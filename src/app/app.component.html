@@ -1,3 +1,5 @@
-<ng-container [ngSwitch]="env.appType">
-  <app-main *ngSwitchDefault></app-main>
-</ng-container>
+@switch (env.appType) {
+  @default {
+    <app-main></app-main>
+  }
+}

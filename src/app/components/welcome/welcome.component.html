@@ -14,16 +14,20 @@
       This is a webapp for creating and managing informations for pet sitters who
       are looking after the pets during absence of their owners.
     </div>
-    <ng-container *ngIf="bs.serviceAvailable">
-      <div *ngIf="bs.remainingUsers > 0">
-        <span i18n>To use this app you need to</span>
-        <button (click)="mode='login'" [class]="classForLogin" i18n mat-button>login</button>
-        <span i18n>or</span>
-        <button (click)="mode='register'" [class]="classForRegister" i18n mat-button>register</button>
-      </div>
-      <div *ngIf="bs.remainingUsers <= 0">
-        <span i18n>To use this app you need to login</span>
-      </div>
+    @if (bs.serviceAvailable) {
+      @if (bs.remainingUsers > 0) {
+        <div>
+          <span i18n>To use this app you need to</span>
+          <button (click)="mode='login'" [class]="classForLogin" i18n mat-button>login</button>
+          <span i18n>or</span>
+          <button (click)="mode='register'" [class]="classForRegister" i18n mat-button>register</button>
+        </div>
+      }
+      @if (bs.remainingUsers <= 0) {
+        <div>
+          <span i18n>To use this app you need to login</span>
+        </div>
+      }
       <form [formGroup]="form">
         <mat-form-field [appearance]="globals.appearance" [formGroup]="form">
           <mat-label>{{ controls['username']?.label }}</mat-label>
@@ -42,41 +46,45 @@
             <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
           </button>
           <!-- mat-error *ngIf="form.get('password')?.invalid && !form.get('password')?.untouched">
-            <ng-container *ngIf="form.get('password')?.errors?.['required']" i18n>Password is required</ng-container>
+          <ng-container *ngIf="form.get('password')?.errors?.['required']" i18n>Password is required</ng-container>
           </mat-error -->
         </mat-form-field>
-        <div *ngIf="bs.remainingUsers > 0" [class]="classForArea('register')">
-          <mat-chip-listbox aria-label="usertype" multiple>
-            <div label>{{ controls.usertype.label }}</div>
-            @for (type of globals.usertypes; track type) {
-              <mat-chip-option selectable="true"
-                               [selected]="hasUsertype(type.value)"
-                               (selectionChange)="toggleUsertype(type.value)">
-                {{ type.label }}
-              </mat-chip-option>
-            }
-          </mat-chip-listbox>
-          <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'email'}"></ng-container>
-          <br>
-          <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'firstname'}"></ng-container>
-          <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'lastname'}"></ng-container>
-          <br>
-          <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'address1'}"></ng-container>
-          <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'address2'}"></ng-container>
-          <br>
-          <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'zip'}"></ng-container>
-          <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'city'}"></ng-container>
-        </div>
+        @if (bs.remainingUsers > 0) {
+          <div [class]="classForArea('register')">
+            <mat-chip-listbox aria-label="usertype" multiple>
+              <div label>{{ controls.usertype.label }}</div>
+              @for (type of globals.usertypes; track type) {
+                <mat-chip-option (selectionChange)="toggleUsertype(type.value)"
+                                 [selected]="hasUsertype(type.value)"
+                                 selectable="true">
+                  {{ type.label }}
+                </mat-chip-option>
+              }
+            </mat-chip-listbox>
+            <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'email'}"></ng-container>
+            <br>
+            <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'firstname'}"></ng-container>
+            <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'lastname'}"></ng-container>
+            <br>
+            <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'address1'}"></ng-container>
+            <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'address2'}"></ng-container>
+            <br>
+            <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'zip'}"></ng-container>
+            <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'city'}"></ng-container>
+          </div>
+        }
       </form>
-    </ng-container>
+    }
   </mat-dialog-content>
   <mat-dialog-actions>
     @if (bs.serviceAvailable) {
       <button (click)="onSend()" mat-button>{{ btnSendTitle }}</button>
     }
-    <ng-container *ngIf="!bs.serviceAvailable" i18n>
-      The service is currently not available
-    </ng-container>
+    @if (!bs.serviceAvailable) {
+      <ng-container i18n>
+        The service is currently not available
+      </ng-container>
+    }
   </mat-dialog-actions>
 </div>
 

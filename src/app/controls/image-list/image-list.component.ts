@@ -68,7 +68,7 @@ export class ImageListComponent extends DlgBaseComponent {
 
   clickImageMove(evt: MouseEvent, image: PictureData, diff: number) {
     evt.stopPropagation();
-    const idx = this.time.pictures.findIndex(e => e.id === image.id);
+    const idx = this.pictures.findIndex(e => e.id === image.id);
     if (idx >= 0) {
       this.pictures.splice(idx, 1);
       this.pictures.splice(idx + diff, 0, image);

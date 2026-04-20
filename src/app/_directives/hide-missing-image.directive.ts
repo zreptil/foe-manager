@@ -9,12 +9,12 @@ export class HideMissingImageDirective {
   }
 
   @HostListener('error')
-  private onError() {
+  onError() {
     setTimeout(() => this.el.nativeElement.style.display = 'none');
   }
 
   @HostListener('load')
-  private onLoad() {
+  onLoad() {
     setTimeout(() => this.el.nativeElement.style.display = 'initial');
   }
 }

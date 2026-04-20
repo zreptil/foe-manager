@@ -1,48 +1,52 @@
-<form *ngIf="ps.page(pageName) != null" [formGroup]="ps.page(pageName)?.form">
-  @if (!hasUsertype(1)) {
-    <mat-chip-listbox aria-label="usertype" multiple>
-      <div label>{{ controls.usertype.label }}</div>
-      @for (type of globals.usertypes; track type) {
-        <mat-chip-option selectable="true"
-                         [selected]="hasUsertype(type.value)"
-                         (selectionChange)="toggleUsertype(type.value)">
-          {{ type.label }}
-        </mat-chip-option>
-      }
-    </mat-chip-listbox>
-  }
-  <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'person_firstname'}"></ng-container>
-  <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'person_lastname'}"></ng-container>
-  <br>
-  <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'person_email'}"></ng-container>
-  <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'person_phone'}"></ng-container>
-  <br>
-  <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'person_address1'}"></ng-container>
-  <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'person_address2'}"></ng-container>
-  <br>
-  <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'person_zip'}"></ng-container>
-  <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'person_city'}"></ng-container>
-  <br>
-  <button (click)="clickImgur($event)" mat-button>
-    <span i18n>imgur</span>
-    @if (!Utils.isEmpty(_data.person.imgur.at)) {
-      <mat-icon>no_photography</mat-icon>
-    } @else {
-      <mat-icon>photography</mat-icon>
+@if (ps.page(pageName) != null) {
+  <form [formGroup]="ps.page(pageName)?.form">
+    @if (!hasUsertype(1)) {
+      <mat-chip-listbox aria-label="usertype" multiple>
+        <div label>{{ controls.usertype.label }}</div>
+        @for (type of globals.usertypes; track type) {
+          <mat-chip-option (selectionChange)="toggleUsertype(type.value)"
+                           [selected]="hasUsertype(type.value)"
+                           selectable="true">
+            {{ type.label }}
+          </mat-chip-option>
+        }
+      </mat-chip-listbox>
     }
-  </button>
-</form>
-<div *ngIf="ps.page(pageName) == null" i18n page-error>
-  The form is missing some information
-</div>
+    <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'person_firstname'}"></ng-container>
+    <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'person_lastname'}"></ng-container>
+    <br>
+    <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'person_email'}"></ng-container>
+    <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'person_phone'}"></ng-container>
+    <br>
+    <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'person_address1'}"></ng-container>
+    <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'person_address2'}"></ng-container>
+    <br>
+    <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'person_zip'}"></ng-container>
+    <ng-container *ngTemplateOutlet="formFieldTemplate; context: {name: 'person_city'}"></ng-container>
+    <br>
+    <button (click)="clickImgur($event)" mat-button>
+      <span i18n>imgur</span>
+      @if (!Utils.isEmpty(_data.person.imgur.at)) {
+        <mat-icon>no_photography</mat-icon>
+      } @else {
+        <mat-icon>photography</mat-icon>
+      }
+    </button>
+  </form>
+}
+@if (ps.page(pageName) == null) {
+  <div i18n page-error>
+    The form is missing some information
+  </div>
+}
 
 <ng-template #formFieldTemplate let-name="name">
   <mat-form-field [appearance]="ps.appearance" [formGroup]="ps.page(pageName).form">
     <mat-label>{{ ps.page(pageName).controls[name]?.label }}</mat-label>
     <input [formControlName]="name" [id]="name" matInput>
     <!-- mat-error *ngIf="form.get(name)?.invalid && !form.get(name)?.untouched">
-      <ng-container *ngIf="form.get(name)?.errors?.['required']" i18n>{{ controls[name]?.label }} is required</ng-container>
-      <ng-container *ngIf="form.get(name)?.errors?.['email']" i18n>Invalid email address</ng-container>
+    <ng-container *ngIf="form.get(name)?.errors?.['required']" i18n>{{ controls[name]?.label }} is required</ng-container>
+    <ng-container *ngIf="form.get(name)?.errors?.['email']" i18n>Invalid email address</ng-container>
     </mat-error -->
   </mat-form-field>
 </ng-template>

@@ -2,11 +2,11 @@ import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChil
 import {ProgressService} from '@/_services/progress.service';
 import {ThemeService} from '@/_services/theme.service';
 import {of, Subscription} from 'rxjs';
-import {CommonModule} from '@angular/common';
+
 import {MaterialModule} from '@/material.module';
 
 @Component({
-  imports: [CommonModule, MaterialModule],
+  imports: [MaterialModule],
   selector: 'app-progress',
   templateUrl: './progress.component.html',
   styleUrls: ['./progress.component.scss']

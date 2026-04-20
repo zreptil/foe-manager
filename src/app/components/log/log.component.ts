@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LinkDef, Log} from '@/_services/log.service';
-import {CommonModule} from '@angular/common';
+
 import {MaterialModule} from '@/material.module';
 import {FormsModule} from '@angular/forms';
 import {LogPipe} from '@/components/log/log.pipe';
@@ -8,7 +8,7 @@ import {GLOBALS, GlobalsService} from '@/_services/globals.service';
 import {PdfService} from '@/_services/pdf.service';
 
 @Component({
-  imports: [CommonModule, MaterialModule, FormsModule, LogPipe],
+  imports: [MaterialModule, FormsModule, LogPipe],
   selector: 'app-log',
   templateUrl: './log.component.html',
   styleUrls: ['./log.component.scss']

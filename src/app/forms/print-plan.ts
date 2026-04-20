@@ -194,6 +194,19 @@ export class PrintPlanForm extends BasePrint {
                   this.ps.loadPending--;
                 }
               }, error: _err => {
+                images[picture.userType][idx].stack[0] = {
+                  width: 'auto',
+                  text: `Hier sollte das Bild ${picture.url} angezeigt werden,`
+                    + ` konnte aber nicht geladen werden. Das liegt vermutlich`
+                    + ` an fehlender CORS-Unterstützung vom Server, auf dem das`
+                    + ` Bild gehostet wird. Mögliche Lösungen in absteigend sinnvoller Reihenfolge:\n`
+                    + `- Das Bild auf Imgur hochladen und von dort verlinken\n`
+                    + `- Den Server so konfigurieren, dass er CORS Anfragen von dieser Seite zulässt\n`
+                    + `- Die Url so abändern: https://corg.zreptil.de?url=${picture.url}`,
+                  fontSize: this.fs(9),
+                  color: 'red'
+                };
+                images[picture.userType][idx].width = 'auto';
                 this.ps.loadPending--;
               }
             });

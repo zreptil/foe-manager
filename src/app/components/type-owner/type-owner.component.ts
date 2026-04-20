@@ -33,7 +33,8 @@ export class TypeOwnerComponent implements AfterViewInit {
 
   clickAdd(evt: MouseEvent) {
     evt.stopPropagation();
-    this.msg.showPopup(PlanComponent, 'plan', new PlanData({0: -1})).subscribe(result => {
+    const plan = new PlanData({0: -1, b: 2});
+    this.msg.showPopup(PlanComponent, 'plan', plan).subscribe(result => {
       if (result?.btn === 'save') {
         GLOBALS.appData.plans ??= [];
         result.data.id = GLOBALS.appData.plans.length + 1;
