@@ -156,6 +156,15 @@ export class BuildingComponent {
     return 'positive';
   }
 
+  protected calcBlockValue(level: LevelData, idx: number) {
+    let ret = level.cost;
+    for (let i = 0; i < idx; i++) {
+      ret -= this.bs.calcReward(level.rewards[i]);
+    }
+    ret -= this.bs.calcReward(level.rewards[idx]) * 2;
+    return ret;
+  }
+
   protected calcPlaceValue(method: number, level: LevelData, idx: number, ownerValue: number) {
     return this.calcMethods[method].bind(this)(level, idx, ownerValue);
   }

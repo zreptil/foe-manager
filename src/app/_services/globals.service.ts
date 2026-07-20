@@ -294,7 +294,7 @@ export class GlobalsService {
     if (this._gbList == null) {
       switch (GLOBALS.user.siteMode) {
         case EnumSitemode.manage:
-          this._gbList = this.assist.gbList.filter(gb => GLOBALS.user.listGb[gb.key] != null);
+          this._gbList = this.assist.gbList.filter(gb => GLOBALS.user.listGb[gb.key] != null && GLOBALS.user.listGb[gb.key].active);
           break;
         default:
           this._gbList = this.assist.gbList;

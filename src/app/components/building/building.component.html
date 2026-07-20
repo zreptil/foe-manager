@@ -93,8 +93,9 @@
                 <td reward>{{ bs.calcReward(reward) }}</td>
                 <td blocks>
                   <div [class]="classForBlock(nextLevel, rewardIdx)" block>
-                    @if ((rewardIdx === 0 || nextLevel.blocks[rewardIdx] - (nextLevel.blocks[rewardIdx - 1]) > 0) && nextLevel.blocks[$index] > 0) {
-                      {{ nextLevel.blocks[rewardIdx] }}
+                    @let block = calcBlockValue(nextLevel, rewardIdx);
+                    @if ((rewardIdx === 0 || block - calcBlockValue(nextLevel, rewardIdx - 1) > 0) && block > 0) {
+                      {{ block }}
                     } @else {
                       <mat-icon i18n-title title="Der Platz ist mit dem Eigenanteil schon gesichert">thumb_up</mat-icon>
                     }
