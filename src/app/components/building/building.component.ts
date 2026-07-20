@@ -217,11 +217,9 @@ export class BuildingComponent {
         break;
       case EnumSitemode.buildings:
 //        if (GLOBALS.user.activeGbKey !== this.gb.key) {
-        setTimeout(() => {
-          GLOBALS.user.activeGbKey = this.gb.key;
-          GLOBALS.user.activeUserGb = new GbUserData({a: 1});
-          GLOBALS.saveSharedData();
-        }, 1000);
+        GLOBALS.user.activeGbKey = this.gb.key;
+        GLOBALS.user.activeUserGb = new GbUserData({a: 1});
+        GLOBALS.saveSharedData();
 //        }
         break;
     }

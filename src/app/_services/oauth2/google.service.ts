@@ -38,7 +38,7 @@ export class GoogleService {
     if (user == null) {
       this.oauthService.initLoginFlow();
     }
-    console.log('so schauts aus', this.oauthService.getIdentityClaims());
+    // console.log('so schauts aus', this.oauthService.getIdentityClaims());
   }
 
   callGoogleApi() {
