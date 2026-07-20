@@ -5,12 +5,62 @@
         {{ globals.appData?.person?.fullname }}
         @if (globals.usertypeList?.length > 1) {
           @for (type of globals.usertypeList; track type.value) {
-            <button mat-button [class]="classForType(type)" (click)="clickType(type)">{{ type.label }}</button>
+            <button (click)="clickType(type)" [class]="classForType(type)" mat-button>{{ type.label }}</button>
           }
         }
       }
+      @if (globals.user.siteMode !== 2) {
+        @if (globals.user.siteMode === 0) {
+          <div i18n>Bitte die Gebäude auswählen, die in Deiner Stadt stehen</div>
+        } @else {
+          <div i18n>Liste der Gebäude in der Stadt</div>
+        }
+        <button (click)="toggleMode($event)" matIconButton small-icon-button>
+          <mat-icon>{{ iconForMode() }}</mat-icon>
+        </button>
+        <button (click)="toggleMode($event, 2)" matIconButton small-icon-button>
+          <mat-icon>{{ iconForMode(2) }}</mat-icon>
+        </button>
+      } @else {
+        <button (click)="clickBuildingsBack($event)" matIconButton small-icon-button>
+          <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+      }
     </div>
+    @if (globals.user.siteMode !== 2 || globals.user.activeGbKey == null) {
+      <div>
+        <button (click)="clickSort($event)" matIconButton small-icon-button>
+          <mat-icon>{{ iconForSort }}</mat-icon>
+        </button>
+      </div>
+    }
     <div>
+      @if (globals.siteConfig.editField === 'user') {
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input (blur)="saveName()"
+                 (focus)="bs.onFocus($event)"
+                 (keydown.enter)="saveName()"
+                 [(ngModel)]="globals.user.username"
+                 autofocus matInput>
+        </mat-form-field>
+        <button (click)="saveName()" mat-button>
+          <mat-icon>done</mat-icon>
+        </button>
+      } @else {
+        <button (click)="clickName($event)" mat-button>
+          {{ globals.user.username }}
+        </button>
+        <button (click)="clickZoom($event)" mat-button>
+          <mat-icon>
+            {{ ['zoom_in', 'zoom_out'][globals.user.userzoom] }}
+          </mat-icon>
+        </button>
+      }
+
+      @if (globals.isDebug) {
+        <button (click)="clickImport($event)" mat-button>Importieren</button>
+      }
       <!-- button (click)="sync.toggleSyncDropbox()" id="sync" mat-icon-button>
         <ng-container *ngIf="!sync.hasSync">
           <mat-icon>sync_disabled</mat-icon>
@@ -20,62 +70,22 @@
         </ng-container>
       </button -->
       <app-close-button [data]="closeData"></app-close-button>
-      @if (!Utils.isEmpty(bs.token)) {
-        <button [matMenuTriggerFor]="userMenu" mat-icon-button>
-          <mat-icon>person</mat-icon>
-        </button>
-        <mat-menu #userMenu="matMenu">
-          <button (click)="onClick('settings')" mat-menu-item>
-            <mat-icon>settings</mat-icon>
-            <span i18n>Settings</span>
-          </button>
-          <button (click)="onClick('password')" mat-menu-item>
-            <mat-icon>key</mat-icon>
-            <span i18n>Password</span>
-          </button>
-          <button (click)="onClick('whatsnew')" mat-menu-item>
-            <mat-icon>info_outline</mat-icon>
-            <span i18n>Once upon a time...</span>
-          </button>
-          <button (click)="onClick('impressum')" mat-menu-item>
-            <mat-icon>account_balance</mat-icon>
-            <span i18n>Impressum</span>
-          </button>
-          <button (click)="onClick('dsgvo')" mat-menu-item>
-            <mat-icon>policy</mat-icon>
-            <span i18n>DSGVO</span>
-          </button>
-          <mat-divider></mat-divider>
-          <button (click)="onClick('logout')" mat-menu-item>
-            <mat-icon>logout</mat-icon>
-            <span i18n>Logout</span>
-          </button>
-        </mat-menu>
-      }
     </div>
   </div>
   <div>
-    <div content>
-      @if (globals.isDebug) {
-        <div viewInfo>Type{{ globals.currentUserTypeName }}
-          {{ globals.currentUserType?.value }}
+    <div [class]="classForContent" [style]="styleForContent" content>
+      @if (assist.importDone) {
+        <textarea>{{ gbJson }}</textarea>
+      } @else if (!assist.hasData) {
+        <div gbListError>
+          Die Daten aus dem Cache sind falsch. Bitte den Cache leeren und neu versuchen.
         </div>
-      }
-      @switch (globals.currentUserType?.value) {
-        @case (UserType.Owner) {
-          <app-type-owner></app-type-owner>
-        }
-        @case (UserType.Sitter) {
-          <app-type-sitter></app-type-sitter>
-        }
-        @case (UserType.Admin) {
-          <app-type-admin></app-type-admin>
-        }
-        @default {
-          @if (globals.devSupport) {
-            {{ globals.appData ?? {} |json }}<br>
+      } @else if (assist.loadDone) {
+        <div gbList>
+          @for (gb of globals.gbList; track $index) {
+            <app-building [building]="gb"></app-building>
           }
-        }
+        </div>
       }
     </div>
   </div>
@@ -83,3 +93,4 @@
 </div>
 <app-progress></app-progress>
 <div hidden id="mark"></div>
+<div version>{{ globals.version }}</div>

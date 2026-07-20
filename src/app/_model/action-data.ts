@@ -17,7 +17,7 @@ export class ActionData extends BaseData {
       a: this.text,
       b: this.done,
       c: this.pictures,
-      d: this.created ?? Utils.now.getTime()
+      d: this.created ?? Utils.now.getTime(),
     };
   }
 

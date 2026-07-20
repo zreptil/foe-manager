@@ -4,7 +4,6 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {map, Observable, of} from 'rxjs';
 import {DialogComponent} from '@/components/dialog/dialog.component';
 import {ComponentType} from '@angular/cdk/overlay';
-import {PasswordChangeComponent} from '@/components/password-change/password-change.component';
 import {GLOBALS} from '@/_services/globals.service';
 import {DlgBaseComponent} from '@/classes/base/dlg-base-component';
 
@@ -90,11 +89,5 @@ export class MessageService {
     }
 
     return this.dlgRef.afterClosed();
-  }
-
-  changePassword() {
-    this.showPopup(PasswordChangeComponent, 'password', null).subscribe(_result => {
-
-    });
   }
 }

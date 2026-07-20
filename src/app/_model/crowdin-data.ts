@@ -28,6 +28,6 @@ export class CrowdinData {
   }
 
   static factoryGerman(): CrowdinData {
-    return new CrowdinData('order66', 39, 'en', '13600041-555863');
+    return new CrowdinData('foe-manager', 39, 'en', '13600041-555863');
   }
 }

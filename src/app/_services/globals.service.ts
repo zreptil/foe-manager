@@ -9,16 +9,16 @@ import {SyncService} from '@/_services/sync/sync.service';
 import {LanguageService} from '@/_services/language.service';
 import {EnvironmentService} from '@/_services/environment.service';
 import {MessageService} from '@/_services/message.service';
-import {WhatsNewComponent} from '@/components/whats-new/whats-new.component';
-import {WelcomeComponent} from '@/components/welcome/welcome.component';
-import {BackendService, SitterPlan} from '@/_services/backend.service';
 import {AppData, TypeUser, UserType} from '@/_model/app-data';
-import {PersonData} from '@/_model/person-data';
 import {MatFormFieldAppearance} from '@angular/material/form-field';
+import {VERSION} from '@/version';
 import {ImgurService} from '@/_services/oauth2/imgur.service';
-import {PlanData, PlanStatus} from '@/_model/plan-data';
-import {DayData} from '@/_model/day-data';
 import {FormConfig} from '@/forms/form-config';
+import {EnumSitemode, EnumSortmode, UserData} from '@/_model/user-data';
+import {GbUserData} from '@/_model/gb-user-data';
+import {GbData} from '@/_model/gb-data';
+import {AssistService} from '@/_services/assist.service';
+import {BuildingService} from '@/_services/building.service';
 
 class CustomTimeoutError extends Error {
   constructor() {
@@ -33,7 +33,7 @@ export let GLOBALS: GlobalsService;
   providedIn: 'root'
 })
 export class GlobalsService {
-  version = '1.1.3';
+  version = VERSION;
   skipStorageClear = false;
   devSupport = false;
   debugFlag = 'debug';
@@ -42,8 +42,6 @@ export class GlobalsService {
   dragPos: any = {};
   themeChanged = false;
   editColors = false;
-  appMode = 'standard';
-  editPart: string;
   maxLogEntries = 20;
   storageVersion: string;
   currentPage: string;
@@ -70,40 +68,37 @@ export class GlobalsService {
     dsgvo: $localize`Dataprotection`,
     help: $localize`Information`,
     impressum: $localize`Impressum`,
-    welcome: $localize`Welcome to Order66`,
+    welcome: $localize`Welcome to foe-manager`,
     whatsnew: $localize`Once upon a time...`,
     linkPicture: $localize`Link Picture`,
     imgurSelector: $localize`Imgur Picture Selector`,
   };
+  siteConfig: any = {
+    pdfTarget: '',
+    pdfData: null,
+    ppPdfSameWindow: false,
+    editField: '',
+    delayTimer: 0,
+    repeatTimer: 0,
+    sniperValue: 0,
+    levelGbKey: '',
+    levelValue: 0
+  }
   urlPlayground = 'http://pdf.zreptil.de/playground.php';
   appData: AppData;
-  sitterFetching = false;
-  ownerFetching = false;
+  user: UserData;
   saveImmediately = true;
   showCompleted = false;
   _styleForPanels: any = {};
-  siteConfig: any = {
-    gridColumns: 4,
-    showPrimeNumbers: false,
-    rubikView: 'three-d',
-    rubikMode: '',
-    rubikRotx: -30,
-    rubikRoty: 30,
-    rubikRotz: 0,
-    rubikTurnSpeed: 0.2,
-    rubikRecorded: '',
-    pdfTarget: '',
-    pdfData: null,
-    ppPdfSameWindow: false
-  }
   formListParams: any;
   private flags = '';
 
   constructor(public http: HttpClient,
+              public bs: BuildingService,
+              public assist: AssistService,
               public sync: SyncService,
               public ls: LanguageService,
               public msg: MessageService,
-              public bs: BackendService,
               public imgur: ImgurService,
               public env: EnvironmentService) {
     GLOBALS = this;
@@ -113,23 +108,8 @@ export class GlobalsService {
       elem.innerHTML = `${elem.innerHTML} (local)`;
     }
     this.loadSharedData().then(_ => {
-      this.bs.loginByToken(
-        (data) => {
-          const ut = GLOBALS.currentUserType?.value;
-          this.appData = new AppData();
-          this.appData.fillFromBackend(data.data);
-          this.appData.permissions = data.perm?.split(',').map((entry: string) => +entry);
-          this.appData.usertype = data.type;
-          this.currentUserType = GLOBALS.usertypeList.find(e => e.value === ut) ?? GLOBALS.usertypeList[0];
-          if (this.storageVersion !== this.version) {
-            this.msg.showPopup(WhatsNewComponent, 'whatsnew', {});
-          } else {
-            this.currentPage = 'main';
-          }
-          this.imgur.init();
-        }, (_error) => {
-          this.msg.showPopup(WelcomeComponent, 'welcome', {});
-        });
+      this.appData = new AppData();
+      this.imgur.init();
     });
   }
 
@@ -162,34 +142,6 @@ export class GlobalsService {
       }
     }
     return 'Unknown';
-  }
-
-  _sitterList: PersonData[];
-
-  get sitterList(): PersonData[] {
-    if (this._sitterList == null && !this.sitterFetching) {
-      this.sitterFetching = true;
-      this.bs.getPersonList(UserType.Sitter, (data) => {
-        this._sitterList = data;
-        this._sitterList.push(new PersonData({a: $localize`Toby`, b: $localize`Named`}));
-        this.sitterFetching = false;
-      });
-    }
-    return this._sitterList;
-  }
-
-  _ownerList: PersonData[];
-
-  get ownerList(): PersonData[] {
-    if (this._ownerList == null && !this.ownerFetching) {
-      this.ownerFetching = true;
-      this.bs.getPersonList(UserType.Owner, (data) => {
-        this._ownerList = data;
-        this._ownerList.push(new PersonData({a: $localize`Toby`, b: $localize`Named`}));
-        this.ownerFetching = false;
-      });
-    }
-    return this._ownerList;
   }
 
   _isDebug = false;
@@ -324,50 +276,54 @@ export class GlobalsService {
     return this._currPeriodShift;
   }
 
-  ownerData(plan: SitterPlan): string {
-    const data = GLOBALS.ownerList?.find(
-      (owner) => owner.fkUser === plan.ui);
-    if (data?.phone != null) {
-      return `${data.fullname} (${data.phone})`;
-    }
-    if (data?.city != null) {
-      return `${data.fullname} (${data.address})`;
-    }
-    return `${data?.fullname}`;
-  }
+  _gbList: GbData[];
 
-  owner(plan: SitterPlan): PersonData {
-    return GLOBALS.ownerList?.find(
-      (owner) => owner.fkUser === plan.ui);
-  }
-
-  ownerName(plan: SitterPlan): string {
-    const data = GLOBALS.ownerList?.find(
-      (owner) => owner.fkUser === plan.ui);
-    return `${data?.fullname}`;
-  }
-
-  ownerInfo(plan: SitterPlan): string {
-    const data = GLOBALS.ownerList?.find(
-      (owner) => owner.fkUser === plan.ui);
-    if (data?.phone != null) {
-      return `${data.phone}`;
+  get gbList() {
+    if (this.bs.isModeBuildings && GLOBALS.user.activeGbKey != null) {
+      if (this._gbList == null) {
+        this._gbList = this.assist.gbList;
+      }
+      const gb = this._gbList.find(gb => gb.key === GLOBALS.user.activeGbKey);
+      if (gb != null) {
+        return [gb];
+      } else {
+        GLOBALS.user.activeGbKey = null;
+        GLOBALS.user.activeUserGb = null;
+      }
     }
-    if (data?.city != null) {
-      return `${data.address}`;
+    if (this._gbList == null) {
+      switch (GLOBALS.user.siteMode) {
+        case EnumSitemode.manage:
+          this._gbList = this.assist.gbList.filter(gb => GLOBALS.user.listGb[gb.key] != null);
+          break;
+        default:
+          this._gbList = this.assist.gbList;
+      }
     }
-    return '';
+    switch (GLOBALS.user.gbSort[GLOBALS.user.siteMode]) {
+      case EnumSortmode.none:
+        break;
+      case EnumSortmode.alpha:
+        this._gbList = [...this._gbList].sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case EnumSortmode.level:
+        this._gbList = [...this._gbList].sort((a, b) =>
+          -Utils.compare(this.bs.gbForUser(a)?.level, this.bs.gbForUser(b)?.level));
+        break;
+      case EnumSortmode.timeCopied:
+        this._gbList = [...this._gbList].sort((a, b) =>
+          -Utils.compare(this.bs.gbForUser(a)?.timeCopied ?? 0, this.bs.gbForUser(b)?.timeCopied ?? 0));
+        break;
+    }
+    return this._gbList;
   }
 
   loadAppData() {
-    this.bs.loadAppData((data) => {
-      const ut = GLOBALS.currentUserType?.value;
-      this.appData.fillFromJson(data.asJson);
-      this.currentUserType = GLOBALS.usertypeList.find(e => e.value === ut) ?? GLOBALS.usertypeList[0];
-    });
+    this.appData = new AppData();
   }
 
   async loadSharedData() {
+    GLOBALS.user = new UserData();
     let storage: any = {};
     try {
       storage = JSON.parse(localStorage.getItem('sharedData')) ?? {};
@@ -384,16 +340,50 @@ export class GlobalsService {
     }
 
     this.storageVersion = storage.s1;
+    GLOBALS.user.listGb = {};
+    if (Array.isArray(storage.s2)) {
+      const src = storage.s2;
+      storage.s2 = {};
+      for (const item of src) {
+        storage.s2[item.a] = {a: item.b, b: item.c};
+      }
+    }
+    const src = storage.s2 ?? {};
+    for (const key of Object.keys(src)) {
+      GLOBALS.user.listGb[key] = new GbUserData(src[key]);
+    }
+    GLOBALS.user.siteMode = storage.s3 ?? EnumSitemode.select;
+    GLOBALS.user.username = storage.s4 ?? 'Bitte Name eingeben';
+    if (typeof (storage.s5) !== 'object') {
+      storage.s5 = {0: EnumSortmode.timeCopied, 1: EnumSortmode.alpha, 2: EnumSortmode.alpha};
+    }
+    GLOBALS.user.gbSort = storage.s5 ?? {0: EnumSortmode.timeCopied, 1: EnumSortmode.alpha, 2: EnumSortmode.alpha};
+    GLOBALS.user.activeGbKey = storage.s6;
+    if (storage.s7 != null) {
+      GLOBALS.user.activeUserGb = new GbUserData(storage.s7);
+    } else {
+      GLOBALS.user.activeUserGb = null;
+    }
+    GLOBALS.user.userzoom = storage.s8 ?? 0;
+
     // validate values
-    this.bs.token = storage.s2;
   }
 
   saveSharedData(): void {
     const storage: any = {
       s0: Date.now(),
       s1: this.version,
-      s2: this.bs.token
+      s2: {},
+      s3: GLOBALS.user.siteMode,
+      s4: this.user.username,
+      s5: this.user.gbSort,
+      s6: GLOBALS.user.activeGbKey,
+      s7: GLOBALS.user.activeUserGb?.asJson,
+      s8: GLOBALS.user.userzoom
     };
+    for (const key of Object.keys(GLOBALS.user.listGb)) {
+      storage.s2[key] = GLOBALS.user.listGb[key].asJson;
+    }
     const data = JSON.stringify(storage);
     localStorage.setItem('sharedData', data);
     if (this.sync.hasSync) {
@@ -486,63 +476,14 @@ export class GlobalsService {
     return name;
   }
 
-  saveImmediate(saveToAppData?: () => void, onDone?: () => void) {
+  saveImmediate(saveToAppData?: () => void, _onDone?: () => void) {
     if (this.saveImmediately) {
       saveToAppData?.();
-      this.bs.saveAppData(GLOBALS.appData,
-        (data) => {
-          const ut = GLOBALS.currentUserType?.value;
-          GLOBALS.appData.fillFromJson(data.asJson);
-          GLOBALS.appData.usertype = data.usertype;
-          GLOBALS.currentUserType = GLOBALS.usertypeList.find(e => e.value === ut) ?? GLOBALS.usertypeList[0];
-          GLOBALS.saveSharedData();
-          onDone?.();
-        },
-        (error) => {
-          console.error(error);
-          this.msg.error($localize`Error when saving data - ${error}`);
-        });
     }
   }
 
   openLink(url: string) {
     window.open(url, '_blank');
-  }
-
-  styleForPlan(plan: SitterPlan): any {
-    if (this._styleForPanels[plan.ui] == null) {
-      this._styleForPanels[plan.ui] = {};
-      const owner = this.appData?.person?.owners?.[plan.ui];
-      this._styleForPanels[plan.ui].backgroundColor = owner?.colorBack?.display ?? 'white';
-      this._styleForPanels[plan.ui].color = owner?.colorFore?.display ?? 'black';
-      this._styleForPanels[plan.ui]['--foreColor'] = this._styleForPanels[plan.ui].color;
-      this._styleForPanels[plan.ui]['--backColor'] = this._styleForPanels[plan.ui].backgroundColor;
-    }
-    return this._styleForPanels[plan.ui];
-  }
-
-  statusIcon(plan: PlanData) {
-    const icons: any = {
-      0: 'thumb_down',
-      1: 'thumb_up'
-    };
-    return icons[plan.status ?? 0];
-  }
-
-  statusInfo(plan: PlanData) {
-    if (Utils.isEmpty(plan.statusInfo)) {
-      plan.statusInfo = null;
-    }
-    switch (plan.status) {
-      case PlanStatus.accepted:
-        return plan.statusInfo ?? $localize`${plan.sitterPerson?.firstname} accepted the plan`;
-      case PlanStatus.denied:
-        return plan.statusInfo ?? $localize`${plan.sitterPerson?.firstname} denied the plan`;
-    }
-  }
-
-  hasActions(day: DayData) {
-    return day.timeRanges.some(e => e.actions?.length > 0);
   }
 
   loadFormListParams(): void {

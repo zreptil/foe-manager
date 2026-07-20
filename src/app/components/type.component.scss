@@ -74,6 +74,39 @@ mat-card-content {
   overflow-y: auto;
 }
 
+[todo] {
+  border: 5px solid rgba(255, 0, 0, 0.5);
+  padding: 0.5em;
+  border-radius: 0.5em;
+
+  [title] {
+    margin: 0 0.5em 1em 0;
+    font-weight: bold;
+    font-variant: small-caps;
+  }
+
+  [line] {
+  }
+
+  ul {
+    padding-inline-start: 0;
+  }
+
+  li {
+    display: flex;
+    flex-flow: row;
+  }
+
+  [line]:before {
+    content: '• ';
+  }
+
+  img {
+    max-width: 50%;
+    margin-right: 1em;
+  }
+}
+
 [sitter] {
   font-size: 70%;
   color: rgba(0, 0, 0, 0.8);
@@ -167,5 +200,10 @@ div[dayactions] {
 [extInfo] {
   margin-top: 1em;
   font-size: 0.8em;
+}
+
+.absence {
+  background-color: white;
+  color: red;
 }
 

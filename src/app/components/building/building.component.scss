@@ -1,0 +1,299 @@
+mat-card.select, mat-card.buildings {
+  cursor: pointer;
+}
+
+mat-card {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0.5em;
+  border-radius: 1em;
+  height: 100%;
+  position: relative;
+
+  [btnMark] {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  [card-title] {
+    text-align: center;
+    cursor: pointer;
+    max-width: calc(100% - 3em);
+  }
+
+  [info] {
+    color: silver;
+  }
+
+  mat-card-content {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+
+    [upgrade] {
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1em;
+
+      mat-icon {
+        --size: 16px;
+        height: var(--size);
+        width: var(--size);
+        font-size: var(--size);
+      }
+
+      div {
+        --border: 1px solid silver;
+      }
+
+      [header] {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+        margin-top: 1em;
+
+        [level] {
+        }
+
+        [cost] {
+          text-align: right;
+        }
+      }
+
+      [rewards] {
+        display: flex;
+        flex-flow: column;
+        gap: 0.1em;
+      }
+    }
+
+    [owner] {
+      color: var(--ownerFore);
+    }
+  }
+}
+
+mat-card.selected {
+  background: rgba(0, 0, 0, 0.1);
+
+  [card-title] {
+    color: var(--ownerFore);
+  }
+}
+
+mat-card.gb-marked {
+  background: #ff0;
+  --ownerFore: black;
+  --copyFore: rgba(0, 0, 0, 0.7);
+
+  tr[row].marked {
+    background: rgba(0, 0, 0, 0.1);
+  }
+}
+
+[level] {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+
+[topSpace] {
+  margin-top: 1em;
+  color: white;
+}
+
+mat-card mat-card-content [upgrade] {
+  [header] {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  [rewards] [row] {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+[copyButton] {
+  margin-top: 1em;
+  height: inherit;
+  font-size: 75%;
+  --mat-button-text-label-text-color: var(--copyFore);
+}
+
+[calc], [calcTotal] {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  gap: 0.5em;
+  justify-content: space-between;
+}
+
+[calcTotal] {
+  justify-content: flex-end;
+}
+
+[calc], [calccost], [calcTotal] {
+  color: rgba(255, 255, 0, 0.8);
+}
+
+[levelEdit] {
+  display: flex;
+  flex-flow: row;
+  width: 10em;
+  align-items: center;
+}
+
+[vert] {
+  display: flex;
+  flex-flow: column;
+}
+
+mat-label {
+  display: flex;
+  align-items: center;
+
+  mat-icon {
+    margin-right: 0.5em;
+  }
+}
+
+[row] {
+  cursor: pointer;
+
+  [level] {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  [reward] {
+    text-align: right;
+  }
+
+  [block] {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 75%;
+    color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+  }
+
+  [block].owner {
+    color: var(--ownerFore);
+    font-size: 1em;
+  }
+
+  [cost] {
+    text-align: right;
+  }
+
+  [calc].positive {
+    color: var(--calcPositive);
+  }
+
+  [calc].negative {
+    color: var(--calcNegative);
+  }
+}
+
+.gb-marked {
+  [calc], [calccost] {
+    color: rgba(0, 0, 255, 0.8);
+  }
+
+  [block] {
+    color: rgba(0, 0, 0, 0.5);
+  }
+
+  [block].owner {
+    color: var(--ownerFore);
+  }
+
+  [calc].positive {
+    color: green; //var(--calcPositive);
+  }
+
+  [calc].negative {
+    color: red; //var(--calcNegative);
+  }
+}
+
+[row].marked {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0 2px;
+  --br: 6px;
+  width: 100%;
+
+  mat-icon {
+    --size: 16px;
+    height: var(--size);
+    width: var(--size);
+    font-size: var(--size);
+  }
+
+  tr > :first-child {
+    padding-left: 0.5em;
+    border-top-left-radius: var(--br);
+    border-bottom-left-radius: var(--br);
+  }
+
+  tr > :last-child {
+    padding-right: 0.5em;
+    border-top-right-radius: var(--br);
+    border-bottom-right-radius: var(--br);
+  }
+
+  tr {
+    td {
+      align-items: center;
+      justify-content: flex-end;
+      min-width: 0;
+      white-space: nowrap;
+    }
+
+    td[title] {
+      width: 2em;
+    }
+
+    td[reward] {
+      width: 6em;
+    }
+
+    td[blocks] {
+      width: 6em;
+    }
+
+    td[calc] {
+      width: 5em;
+    }
+
+    td[name] {
+      justify-content: flex-start;
+    }
+  }
+
+  tr[first] {
+    vertical-align: top;
+    height: 1.7em;
+  }
+
+  _tr {
+    border: 1px solid lime;
+
+    td {
+      border: 1px solid red;
+    }
+  }
+}

@@ -71,8 +71,43 @@
     height: calc(var(--doc-height) - 50px);
   }
 
-  [content].grid {
+  [content] {
     overflow-y: auto;
+    display: flex;
+    flex-flow: column;
+
+    [gbList] {
+      display: grid;
+      padding: 0.5em;
+      grid-template-columns: repeat(auto-fill, minmax(13em, 2fr));
+      grid-gap: 0.2em;
+
+      button[small-icon-button] {
+        --size: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        --mat-icon-button-state-layer-size: var(--size);
+
+        mat-icon {
+          font-size: var(--size);
+        }
+      }
+    }
+
+    textarea {
+      display: flex;
+      flex: 1;
+    }
+  }
+
+  [content].building {
+    align-items: center;
+    justify-content: center;
+
+    [gbList] {
+      grid-template-columns: initial;
+    }
   }
 
   [viewInfo] {
@@ -126,4 +161,23 @@ button[micro-button] {
 app-log {
   position: absolute;
   bottom: 0;
+}
+
+[gbListError] {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  font-size: 2em;
+  background: red;
+  color: rgba(255, 255, 0, 0.9);
+}
+
+[version] {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  color: rgba(0, 0, 0, 0.4);
 }

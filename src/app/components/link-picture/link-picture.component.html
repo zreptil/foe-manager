@@ -46,21 +46,31 @@
   <mat-dialog-actions>
     <div actions>
       @if (isImgurSelector) {
-        <button (click)="clickImportImgur($event)" mat-button
-                [disabled]="imgurSelected?.length === 0">
+        <button (click)="clickImportImgur($event)" [disabled]="imgurSelected?.length === 0"
+                mat-button>
           <mat-icon>cloud_download</mat-icon>
           <span i18n>Import</span>
         </button>
-        <button (click)="clickCancel($event)" mat-button
-                [disabled]="imgurSelected?.length === 0">
+        <button (click)="clickCancel($event)" [disabled]="imgurSelected?.length === 0"
+                mat-button>
           <mat-icon>close</mat-icon>
           <span i18n>Cancel</span>
         </button>
       } @else {
-        <button (click)="clickSave($event)" mat-button>
-          <mat-icon>save</mat-icon>
-          <span i18n>Save</span>
-        </button>
+        <div>
+          <button (click)="clickSave($event)" mat-button>
+            <mat-icon>save</mat-icon>
+            <span i18n>Save</span>
+          </button>
+          <button (click)="srcData.todo = !srcData.todo" mat-button>
+            @if (srcData.todo) {
+              <mat-icon mark>assignment_add</mat-icon>
+              <span i18n>Todo for Owner</span>
+            } @else {
+              <mat-icon>info</mat-icon>
+            }
+          </button>
+        </div>
       }
       @if (!isImgurSelector && Utils.isEmpty(srcData.url)) {
         <button (click)="clickImgur($event)" mat-button>

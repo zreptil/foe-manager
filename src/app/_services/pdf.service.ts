@@ -9,8 +9,6 @@ import {forkJoin, map, Observable, of} from 'rxjs';
 import {TCreatedPdf} from 'pdfmake/build/pdfmake';
 import {FormConfig} from '@/forms/form-config';
 import {ReportData} from '@/_model/report-data';
-import {PrintPlanForm} from '@/forms/print-plan';
-import {PlanData} from '@/_model/plan-data';
 import {ThemeService} from '@/_services/theme.service';
 
 export class PdfData {
@@ -25,7 +23,7 @@ export class PdfData {
 })
 export class PdfService {
 
-  formList = [new PrintPlanForm(this)];
+  formList: any[] = [];
   pdfMake: any;
   pdfList: PdfData[] = [];
   pdfDoc: any = null;
@@ -69,12 +67,6 @@ export class PdfService {
       this.pdfMake = pdfMakeModule.default;
       this.pdfMake.vfs = pdfFontsModule.default.pdfMake.vfs;
     }
-  }
-
-  generateSitterPlan(data: PlanData) {
-    GLOBALS.siteConfig.isCreatingPDF = true;
-    GLOBALS.siteConfig.pdfData = data;
-    this.generatePdf();
   }
 
   async generatePdf(doSave = true) {

@@ -1,13 +1,11 @@
 import {AfterViewInit, Component, HostListener, OnInit} from '@angular/core';
 import {DropboxService} from '@/_services/sync/dropbox.service';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
-import {GLOBALS, GlobalsService} from '@/_services/globals.service';
+import {GlobalsService} from '@/_services/globals.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {PersonData} from '@/_model/person-data';
-import {BackendService} from '@/_services/backend.service';
 import {MessageService} from '@/_services/message.service';
 import {EnvironmentService} from '@/_services/environment.service';
-import {AppData, UserType} from '@/_model/app-data';
+import {UserType} from '@/_model/app-data';
 import {DlgBaseComponent} from '@/classes/base/dlg-base-component';
 
 @Component({
@@ -41,7 +39,6 @@ export class WelcomeComponent extends DlgBaseComponent implements OnInit, AfterV
   };
 
   constructor(globals: GlobalsService,
-              public bs: BackendService,
               public env: EnvironmentService,
               public dbs: DropboxService,
               public msg: MessageService) {
@@ -104,7 +101,7 @@ export class WelcomeComponent extends DlgBaseComponent implements OnInit, AfterV
       const ctrl = this.controls[key];
       controls[key] = new FormControl(this.env.defaultLogin?.[key] ?? '', ctrl.validators);
     }
-    controls.usertype.value = UserType.Owner;
+    controls.usertype.value = UserType.User;
     this.controls.usertype.value = controls.usertype.value;
     this.form = new FormGroup(controls);
   }
@@ -126,57 +123,6 @@ export class WelcomeComponent extends DlgBaseComponent implements OnInit, AfterV
   }
 
   onSend() {
-    switch (this.mode) {
-      case 'login':
-        this.submitLogin();
-        break;
-      case 'register':
-        this.submitRegister();
-        break;
-    }
-  }
-
-  submitLogin() {
-    if (this.form.get('username').errors == null
-      && this.form.get('password').errors == null) {
-      this.bs.login(this.form.value.username, this.form.value.password,
-        (data) => {
-          GLOBALS.appData = data.data;
-          GLOBALS.appData.permissions = data.perm?.split(',').map((entry: string) => +entry);
-          GLOBALS.appData.usertype = data.type;
-          GLOBALS.currentUserType = GLOBALS.usertypeList[0];
-          GLOBALS.saveSharedData();
-          this.msg.closePopup();
-        },
-        (error) => {
-          console.error(error);
-          this.msg.error($localize`Wrong username or password`);
-        });
-    }
-  }
-
-  submitRegister() {
-    if (this.form.valid) {
-      const person = new PersonData();
-      for (const key of Object.keys(this.form.value)) {
-        (person as any)[key] = this.form.value[key];
-      }
-      GLOBALS.appData ??= new AppData(1);
-      GLOBALS.appData.person = person;
-      this.bs.register(this.form.value.username, this.form.value.password, this.usertype, GLOBALS.appData,
-        (data) => {
-          GLOBALS.appData = data;
-          GLOBALS.currentUserType = GLOBALS.usertypeList[0];
-          GLOBALS.saveSharedData();
-          this.msg.closePopup();
-        },
-        (error) => {
-          console.error(error);
-          if (error.status === 409) {
-            this.msg.error($localize`The user with the name @${this.form.value.username}@ already exists`);
-          }
-        });
-    }
   }
 
   @HostListener('document:keydown', ['$event'])

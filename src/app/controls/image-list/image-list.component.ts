@@ -1,15 +1,12 @@
 import {Component, Input} from '@angular/core';
-import {TimeData} from '@/_model/time-data';
 import {GLOBALS, GlobalsService} from '@/_services/globals.service';
 import {UserType} from '@/_model/app-data';
-import {DayData} from '@/_model/day-data';
 import {Utils} from '@/classes/utils';
 import {PictureData} from '@/_model/picture-data';
 import {LinkPictureComponent} from '@/components/link-picture/link-picture.component';
 import {DialogResultButton} from '@/_model/dialog-data';
 import {MessageService} from '@/_services/message.service';
 import {DlgBaseComponent} from '@/classes/base/dlg-base-component';
-import {PlanData} from '@/_model/plan-data';
 
 @Component({
   selector: 'app-image-list',
@@ -18,11 +15,7 @@ import {PlanData} from '@/_model/plan-data';
   standalone: false
 })
 export class ImageListComponent extends DlgBaseComponent {
-  @Input() day: DayData;
-  @Input() time: TimeData;
-  @Input() plan: PlanData;
   @Input() userType: UserType;
-  @Input() isSitter: boolean;
   @Input() mayEdit: boolean;
 
   protected readonly Utils = Utils;
@@ -42,25 +35,17 @@ export class ImageListComponent extends DlgBaseComponent {
   }
 
   get pictures(): PictureData[] {
-    if (this.plan != null) {
-      return this.plan.pictures;
-    }
-    if (this.time != null) {
-      return this.time.pictures;
-    }
     return null;
   }
 
   get mayEditImage(): boolean {
-    return this.mayEdit && this.userType === (this.isSitter ? UserType.Sitter : UserType.Owner);
+    return this.mayEdit && this.userType === UserType.User;
   }
 
   get classForInfo(): string[] {
     const ret: string[] = [];
-    if (this.isSitter && this.userType !== UserType.Sitter) {
-      ret.push('ownerInfo');
-    } else if (!this.isSitter && this.userType !== UserType.Owner) {
-      ret.push('sitterInfo');
+    if (this.userType !== UserType.User) {
+      ret.push('userInfo');
     }
 
     return ret;
@@ -76,44 +61,7 @@ export class ImageListComponent extends DlgBaseComponent {
     }
   }
 
-  clickEditTimeImage(evt: MouseEvent, image: PictureData) {
-    evt.stopPropagation();
-    this.msg.showPopup(LinkPictureComponent, 'settings', image).subscribe(result => {
-      if (result?.btn === DialogResultButton.ok) {
-        const idx = this.pictures.findIndex(e => +e.id === +image.id);
-        if (idx >= 0) {
-          this.pictures[idx].fillFromJson(result.data.asJson);
-          this._imageList = null;
-        }
-      }
-    })
-  }
-
-  clickDeleteTimeImage(evt: MouseEvent, picture: PictureData) {
-    evt.stopPropagation();
-    let name = '';
-    if (this.plan == null) {
-      name = ` ${$localize`from`} ${Utils.fmtDate(this.day?.date ?? new Date())} ${this.time?.typeName}`;
-    }
-    const msg = $localize`Delete the picture${name}?`;
-    const idx = this.pictures.findIndex(e => +e.id === +picture.id);
-    if (idx >= 0) {
-      this.msg.confirm(msg).subscribe(result => {
-        if (result?.btn === DialogResultButton.yes) {
-          delete (this.pictures[idx]);
-          this.reloadFromJson();
-          this._imageList = null;
-        }
-      });
-    }
-  }
-
   reloadFromJson() {
-    if (this.plan != null) {
-      this.plan.fillFromJson(this.plan.asJson);
-    } else if (this.time != null) {
-      this.time.fillFromJson(this.time.asJson);
-    }
   }
 
   clickAddImage(evt: MouseEvent) {

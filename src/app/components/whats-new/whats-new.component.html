@@ -5,6 +5,13 @@
     <app-close-button [data]="closeData"></app-close-button>
   </div>
   <mat-dialog-content>
+    <h2 (click)="click(11.4)">
+      <span i18n="version">Version</span><span i18n="v114">1.1.4 - 04/05/2026</span></h2>
+    <ul [class]="classFor(11.4)">
+      <li class="added" i18n="v114a1">
+        Added todo-flags for informations and pictures, that will be shown to the owner after arrival at home.
+      </li>
+    </ul>
     <h2 (click)="click(11.3)">
       <span i18n="version">Version</span><span i18n="v113">1.1.3 - 17/08/2024</span></h2>
     <ul [class]="classFor(11.3)">

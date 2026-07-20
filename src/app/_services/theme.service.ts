@@ -20,7 +20,7 @@ export class ThemeService {
               public mcs: MaterialColorService,
               public msg: MessageService) {
     window.addEventListener('resize', this.onResize);
-    GLOBALS.requestJson(`assets/themes/standard/colors.json`).then(result => {
+    GLOBALS.requestJson(this.themeAssetUrl('standard', 'colors.json')).then(result => {
       this._stdTheme = result;
       this.restoreTheme();
     });
@@ -161,15 +161,15 @@ export class ThemeService {
     const suffix = this.isWatch ? '-watch' : '';
     let theme: any;
     if (name != null && name !== 'null') {
-      document.getElementById('themestyle').setAttribute('href', `assets/themes/${name}/index.css`);
-      document.getElementById('favicon').setAttribute('href', `assets/themes/${name}/favicon${suffix}.png`);
+      document.getElementById('themestyle').setAttribute('href', this.themeAssetUrl(name, 'index.css'));
+      document.getElementById('favicon').setAttribute('href', this.themeAssetUrl(name, `favicon${suffix}.png`));
       if (name === 'own') {
         this.restoreTheme();
         await this.updateWithStandardTheme(this.currTheme);
         GLOBALS.saveWebData();
         return;
       } else {
-        theme = await GLOBALS.requestJson(`assets/themes/${name}/colors.json`) ?? {};
+        theme = await GLOBALS.requestJson(this.themeAssetUrl(name, 'colors.json')) ?? {};
         if (name !== 'standard') {
           await this.updateWithStandardTheme(theme);
         }
@@ -177,7 +177,7 @@ export class ThemeService {
     } else {
       name = GLOBALS.baseThemeName(name);
       if (name != null) {
-        theme = await GLOBALS.requestJson(`assets/themes/${name}/colors.json`) ?? {};
+        theme = await GLOBALS.requestJson(this.themeAssetUrl(name, 'colors.json')) ?? {};
       }
     }
     if (theme == null) {
@@ -250,5 +250,9 @@ export class ThemeService {
       }
     }
     return ret;
+  }
+
+  private themeAssetUrl(theme: string, file: string): string {
+    return `assets/themes/${theme}/${file}?v=${GLOBALS.version}`;
   }
 }

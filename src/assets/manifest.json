@@ -2,16 +2,26 @@
   "display": "standalone",
   "icons": [
     {
-      "sizes": "176x176",
+      "sizes": "256x256",
       "src": "themes/standard/favicon.png",
+      "type": "image/png"
+    },
+    {
+      "sizes": "192x192",
+      "src": "themes/standard/favicon192.png",
+      "type": "image/png"
+    },
+    {
+      "sizes": "512x512",
+      "src": "themes/standard/favicon512.png",
       "type": "image/png"
     }
   ],
-  "name": "order66",
+  "name": "foe-manager",
   "permissions": [],
-  "prefer_related_applications": true,
+  "prefer_related_applications": false,
   "related_applications": [],
-  "short_name": "order66",
+  "short_name": "foe-manager",
   "start_url": "/index.html",
-  "url": "https://order66.zreptil.de/"
+  "url": "https://foe-manager.zreptil.de/"
 }

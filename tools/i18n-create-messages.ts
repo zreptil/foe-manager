@@ -14,7 +14,7 @@ const outFile = '../src/assets/messages.json';
 async function main() {
   try {
     createJson(['@en-GB'], []);
-    let zipfile = getPath(`${os.homedir()}/Downloads/order66 (translations).zip`);
+    let zipfile = getPath(`${os.homedir()}/Downloads/foe-manager (translations).zip`);
     console.log('extracting', zipfile, '...');
     await extract(zipfile, {dir: getPath('../temp')});
     createJson(['@en-GB', 'de/de-DE'], []);

@@ -5,6 +5,7 @@ export class PictureData extends BaseData {
   url: string;
   info: string;
   userType: UserType;
+  todo: boolean;
 
   constructor(json?: any) {
     super(json);
@@ -15,12 +16,14 @@ export class PictureData extends BaseData {
       a: this.url,
       b: this.info,
       c: this.userType,
+      d: this.todo
     };
   }
 
   override _fillFromJson(json: any, def?: any): void {
     this.url = json?.a ?? def?.url;
     this.info = json?.b ?? def?.info;
-    this.userType = json?.c ?? def?.userType ?? UserType.Sitter;
+    this.userType = json?.c ?? def?.userType ?? UserType.User;
+    this.todo = json?.d ?? def?.todo;
   }
 }

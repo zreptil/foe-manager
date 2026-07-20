@@ -25,25 +25,20 @@ import {ColorPickerSliderComponent} from '@/controls/color-picker/color-picker-s
 import {ColorPickerHslComponent} from '@/controls/color-picker/color-picker-hsl/color-picker-hsl.component';
 import {SettingsComponent} from '@/components/settings/settings.component';
 import {PersonFormComponent} from '@/controls/person-form/person-form.component';
-import {TypeOwnerComponent} from '@/components/type-owner/type-owner.component';
-import {TypeSitterComponent} from '@/components/type-sitter/type-sitter.component';
-import {PlanComponent} from '@/components/plan/plan.component';
 import {DatepickerComponent} from '@/controls/datepicker/datepicker.component';
 import {DatepickerDialogComponent} from '@/controls/datepicker/datepicker-dialog/datepicker-dialog.component';
 import {DatepickerMonthComponent} from '@/controls/datepicker/datepicker-month/datepicker-month.component';
-import {DayComponent} from '@/components/day/day.component';
-import {TasksComponent} from '@/components/tasks/tasks.component';
 import {TextareaAutoresizeDirective} from '@/_directives/textarea-autoresize.directive';
 import {TypeAdminComponent} from '@/components/type-admin/type-admin.component';
-import {PasswordChangeComponent} from './components/password-change/password-change.component';
+import {TypeUserComponent} from '@/components/type-user/type-user.component';
 import {DsgvoComponent} from '@/components/dsgvo/dsgvo.component';
 import {LinkPictureComponent} from './components/link-picture/link-picture.component';
 import {HideMissingImageDirective} from '@/_directives/hide-missing-image.directive';
-import {TimeIconComponent} from './controls/time-icon/time-icon.component';
 import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {ImageListComponent} from './controls/image-list/image-list.component';
 import {OAuthModule} from 'angular-oauth2-oidc';
 import {ScrollShadowDirective} from '@/_directives/scroll-shadow.directive';
+import { BuildingComponent } from './components/building/building.component';
 
 @NgModule({
   declarations: [
@@ -70,16 +65,11 @@ import {ScrollShadowDirective} from '@/_directives/scroll-shadow.directive';
     ImpressumComponent,
     DsgvoComponent,
     PersonFormComponent,
-    TypeOwnerComponent,
-    TypeSitterComponent,
+    TypeUserComponent,
     TypeAdminComponent,
-    PlanComponent,
-    DayComponent,
-    TasksComponent,
-    PasswordChangeComponent,
     LinkPictureComponent,
-    TimeIconComponent,
     ImageListComponent,
+    BuildingComponent,
   ],
   bootstrap: [AppComponent],
   imports: [

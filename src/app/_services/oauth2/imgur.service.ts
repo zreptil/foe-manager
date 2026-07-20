@@ -56,10 +56,10 @@ export class ImgurService {
   }
 
   get msgOauth2Workflow(): string {
-    return $localize`To connect to Imgur, you need to confirm that Order66
+    return $localize`To connect to Imgur, you need to confirm that foe-manager
 is allowed to access the images. This confirmation is requested by
 Imgur using special dialogs. Everything that needs to be confirmed there is
-beyond the control of Order66. Should the confirmation process be started?`;
+beyond the control of foe-manager. Should the confirmation process be started?`;
   }
 
   init(): void {

@@ -1,0 +1,202 @@
+<mat-card (click)="clickGBCard($event)" [class]="classForGb">
+  @if (bs.isModeManage) {
+    <button (click)="clickGBMark($event)" btnMark mat-icon-button small-icon-button>
+      <mat-icon>
+        @if (gbUser?.marked) {
+          check_circle
+        } @else {
+          radio_button_unchecked
+        }
+      </mat-icon>
+    </button>
+  }
+  <div card-title>
+    {{ gb.name }}
+  </div>
+  @if (!bs.isModeManage) {
+    <div i18n-title info title="Die Anzahl an Leveln für die es Daten gibt">{{ gb.levels.length }}</div>
+  }
+  @if (globals.user.siteMode > 0 && gbUser != null) {
+    <mat-card-content>
+      @if (globals.siteConfig.levelGbKey === gb.key) {
+        <div levelEdit>
+          <mat-form-field>
+            <mat-label i18n>Level</mat-label>
+            <input (blur)="saveLevel()"
+                   (focus)="bs.onFocus($event)"
+                   (keydown.enter)="saveLevel()"
+                   [(ngModel)]="globals.siteConfig.levelValue" autofocus matInput>
+          </mat-form-field>
+          <button (click)="saveLevel($event)" matIconButton small-icon-button>
+            <mat-icon>done</mat-icon>
+          </button>
+        </div>
+      } @else {
+        <div level>
+          <button
+            (pointercancel)="stopLevelChange($event)"
+            (pointerdown)="startLevelChange($event, -1)"
+            (pointerleave)="stopLevelChange($event)"
+            (pointerup)="stopLevelChange($event)"
+            [disabled]="gbUser.level < 2" matIconButton small-icon-button>
+            <mat-icon>arrow_drop_down</mat-icon>
+          </button>
+          <button (click)="clickEditLevel($event)" mat-button>{{ gbUser.level }}</button>
+          <button
+            (pointercancel)="stopLevelChange($event)"
+            (pointerdown)="startLevelChange($event, 1)"
+            (pointerleave)="stopLevelChange($event)"
+            (pointerup)="stopLevelChange($event)"
+            [disabled]="gbUser.level >= gb.levels.length-1" matIconButton small-icon-button>
+            <mat-icon>arrow_drop_up</mat-icon>
+          </button>
+        </div>
+      }
+      @if (nextLevel != null) {
+        <table>
+          <tr first row>
+            <td name>
+              <div level>
+                <mat-icon>move_up</mat-icon>
+                {{ nextLevel.level }}
+              </div>
+            </td>
+            <td>
+              <div cost>{{ nextLevel.cost }}</div>
+            </td>
+            @if (showSniper) {
+              <td calccost colspan="2" cost>
+                @if ((gbUser.ownerValue ?? 0) > 0) {
+                  <div>
+                    <mat-icon>crown</mat-icon>
+                    {{ gbUser.ownerValue }}
+                  </div>
+                }
+              </td>
+            } @else {
+              <td></td>
+            }
+          </tr>
+          @if (showSniper) {
+            <tr row>
+              <td colspan="4">
+                <div calccost cost>
+                  {{ nextLevel.cost - (gbUser.ownerValue ?? 0) }}
+                </div>
+              </td>
+            </tr>
+          }
+          @for (reward of nextLevel.rewards; let rewardIdx = $index; track rewardIdx) {
+            @if (reward !== 0) {
+              <tr (click)="clickRow($event, rewardIdx)" [class]="classForReward(rewardIdx)" row>
+                <td title>P{{ rewardIdx + 1 }}</td>
+                <td reward>{{ bs.calcReward(reward) }}</td>
+                <td blocks>
+                  <div [class]="classForBlock(nextLevel, rewardIdx)" block>
+                    @if ((rewardIdx === 0 || nextLevel.blocks[rewardIdx] - (nextLevel.blocks[rewardIdx - 1]) > 0) && nextLevel.blocks[$index] > 0) {
+                      {{ nextLevel.blocks[rewardIdx] }}
+                    } @else {
+                      <mat-icon i18n-title title="Der Platz ist mit dem Eigenanteil schon gesichert">thumb_up</mat-icon>
+                    }
+                  </div>
+                </td>
+                @if (showSniper) {
+                  @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {
+                    <td [class]="classForPlaceValue(calcIdx, nextLevel, rewardIdx, gbUser.ownerValue)" calc>
+                      @if (gbUser.ownerValue > 0 || gbUser.sniperValues?.length > 0) {
+                        @let v = calcPlaceValue(calcIdx, nextLevel, rewardIdx, gbUser.ownerValue);
+                        @if (v >= 0) {
+                          <span></span>{{ v }}
+                        } @else {
+                          <mat-icon>target</mat-icon>
+                          {{ -v }}
+                        }
+                      } @else {
+                      }
+                    </td>
+                  }
+                }
+              </tr>
+            }
+          }
+          @if (showSniper && gbUser.ownerValue > 0) {
+            <tr>
+              <td colspan="3">
+              </td>
+              @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {
+                <td>
+                  <div calcTotal>
+                    <mat-icon>crown</mat-icon>
+                    {{ calcTotal(calcIdx, nextLevel, gbUser.ownerValue) }}
+                  </div>
+                </td>
+              }
+            </tr>
+          }
+        </table>
+
+        @if (bs.isModeManage) {
+          <button (click)="clickCopyAction($event, nextLevel)" copyButton mat-button>
+            <span>{{ copyData(nextLevel) }}</span>
+          </button>
+        }
+        @if (showSniper) {
+          @if (globals.siteConfig.editField === 'owner') {
+            <div topSpace>
+              <mat-form-field>
+                <mat-label i18n>
+                  <mat-icon>crown</mat-icon>
+                  Eingezahlter Eigenanteil
+                </mat-label>
+                <input (blur)="globals.siteConfig.editField = null"
+                       (focus)="bs.onFocus($event)"
+                       (keydown.enter)="globals.siteConfig.editField = ((gbUser.sniperValues?.length ?? 5)<5 ? 'sniper' : null)"
+                       [(ngModel)]="gbUser.ownerValue" autofocus matInput>
+              </mat-form-field>
+              <button (click)="globals.siteConfig.editField = null" mat-button>
+                <mat-icon>done</mat-icon>
+              </button>
+            </div>
+          } @else if (globals.siteConfig.editField === 'sniper') {
+            <div topSpace>
+              <mat-form-field>
+                <mat-label i18n>
+                  <mat-icon>target</mat-icon>
+                  Eingezahlter Anteil
+                </mat-label>
+                <input (blur)="saveSniperValue()"
+                       (focus)="bs.onFocus($event)"
+                       (keydown.enter)="saveSniperValue(null, true)"
+                       [(ngModel)]="globals.siteConfig.sniperValue" autofocus matInput>
+              </mat-form-field>
+              <button (click)="saveSniperValue($event)" mat-button>
+                <mat-icon>done</mat-icon>
+              </button>
+            </div>
+          } @else {
+            <button (click)="clickOwnerValue($event)" mat-button owner>
+              <mat-icon>crown</mat-icon>
+              <span>@if (gbUser.ownerValue > 0) {
+                {{ gbUser.ownerValue }}
+              } @else {
+                Eigenanteil
+              }</span>
+            </button>
+            @for (sniper of gbUser.sniperValues; track $index) {
+              <button (click)="clickSniperValue($event, $index)" mat-button owner>
+                <mat-icon>target</mat-icon>
+                <span>{{ sniper }}</span>
+              </button>
+            }
+            @if (gbUser.sniperValues?.length < 5) {
+              <button (click)="globals.siteConfig.editField='sniper'" mat-button owner>
+                <mat-icon>target</mat-icon>
+                <span i18n>Fremdanteil</span>
+              </button>
+            }
+          }
+        }
+      }
+    </mat-card-content>
+  }
+</mat-card>
