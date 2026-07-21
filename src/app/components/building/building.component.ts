@@ -79,6 +79,7 @@ export class BuildingComponent {
 
   startLevelChange(evt: PointerEvent, diff: number): void {
     evt.preventDefault();
+    evt.stopPropagation();
     this.changeLevel(diff);
     GLOBALS.siteConfig.delayTimer = window.setTimeout(() => {
       GLOBALS.siteConfig.repeatTimer = window.setInterval(() => {
@@ -97,6 +98,7 @@ export class BuildingComponent {
 
   stopLevelChange(evt: PointerEvent): void {
     evt.preventDefault();
+    evt.stopPropagation();
     clearTimeout(GLOBALS.siteConfig.delayTimer);
     clearInterval(GLOBALS.siteConfig.repeatTimer);
   }

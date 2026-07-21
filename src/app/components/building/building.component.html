@@ -34,6 +34,7 @@
       } @else {
         <div level>
           <button
+            (contextmenu)="$event.preventDefault()"
             (pointercancel)="stopLevelChange($event)"
             (pointerdown)="startLevelChange($event, -1)"
             (pointerleave)="stopLevelChange($event)"
@@ -43,6 +44,7 @@
           </button>
           <button (click)="clickEditLevel($event)" mat-button>{{ gbUser.level }}</button>
           <button
+            (contextmenu)="$event.preventDefault()"
             (pointercancel)="stopLevelChange($event)"
             (pointerdown)="startLevelChange($event, 1)"
             (pointerleave)="stopLevelChange($event)"

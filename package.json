@@ -1,6 +1,6 @@
 {
   "name": "foe-manager",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "scripts": {
     "build": "npm run sync-version && ng build && npm run zip",

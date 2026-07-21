@@ -103,6 +103,8 @@ mat-card.gb-marked {
   align-items: center;
   justify-content: center;
   gap: 0.5em;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 [topSpace] {
