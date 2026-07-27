@@ -1,4 +1,6 @@
-import {ChangeDetectorRef, Component} from '@angular/core';
+import {ChangeDetectorRef, Component, inject} from '@angular/core';
+import {SwUpdate} from '@angular/service-worker';
+import {filter} from 'rxjs';
 import {SyncService} from '@/_services/sync/sync.service';
 import {EnvironmentService} from '@/_services/environment.service';
 import {GLOBALS} from '@/_services/globals.service';
@@ -31,5 +33,27 @@ export class AppComponent {
     };
     sync.init();
     GLOBALS.loadSharedData();
+    this.setupUpdates();
+  }
+
+  private setupUpdates() {
+    const swUpdate = inject(SwUpdate);
+    if (!swUpdate.isEnabled) {
+      return;
+    }
+
+    swUpdate.versionUpdates
+      .pipe(filter(evt => evt.type === 'VERSION_READY'))
+      .subscribe(() => {
+        // Automatically reload the page to apply the update
+        document.location.reload();
+      });
+
+    // Check for updates every now and then (e.g., when the app starts)
+    swUpdate.checkForUpdate().then(found => {
+      if (found) {
+        console.log('New version found and being downloaded...');
+      }
+    });
   }
 }

@@ -31,8 +31,15 @@
   <div card-title>
     {{ gb.name }}
   </div>
-  @if (!bs.isModeManage) {
+  @if (!bs.isModeManage && globals.isDebug) {
     <div i18n-title info title="Die Anzahl an Leveln für die es Daten gibt">{{ gb.levels.length }}</div>
+  }
+  @if (bs.isModeBuildings || bs.isModeSelect) {
+    <div gb-effects>
+      @for (e of gb.effects; track $index) {
+        <div>{{ e }}</div>
+      }
+    </div>
   }
   @if (globals.user.siteMode > 0 && gbUser != null) {
     <mat-card-content>

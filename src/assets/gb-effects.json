@@ -1,0 +1,1100 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-07-27",
+  "language": "de",
+  "game": "Forge of Empires",
+  "scope": {
+    "type": "great_buildings",
+    "buildingCount": 48,
+    "latestIncludedAge": "Space Age Space Hub",
+    "containsLevelValues": false,
+    "containsFootprints": false,
+    "note": "Diese Datei beschreibt die Effekttypen der Legendären Gebäude. Konkrete Effektwerte je Stufe sind noch nicht enthalten."
+  },
+  "effectDefinitions": {
+    "cosmic_catalyst": {
+      "name": "Kosmischer Katalysator",
+      "description": "Spezialbonus des Kosmischen Katalysators."
+    },
+    "guild_goods": {
+      "name": "Gildengüter",
+      "description": "Produziert Güter für die Gildenkasse."
+    },
+    "critical_hit": {
+      "name": "Kritischer Treffer",
+      "description": "Chance, eine gegnerische Einheit mit einem Treffer zu besiegen."
+    },
+    "penal_unit": {
+      "name": "Strafkolonie-Einheiten",
+      "description": "Produziert ungebundene Einheiten aus vorhandenen Militärgebäuden."
+    },
+    "advanced_tactics": {
+      "name": "Fortgeschrittene Taktiken",
+      "description": "Erhöht Angriff und Verteidigung der angreifenden und verteidigenden Armee."
+    },
+    "research": {
+      "name": "Forge-Punkte",
+      "description": "Produziert Forge-Punkte."
+    },
+    "fierce_resistance": {
+      "name": "Heftiger Widerstand",
+      "description": "Erhöht die Kampfwerte der verteidigenden Armee."
+    },
+    "previous_era_goods": {
+      "name": "Güter der vorherigen Epoche",
+      "description": "Produziert Güter der vorherigen Epoche."
+    },
+    "military_boost": {
+      "name": "Militärbonus",
+      "description": "Erhöht Angriff und Verteidigung der angreifenden Armee."
+    },
+    "algorithmic_core": {
+      "name": "Algorithmischer Kern",
+      "description": "Spezialbonus des KI-Kerns."
+    },
+    "mysterious_shards": {
+      "name": "Mysteriöse Scherben",
+      "description": "Ermöglicht den Fund besonderer Scherben beziehungsweise Belohnungen."
+    },
+    "diplomatic_gifts": {
+      "name": "Diplomatische Geschenke",
+      "description": "Gewährt zusätzliche Belohnungen bei erfolgreichen Verhandlungen."
+    },
+    "orbital_transfer": {
+      "name": "Orbitaltransfer",
+      "description": "Ermöglicht den Transfer spezieller Ressourcen."
+    },
+    "missile_launch": {
+      "name": "Raketenstart",
+      "description": "Chance, zu Kampfbeginn gegnerische Einheiten auszuschalten."
+    },
+    "coin_production": {
+      "name": "Münzproduktion",
+      "description": "Produziert Münzen."
+    },
+    "spoils_of_war": {
+      "name": "Kriegsbeute",
+      "description": "Chance auf eine zusätzliche Belohnung nach gewonnenen Kämpfen."
+    },
+    "supply_production": {
+      "name": "Vorratsproduktion",
+      "description": "Produziert Vorräte."
+    },
+    "good_production": {
+      "name": "Güterproduktion",
+      "description": "Produziert Güter der aktuellen Epoche."
+    },
+    "plunder_and_pillage": {
+      "name": "Plündern und Brandschatzen",
+      "description": "Verbessert die Erträge beim Plündern."
+    },
+    "double_collection": {
+      "name": "Doppelte Ernte",
+      "description": "Chance, die reguläre Produktion eines motivierten Gebäudes doppelt einzusammeln."
+    },
+    "medal_production": {
+      "name": "Medaillenproduktion",
+      "description": "Produziert Medaillen."
+    },
+    "happiness": {
+      "name": "Zufriedenheit",
+      "description": "Erhöht die Zufriedenheit der Stadt."
+    },
+    "helping_hands": {
+      "name": "Helfende Hände",
+      "description": "Chance auf Güter oder andere Belohnungen beim Motivieren beziehungsweise Polieren."
+    },
+    "aid_blueprints": {
+      "name": "Blaupausen durch Hilfe",
+      "description": "Erhöht die Chance auf Blaupausen beim Motivieren beziehungsweise Polieren."
+    },
+    "contribution_boost": {
+      "name": "Förderbonus",
+      "description": "Erhöht Belohnungen für Einzahlungen in Legendäre Gebäude."
+    },
+    "plunder_goods": {
+      "name": "Plündergüter",
+      "description": "Gewährt zusätzliche Güter beim erfolgreichen Plündern."
+    },
+    "aid_goods": {
+      "name": "Güter durch Hilfe",
+      "description": "Chance auf Güter beim Motivieren beziehungsweise Polieren."
+    },
+    "population": {
+      "name": "Bevölkerung",
+      "description": "Stellt Bevölkerung bereit."
+    },
+    "quest_reward_boost": {
+      "name": "Questbelohnungsbonus",
+      "description": "Erhöht die meisten Belohnungen aus Quests."
+    },
+    "supply_boost": {
+      "name": "Vorratsbonus",
+      "description": "Erhöht die Vorratsproduktion der Stadt."
+    },
+    "coin_boost": {
+      "name": "Münzbonus",
+      "description": "Erhöht die Münzproduktion der Stadt."
+    },
+    "plunder_repel": {
+      "name": "Plünderschutz",
+      "description": "Chance, einen Plünderungsversuch abzuwehren."
+    },
+    "support_pool_bonus": {
+      "name": "Unterstützungspool-Bonus",
+      "description": "Erhöht den Beitrag zum Unterstützungspool der Gilde."
+    },
+    "relic_hunt": {
+      "name": "Reliktjagd",
+      "description": "Ermöglicht Reliktfunde in der Gildenexpedition."
+    },
+    "first_strike": {
+      "name": "Erstschlag",
+      "description": "Chance, zu Kampfbeginn eine gegnerische Einheit auszuschalten."
+    }
+  },
+  "greatBuildings": [
+    {
+      "id": "cosmic_catalyst",
+      "name": {
+        "de": "Kosmischer Katalysator",
+        "en": "Cosmic Catalyst"
+      },
+      "age": "Space Age Space Hub",
+      "effects": [
+        {
+          "id": "cosmic_catalyst",
+          "name": "Kosmischer Katalysator",
+          "description": "Spezialbonus des Kosmischen Katalysators."
+        },
+        {
+          "id": "guild_goods",
+          "name": "Gildengüter",
+          "description": "Produziert Güter für die Gildenkasse."
+        },
+        {
+          "id": "critical_hit",
+          "name": "Kritischer Treffer",
+          "description": "Chance, eine gegnerische Einheit mit einem Treffer zu besiegen."
+        }
+      ]
+    },
+    {
+      "id": "stellar_warship",
+      "name": {
+        "de": "Stellar Warship",
+        "en": "Stellar Warship"
+      },
+      "age": "Space Age Space Hub",
+      "effects": [
+        {
+          "id": "penal_unit",
+          "name": "Strafkolonie-Einheiten",
+          "description": "Produziert ungebundene Einheiten aus vorhandenen Militärgebäuden."
+        },
+        {
+          "id": "advanced_tactics",
+          "name": "Fortgeschrittene Taktiken",
+          "description": "Erhöht Angriff und Verteidigung der angreifenden und verteidigenden Armee."
+        }
+      ]
+    },
+    {
+      "id": "saturn_vi_gate_hydra",
+      "name": {
+        "de": "Saturn-VI-Tor HYDRA",
+        "en": "Saturn VI Gate HYDRA"
+      },
+      "age": "Space Age Titan",
+      "effects": [
+        {
+          "id": "guild_goods",
+          "name": "Gildengüter",
+          "description": "Produziert Güter für die Gildenkasse."
+        },
+        {
+          "id": "advanced_tactics",
+          "name": "Fortgeschrittene Taktiken",
+          "description": "Erhöht Angriff und Verteidigung der angreifenden und verteidigenden Armee."
+        }
+      ]
+    },
+    {
+      "id": "saturn_vi_gate_pegasus",
+      "name": {
+        "de": "Saturn-VI-Tor PEGASUS",
+        "en": "Saturn VI Gate PEGASUS"
+      },
+      "age": "Space Age Titan",
+      "effects": [
+        {
+          "id": "research",
+          "name": "Forge-Punkte",
+          "description": "Produziert Forge-Punkte."
+        },
+        {
+          "id": "fierce_resistance",
+          "name": "Heftiger Widerstand",
+          "description": "Erhöht die Kampfwerte der verteidigenden Armee."
+        }
+      ]
+    },
+    {
+      "id": "saturn_vi_gate_centaurus",
+      "name": {
+        "de": "Saturn-VI-Tor CENTAURUS",
+        "en": "Saturn VI Gate CENTAURUS"
+      },
+      "age": "Space Age Titan",
+      "effects": [
+        {
+          "id": "previous_era_goods",
+          "name": "Güter der vorherigen Epoche",
+          "description": "Produziert Güter der vorherigen Epoche."
+        },
+        {
+          "id": "military_boost",
+          "name": "Militärbonus",
+          "description": "Erhöht Angriff und Verteidigung der angreifenden Armee."
+        }
+      ]
+    },
+    {
+      "id": "ai_core",
+      "name": {
+        "de": "KI-Kern",
+        "en": "AI Core"
+      },
+      "age": "Space Age Jupiter Moon",
+      "effects": [
+        {
+          "id": "algorithmic_core",
+          "name": "Algorithmischer Kern",
+          "description": "Spezialbonus des KI-Kerns."
+        },
+        {
+          "id": "guild_goods",
+          "name": "Gildengüter",
+          "description": "Produziert Güter für die Gildenkasse."
+        }
+      ]
+    },
+    {
+      "id": "flying_island",
+      "name": {
+        "de": "Fliegende Insel",
+        "en": "Flying Island"
+      },
+      "age": "Space Age Venus",
+      "effects": [
+        {
+          "id": "mysterious_shards",
+          "name": "Mysteriöse Scherben",
+          "description": "Ermöglicht den Fund besonderer Scherben beziehungsweise Belohnungen."
+        }
+      ]
+    },
+    {
+      "id": "space_carrier",
+      "name": {
+        "de": "Weltraumtransporter",
+        "en": "Space Carrier"
+      },
+      "age": "Space Age Asteroid Belt",
+      "effects": [
+        {
+          "id": "diplomatic_gifts",
+          "name": "Diplomatische Geschenke",
+          "description": "Gewährt zusätzliche Belohnungen bei erfolgreichen Verhandlungen."
+        },
+        {
+          "id": "orbital_transfer",
+          "name": "Orbitaltransfer",
+          "description": "Ermöglicht den Transfer spezieller Ressourcen."
+        }
+      ]
+    },
+    {
+      "id": "virgo_project",
+      "name": {
+        "de": "Das Virgo-Projekt",
+        "en": "The Virgo Project"
+      },
+      "age": "Space Age Mars",
+      "effects": [
+        {
+          "id": "missile_launch",
+          "name": "Raketenstart",
+          "description": "Chance, zu Kampfbeginn gegnerische Einheiten auszuschalten."
+        },
+        {
+          "id": "coin_production",
+          "name": "Münzproduktion",
+          "description": "Produziert Münzen."
+        }
+      ]
+    },
+    {
+      "id": "star_gazer",
+      "name": {
+        "de": "Sternengucker",
+        "en": "Star Gazer"
+      },
+      "age": "Space Age Mars",
+      "effects": [
+        {
+          "id": "previous_era_goods",
+          "name": "Güter der vorherigen Epoche",
+          "description": "Produziert Güter der vorherigen Epoche."
+        }
+      ]
+    },
+    {
+      "id": "terracotta_army",
+      "name": {
+        "de": "Terrakotta-Armee",
+        "en": "Terracotta Army"
+      },
+      "age": "Virtual Future",
+      "effects": [
+        {
+          "id": "advanced_tactics",
+          "name": "Fortgeschrittene Taktiken",
+          "description": "Erhöht Angriff und Verteidigung der angreifenden und verteidigenden Armee."
+        }
+      ]
+    },
+    {
+      "id": "himeji_castle",
+      "name": {
+        "de": "Burg Himeji",
+        "en": "Himeji Castle"
+      },
+      "age": "Virtual Future",
+      "effects": [
+        {
+          "id": "spoils_of_war",
+          "name": "Kriegsbeute",
+          "description": "Chance auf eine zusätzliche Belohnung nach gewonnenen Kämpfen."
+        },
+        {
+          "id": "supply_production",
+          "name": "Vorratsproduktion",
+          "description": "Produziert Vorräte."
+        }
+      ]
+    },
+    {
+      "id": "atlantis_museum",
+      "name": {
+        "de": "Atlantis-Museum",
+        "en": "Atlantis Museum"
+      },
+      "age": "Oceanic Future",
+      "effects": [
+        {
+          "id": "good_production",
+          "name": "Güterproduktion",
+          "description": "Produziert Güter der aktuellen Epoche."
+        },
+        {
+          "id": "plunder_and_pillage",
+          "name": "Plündern und Brandschatzen",
+          "description": "Verbessert die Erträge beim Plündern."
+        }
+      ]
+    },
+    {
+      "id": "kraken",
+      "name": {
+        "de": "Der Kraken",
+        "en": "The Kraken"
+      },
+      "age": "Oceanic Future",
+      "effects": [
+        {
+          "id": "research",
+          "name": "Forge-Punkte",
+          "description": "Produziert Forge-Punkte."
+        },
+        {
+          "id": "first_strike",
+          "name": "Erstschlag",
+          "description": "Chance, zu Kampfbeginn eine gegnerische Einheit auszuschalten."
+        }
+      ]
+    },
+    {
+      "id": "blue_galaxy",
+      "name": {
+        "de": "Die Blaue Galaxie",
+        "en": "The Blue Galaxy"
+      },
+      "age": "Oceanic Future",
+      "effects": [
+        {
+          "id": "medal_production",
+          "name": "Medaillenproduktion",
+          "description": "Produziert Medaillen."
+        },
+        {
+          "id": "double_collection",
+          "name": "Doppelte Ernte",
+          "description": "Chance, die reguläre Produktion eines motivierten Gebäudes doppelt einzusammeln."
+        }
+      ]
+    },
+    {
+      "id": "gaea_statue",
+      "name": {
+        "de": "Gäa-Statue",
+        "en": "Gaea Statue"
+      },
+      "age": "Arctic Future",
+      "effects": [
+        {
+          "id": "medal_production",
+          "name": "Medaillenproduktion",
+          "description": "Produziert Medaillen."
+        },
+        {
+          "id": "happiness",
+          "name": "Zufriedenheit",
+          "description": "Erhöht die Zufriedenheit der Stadt."
+        }
+      ]
+    },
+    {
+      "id": "arctic_orangery",
+      "name": {
+        "de": "Arktische Orangerie",
+        "en": "Arctic Orangery"
+      },
+      "age": "Arctic Future",
+      "effects": [
+        {
+          "id": "research",
+          "name": "Forge-Punkte",
+          "description": "Produziert Forge-Punkte."
+        },
+        {
+          "id": "critical_hit",
+          "name": "Kritischer Treffer",
+          "description": "Chance, eine gegnerische Einheit mit einem Treffer zu besiegen."
+        }
+      ]
+    },
+    {
+      "id": "seed_vault",
+      "name": {
+        "de": "Saatgut-Tresor",
+        "en": "Seed Vault"
+      },
+      "age": "Arctic Future",
+      "effects": [
+        {
+          "id": "supply_production",
+          "name": "Vorratsproduktion",
+          "description": "Produziert Vorräte."
+        },
+        {
+          "id": "helping_hands",
+          "name": "Helfende Hände",
+          "description": "Chance auf Güter oder andere Belohnungen beim Motivieren beziehungsweise Polieren."
+        }
+      ]
+    },
+    {
+      "id": "rain_forest_project",
+      "name": {
+        "de": "Regenwaldprojekt",
+        "en": "Rain Forest Project"
+      },
+      "age": "Future Era",
+      "effects": [
+        {
+          "id": "good_production",
+          "name": "Güterproduktion",
+          "description": "Produziert Güter der aktuellen Epoche."
+        },
+        {
+          "id": "aid_blueprints",
+          "name": "Blaupausen durch Hilfe",
+          "description": "Erhöht die Chance auf Blaupausen beim Motivieren beziehungsweise Polieren."
+        }
+      ]
+    },
+    {
+      "id": "the_arc",
+      "name": {
+        "de": "Die Arche",
+        "en": "The Arc"
+      },
+      "age": "Future Era",
+      "effects": [
+        {
+          "id": "guild_goods",
+          "name": "Gildengüter",
+          "description": "Produziert Güter für die Gildenkasse."
+        },
+        {
+          "id": "contribution_boost",
+          "name": "Förderbonus",
+          "description": "Erhöht Belohnungen für Einzahlungen in Legendäre Gebäude."
+        }
+      ]
+    },
+    {
+      "id": "voyager_v1",
+      "name": {
+        "de": "Voyager V1",
+        "en": "Voyager V1"
+      },
+      "age": "Tomorrow",
+      "effects": [
+        {
+          "id": "supply_production",
+          "name": "Vorratsproduktion",
+          "description": "Produziert Vorräte."
+        },
+        {
+          "id": "plunder_goods",
+          "name": "Plündergüter",
+          "description": "Gewährt zusätzliche Güter beim erfolgreichen Plündern."
+        }
+      ]
+    },
+    {
+      "id": "trust_tower",
+      "name": {
+        "de": "Vertrauensturm",
+        "en": "Trust Tower"
+      },
+      "age": "Tomorrow",
+      "effects": [
+        {
+          "id": "supply_production",
+          "name": "Vorratsproduktion",
+          "description": "Produziert Vorräte."
+        },
+        {
+          "id": "aid_goods",
+          "name": "Güter durch Hilfe",
+          "description": "Chance auf Güter beim Motivieren beziehungsweise Polieren."
+        }
+      ]
+    },
+    {
+      "id": "innovation_tower",
+      "name": {
+        "de": "Innovationsturm",
+        "en": "Innovation Tower"
+      },
+      "age": "Contemporary Era",
+      "effects": [
+        {
+          "id": "research",
+          "name": "Forge-Punkte",
+          "description": "Produziert Forge-Punkte."
+        },
+        {
+          "id": "population",
+          "name": "Bevölkerung",
+          "description": "Stellt Bevölkerung bereit."
+        }
+      ]
+    },
+    {
+      "id": "lotus_temple",
+      "name": {
+        "de": "Lotustempel",
+        "en": "Lotus Temple"
+      },
+      "age": "Contemporary Era",
+      "effects": [
+        {
+          "id": "coin_production",
+          "name": "Münzproduktion",
+          "description": "Produziert Münzen."
+        },
+        {
+          "id": "happiness",
+          "name": "Zufriedenheit",
+          "description": "Erhöht die Zufriedenheit der Stadt."
+        }
+      ]
+    },
+    {
+      "id": "cape_canaveral",
+      "name": {
+        "de": "Cape Canaveral",
+        "en": "Cape Canaveral"
+      },
+      "age": "Postmodern Era",
+      "effects": [
+        {
+          "id": "research",
+          "name": "Forge-Punkte",
+          "description": "Produziert Forge-Punkte."
+        }
+      ]
+    },
+    {
+      "id": "the_habitat",
+      "name": {
+        "de": "Das Habitat",
+        "en": "The Habitat"
+      },
+      "age": "Postmodern Era",
+      "effects": [
+        {
+          "id": "coin_production",
+          "name": "Münzproduktion",
+          "description": "Produziert Münzen."
+        },
+        {
+          "id": "population",
+          "name": "Bevölkerung",
+          "description": "Stellt Bevölkerung bereit."
+        }
+      ]
+    },
+    {
+      "id": "space_needle",
+      "name": {
+        "de": "Space Needle",
+        "en": "Space Needle"
+      },
+      "age": "Modern Era",
+      "effects": [
+        {
+          "id": "coin_production",
+          "name": "Münzproduktion",
+          "description": "Produziert Münzen."
+        },
+        {
+          "id": "happiness",
+          "name": "Zufriedenheit",
+          "description": "Erhöht die Zufriedenheit der Stadt."
+        }
+      ]
+    },
+    {
+      "id": "atomium",
+      "name": {
+        "de": "Atomium",
+        "en": "Atomium"
+      },
+      "age": "Modern Era",
+      "effects": [
+        {
+          "id": "guild_goods",
+          "name": "Gildengüter",
+          "description": "Produziert Güter für die Gildenkasse."
+        },
+        {
+          "id": "happiness",
+          "name": "Zufriedenheit",
+          "description": "Erhöht die Zufriedenheit der Stadt."
+        }
+      ]
+    },
+    {
+      "id": "chateau_frontenac",
+      "name": {
+        "de": "Château Frontenac",
+        "en": "Château Frontenac"
+      },
+      "age": "Progressive Era",
+      "effects": [
+        {
+          "id": "coin_production",
+          "name": "Münzproduktion",
+          "description": "Produziert Münzen."
+        },
+        {
+          "id": "quest_reward_boost",
+          "name": "Questbelohnungsbonus",
+          "description": "Erhöht die meisten Belohnungen aus Quests."
+        }
+      ]
+    },
+    {
+      "id": "alcatraz",
+      "name": {
+        "de": "Alcatraz",
+        "en": "Alcatraz"
+      },
+      "age": "Progressive Era",
+      "effects": [
+        {
+          "id": "penal_unit",
+          "name": "Strafkolonie-Einheiten",
+          "description": "Produziert ungebundene Einheiten aus vorhandenen Militärgebäuden."
+        },
+        {
+          "id": "happiness",
+          "name": "Zufriedenheit",
+          "description": "Erhöht die Zufriedenheit der Stadt."
+        }
+      ]
+    },
+    {
+      "id": "capitol",
+      "name": {
+        "de": "Kapitol",
+        "en": "Capitol"
+      },
+      "age": "Industrial Age",
+      "effects": [
+        {
+          "id": "supply_production",
+          "name": "Vorratsproduktion",
+          "description": "Produziert Vorräte."
+        },
+        {
+          "id": "population",
+          "name": "Bevölkerung",
+          "description": "Stellt Bevölkerung bereit."
+        }
+      ]
+    },
+    {
+      "id": "royal_albert_hall",
+      "name": {
+        "de": "Royal Albert Hall",
+        "en": "Royal Albert Hall"
+      },
+      "age": "Industrial Age",
+      "effects": [
+        {
+          "id": "good_production",
+          "name": "Güterproduktion",
+          "description": "Produziert Güter der aktuellen Epoche."
+        },
+        {
+          "id": "supply_boost",
+          "name": "Vorratsbonus",
+          "description": "Erhöht die Vorratsproduktion der Stadt."
+        }
+      ]
+    },
+    {
+      "id": "deal_castle",
+      "name": {
+        "de": "Deal Castle",
+        "en": "Deal Castle"
+      },
+      "age": "Colonial Age",
+      "effects": [
+        {
+          "id": "medal_production",
+          "name": "Medaillenproduktion",
+          "description": "Produziert Medaillen."
+        },
+        {
+          "id": "fierce_resistance",
+          "name": "Heftiger Widerstand",
+          "description": "Erhöht die Kampfwerte der verteidigenden Armee."
+        }
+      ]
+    },
+    {
+      "id": "frauenkirche_dresden",
+      "name": {
+        "de": "Dresdner Frauenkirche",
+        "en": "Frauenkirche of Dresden"
+      },
+      "age": "Colonial Age",
+      "effects": [
+        {
+          "id": "good_production",
+          "name": "Güterproduktion",
+          "description": "Produziert Güter der aktuellen Epoche."
+        },
+        {
+          "id": "happiness",
+          "name": "Zufriedenheit",
+          "description": "Erhöht die Zufriedenheit der Stadt."
+        }
+      ]
+    },
+    {
+      "id": "saint_basils_cathedral",
+      "name": {
+        "de": "Basilius-Kathedrale",
+        "en": "Saint Basil's Cathedral"
+      },
+      "age": "Late Middle Ages",
+      "effects": [
+        {
+          "id": "coin_production",
+          "name": "Münzproduktion",
+          "description": "Produziert Münzen."
+        },
+        {
+          "id": "fierce_resistance",
+          "name": "Heftiger Widerstand",
+          "description": "Erhöht die Kampfwerte der verteidigenden Armee."
+        }
+      ]
+    },
+    {
+      "id": "castel_del_monte",
+      "name": {
+        "de": "Castel del Monte",
+        "en": "Castel del Monte"
+      },
+      "age": "Late Middle Ages",
+      "effects": [
+        {
+          "id": "research",
+          "name": "Forge-Punkte",
+          "description": "Produziert Forge-Punkte."
+        },
+        {
+          "id": "military_boost",
+          "name": "Militärbonus",
+          "description": "Erhöht Angriff und Verteidigung der angreifenden Armee."
+        }
+      ]
+    },
+    {
+      "id": "st_marks_basilica",
+      "name": {
+        "de": "Markusdom",
+        "en": "St. Mark's Basilica"
+      },
+      "age": "High Middle Ages",
+      "effects": [
+        {
+          "id": "good_production",
+          "name": "Güterproduktion",
+          "description": "Produziert Güter der aktuellen Epoche."
+        },
+        {
+          "id": "coin_boost",
+          "name": "Münzbonus",
+          "description": "Erhöht die Münzproduktion der Stadt."
+        }
+      ]
+    },
+    {
+      "id": "notre_dame",
+      "name": {
+        "de": "Notre Dame",
+        "en": "Notre Dame"
+      },
+      "age": "High Middle Ages",
+      "effects": [
+        {
+          "id": "supply_production",
+          "name": "Vorratsproduktion",
+          "description": "Produziert Vorräte."
+        },
+        {
+          "id": "happiness",
+          "name": "Zufriedenheit",
+          "description": "Erhöht die Zufriedenheit der Stadt."
+        }
+      ]
+    },
+    {
+      "id": "cathedral_of_aachen",
+      "name": {
+        "de": "Aachener Dom",
+        "en": "Cathedral of Aachen"
+      },
+      "age": "Early Middle Ages",
+      "effects": [
+        {
+          "id": "coin_production",
+          "name": "Münzproduktion",
+          "description": "Produziert Münzen."
+        },
+        {
+          "id": "military_boost",
+          "name": "Militärbonus",
+          "description": "Erhöht Angriff und Verteidigung der angreifenden Armee."
+        }
+      ]
+    },
+    {
+      "id": "hagia_sophia",
+      "name": {
+        "de": "Hagia Sophia",
+        "en": "Hagia Sophia"
+      },
+      "age": "Early Middle Ages",
+      "effects": [
+        {
+          "id": "research",
+          "name": "Forge-Punkte",
+          "description": "Produziert Forge-Punkte."
+        },
+        {
+          "id": "happiness",
+          "name": "Zufriedenheit",
+          "description": "Erhöht die Zufriedenheit der Stadt."
+        }
+      ]
+    },
+    {
+      "id": "galata_tower",
+      "name": {
+        "de": "Galataturm",
+        "en": "Galata Tower"
+      },
+      "age": "Early Middle Ages",
+      "effects": [
+        {
+          "id": "good_production",
+          "name": "Güterproduktion",
+          "description": "Produziert Güter der aktuellen Epoche."
+        },
+        {
+          "id": "plunder_repel",
+          "name": "Plünderschutz",
+          "description": "Chance, einen Plünderungsversuch abzuwehren."
+        }
+      ]
+    },
+    {
+      "id": "colosseum",
+      "name": {
+        "de": "Kolosseum",
+        "en": "Colosseum"
+      },
+      "age": "Iron Age",
+      "effects": [
+        {
+          "id": "medal_production",
+          "name": "Medaillenproduktion",
+          "description": "Produziert Medaillen."
+        },
+        {
+          "id": "happiness",
+          "name": "Zufriedenheit",
+          "description": "Erhöht die Zufriedenheit der Stadt."
+        }
+      ]
+    },
+    {
+      "id": "lighthouse_of_alexandria",
+      "name": {
+        "de": "Leuchtturm von Alexandria",
+        "en": "Lighthouse of Alexandria"
+      },
+      "age": "Iron Age",
+      "effects": [
+        {
+          "id": "good_production",
+          "name": "Güterproduktion",
+          "description": "Produziert Güter der aktuellen Epoche."
+        },
+        {
+          "id": "supply_boost",
+          "name": "Vorratsbonus",
+          "description": "Erhöht die Vorratsproduktion der Stadt."
+        }
+      ]
+    },
+    {
+      "id": "tower_of_babel",
+      "name": {
+        "de": "Turm zu Babel",
+        "en": "Tower of Babel"
+      },
+      "age": "Bronze Age",
+      "effects": [
+        {
+          "id": "good_production",
+          "name": "Güterproduktion",
+          "description": "Produziert Güter der aktuellen Epoche."
+        },
+        {
+          "id": "population",
+          "name": "Bevölkerung",
+          "description": "Stellt Bevölkerung bereit."
+        }
+      ]
+    },
+    {
+      "id": "statue_of_zeus",
+      "name": {
+        "de": "Zeusstatue",
+        "en": "Statue of Zeus"
+      },
+      "age": "Bronze Age",
+      "effects": [
+        {
+          "id": "military_boost",
+          "name": "Militärbonus",
+          "description": "Erhöht Angriff und Verteidigung der angreifenden Armee."
+        }
+      ]
+    },
+    {
+      "id": "observatory",
+      "name": {
+        "de": "Observatorium",
+        "en": "Observatory"
+      },
+      "age": "No Age",
+      "effects": [
+        {
+          "id": "guild_goods",
+          "name": "Gildengüter",
+          "description": "Produziert Güter für die Gildenkasse."
+        },
+        {
+          "id": "support_pool_bonus",
+          "name": "Unterstützungspool-Bonus",
+          "description": "Erhöht den Beitrag zum Unterstützungspool der Gilde."
+        }
+      ]
+    },
+    {
+      "id": "oracle_of_delphi",
+      "name": {
+        "de": "Orakel von Delphi",
+        "en": "Oracle of Delphi"
+      },
+      "age": "No Age",
+      "effects": [
+        {
+          "id": "supply_production",
+          "name": "Vorratsproduktion",
+          "description": "Produziert Vorräte."
+        },
+        {
+          "id": "happiness",
+          "name": "Zufriedenheit",
+          "description": "Erhöht die Zufriedenheit der Stadt."
+        }
+      ]
+    },
+    {
+      "id": "temple_of_relics",
+      "name": {
+        "de": "Relikttempel",
+        "en": "Temple of Relics"
+      },
+      "age": "No Age",
+      "effects": [
+        {
+          "id": "relic_hunt",
+          "name": "Reliktjagd",
+          "description": "Ermöglicht Reliktfunde in der Gildenexpedition."
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "name": "FOE Assistant – Great Buildings",
+      "retrievedAt": "2026-07-27",
+      "usage": "Liste der Gebäude, Zeitalter und Effektkategorien"
+    }
+  ]
+}

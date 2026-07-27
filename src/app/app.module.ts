@@ -1,4 +1,5 @@
-import {NgModule} from '@angular/core';
+import {isDevMode, NgModule} from '@angular/core';
+import {ServiceWorkerModule} from '@angular/service-worker';
 import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
@@ -44,6 +45,7 @@ import {V101} from '@/components/whats-new/history/v101';
 import {V102} from '@/components/whats-new/history/v102';
 import {V103} from '@/components/whats-new/history/v103';
 import {V104} from '@/components/whats-new/history/v104';
+import {V105} from '@/components/whats-new/history/v105';
 
 @NgModule({
   declarations: [
@@ -93,7 +95,14 @@ import {V104} from '@/components/whats-new/history/v104';
     V101,
     V102,
     V103,
-    V104
+    V104,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
+    V105
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
