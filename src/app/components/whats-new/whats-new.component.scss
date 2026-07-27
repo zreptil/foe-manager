@@ -56,6 +56,13 @@ div[header] {
       align-items: flex-start;
     }
 
+    div[list] {
+      display: flex;
+      flex-flow: row;
+      align-items: flex-start;
+      gap: 0.5em;
+    }
+
     mat-icon {
       --v: 24px;
       font-size: 1em;

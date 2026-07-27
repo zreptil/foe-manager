@@ -33,6 +33,11 @@ export let GLOBALS: GlobalsService;
   providedIn: 'root'
 })
 export class GlobalsService {
+  ICON_FIGHT = 'swords';
+  ICON_GOODS = 'package_2';
+  ICON_FORGE = 'scatter_plot';
+  ICON_PEOPLE = 'people';
+
   version = VERSION;
   isNewVersion = false;
   skipStorageClear = false;
