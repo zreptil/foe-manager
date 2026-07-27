@@ -1,13 +1,31 @@
 <mat-card (click)="clickGBCard($event)" [class]="classForGb">
   @if (bs.isModeManage) {
-    <button (click)="clickGBMark($event)" btnMark mat-icon-button small-icon-button>
-      <mat-icon>
-        @if (gbUser?.marked) {
-          check_circle
-        } @else {
-          radio_button_unchecked
-        }
-      </mat-icon>
+    <!--    <button (click)="clickGBMark($event)" btnMark mat-icon-button small-icon-button>-->
+      <!--      <mat-icon>-->
+      <!--        @if (gbUser?.colorIdx) {-->
+      <!--          check_circle-->
+      <!--        } @else {-->
+      <!--          radio_button_unchecked-->
+      <!--        }-->
+      <!--      </mat-icon>-->
+      <!--    </button>-->
+    <button [matMenuTriggerFor]="colorMenu" btnMark mat-icon-button small-icon-button>
+      <mat-icon>{{ gb.icon }}</mat-icon>
+    </button>
+    <mat-menu #colorMenu="matMenu" [overlapTrigger]="true" btnMark>
+      @for (option of globals.siteConfig.colors; track $index) {
+        <button (click)="clickColor($event, $index)" [style]="{backgroundColor: option.color}" mat-menu-item>
+        </button>
+      }
+    </mat-menu>
+    @if (globals.isDebug) {
+      <button (click)="clickGBEdit($event)" btnEdit mat-icon-button small-icon-button>
+        <mat-icon>edit</mat-icon>
+      </button>
+    }
+  } @else if (bs.isModeBuildings || bs.isModeSelect) {
+    <button btnMark mat-icon-button small-icon-button>
+      <mat-icon>{{ gb.icon }}</mat-icon>
     </button>
   }
   <div card-title>
@@ -56,6 +74,16 @@
       }
       @if (nextLevel != null) {
         <table>
+          @if (showSniper) {
+            <tr>
+              <td colspan="3"></td>
+              @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {
+                <td>
+                  <div title>{{ calcTitles[calcIdx] }}</div>
+                </td>
+              }
+            </tr>
+          }
           <tr first row>
             <td name>
               <div level>
@@ -67,25 +95,33 @@
               <div cost>{{ nextLevel.cost }}</div>
             </td>
             @if (showSniper) {
-              <td calccost colspan="2" cost>
-                @if ((gbUser.ownerValue ?? 0) > 0) {
-                  <div>
-                    <mat-icon>crown</mat-icon>
-                    {{ gbUser.ownerValue }}
-                  </div>
-                }
-              </td>
+              <td></td>
+              @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {
+                @let v = calcPlaceValue(calcIdx, nextLevel, -2, gbUser.ownerValue);
+                <td calccost cost>
+                  @if ((v ?? 0) > 0) {
+                    <div>
+                      <mat-icon>crown</mat-icon>
+                      {{ v }}
+                    </div>
+                  }
+                </td>
+              }
             } @else {
               <td></td>
             }
           </tr>
           @if (showSniper) {
             <tr row>
-              <td colspan="4">
-                <div calccost cost>
-                  {{ nextLevel.cost - (gbUser.ownerValue ?? 0) }}
-                </div>
-              </td>
+              <td colspan="3"></td>
+              @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {
+                @let v = calcPlaceValue(calcIdx, nextLevel, -1, gbUser.ownerValue);
+                <td>
+                  <div calccost cost>
+                    {{ v }}
+                  </div>
+                </td>
+              }
             </tr>
           }
           @for (reward of nextLevel.rewards; let rewardIdx = $index; track rewardIdx) {
@@ -105,32 +141,36 @@
                 </td>
                 @if (showSniper) {
                   @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {
-                    <td [class]="classForPlaceValue(calcIdx, nextLevel, rewardIdx, gbUser.ownerValue)" calc>
-                      @if (gbUser.ownerValue > 0 || gbUser.sniperValues?.length > 0) {
-                        @let v = calcPlaceValue(calcIdx, nextLevel, rewardIdx, gbUser.ownerValue);
-                        @if (v >= 0) {
-                          <span></span>{{ v }}
+                    <td>
+                      <div [class]="classForPlaceValue(calcIdx, nextLevel, rewardIdx, gbUser.ownerValue)" calc>
+                        @if (calcPlaceValue(calcIdx, nextLevel, -2, gbUser.ownerValue) > 0 || gbUser.sniperValues?.length > 0) {
+                          @let v = calcPlaceValue(calcIdx, nextLevel, rewardIdx, gbUser.ownerValue);
+                          @if (v >= 0) {
+                            <span></span>{{ v }}
+                          } @else {
+                            <mat-icon>target</mat-icon>
+                            {{ -v }}
+                          }
                         } @else {
-                          <mat-icon>target</mat-icon>
-                          {{ -v }}
                         }
-                      } @else {
-                      }
+                      </div>
                     </td>
                   }
                 }
               </tr>
             }
           }
-          @if (showSniper && gbUser.ownerValue > 0) {
+          @if (showSniper) {
             <tr>
               <td colspan="3">
               </td>
               @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {
                 <td>
                   <div calcTotal>
-                    <mat-icon>crown</mat-icon>
-                    {{ calcTotal(calcIdx, nextLevel, gbUser.ownerValue) }}
+                    @if (calcPlaceValue(calcIdx, nextLevel, -2, gbUser.ownerValue) > 0) {
+                      <mat-icon>crown</mat-icon>
+                      {{ calcTotal(calcIdx, nextLevel, gbUser.ownerValue) }}
+                    }
                   </div>
                 </td>
               }
@@ -138,11 +178,6 @@
           }
         </table>
 
-        @if (bs.isModeManage) {
-          <button (click)="clickCopyAction($event, nextLevel)" copyButton mat-button>
-            <span>{{ copyData(nextLevel) }}</span>
-          </button>
-        }
         @if (showSniper) {
           @if (globals.siteConfig.editField === 'owner') {
             <div topSpace>
@@ -198,6 +233,11 @@
               </button>
             }
           }
+        }
+        @if (bs.isModeManage) {
+          <button (click)="clickCopyAction($event, nextLevel)" copyButton mat-button>
+            <span>{{ copyData(nextLevel) }}</span>
+          </button>
         }
       }
     </mat-card-content>

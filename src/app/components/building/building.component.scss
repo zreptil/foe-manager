@@ -1,8 +1,16 @@
+:host {
+  --mat-form-field-filled-input-text-color: var(--bodyFore);
+  --mat-form-field-filled-label-text-color: var(--bodyFore);
+  --mat-form-field-filled-focus-input-text-color: var(--bodyFore);
+  --mat-form-field-filled-focus-label-text-color: var(--bodyFore);
+}
+
 mat-card.select, mat-card.buildings {
   cursor: pointer;
 }
 
 mat-card {
+  --cardFore: var(--bodyFore);
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -11,6 +19,11 @@ mat-card {
   border-radius: 1em;
   height: 100%;
   position: relative;
+  color: var(--cardFore);
+  --mat-form-field-filled-label-text-color: var(--ownerFore);
+  --mat-form-field-filled-hover-label-text-color: var(--ownerFore);
+  --mat-form-field-filled-input-text-color: var(--ownerFore);
+  --mat-form-field-filled-focus-label-text-color: var(--ownerFore);
 
   [btnMark] {
     position: absolute;
@@ -77,6 +90,13 @@ mat-card {
       color: var(--ownerFore);
     }
   }
+
+  [btnEdit] {
+    display: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
 }
 
 mat-card.selected {
@@ -87,13 +107,9 @@ mat-card.selected {
   }
 }
 
-mat-card.gb-marked {
-  background: #ff0;
-  --ownerFore: black;
-  --copyFore: rgba(0, 0, 0, 0.7);
-
-  tr[row].marked {
-    background: rgba(0, 0, 0, 0.1);
+mat-card:hover {
+  [btnEdit] {
+    display: block;
   }
 }
 
@@ -109,7 +125,7 @@ mat-card.gb-marked {
 
 [topSpace] {
   margin-top: 1em;
-  color: white;
+  color: var(--mat-form-field-filled-input-text-color);
 }
 
 mat-card mat-card-content [upgrade] {
@@ -134,7 +150,8 @@ mat-card mat-card-content [upgrade] {
   flex-flow: row;
   align-items: center;
   gap: 0.5em;
-  justify-content: space-between;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 [calcTotal] {
@@ -206,13 +223,82 @@ mat-label {
   }
 }
 
-.gb-marked {
+mat-card.gb-color-1 {
+  background: #ff0;
+  --ownerFore: black;
+  --copyFore: rgba(0, 0, 0, 0.7);
+
+  tr[row].marked {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
   [calc], [calccost] {
     color: rgba(0, 0, 255, 0.8);
   }
 
   [block] {
     color: rgba(0, 0, 0, 0.5);
+  }
+
+  [block].owner {
+    color: var(--ownerFore);
+  }
+
+  [calc].positive {
+    color: green; //var(--calcPositive);
+  }
+
+  [calc].negative {
+    color: red; //var(--calcNegative);
+  }
+}
+
+mat-card.gb-color-2 {
+  background: #080;
+  --ownerFore: rgba(255, 255, 255, 0.8);
+  --copyFore: rgba(0, 0, 0, 0.7);
+
+  tr[row].marked {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  [calc], [calccost] {
+    color: rgba(0, 255, 0, 0.8);
+  }
+
+  [block] {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  [block].owner {
+    color: var(--ownerFore);
+  }
+
+  [calc].positive {
+    color: green; //var(--calcPositive);
+  }
+
+  [calc].negative {
+    color: red; //var(--calcNegative);
+  }
+}
+
+mat-card.gb-color-3 {
+  background: #808;
+  --cardFore: rgba(255, 255, 255, 0.8);
+  --ownerFore: rgba(255, 255, 255, 0.9);
+  --copyFore: rgba(255, 255, 255, 0.7);
+
+  tr[row].marked {
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  [calc], [calccost] {
+    color: rgba(128, 0, 128, 0.8);
+  }
+
+  [block] {
+    color: rgba(255, 255, 255, 0.5);
   }
 
   [block].owner {
@@ -263,6 +349,11 @@ table {
       justify-content: flex-end;
       min-width: 0;
       white-space: nowrap;
+
+      [title] {
+        text-align: right;
+        font-size: 75%;
+      }
     }
 
     td[title] {
@@ -298,4 +389,12 @@ table {
       border: 1px solid red;
     }
   }
+}
+
+[mat-menu-item] {
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  border: 10px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 5px;
 }

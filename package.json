@@ -1,6 +1,6 @@
 {
   "name": "foe-manager",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "scripts": {
     "build": "npm run sync-version && ng build && npm run zip",
@@ -12,7 +12,7 @@
     "i18n": "npm run i18n-01-extract && npm run i18n-03-create-messages",
     "ng": "ng",
     "start-all": "npm-run-all --parallel backend start",
-    "start": "npm run sync-version && ng serve --port 67 --open --ssl --ssl-key server.key --ssl-cert server.crt",
+    "start": "npm run sync-version && ng serve --port 67 --open --ssl --ssl-key server.key --ssl-cert server.crt --hmr --prebundle",
     "test": "ng test",
     "watch": "ng build --watch --configuration development",
     "sync-version": "tsc tools/sync-version.ts && node tools/sync-version.js",

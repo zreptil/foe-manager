@@ -176,8 +176,15 @@ app-log {
 }
 
 [version] {
+  cursor: help;
   position: absolute;
   right: 5px;
   bottom: 5px;
   color: rgba(0, 0, 0, 0.4);
+}
+
+[btnAdd] {
+  position: absolute;
+  right: 5px;
+  bottom: 25px;
 }

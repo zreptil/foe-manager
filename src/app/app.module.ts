@@ -38,7 +38,11 @@ import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
 import {ImageListComponent} from './controls/image-list/image-list.component';
 import {OAuthModule} from 'angular-oauth2-oidc';
 import {ScrollShadowDirective} from '@/_directives/scroll-shadow.directive';
-import { BuildingComponent } from './components/building/building.component';
+import {BuildingComponent} from './components/building/building.component';
+import {V100} from '@/components/whats-new/history/v100';
+import {V101} from '@/components/whats-new/history/v101';
+import {V102} from '@/components/whats-new/history/v102';
+import {V103} from '@/components/whats-new/history/v103';
 
 @NgModule({
   declarations: [
@@ -84,6 +88,10 @@ import { BuildingComponent } from './components/building/building.component';
     HideMissingImageDirective,
     ScrollShadowDirective,
     OAuthModule.forRoot(),
+    V100,
+    V101,
+    V102,
+    V103
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),

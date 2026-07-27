@@ -34,6 +34,7 @@ export let GLOBALS: GlobalsService;
 })
 export class GlobalsService {
   version = VERSION;
+  isNewVersion = false;
   skipStorageClear = false;
   devSupport = false;
   debugFlag = 'debug';
@@ -68,7 +69,7 @@ export class GlobalsService {
     dsgvo: $localize`Dataprotection`,
     help: $localize`Information`,
     impressum: $localize`Impressum`,
-    welcome: $localize`Welcome to foe-manager`,
+    welcome: $localize`Welcome to FOE-manager`,
     whatsnew: $localize`Once upon a time...`,
     linkPicture: $localize`Link Picture`,
     imgurSelector: $localize`Imgur Picture Selector`,
@@ -82,7 +83,13 @@ export class GlobalsService {
     repeatTimer: 0,
     sniperValue: 0,
     levelGbKey: '',
-    levelValue: 0
+    levelValue: 0,
+    colors: [
+      {name: $localize`Standard`, color: 'var(--mainBodyBack)'},
+      {name: $localize`Gelb`, color: '#FFFF00'},
+      {name: $localize`Grün`, color: '#008000'},
+      {name: $localize`Lila`, color: '#808'}
+    ]
   }
   urlPlayground = 'http://pdf.zreptil.de/playground.php';
   appData: AppData;
@@ -277,9 +284,8 @@ export class GlobalsService {
   }
 
   _gbList: GbData[];
-
   get gbList() {
-    if (this.bs.isModeBuildings && GLOBALS.user.activeGbKey != null) {
+    if (GLOBALS.user.activeGbKey != null) {
       if (this._gbList == null) {
         this._gbList = this.assist.gbList;
       }
@@ -294,7 +300,16 @@ export class GlobalsService {
     if (this._gbList == null) {
       switch (GLOBALS.user.siteMode) {
         case EnumSitemode.manage:
-          this._gbList = this.assist.gbList.filter(gb => GLOBALS.user.listGb[gb.key] != null && GLOBALS.user.listGb[gb.key].active);
+          this._gbList = this.assist.gbList.filter(gb =>
+            GLOBALS.user.listGb[gb.key] != null
+            && GLOBALS.user.listGb[gb.key].active
+            && GLOBALS.user.listGb[gb.key].player == null);
+          break;
+        case EnumSitemode.players:
+          this._gbList = this.assist.gbList.filter(gb =>
+            GLOBALS.user.listGb[gb.key] != null
+            && GLOBALS.user.listGb[gb.key].active
+            && GLOBALS.user.listGb[gb.key].player != null);
           break;
         default:
           this._gbList = this.assist.gbList;
@@ -316,6 +331,20 @@ export class GlobalsService {
         break;
     }
     return this._gbList;
+  }
+
+  _playerList: GbUserData[];
+  get playerList() {
+    if (this._playerList == null) {
+      this._playerList = [];
+      for (const key of Object.keys(GLOBALS.user.listGb)) {
+        const gb = GLOBALS.user.listGb[key];
+        if (gb.player != null && this._playerList.findIndex(gbUser => gbUser.player != null) >= 0) {
+          this._playerList.push(GLOBALS.user.listGb[key]);
+        }
+      }
+    }
+    return this._playerList;
   }
 
   loadAppData() {
@@ -379,7 +408,7 @@ export class GlobalsService {
       s5: this.user.gbSort,
       s6: GLOBALS.user.activeGbKey,
       s7: GLOBALS.user.activeUserGb?.asJson,
-      s8: GLOBALS.user.userzoom
+      s8: GLOBALS.user.userzoom,
     };
     for (const key of Object.keys(GLOBALS.user.listGb)) {
       storage.s2[key] = GLOBALS.user.listGb[key].asJson;
@@ -404,6 +433,7 @@ export class GlobalsService {
     this.oauth2AccessToken = storage.w2;
     this.theme = storage.w3 ?? 'standard';
     this.devSupport = storage.w4 ?? false;
+    this.isNewVersion = this.version !== storage.w5;
 
     // validate values
     if (this.oauth2AccessToken == null) {
@@ -417,7 +447,8 @@ export class GlobalsService {
       w1: this._syncType,
       w2: this.oauth2AccessToken,
       w3: this.theme,
-      w4: this.devSupport
+      w4: this.devSupport,
+      w5: this.version
     };
     localStorage.setItem('webData', JSON.stringify(storage));
   }

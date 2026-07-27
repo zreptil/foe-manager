@@ -3,6 +3,7 @@ import {GLOBALS, GlobalsService} from '@/_services/globals.service';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
 import {Observable, of} from 'rxjs';
 import {DlgBaseComponent} from '@/classes/base/dlg-base-component';
+import {Utils} from '@/classes/utils';
 
 @Component({
   selector: 'app-whats-new',
@@ -29,6 +30,12 @@ export class WhatsNewComponent extends DlgBaseComponent implements AfterViewInit
 
   get originUrl(): string {
     return location.origin.replace(/\/$/, '');
+  }
+
+  version(section: any): string {
+    const ret: string[] = [section.display];
+    ret.push(Utils.fmtDate(Utils.parseDate(`${section.date}`)));
+    return Utils.join(ret, ' - ');
   }
 
   classFor(id: number): string[] {

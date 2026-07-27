@@ -41,7 +41,8 @@ html, body {
   --mat-form-field-filled-error-focus-active-indicator-color: var(--errorColor);
   --mat-form-field-filled-error-hover-active-indicator-color: var(--errorColor);
   --mat-form-field-filled-error-hover-label-text-color: var(--errorColor);
-  --mat-menu-container-color: var(--mainHeadBack);
+  --mat-menu-container-color: transparent;
+  --mat-menu-container-elevation-shadow: none;
   --mat-divider-color: var(--mainHeadFore);
   --mat-menu-item-label-text-color: var(--mainHeadFore);
   --mat-menu-item-icon-color: var(----mat-menu-item-label-text-color);
@@ -50,6 +51,8 @@ html, body {
   --mat-form-field-filled-disabled-container-color: rgba(0, 0, 0, 0);
   --mat-form-field-filled-input-text-color: var(--bodyFore);
   --mat-form-field-filled-label-text-color: var(--bodyFore);
+  --mat-form-field-filled-focus-input-text-color: var(--bodyFore);
+  --mat-form-field-filled-focus-label-text-color: var(--bodyFore);
   --mat-form-field-filled-hover-label-text-color: var(--bodyFore);
   --mat-expansion-container-background-color: rgba(0, 0, 0, 0.1);
   --mat-button-text-label-text-size: 1em;

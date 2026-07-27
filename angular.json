@@ -14,7 +14,11 @@
               "extractLicenses": false,
               "namedChunks": true,
               "optimization": false,
-              "sourceMap": true
+              "sourceMap": {
+                "scripts": false,
+                "styles": true,
+                "vendor": false
+              }
             },
             "production": {
               "budgets": [

@@ -20,6 +20,10 @@ export class BuildingService {
     return GLOBALS.user.siteMode === EnumSitemode.manage;
   }
 
+  get isModePlayers() {
+    return GLOBALS.user.siteMode === EnumSitemode.players;
+  }
+
   onFocus(evt: FocusEvent): void {
     (evt?.target as HTMLInputElement)?.select();
   }

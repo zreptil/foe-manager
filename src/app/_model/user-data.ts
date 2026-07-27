@@ -9,7 +9,8 @@ export enum EnumPermission {
 export enum EnumSitemode {
   select,
   manage,
-  buildings
+  buildings,
+  players
 }
 
 export enum EnumSortmode {
@@ -29,6 +30,7 @@ export class UserData extends BaseData {
   listGb: { [key: string]: GbUserData };
   readonly _activeGbKey = signal<string>(null);
   activeUserGb: GbUserData;
+  activePlayer: string;
 
   constructor(json?: any) {
     super(json);

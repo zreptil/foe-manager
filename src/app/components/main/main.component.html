@@ -9,19 +9,38 @@
           }
         }
       }
-      @if (globals.user.siteMode !== 2) {
-        @if (globals.user.siteMode === 0) {
-          <div i18n>Bitte die Gebäude auswählen, die in Deiner Stadt stehen</div>
-        } @else {
-          <div i18n>Liste der Gebäude in der Stadt</div>
+      @if (globals.user.siteMode < 2) {
+        @switch (globals.user.siteMode) {
+          @case (0) {
+            <div i18n>Bitte die Gebäude auswählen, die in Deiner Stadt stehen</div>
+          }
+          @case (1) {
+            <div i18n>Liste der Gebäude in der Stadt</div>
+          }
+          @default {
+            <div i18n>Liste der Gebäude in der Stadt</div>
+          }
         }
-        <button (click)="toggleMode($event)" matIconButton small-icon-button>
+        <button (click)="toggleMode($event )" matIconButton small-icon-button>
           <mat-icon>{{ iconForMode() }}</mat-icon>
         </button>
         <button (click)="toggleMode($event, 2)" matIconButton small-icon-button>
           <mat-icon>{{ iconForMode(2) }}</mat-icon>
         </button>
+        @if (globals.isDebug) {
+          <button (click)="toggleMode($event, 3)" matIconButton small-icon-button>
+            <mat-icon>{{ iconForMode(3) }}</mat-icon>
+          </button>
+        }
       } @else {
+        @switch (globals.user.siteMode) {
+          @case (2) {
+            <div i18n>Gebäude</div>
+          }
+          @case (3) {
+            <div i18n>Gebäude anderer Spieler</div>
+          }
+        }
         <button (click)="clickBuildingsBack($event)" matIconButton small-icon-button>
           <mat-icon>keyboard_arrow_left</mat-icon>
         </button>
@@ -86,6 +105,25 @@
             <app-building [building]="gb"></app-building>
           }
         </div>
+        @if (bs.isModePlayers) {
+          @if (editPlayer != null) {
+            <mat-form-field>
+              <mat-label i18n>
+                <mat-icon>target</mat-icon>
+                Spielername
+              </mat-label>
+              <input (blur)="savePlayer()"
+                     (focus)="bs.onFocus($event)"
+                     [(ngModel)]="editPlayer" autofocus matInput>
+            </mat-form-field>
+          } @else {
+            <!--            @for (player of globals.playerList; track $index) {-->
+              <!--            }-->
+            <button (click)="clickPlayersAdd($event)" btnAdd mat-fab>
+              <mat-icon> add</mat-icon>
+            </button>
+          }
+        }
       }
     </div>
   </div>
@@ -93,4 +131,4 @@
 </div>
 <app-progress></app-progress>
 <div hidden id="mark"></div>
-<div version>{{ globals.version }}</div>
+<div (click)="showWhatsNew()" version>{{ globals.version }}</div>

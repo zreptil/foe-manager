@@ -18,7 +18,8 @@ export class BuildingComponent {
   building = input.required<GbData>();
   gbUser: GbUserData;
   nextLevel: LevelData;
-  calcMethods = [this.calcSafePlaces];
+  calcMethods = [this.calcSafePlaces, this.calcNicePlaces];
+  calcTitles = [$localize`Sicher`, $localize`Nett`];
 
   constructor(public globals: GlobalsService,
               public msg: MessageService,
@@ -37,8 +38,10 @@ export class BuildingComponent {
 
   get showSniper() {
     return GLOBALS.user.siteMode === EnumSitemode.buildings ||
-      (GLOBALS.user.siteMode === EnumSitemode.manage && this.gbUser.marked &&
-        GLOBALS.isDebug);
+      (GLOBALS.user.siteMode === EnumSitemode.manage &&
+        GLOBALS.user.activeGbKey != null
+      );
+    //  this.gbUser.marked && GLOBALS.isDebug);
   }
 
   protected get classForGb() {
@@ -49,8 +52,8 @@ export class BuildingComponent {
     if (GLOBALS.user.listGb[this.gb.key]?.active) {
       ret.push('selected');
     }
-    if (GLOBALS.user.siteMode === EnumSitemode.manage && this.gbUser?.marked) {
-      ret.push('gb-marked');
+    if (GLOBALS.user.siteMode === EnumSitemode.manage && this.gbUser?.colorIdx) {
+      ret.push(`gb-color-${this.gbUser.colorIdx}`);
     }
     ret.push(Object.keys(EnumSitemode).filter(key => isNaN(Number(key)))[GLOBALS.user.siteMode]);
     return ret.join(' ');
@@ -91,7 +94,11 @@ export class BuildingComponent {
   changeLevel(diff: number) {
     this.gbUser.level += diff;
     this.nextLevel = this.bs.levelForUser(this.gb, this.gbUser);
+    if (GLOBALS.user.siteMode === EnumSitemode.buildings && this.gb.key === GLOBALS.user.activeGbKey) {
+      GLOBALS.user.activeUserGb = this.gbUser;
+    }
     if (GLOBALS.user.siteMode === EnumSitemode.manage || GLOBALS.user.siteMode === EnumSitemode.buildings) {
+      console.log('save');
       GLOBALS.saveSharedData();
     }
   }
@@ -117,15 +124,14 @@ export class BuildingComponent {
   }
 
   protected classForBlock(level: LevelData, idx: number): string {
-    // Wenn der Platz schon sicher ist, wird er nie markiert
-    if (idx > 0 && level.blocks[idx] <= level.blocks[idx - 1]) {
-      return '';
-    }
-    const lastIdx = this.findLastOwnerBlock(level);
-    if (idx === lastIdx) {
-      return idx === 0 || level.blocks[idx] > level.blocks[idx - 1] ? 'owner' : '';
-    }
-    if (idx > 0 && idx < level.blocks?.length && level.blocks[idx + 1] < level.blocks[idx]) {
+    const bc = this.calcBlockValue(level, idx);
+    if (bc > 0) {
+      for (let i = idx + 1; i <= 5 && level.rewards[i] > 0; i++) {
+        const bn = this.calcBlockValue(level, i);
+        if (bn > 0) {
+          return '';
+        }
+      }
       return 'owner';
     }
     return '';
@@ -172,16 +178,56 @@ export class BuildingComponent {
   }
 
   protected calcTotal(method: number, level: LevelData, ownerValue: number) {
-    let ret = 0;
+    let ret = level.cost - this.calcMethods[method].bind(this)(level, -2, ownerValue);
     for (let i = 0; i < level.rewards.length; i++) {
       if (level.rewards[i] > 0) {
-        ret += Math.abs(this.calcMethods[method].bind(this)(level, i, ownerValue));
+        ret -= Math.abs(this.calcMethods[method].bind(this)(level, i, ownerValue));
       }
     }
-    return level.cost - ret - (ownerValue ?? 0);
+    return ret;
+  }
+
+  protected calcNicePlaces(level: LevelData, idx: number, ownerValue: number) {
+    ownerValue = this.calcBlockValue(level, 0);
+    switch (idx) {
+      case -2:
+        return ownerValue;
+      case -1:
+        return level.cost - ownerValue;
+    }
+    const sl = [...this.gbUser.sniperValues, 0];
+    let base = level.cost - +(ownerValue ?? 0);
+    let ret = base;
+    let sniperIdx = 0;
+    const reward = this.bs.calcReward(level.rewards[idx]);
+    let rewIdx = 0;
+    while (idx >= 0) {
+      const rew = this.bs.calcReward(level.rewards[rewIdx]);
+      ret = Math.min(rew, Math.ceil(base / 2));
+      if (ret <= sl[sniperIdx]) {
+        if (idx === 0) {
+          return -sl[sniperIdx];
+        }
+        ret = sl[sniperIdx];
+        sniperIdx++;
+      }
+      base -= ret;
+      if (base < 0) {
+        return 0;
+      }
+      idx--;
+      rewIdx++;
+    }
+    return Math.min(reward, base);
   }
 
   protected calcSafePlaces(level: LevelData, idx: number, ownerValue: number) {
+    switch (idx) {
+      case -2:
+        return ownerValue;
+      case -1:
+        return level.cost - (ownerValue ?? 0);
+    }
     const sl = [...this.gbUser.sniperValues, 0];
     let base = level.cost - +(ownerValue ?? 0);
     let ret = base;
@@ -204,11 +250,29 @@ export class BuildingComponent {
     return ret;
   }
 
-  protected clickGBMark(evt: PointerEvent) {
-    evt.preventDefault();
+  protected clickColor(evt: PointerEvent, idx: number) {
     if (this.gbUser != null) {
-      this.gbUser.marked = !this.gbUser.marked;
+      this.gbUser.colorIdx = idx;
       GLOBALS.saveSharedData();
+    }
+  }
+
+  // protected clickGBMark(evt: PointerEvent) {
+  //   evt.preventDefault();
+  //   if (this.gbUser != null) {
+  //     this.gbUser.colorIdx = !this.gbUser.colorIdx;
+  //     GLOBALS.saveSharedData();
+  //   }
+  // }
+
+  protected clickGBEdit(evt: PointerEvent) {
+    evt.preventDefault();
+    if (GLOBALS.user.activeGbKey == null) {
+      GLOBALS.user.activeGbKey = this.gb.key;
+      GLOBALS.user.activeUserGb = this.bs.gbForUser(this.gb);
+    } else {
+      GLOBALS.user.activeGbKey = null;
+      GLOBALS.user.activeUserGb = null;
     }
   }
 
@@ -227,11 +291,11 @@ export class BuildingComponent {
       case EnumSitemode.manage:
         break;
       case EnumSitemode.buildings:
-//        if (GLOBALS.user.activeGbKey !== this.gb.key) {
-        GLOBALS.user.activeGbKey = this.gb.key;
-        GLOBALS.user.activeUserGb = new GbUserData({a: 1});
-        GLOBALS.saveSharedData();
-//        }
+        if (GLOBALS.user.activeGbKey !== this.gb.key) {
+          GLOBALS.user.activeGbKey = this.gb.key;
+          GLOBALS.user.activeUserGb = new GbUserData({a: 1});
+          GLOBALS.saveSharedData();
+        }
         break;
     }
   }
@@ -252,15 +316,5 @@ export class BuildingComponent {
   protected clickOwnerValue(evt: PointerEvent) {
     evt.preventDefault();
     GLOBALS.siteConfig.editField = 'owner';
-  }
-
-  protected findLastOwnerBlock(level: LevelData) {
-    let ret = 0;
-    for (let i = 1; i < level.blocks.length; i++) {
-      if (level.blocks[i - 1] < level.blocks[i] && level.blocks[i] > 0) {
-        ret = i;
-      }
-    }
-    return ret;
   }
 }

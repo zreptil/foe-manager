@@ -16,6 +16,7 @@ import {GoogleService} from '@/_services/oauth2/google.service';
 import {AssistService} from '@/_services/assist.service';
 import {EnumSitemode, EnumSortmode} from '@/_model/user-data';
 import {BuildingService} from '@/_services/building.service';
+import {GbUserData} from '@/_model/gb-user-data';
 
 @Component({
   selector: 'app-main',
@@ -29,7 +30,7 @@ export class MainComponent implements OnInit {
     colorKey: 'main',
     showClose: false
   };
-
+  editPlayer: string;
   protected readonly Utils = Utils;
 
   constructor(public globals: GlobalsService,
@@ -64,7 +65,8 @@ export class MainComponent implements OnInit {
   }
 
   get classForContent() {
-    if (GLOBALS.user.siteMode === EnumSitemode.buildings && GLOBALS.user.activeUserGb != null) {
+    // GLOBALS.user.siteMode === EnumSitemode.buildings &&
+    if (GLOBALS.user.activeUserGb != null) {
       return 'building';
     }
     return '';
@@ -90,11 +92,16 @@ export class MainComponent implements OnInit {
         return 'check';
       case EnumSitemode.manage:
         return 'edit';
+      case EnumSitemode.players:
+        return 'group';
     }
     return 'apartment';
   }
 
   ngOnInit(): void {
+    if (GLOBALS.isNewVersion) {
+      this.msg.showPopup(WhatsNewComponent, 'whatsnew', {});
+    }
   }
 
   clickLocalTitle() {
@@ -200,6 +207,32 @@ export class MainComponent implements OnInit {
     GLOBALS.user.userzoom = 1 - GLOBALS.user.userzoom;
     GLOBALS.saveSharedData();
   }
+
+  protected showWhatsNew() {
+    this.msg.showPopup(WhatsNewComponent, 'whatsnew', {});
+  }
+
+  protected clickPlayersAdd(evt: PointerEvent) {
+    evt.preventDefault();
+    this.editPlayer = $localize`Name eingeben`;
+  }
+
+  protected savePlayer() {
+    if (!Utils.isEmpty(this.editPlayer)) {
+      GLOBALS._playerList = null;
+      const list = GLOBALS.playerList;
+      if (GLOBALS.user.activePlayer != null) {
+        const playerList = list.filter((player) => player.player === GLOBALS.user.activePlayer);
+        for (const entry of playerList) {
+          entry.player = this.editPlayer;
+        }
+      } else {
+        GLOBALS.user.activePlayer = this.editPlayer;
+        list.push(new GbUserData({}));
+      }
+    }
+  }
 }
 
+// Rolly der Erste Habitat 94
 // {"s0":1784473728660,"s1":"1.1.4","s2":{"The-Blue-Galaxy":{"0":1,"a":11,"c":false,"d":[true,true,true,true,true]},"Lighthouse-of-Alexandria":{"0":1,"a":10,"c":false,"d":[true,true,true,true,true]},"Tower-of-Babel":{"0":1,"a":20,"c":false,"d":[true,true,true,true,true]},"Alcatraz":{"0":1,"a":33,"b":1784259033241,"c":false,"d":[true,true,true,true,true]},"Observatory":{"0":1,"a":19,"c":false,"d":[true,true,true,true,true]},"Cathedral-of-Aachen":{"0":1,"a":19,"c":false,"d":[true,true,true,true,true]},"The-Arc":{"0":1,"a":95,"c":false,"d":[true,true,true,true,true]},"AI-Core":{"0":1,"a":1,"b":0,"c":false,"d":[true,true,true,true,true]},"Trust-Tower":{"0":1,"a":1,"b":0,"c":false,"d":[true,true,true,true,true]},"Château-Frontenac":{"0":1,"a":1,"b":0,"c":false,"d":[true,true,true,true,true]}},"s3":2,"s4":"Andi Schlumpf","s5":{"0":3,"1":1,"2":2},"s6":"Observatory","s7":{"0":1,"a":49,"c":false,"d":[true,true,true,true,true]}}
