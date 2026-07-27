@@ -10,7 +10,7 @@
       <!--      </mat-icon>-->
       <!--    </button>-->
     <button [matMenuTriggerFor]="colorMenu" btnMark mat-icon-button small-icon-button>
-      <mat-icon>{{ gb.icon }}</mat-icon>
+      <mat-icon [class]="gb.iconClass">{{ gb.icon }}</mat-icon>
     </button>
     <mat-menu #colorMenu="matMenu" [overlapTrigger]="true" btnMark>
       @for (option of globals.siteConfig.colors; track $index) {
@@ -25,7 +25,7 @@
     }
   } @else if (bs.isModeBuildings || bs.isModeSelect) {
     <button btnMark mat-icon-button small-icon-button>
-      <mat-icon>{{ gb.icon }}</mat-icon>
+      <mat-icon [class]="gb.iconClass">{{ gb.icon }}</mat-icon>
     </button>
   }
   <div card-title>

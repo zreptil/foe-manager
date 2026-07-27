@@ -5,6 +5,7 @@ export class GbData extends BaseData {
   key: string;
   name: string;
   icon: string;
+  iconClass: string;
   levels: LevelData[];
   effects: string[];
 
@@ -18,7 +19,8 @@ export class GbData extends BaseData {
       b: this.name,
       c: [],
       d: this.icon,
-      e: this.effects
+      e: this.effects,
+      f: this.iconClass
     };
     for (const level of this.levels) {
       ret.c.push(level.asJson);
@@ -36,5 +38,6 @@ export class GbData extends BaseData {
     }
     this.icon = json?.d ?? def?.icon ?? 'apartment';
     this.effects = json?.e ?? def?.effects ?? [];
+    this.iconClass = json?.f ?? def?.iconClass ?? '';
   }
 }

@@ -80,13 +80,13 @@ export class AssistService {
         a: 'Stellar-Warship', b: 'Stellares Kriegsschiff', d: GLOBALS.ICON_FIGHT, e: [
           $localize`Produziert ungebundene Einheiten aus vorhandenen Militärgebäuden`,
           $localize`Erhöht die Kampfwerte der angreifenden und verteidigenden Armee`
-        ]
+        ], f: 'attackdefend'
       }),
       new GbData({
         a: 'Saturn-VI-Gate-HYDRA', b: 'Saturn VI Gate HYDRA', d: GLOBALS.ICON_FIGHT, e: [
           $localize`Produziert Güter für die Gildenkasse`,
           $localize`Erhöht die Kampfwerte der angreifenden und verteidigenden Armee`
-        ]
+        ], f: 'attackdefend'
       }),
       new GbData({
         a: 'Saturn-VI-Gate-PEGASUS', b: 'Saturn VI Gate PEGASUS', d: GLOBALS.ICON_FIGHT, e: [
@@ -98,7 +98,7 @@ export class AssistService {
         a: 'Saturn-VI-Gate-CENTAURUS', b: 'Saturn VI Gate CENTAURUS', d: GLOBALS.ICON_FIGHT, e: [
           $localize`Produziert Güter der vorherigen Epoche`,
           $localize`Erhöht die Kampfwerte der angreifenden Armee`
-        ]
+        ], f: 'attack'
       }),
       new GbData({
         a: 'AI-Core', b: 'K.I. Kern', d: GLOBALS.ICON_GOODS, e: [
@@ -131,7 +131,7 @@ export class AssistService {
       new GbData({
         a: 'Terracotta-Army', b: 'Terrakotta Armee', d: GLOBALS.ICON_FIGHT, e: [
           $localize`Erhöht die Kampfwerte der angreifenden und verteidigenden Armee`
-        ]
+        ], f: 'attackdefend'
       }),
       new GbData({
         a: 'Himeji-Castle', b: 'Burg Himeji', d: GLOBALS.ICON_GOODS, e: [
@@ -262,7 +262,7 @@ export class AssistService {
         a: 'Deal-Castle', b: 'Deal Castle', d: GLOBALS.ICON_FIGHT, e: [
           $localize`Produziert Medaillen`,
           $localize`Erhöht die Kampfwerte der verteidigenden Armee`
-        ]
+        ], f: 'defend'
       }),
       new GbData({
         a: 'Frauenkirche-of-Dresden', b: 'Dresdner Frauenkirche', d: GLOBALS.ICON_GOODS, e: [
@@ -274,13 +274,13 @@ export class AssistService {
         a: 'Saint-Basils-Cathedral', b: 'Basilius-Kathedrale', d: GLOBALS.ICON_FIGHT, e: [
           $localize`Produziert Münzen`,
           $localize`Erhöht die Kampfwerte der verteidigenden Armee`
-        ]
+        ], f: 'defend'
       }),
       new GbData({
         a: 'Castel-del-Monte', b: 'Castel del Monte', d: GLOBALS.ICON_FIGHT, e: [
           $localize`Produziert Forge-Punkte`,
           $localize`Erhöht die Kampfwerte der angreifenden Armee`
-        ]
+        ], f: 'attack'
       }),
       new GbData({
         a: 'St.-Marks-Basilica', b: 'Markusdom', d: GLOBALS.ICON_GOODS, e: [
@@ -298,7 +298,7 @@ export class AssistService {
         a: 'Cathedral-of-Aachen', b: 'Aachener Dom', d: GLOBALS.ICON_FIGHT, e: [
           $localize`Produziert Münzen`,
           $localize`Erhöht die Kampfwerte der angreifenden Armee`
-        ]
+        ], f: 'attack'
       }),
       new GbData({
         a: 'Hagia-Sophia', b: 'Hagia Sophia', d: GLOBALS.ICON_FORGE, e: [
@@ -333,13 +333,13 @@ export class AssistService {
       new GbData({
         a: 'Statue-of-Zeus', b: 'Zeusstatue', d: GLOBALS.ICON_FIGHT, e: [
           $localize`Erhöht die Kampfwerte der angreifenden Armee`
-        ]
+        ], f: 'attack'
       }),
       new GbData({
         a: 'Observatory', b: 'Observatorium', d: GLOBALS.ICON_FIGHT, e: [
           $localize`Produziert Güter für die Gildenkasse`,
           $localize`Erhöht die Kampfwerte der verteidigenden Armee`
-        ]
+        ], f: 'defend'
       }),
       new GbData({
         a: 'Oracle-of-Delphi', b: 'Orakel von Delphi', d: GLOBALS.ICON_GOODS, e: [

@@ -10,6 +10,11 @@ import {GLOBALS} from '@/_services/globals.service';
       Die Effekte der Gebäude wurden hinzugefügt. Diese werden in der Gebäudeübersicht und
       in der Auswahl der Gebäude für die eigene Stadt angezeigt.
     </li>
+    <li class="changed" i18n="105c1">
+      Die Icons der Kampf-Gebäude werden jetzt farblich markiert. Für Gebäude, die Bonus auf Angriffswerte
+      haben, ist das Icon rot, für Bonus auf Verteidigung blau und wenn ein Gebäude beides hat,
+      ist es rot und blau.
+    </li>
   </ul>
   `,
   imports: [],

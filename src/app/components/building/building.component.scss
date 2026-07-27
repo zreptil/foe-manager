@@ -420,3 +420,19 @@ table {
   border: 10px solid rgba(0, 0, 0, 0.1);
   margin-bottom: 5px;
 }
+
+mat-icon.attack {
+  color: var(--iconAttack);
+}
+
+mat-icon.defend {
+  color: var(--iconDefend);
+}
+
+mat-icon.attackdefend {
+  background: linear-gradient(to right, var(--iconAttack) 0%, var(--iconAttack) 50%, var(--iconDefend) 50%, var(--iconDefend) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
