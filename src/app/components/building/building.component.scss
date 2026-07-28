@@ -382,7 +382,7 @@ table {
 }
 
 [btnEdit]:hover {
-  background: #fff;
+  --mat-menu-item-hover-state-layer-color: #fff;
   color: #000;
   border: 1px solid black;
 }
