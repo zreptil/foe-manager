@@ -15,7 +15,7 @@ mat-card {
   --iconDefend: rgba(0, 0, 255);
   --calcNegative: rgba(255, 170, 170);
   --calcPositive: rgba(180, 255, 180);
-  --rowMarK: rgba(255, 255, 255, 0.1);
+  --rowMark: rgba(255, 255, 255, 0.1);
   --calcCost: rgba(255, 255, 0, 0.8);
   --block: rgba(0, 0, 0, 0.5);
 
@@ -248,7 +248,7 @@ mat-card.gb-color-1 {
   --calcPositive: rgba(0, 140, 0);
   --ownerFore: black;
   --copyFore: rgba(0, 0, 0, 0.7);
-  --rowMarK: rgba(0, 0, 0, 0.1);
+  --rowMark: rgba(0, 0, 0, 0.1);
   --calcCost: rgba(200, 0, 200, 0.8);
   --block: rgba(0, 0, 0, 0.5);
 }

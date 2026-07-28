@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "npm run sync-version && ng build && npm run zip",
-    "zip": "zip-a-folder dist/app/browser dist/foe-manager_local.zip && copy dist\\foe-manager_local.zip dist\\app\\browser\\foe-manager_local.zip",
+    "zip": "zip-a-folder dist/app/browser dist/foe-manager_local.zip && md dist\\app\\browser\\history && copy dist\\foe-manager_local.zip dist\\app\\browser\\history\\foe-manager-%npm_package_version%.zip",
     "i18n-01-extract": "ng extract-i18n app --output-path src/locale --out-file messages.en-GB.xliff --format xliff --progress",
     "i18n-02-upload-english": "start https://crowdin.com/project/foe-manager/content/files",
     "i18n-03-create-messages": "tsc tools/i18n-create-messages.ts && node tools/i18n-create-messages.js && npm run build",
