@@ -109,7 +109,14 @@
           </tr>
           @if (showSniper) {
             <tr row>
-              <td colspan="3"></td>
+              <td></td>
+              <td owner reward>
+                <div>
+                  <mat-icon>crown</mat-icon>
+                  {{ ownerValueMax(nextLevel) }}
+                </div>
+              </td>
+              <td></td>
               @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {
                 @let v = calcPlaceValue(calcIdx, nextLevel, -1, gbUser.ownerValue);
                 <td>
@@ -118,6 +125,17 @@
                   </div>
                 </td>
               }
+            </tr>
+          } @else {
+            <tr row>
+              <td></td>
+              <td owner reward>
+                <div>
+                  <mat-icon>crown</mat-icon>
+                  {{ ownerValueMax(nextLevel) }}
+                </div>
+              </td>
+              <td></td>
             </tr>
           }
           @for (reward of nextLevel.rewards; let rewardIdx = $index; track rewardIdx) {
@@ -128,7 +146,8 @@
                 <td blocks>
                   <div [class]="classForBlock(nextLevel, rewardIdx)" block>
                     @let block = calcBlockValue(nextLevel, rewardIdx);
-                    @if ((rewardIdx === 0 || block - calcBlockValue(nextLevel, rewardIdx - 1) > 0) && block > 0) {
+                    @let last = calcBlockValue(nextLevel, rewardIdx - 1);
+                    @if ((rewardIdx === 0 || block > last) && block > 0) {
                       {{ block }}
                     } @else {
                       <mat-icon i18n-title title="Der Platz ist mit dem Eigenanteil schon gesichert">thumb_up</mat-icon>

@@ -123,6 +123,38 @@ export class BuildingComponent {
     GLOBALS.saveSharedData();
   }
 
+  protected ownerValueMax(level: LevelData) {
+    let calc = level.cost;
+    let ret = 0;
+    for (let i = 0; i < level.rewards.length; i++) {
+      const reward = this.bs.calcReward(level.rewards[i]);
+      if (reward > 0) {
+        if (calc - 2 * reward > ret) {
+          ret = calc - 2 * reward;
+        }
+        calc -= reward;
+      }
+    }
+    return ret;
+  }
+
+  protected calcBlockValue(level: LevelData, idx: number) {
+    let calc = level.cost;
+    let ret = 0;
+    for (let i = 0; i <= idx; i++) {
+      const reward = this.bs.calcReward(level.rewards[i]);
+      if (reward > 0) {
+        if (calc - 2 * reward > ret) {
+          ret = calc - 2 * reward;
+        }
+        calc -= reward;
+      }
+//      ret -= this.bs.calcReward(level.rewards[i]);
+    }
+//    ret -= this.bs.calcReward(level.rewards[idx]) * 2;
+    return ret;
+  }
+
   protected classForBlock(level: LevelData, idx: number): string {
     const bc = this.calcBlockValue(level, idx);
     if (bc > 0) {
@@ -132,7 +164,7 @@ export class BuildingComponent {
           return '';
         }
       }
-      return 'owner';
+      return ''; //'owner';
     }
     return '';
   }
@@ -162,15 +194,6 @@ export class BuildingComponent {
       return 'negative';
     }
     return 'positive';
-  }
-
-  protected calcBlockValue(level: LevelData, idx: number) {
-    let ret = level.cost;
-    for (let i = 0; i < idx; i++) {
-      ret -= this.bs.calcReward(level.rewards[i]);
-    }
-    ret -= this.bs.calcReward(level.rewards[idx]) * 2;
-    return ret;
   }
 
   protected calcPlaceValue(method: number, level: LevelData, idx: number, ownerValue: number) {
