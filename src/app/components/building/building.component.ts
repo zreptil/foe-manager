@@ -219,7 +219,9 @@ export class BuildingComponent {
   }
 
   protected calcNicePlaces(level: LevelData, idx: number, ownerValue: number) {
-    ownerValue = this.calcBlockValue(level, 0);
+    if (Utils.isEmpty(ownerValue) || ownerValue === 0) {
+      ownerValue = this.calcBlockValue(level, 0);
+    }
     switch (idx) {
       case -2:
         return ownerValue;
