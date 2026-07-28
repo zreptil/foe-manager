@@ -182,7 +182,7 @@
               @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {
                 <td>
                   <div calcTotal>
-                    @if (calcPlaceValue(calcIdx, nextLevel, -2, gbUser.ownerValue) > 0) {
+                    @if (calcPlaceValue(calcIdx, nextLevel, -2, gbUser.ownerValue) > 0 || gbUser.sniperValues?.length > 0) {
                       <mat-icon>crown</mat-icon>
                       {{ calcTotal(calcIdx, nextLevel, gbUser.ownerValue) }}
                     }
