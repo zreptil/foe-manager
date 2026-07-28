@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {HistoryBase} from './history-base';
 import {GLOBALS} from '@/_services/globals.service';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'app-v106',
@@ -12,9 +13,18 @@ import {GLOBALS} from '@/_services/globals.service';
       man wie in der Gebäudeliste Eigenanteil und Fremdanteile eingeben. Mit Anklicken des Pfeils
       links oben kommt man wieder in die Liste der Gebäude in der Stadt zurück.
     </li>
+    <li class="added" i18n="106a2">
+      Neue Sortierung der Gebäudeliste.
+      <div list>
+        <mat-icon>{{ globals.ICON_FIGHT }}</mat-icon>
+        <span>Sortierung nach der Art des Gebäudes</span>
+      </div>
+    </li>
   </ul>
   `,
-  imports: [],
+  imports: [
+    MatIcon
+  ],
   standalone: true
 })
 export class V106 extends HistoryBase {
