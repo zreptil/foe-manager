@@ -201,12 +201,12 @@
                   <mat-icon>crown</mat-icon>
                   Eingezahlter Eigenanteil
                 </mat-label>
-                <input (blur)="globals.siteConfig.editField = null"
+                <input (blur)="saveOwnerValue()"
                        (focus)="bs.onFocus($event)"
                        (keydown.enter)="globals.siteConfig.editField = ((gbUser.sniperValues?.length ?? 5)<5 ? 'sniper' : null)"
                        [(ngModel)]="gbUser.ownerValue" autofocus matInput>
               </mat-form-field>
-              <button (click)="globals.siteConfig.editField = null" mat-button>
+              <button (click)="saveOwnerValue($event)" mat-button>
                 <mat-icon>done</mat-icon>
               </button>
             </div>

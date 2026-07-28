@@ -15,7 +15,7 @@
               "namedChunks": true,
               "optimization": false,
               "sourceMap": {
-                "scripts": false,
+                "scripts": true,
                 "styles": true,
                 "vendor": false
               }

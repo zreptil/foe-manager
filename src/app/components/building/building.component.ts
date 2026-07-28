@@ -93,12 +93,13 @@ export class BuildingComponent {
 
   changeLevel(diff: number) {
     this.gbUser.level += diff;
+    this.gbUser.ownerValue = 0;
+    this.gbUser.sniperValues = [];
     this.nextLevel = this.bs.levelForUser(this.gb, this.gbUser);
     if (GLOBALS.user.siteMode === EnumSitemode.buildings && this.gb.key === GLOBALS.user.activeGbKey) {
       GLOBALS.user.activeUserGb = this.gbUser;
     }
     if (GLOBALS.user.siteMode === EnumSitemode.manage || GLOBALS.user.siteMode === EnumSitemode.buildings) {
-      console.log('save');
       GLOBALS.saveSharedData();
     }
   }
@@ -169,6 +170,12 @@ export class BuildingComponent {
     return '';
   }
 
+  protected saveOwnerValue(evt?: PointerEvent) {
+    evt?.preventDefault();
+    GLOBALS.siteConfig.editField = null;
+    GLOBALS.saveSharedData();
+  }
+
   protected saveSniperValue(evt?: PointerEvent, addNewValue = false) {
     evt?.preventDefault();
     this.gbUser.sniperValues ??= [];
@@ -181,6 +188,7 @@ export class BuildingComponent {
     if (!addNewValue || this.gbUser.sniperValues.length >= 5) {
       GLOBALS.siteConfig.editField = null;
     }
+    GLOBALS.saveSharedData();
   }
 
   protected clickSniperValue(evt: PointerEvent, idx: number) {
@@ -328,6 +336,8 @@ export class BuildingComponent {
     this.gbUser.level = Math.max(Math.min(+GLOBALS.siteConfig.levelValue, this.gb.levels.length - 1), 1);
     this.nextLevel = this.bs.levelForUser(this.gb, this.gbUser);
     GLOBALS.siteConfig.levelGbKey = null;
+    this.gbUser.ownerValue = 0;
+    this.gbUser.sniperValues = [];
   }
 
   protected clickEditLevel(evt: PointerEvent) {

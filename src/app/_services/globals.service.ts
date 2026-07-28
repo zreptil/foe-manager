@@ -407,8 +407,6 @@ export class GlobalsService {
       GLOBALS.user.activeUserGb = null;
     }
     GLOBALS.user.userzoom = storage.s8 ?? 0;
-
-    // validate values
   }
 
   saveSharedData(): void {

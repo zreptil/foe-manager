@@ -3,7 +3,6 @@ import {GbData} from '@/_model/gb-data';
 import {LevelData} from '@/_model/level-data';
 import {HttpClient, HttpRequest} from '@angular/common/http';
 import {GLOBALS} from './globals.service';
-import {Utils} from '@/classes/utils';
 
 @Injectable({
   providedIn: 'root',
@@ -44,7 +43,6 @@ export class AssistService {
           for (const src of list) {
             const gb = this.gbList.find((gb) => gb.key === src.a);
             if (gb != null) {
-              console.log(Utils.jsonize(gb));
               gb.fillFromJson(src, gb);
             } else {
               console.error(`Unknown GB: ${src.a}`);

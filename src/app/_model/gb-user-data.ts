@@ -6,7 +6,7 @@ export class GbUserData extends BaseData {
   colorIdx: number;
   ownerValue: number;
   levelMarked: boolean[];
-  sniperValues: number[] = [];
+  sniperValues: number[];
   active: boolean;
   player: string;
 
@@ -21,7 +21,9 @@ export class GbUserData extends BaseData {
       c: this.colorIdx,
       d: this.levelMarked,
       e: this.active,
-      f: this.player
+      f: this.player,
+      g: +this.ownerValue,
+      h: this.sniperValues
     };
   }
 
@@ -40,6 +42,8 @@ export class GbUserData extends BaseData {
     }
     this.active = json?.e ?? def?.active ?? true;
     this.player = json?.f ?? def?.user;
+    this.ownerValue = +(json?.g ?? def?.ownerValue ?? 0);
+    this.sniperValues = json?.h ?? def?.sniperValues ?? [];
   }
 }
 
