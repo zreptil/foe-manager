@@ -46,6 +46,7 @@ import {V102} from '@/components/whats-new/history/v102';
 import {V103} from '@/components/whats-new/history/v103';
 import {V104} from '@/components/whats-new/history/v104';
 import {V105} from '@/components/whats-new/history/v105';
+import {V106} from '@/components/whats-new/history/v106';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import {V105} from '@/components/whats-new/history/v105';
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
-    V105
+    V105,
+    V106
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),

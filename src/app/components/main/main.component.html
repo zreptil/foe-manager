@@ -1,49 +1,38 @@
 <div mainpanel>
   <div toolbar>
     <div>
-      @if (globals.appData?.person?.fullname != null) {
-        {{ globals.appData?.person?.fullname }}
-        @if (globals.usertypeList?.length > 1) {
-          @for (type of globals.usertypeList; track type.value) {
-            <button (click)="clickType(type)" [class]="classForType(type)" mat-button>{{ type.label }}</button>
-          }
-        }
-      }
-      @if (globals.user.siteMode < 2) {
-        @switch (globals.user.siteMode) {
-          @case (0) {
-            <div i18n>Bitte die Gebäude auswählen, die in Deiner Stadt stehen</div>
-          }
-          @case (1) {
-            <div i18n>Liste der Gebäude in der Stadt</div>
-          }
-          @default {
-            <div i18n>Liste der Gebäude in der Stadt</div>
-          }
-        }
-        <button (click)="toggleMode($event )" matIconButton small-icon-button>
-          <mat-icon>{{ iconForMode() }}</mat-icon>
-        </button>
-        <button (click)="toggleMode($event, 2)" matIconButton small-icon-button>
-          <mat-icon>{{ iconForMode(2) }}</mat-icon>
-        </button>
-        @if (globals.isDebug) {
-          <button (click)="toggleMode($event, 3)" matIconButton small-icon-button>
-            <mat-icon>{{ iconForMode(3) }}</mat-icon>
-          </button>
-        }
-      } @else {
-        @switch (globals.user.siteMode) {
-          @case (2) {
-            <div i18n>Gebäude</div>
-          }
-          @case (3) {
-            <div i18n>Gebäude anderer Spieler</div>
-          }
-        }
+      <div>{{ toolbarTitle }}</div>
+      <ng-template #btnBack>
         <button (click)="clickBuildingsBack($event)" matIconButton small-icon-button>
           <mat-icon>keyboard_arrow_left</mat-icon>
         </button>
+      </ng-template>
+      <ng-template #btnSiteMode let-mode="mode">
+        <button (click)="toggleMode($event, mode)" matIconButton small-icon-button>
+          <mat-icon>{{ iconForMode(mode) }}</mat-icon>
+        </button>
+      </ng-template>
+      @switch (globals.user.siteMode) {
+        @case (EnumSitemode.manage) {
+          @if (globals.user.activeUserGb == null) {
+            <ng-container [ngTemplateOutletContext]="{}" [ngTemplateOutlet]="btnSiteMode"/>
+            <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.buildings}" [ngTemplateOutlet]="btnSiteMode"/>
+            @if (globals.isDebug) {
+              <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.players}" [ngTemplateOutlet]="btnSiteMode"/>
+            }
+          } @else {
+            <ng-container [ngTemplateOutlet]="btnBack"/>
+          }
+        }
+        @case (EnumSitemode.select) {
+          <ng-container [ngTemplateOutletContext]="{}" [ngTemplateOutlet]="btnSiteMode"/>
+        }
+        @case (EnumSitemode.buildings) {
+          <ng-container [ngTemplateOutlet]="btnBack"/>
+        }
+        @case (EnumSitemode.players) {
+          <ng-container [ngTemplateOutlet]="btnBack"/>
+        }
       }
     </div>
     @if (globals.user.siteMode !== 2 || globals.user.activeGbKey == null) {

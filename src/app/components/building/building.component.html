@@ -1,14 +1,5 @@
 <mat-card (click)="clickGBCard($event)" [class]="classForGb">
   @if (bs.isModeManage) {
-    <!--    <button (click)="clickGBMark($event)" btnMark mat-icon-button small-icon-button>-->
-      <!--      <mat-icon>-->
-      <!--        @if (gbUser?.colorIdx) {-->
-      <!--          check_circle-->
-      <!--        } @else {-->
-      <!--          radio_button_unchecked-->
-      <!--        }-->
-      <!--      </mat-icon>-->
-      <!--    </button>-->
     <button [matMenuTriggerFor]="colorMenu" btnMark mat-icon-button small-icon-button>
       <mat-icon [class]="gb.iconClass">{{ gb.icon }}</mat-icon>
     </button>
@@ -17,12 +8,10 @@
         <button (click)="clickColor($event, $index)" [style]="{backgroundColor: option.color}" mat-menu-item>
         </button>
       }
-    </mat-menu>
-    @if (globals.isDebug) {
-      <button (click)="clickGBEdit($event)" btnEdit mat-icon-button small-icon-button>
+      <button (click)="clickGBEdit($event)" btnEdit mat-menu-item>
         <mat-icon>edit</mat-icon>
       </button>
-    }
+    </mat-menu>
   } @else if (bs.isModeBuildings || bs.isModeSelect) {
     <button btnMark mat-icon-button small-icon-button>
       <mat-icon [class]="gb.iconClass">{{ gb.icon }}</mat-icon>

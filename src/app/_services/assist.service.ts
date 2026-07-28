@@ -92,7 +92,7 @@ export class AssistService {
         a: 'Saturn-VI-Gate-PEGASUS', b: 'Saturn VI Gate PEGASUS', d: GLOBALS.ICON_FIGHT, e: [
           $localize`Produziert Forge-Punkte`,
           $localize`Erhöht die Kampfwerte der verteidigenden Armee`
-        ]
+        ], f: 'defend'
       }),
       new GbData({
         a: 'Saturn-VI-Gate-CENTAURUS', b: 'Saturn VI Gate CENTAURUS', d: GLOBALS.ICON_FIGHT, e: [

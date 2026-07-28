@@ -334,6 +334,14 @@ export class GlobalsService {
         this._gbList = [...this._gbList].sort((a, b) =>
           -Utils.compare(this.bs.gbForUser(a)?.timeCopied ?? 0, this.bs.gbForUser(b)?.timeCopied ?? 0));
         break;
+      case EnumSortmode.type:
+        this._gbList = [...this._gbList].sort((a, b) => {
+          if ((a.icon ?? 0) === (b.icon ?? 0)) {
+            return Utils.compare(a.iconClass ?? '', b.iconClass ?? '')
+          }
+          return Utils.compare(a.icon ?? 0, b.icon ?? 0);
+        });
+        break;
     }
     return this._gbList;
   }

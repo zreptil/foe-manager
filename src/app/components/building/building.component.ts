@@ -64,7 +64,7 @@ export class BuildingComponent {
     navigator.clipboard.writeText(this.copyData(level));
     this.gbUser.timeCopied = Date.now();
     GLOBALS.saveSharedData();
-    this.msg.info($localize`${this.gb.name} wurde kopiert`);
+    // this.msg.info($localize`${this.gb.name} wurde kopiert`);
   }
 
   copyData(level: LevelData) {

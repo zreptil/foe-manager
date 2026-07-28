@@ -11,6 +11,14 @@ mat-card.select, mat-card.buildings {
 
 mat-card {
   --cardFore: var(--bodyFore);
+  --iconAttack: rgba(255, 160, 160);
+  --iconDefend: rgba(0, 0, 255);
+  --calcNegative: rgba(255, 170, 170);
+  --calcPositive: rgba(180, 255, 180);
+  --rowMarK: rgba(255, 255, 255, 0.1);
+  --calcCost: rgba(255, 255, 0, 0.8);
+  --block: rgba(0, 0, 0, 0.5);
+
   min-height: 3em;
   display: flex;
   flex-flow: column;
@@ -112,13 +120,6 @@ mat-card {
       color: var(--ownerFore);
     }
   }
-
-  [btnEdit] {
-    display: none;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-  }
 }
 
 mat-card.selected {
@@ -126,12 +127,6 @@ mat-card.selected {
 
   [card-title] {
     color: var(--ownerFore);
-  }
-}
-
-mat-card:hover {
-  [btnEdit] {
-    display: block;
   }
 }
 
@@ -181,7 +176,7 @@ mat-card mat-card-content [upgrade] {
 }
 
 [calc], [calccost], [calcTotal] {
-  color: rgba(255, 255, 0, 0.8);
+  color: var(--calcCost);
 }
 
 [levelEdit] {
@@ -223,7 +218,7 @@ mat-label {
     align-items: center;
     justify-content: flex-end;
     font-size: 75%;
-    color: rgba(0, 0, 0, 0.5);
+    color: var(--block);
     width: 100%;
   }
 
@@ -247,62 +242,27 @@ mat-label {
 
 mat-card.gb-color-1 {
   background: #ff0;
+  --iconAttack: rgba(255, 160, 160);
+  --iconDefend: rgba(0, 0, 255);
+  --calcNegative: rgba(255, 70, 70);
+  --calcPositive: rgba(0, 140, 0);
   --ownerFore: black;
   --copyFore: rgba(0, 0, 0, 0.7);
-
-  tr[row].marked {
-    background: rgba(0, 0, 0, 0.1);
-  }
-
-  [calc], [calccost] {
-    color: rgba(0, 0, 255, 0.8);
-  }
-
-  [block] {
-    color: rgba(0, 0, 0, 0.5);
-  }
-
-  [block].owner {
-    color: var(--ownerFore);
-  }
-
-  [calc].positive {
-    color: green; //var(--calcPositive);
-  }
-
-  [calc].negative {
-    color: red; //var(--calcNegative);
-  }
+  --rowMarK: rgba(0, 0, 0, 0.1);
+  --calcCost: rgba(200, 0, 200, 0.8);
+  --block: rgba(0, 0, 0, 0.5);
 }
 
 mat-card.gb-color-2 {
   background: #080;
+  --cardFore: rgba(255, 255, 255, 0.8);
   --ownerFore: rgba(255, 255, 255, 0.8);
   --copyFore: rgba(0, 0, 0, 0.7);
-
-  tr[row].marked {
-    background: rgba(0, 0, 0, 0.1);
-  }
-
-  [calc], [calccost] {
-    color: rgba(0, 255, 0, 0.8);
-  }
-
-  [block] {
-    color: rgba(255, 255, 255, 0.5);
-  }
-
-  [block].owner {
-    color: var(--ownerFore);
-  }
-
-  [calc].positive {
-    color: green; //var(--calcPositive);
-  }
-
-  [calc].negative {
-    color: red; //var(--calcNegative);
-  }
+  --iconDefend: #aaf;
+  --iconAttack: #faa;
+  --rowMark: rgba(0, 0, 0, 0.1);
+  --calcCost: rgba(0, 255, 0, 0.8);
+  --block: rgba(255, 255, 255, 0.5);
 }
 
 mat-card.gb-color-3 {
@@ -310,34 +270,14 @@ mat-card.gb-color-3 {
   --cardFore: rgba(255, 255, 255, 0.8);
   --ownerFore: rgba(255, 255, 255, 0.9);
   --copyFore: rgba(255, 255, 255, 0.7);
-
-  tr[row].marked {
-    background: rgba(255, 255, 255, 0.1);
-  }
-
-  [calc], [calccost] {
-    color: rgba(128, 0, 128, 0.8);
-  }
-
-  [block] {
-    color: rgba(255, 255, 255, 0.5);
-  }
-
-  [block].owner {
-    color: var(--ownerFore);
-  }
-
-  [calc].positive {
-    color: green; //var(--calcPositive);
-  }
-
-  [calc].negative {
-    color: red; //var(--calcNegative);
-  }
+  --iconDefend: #88f;
+  --rowMark: rgba(255, 255, 255, 0.1);
+  --calcCost: rgba(255, 255, 0, 0.8);
+  --block: rgba(255, 255, 255, 0.5);
 }
 
 [row].marked {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--rowMark);
 }
 
 table {
@@ -416,9 +356,35 @@ table {
 [mat-menu-item] {
   height: 24px;
   width: 24px;
+  --mat-menu-item-icon-size: 24px;
   border-radius: 50%;
   border: 10px solid rgba(0, 0, 0, 0.1);
   margin-bottom: 5px;
+}
+
+[btnEdit] {
+  border: none;
+  background: var(--mainHeadBack);
+  color: var(--mainHeadFore);
+  min-width: 48px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon {
+    margin: 0;
+  }
+
+  ::ng-deep.mat-mdc-menu-item-text {
+    display: none;
+  }
+}
+
+[btnEdit]:hover {
+  background: #fff;
+  color: #000;
+  border: 1px solid black;
 }
 
 mat-icon.attack {

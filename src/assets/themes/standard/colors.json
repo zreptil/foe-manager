@@ -61,9 +61,5 @@
   "passwordBodyBack": "mat-red-600",
   "passwordBodyFore": "mat-red-200",
   "ownerFore": "rgba(255, 255, 255, 0.9)",
-  "copyFore": "rgba(255, 255, 255, 0.7)",
-  "calcNegative": "rgba(255, 180, 180)",
-  "calcPositive": "rgba(180, 255, 180)",
-  "iconAttack": "rgba(255, 0, 0)",
-  "iconDefend": "rgba(0, 0, 255)"
+  "copyFore": "rgba(255, 255, 255, 0.7)"
 }

@@ -32,6 +32,7 @@ export class MainComponent implements OnInit {
   };
   editPlayer: string;
   protected readonly Utils = Utils;
+  protected readonly EnumSitemode = EnumSitemode;
 
   constructor(public globals: GlobalsService,
               public msg: MessageService,
@@ -82,6 +83,39 @@ export class MainComponent implements OnInit {
         return 'format_list_numbered';
       case EnumSortmode.timeCopied:
         return 'access_time';
+      case EnumSortmode.type:
+        return 'swords';
+    }
+  }
+
+  get toolbarTitle() {
+    /*      @if (globals.user.siteMode < 2) {
+        @switch (globals.user.siteMode) {
+          @case (0) {
+            <div i18n>Bitte die Gebäude auswählen, die in Deiner Stadt stehen</div>
+          }
+          @case (1) {
+            <div i18n>Liste der Gebäude in der Stadt</div>
+          }
+          @default {
+            <div i18n>Liste der Gebäude in der Stadt</div>
+          }
+        }
+*/
+    switch (GLOBALS.user.siteMode) {
+      case EnumSitemode.manage:
+        if (GLOBALS.user.activeUserGb != null) {
+          return null;
+        }
+        return $localize`Liste der Gebäude in der Stadt`;
+      case EnumSitemode.select:
+        return $localize`Bitte die Gebäude auswählen, die in Deiner Stadt stehen`;
+      case EnumSitemode.buildings:
+        return $localize`Gebäude`;
+      case EnumSitemode.players:
+        return $localize`Gebäude anderer Spieler`;
+      default:
+        return $localize`Liste der Gebäude in der Stadt`;
     }
   }
 

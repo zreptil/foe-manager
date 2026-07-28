@@ -17,7 +17,8 @@ export enum EnumSortmode {
   none,
   alpha,
   level,
-  timeCopied
+  timeCopied,
+  type
 }
 
 export class UserData extends BaseData {
