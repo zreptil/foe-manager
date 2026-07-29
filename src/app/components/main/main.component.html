@@ -68,6 +68,9 @@
 
       @if (globals.isDebug) {
         <button (click)="clickImport($event)" mat-button>Importieren</button>
+        <button (click)="clickCopy($event)" mat-button>
+          <mat-icon>content_copy</mat-icon>
+        </button>
       }
       <!-- button (click)="sync.toggleSyncDropbox()" id="sync" mat-icon-button>
         <ng-container *ngIf="!sync.hasSync">

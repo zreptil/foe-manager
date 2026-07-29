@@ -257,7 +257,7 @@ mat-card.gb-color-2 {
   background: #080;
   --cardFore: rgba(255, 255, 255, 0.8);
   --ownerFore: rgba(255, 255, 255, 0.8);
-  --copyFore: rgba(0, 0, 0, 0.7);
+  --copyFore: rgba(255, 255, 255, 0.7);
   --iconDefend: #aaf;
   --iconAttack: #faa;
   --rowMark: rgba(0, 0, 0, 0.1);
@@ -299,7 +299,7 @@ table {
     border-bottom-left-radius: var(--br);
   }
 
-  tr > :last-child {
+  tr > :last-child:not(.copy) {
     padding-right: 0.5em;
     border-top-right-radius: var(--br);
     border-bottom-right-radius: var(--br);
@@ -311,6 +311,7 @@ table {
       justify-content: flex-end;
       min-width: 0;
       white-space: nowrap;
+      padding: 0 0.5em;
 
       [title] {
         text-align: right;
@@ -401,4 +402,41 @@ mat-icon.attackdefend {
   -webkit-background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
+}
+
+.edit {
+  [row] {
+    --br: 0.5em;
+    --thick: 3px;
+
+    td.copy {
+      border-left: var(--thick) solid var(--copyFore);
+      border-right: var(--thick) solid var(--copyFore);
+    }
+  }
+
+  [row]:nth-child(3) {
+    td.copy {
+      border-top-left-radius: var(--br);
+      border-top-right-radius: var(--br);
+      border-top: var(--thick) solid var(--copyFore);
+    }
+  }
+
+  [row]:nth-last-child(2) {
+    td.copy {
+      border-bottom-left-radius: var(--br);
+      border-bottom-right-radius: var(--br);
+      border-bottom: var(--thick) solid var(--copyFore);
+    }
+  }
+
+  td {
+    button {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      padding: 0;
+    }
+  }
 }

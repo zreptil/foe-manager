@@ -266,7 +266,9 @@ export class MainComponent implements OnInit {
       }
     }
   }
-}
 
-// Rolly der Erste Habitat 94
-// {"s0":1784473728660,"s1":"1.1.4","s2":{"The-Blue-Galaxy":{"0":1,"a":11,"c":false,"d":[true,true,true,true,true]},"Lighthouse-of-Alexandria":{"0":1,"a":10,"c":false,"d":[true,true,true,true,true]},"Tower-of-Babel":{"0":1,"a":20,"c":false,"d":[true,true,true,true,true]},"Alcatraz":{"0":1,"a":33,"b":1784259033241,"c":false,"d":[true,true,true,true,true]},"Observatory":{"0":1,"a":19,"c":false,"d":[true,true,true,true,true]},"Cathedral-of-Aachen":{"0":1,"a":19,"c":false,"d":[true,true,true,true,true]},"The-Arc":{"0":1,"a":95,"c":false,"d":[true,true,true,true,true]},"AI-Core":{"0":1,"a":1,"b":0,"c":false,"d":[true,true,true,true,true]},"Trust-Tower":{"0":1,"a":1,"b":0,"c":false,"d":[true,true,true,true,true]},"Château-Frontenac":{"0":1,"a":1,"b":0,"c":false,"d":[true,true,true,true,true]}},"s3":2,"s4":"Andi Schlumpf","s5":{"0":3,"1":1,"2":2},"s6":"Observatory","s7":{"0":1,"a":49,"c":false,"d":[true,true,true,true,true]}}
+  protected clickCopy(evt: PointerEvent) {
+    evt.preventDefault();
+    navigator.clipboard.writeText(JSON.stringify(GLOBALS.sharedData));
+  }
+}

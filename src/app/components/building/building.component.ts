@@ -39,9 +39,8 @@ export class BuildingComponent {
   get showSniper() {
     return GLOBALS.user.siteMode === EnumSitemode.buildings ||
       (GLOBALS.user.siteMode === EnumSitemode.manage &&
-        GLOBALS.user.activeGbKey != null
+        (GLOBALS.user.activeGbKey != null || this.gbUser.copyIdx >= 0)
       );
-    //  this.gbUser.marked && GLOBALS.isDebug);
   }
 
   protected get classForGb() {
@@ -52,11 +51,29 @@ export class BuildingComponent {
     if (GLOBALS.user.listGb[this.gb.key]?.active) {
       ret.push('selected');
     }
-    if (GLOBALS.user.siteMode === EnumSitemode.manage && this.gbUser?.colorIdx) {
-      ret.push(`gb-color-${this.gbUser.colorIdx}`);
+    if (GLOBALS.user.siteMode === EnumSitemode.manage) {
+      if (this.gbUser?.colorIdx) {
+        ret.push(`gb-color-${this.gbUser.colorIdx}`);
+      }
+      if (GLOBALS.user.activeGbKey != null) {
+        ret.push('edit');
+      }
     }
     ret.push(Object.keys(EnumSitemode).filter(key => isNaN(Number(key)))[GLOBALS.user.siteMode]);
     return ret.join(' ');
+  }
+
+  isColumnVisible(idx: number) {
+    return GLOBALS.user.activeGbKey != null ||
+      (GLOBALS.user.siteMode === EnumSitemode.manage && +(this.gbUser?.copyIdx) === +idx);
+  }
+
+  classForCopy(idx: number) {
+    const ret: string[] = [];
+    if (idx === (this.gbUser?.copyIdx ?? -1)) {
+      ret.push('copy');
+    }
+    return ret;
   }
 
   clickCopyAction(evt: MouseEvent, level: LevelData) {
@@ -69,13 +86,19 @@ export class BuildingComponent {
 
   copyData(level: LevelData) {
     const ret: string[] = [GLOBALS.user.username, this.gb.name];
-    let place = 1;
     const rewards: string[] = [];
-    for (const reward of level.rewards) {
-      if (reward > 0 && this.gbUser.levelMarked[place - 1]) {
-        rewards.push(`P${place}(${this.bs.calcReward(reward)})`);
+    for (let i = 0; i < level.rewards.length; i++) {
+      if (this.gbUser.levelMarked[i] && level.rewards[i] > 0) {
+        let reward = level.rewards[i];
+        if (this.gbUser.copyIdx >= 0) {
+          reward = this.calcPlaceValue(this.gbUser.copyIdx, level, i, this.gbUser.ownerValue);
+        } else {
+          reward = this.bs.calcReward(reward);
+        }
+        if (reward > 0) {
+          rewards.push(`P${i + 1}(${reward})`);
+        }
       }
-      place++;
     }
     return [...ret, ...rewards.reverse()].join(' ');
   }
@@ -93,15 +116,7 @@ export class BuildingComponent {
 
   changeLevel(diff: number) {
     this.gbUser.level += diff;
-    this.gbUser.ownerValue = 0;
-    this.gbUser.sniperValues = [];
-    this.nextLevel = this.bs.levelForUser(this.gb, this.gbUser);
-    if (GLOBALS.user.siteMode === EnumSitemode.buildings && this.gb.key === GLOBALS.user.activeGbKey) {
-      GLOBALS.user.activeUserGb = this.gbUser;
-    }
-    if (GLOBALS.user.siteMode === EnumSitemode.manage || GLOBALS.user.siteMode === EnumSitemode.buildings) {
-      GLOBALS.saveSharedData();
-    }
+    this.updateLevel();
   }
 
   stopLevelChange(evt: PointerEvent): void {
@@ -109,6 +124,26 @@ export class BuildingComponent {
     evt.stopPropagation();
     clearTimeout(GLOBALS.siteConfig.delayTimer);
     clearInterval(GLOBALS.siteConfig.repeatTimer);
+  }
+
+  protected saveLevel(evt?: PointerEvent) {
+    evt?.preventDefault();
+    this.gbUser.level = Math.max(Math.min(+GLOBALS.siteConfig.levelValue, this.gb.levels.length - 1), 1);
+    this.updateLevel();
+  }
+
+  protected updateLevel() {
+    this.nextLevel = this.bs.levelForUser(this.gb, this.gbUser);
+    GLOBALS.siteConfig.levelGbKey = null;
+    this.gbUser.ownerValue = 0;
+    this.gbUser.sniperValues = [];
+    this.gbUser.copyIdx = -1;
+    if (GLOBALS.user.siteMode === EnumSitemode.buildings && this.gb.key === GLOBALS.user.activeGbKey) {
+      GLOBALS.user.activeUserGb = this.gbUser;
+    }
+    if (GLOBALS.user.siteMode === EnumSitemode.manage || GLOBALS.user.siteMode === EnumSitemode.buildings) {
+      GLOBALS.saveSharedData();
+    }
   }
 
   protected classForReward(idx: number) {
@@ -197,11 +232,14 @@ export class BuildingComponent {
   }
 
   protected classForPlaceValue(method: number, level: LevelData, idx: number, ownerValue: number) {
+    const ret: string[] = [];
     const value = Math.abs(this.calcPlaceValue(method, level, idx, ownerValue));
     if (value <= 0 || this.bs.calcReward(level.rewards[idx]) < value) {
-      return 'negative';
+      ret.push('negative');
+    } else {
+      ret.push('positive');
     }
-    return 'positive';
+    return ret;
   }
 
   protected calcPlaceValue(method: number, level: LevelData, idx: number, ownerValue: number) {
@@ -219,7 +257,7 @@ export class BuildingComponent {
   }
 
   protected calcNicePlaces(level: LevelData, idx: number, ownerValue: number) {
-    if (Utils.isEmpty(ownerValue) || ownerValue === 0) {
+    if (Utils.isEmpty(ownerValue) || +ownerValue === 0) {
       ownerValue = this.calcBlockValue(level, 0);
     }
     switch (idx) {
@@ -333,15 +371,6 @@ export class BuildingComponent {
     }
   }
 
-  protected saveLevel(evt?: PointerEvent) {
-    evt?.preventDefault();
-    this.gbUser.level = Math.max(Math.min(+GLOBALS.siteConfig.levelValue, this.gb.levels.length - 1), 1);
-    this.nextLevel = this.bs.levelForUser(this.gb, this.gbUser);
-    GLOBALS.siteConfig.levelGbKey = null;
-    this.gbUser.ownerValue = 0;
-    this.gbUser.sniperValues = [];
-  }
-
   protected clickEditLevel(evt: PointerEvent) {
     evt?.preventDefault();
     GLOBALS.siteConfig.levelGbKey = this.gb.key;
@@ -351,5 +380,11 @@ export class BuildingComponent {
   protected clickOwnerValue(evt: PointerEvent) {
     evt.preventDefault();
     GLOBALS.siteConfig.editField = 'owner';
+  }
+
+  protected clickCopyIdx(evt: PointerEvent, idx: number) {
+    evt?.preventDefault();
+    this.gbUser.copyIdx = idx;
+    GLOBALS.saveSharedData();
   }
 }

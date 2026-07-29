@@ -99,7 +99,7 @@ export class AssistService {
         ], f: 'attack'
       }),
       new GbData({
-        a: 'AI-Core', b: 'K.I. Kern', d: GLOBALS.ICON_GOODS, e: [
+        a: 'AI-Core', b: 'K.I. Kern', d: GLOBALS.ICON_GUILD, e: [
           $localize`Spezialbonus des KI-Kerns`,
           $localize`Produziert Güter für die Gildenkasse`
         ]
@@ -180,7 +180,7 @@ export class AssistService {
         ]
       }),
       new GbData({
-        a: 'The-Arc', b: 'Die Arche', d: GLOBALS.ICON_GOODS, e: [
+        a: 'The-Arc', b: 'Die Arche', d: GLOBALS.ICON_GUILD, e: [
           $localize`Produziert Güter für die Gildenkasse`,
           $localize`Erhöht Belohnungen für Einzahlungen in Legendäre Gebäude`
         ]
@@ -227,7 +227,7 @@ export class AssistService {
         ]
       }),
       new GbData({
-        a: 'Atomium', b: 'Atomium', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Atomium', b: 'Atomium', d: GLOBALS.ICON_GUILD, e: [
           $localize`Produziert Güter für die Gildenkasse`,
           $localize`Erhöht die Zufriedenheit der Stadt`
         ]

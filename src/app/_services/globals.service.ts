@@ -37,6 +37,7 @@ export class GlobalsService {
   ICON_GOODS = 'package_2';
   ICON_FORGE = 'scatter_plot';
   ICON_PEOPLE = 'people';
+  ICON_GUILD = 'shield';
 
   version = VERSION;
   isNewVersion = false;
@@ -360,6 +361,24 @@ export class GlobalsService {
     return this._playerList;
   }
 
+  get sharedData() {
+    const ret: any = {
+      s0: Date.now(),
+      s1: this.version,
+      s2: {},
+      s3: GLOBALS.user.siteMode,
+      s4: this.user.username,
+      s5: this.user.gbSort,
+      s6: GLOBALS.user.activeGbKey,
+      s7: GLOBALS.user.activeUserGb?.asJson,
+      s8: GLOBALS.user.userzoom,
+    };
+    for (const key of Object.keys(GLOBALS.user.listGb)) {
+      ret.s2[key] = GLOBALS.user.listGb[key].asJson;
+    }
+    return ret;
+  }
+
   loadAppData() {
     this.appData = new AppData();
   }
@@ -410,21 +429,7 @@ export class GlobalsService {
   }
 
   saveSharedData(): void {
-    const storage: any = {
-      s0: Date.now(),
-      s1: this.version,
-      s2: {},
-      s3: GLOBALS.user.siteMode,
-      s4: this.user.username,
-      s5: this.user.gbSort,
-      s6: GLOBALS.user.activeGbKey,
-      s7: GLOBALS.user.activeUserGb?.asJson,
-      s8: GLOBALS.user.userzoom,
-    };
-    for (const key of Object.keys(GLOBALS.user.listGb)) {
-      storage.s2[key] = GLOBALS.user.listGb[key].asJson;
-    }
-    const data = JSON.stringify(storage);
+    const data = JSON.stringify(this.sharedData);
     localStorage.setItem('sharedData', data);
     if (this.sync.hasSync) {
       this.sync.uploadFile(this.env.settingsFilename, data);
