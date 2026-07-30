@@ -68,9 +68,9 @@ export class BuildingComponent {
       (GLOBALS.user.siteMode === EnumSitemode.manage && +(this.gbUser?.copyIdx) === +idx);
   }
 
-  classForCopy(idx: number) {
-    const ret: string[] = [];
-    if (idx === (this.gbUser?.copyIdx ?? -1)) {
+  classForCopy(idx: number, def: string[] = []) {
+    const ret = [...def];
+    if (+idx === +(this.gbUser?.copyIdx ?? -1)) {
       ret.push('copy');
     }
     return ret;
@@ -174,28 +174,29 @@ export class BuildingComponent {
     return ret;
   }
 
-  protected calcBlockValue(level: LevelData, idx: number) {
+  protected calcBlockValue(method: number, level: LevelData, idx: number) {
     let calc = level.cost;
     let ret = 0;
     for (let i = 0; i <= idx; i++) {
-      const reward = this.bs.calcReward(level.rewards[i]);
+      let reward = this.bs.calcReward(level.rewards[i]);
+      if (method >= 0) {
+        reward = Math.abs(this.calcPlaceValue(method, level, i, this.gbUser.ownerValue));
+      }
       if (reward > 0) {
         if (calc - 2 * reward > ret) {
           ret = calc - 2 * reward;
         }
         calc -= reward;
       }
-//      ret -= this.bs.calcReward(level.rewards[i]);
     }
-//    ret -= this.bs.calcReward(level.rewards[idx]) * 2;
     return ret;
   }
 
-  protected classForBlock(level: LevelData, idx: number): string {
-    const bc = this.calcBlockValue(level, idx);
+  protected classForBlock(method: number, level: LevelData, idx: number): string {
+    const bc = this.calcBlockValue(method, level, idx);
     if (bc > 0) {
       for (let i = idx + 1; i <= 5 && level.rewards[i] > 0; i++) {
-        const bn = this.calcBlockValue(level, i);
+        const bn = this.calcBlockValue(method, level, i);
         if (bn > 0) {
           return '';
         }
@@ -258,7 +259,7 @@ export class BuildingComponent {
 
   protected calcNicePlaces(level: LevelData, idx: number, ownerValue: number) {
     if (Utils.isEmpty(ownerValue) || +ownerValue === 0) {
-      ownerValue = this.calcBlockValue(level, 0);
+      ownerValue = this.calcBlockValue(-1, level, 0);
     }
     switch (idx) {
       case -2:
@@ -274,7 +275,7 @@ export class BuildingComponent {
     let rewIdx = 0;
     while (idx >= 0) {
       const rew = this.bs.calcReward(level.rewards[rewIdx]);
-      ret = Math.min(rew, Math.ceil(base / 2));
+      ret = Math.min(rew, Math.floor(base / 2));
       if (ret <= sl[sniperIdx]) {
         if (idx === 0) {
           return -sl[sniperIdx];
@@ -384,7 +385,7 @@ export class BuildingComponent {
 
   protected clickCopyIdx(evt: PointerEvent, idx: number) {
     evt?.preventDefault();
-    this.gbUser.copyIdx = idx;
+    this.gbUser.copyIdx = +idx;
     GLOBALS.saveSharedData();
   }
 }

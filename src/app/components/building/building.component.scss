@@ -314,7 +314,7 @@ table {
       padding: 0 0.5em;
 
       [title] {
-        text-align: right;
+        text-align: center;
         font-size: 75%;
       }
     }
@@ -328,7 +328,7 @@ table {
     }
 
     td[blocks] {
-      width: 6em;
+      width: 3em;
     }
 
     td[calc] {
@@ -409,25 +409,40 @@ mat-icon.attackdefend {
     --br: 0.5em;
     --thick: 3px;
 
-    td.copy {
+    td.copy:not(.blocks) {
       border-left: var(--thick) solid var(--copyFore);
+    }
+
+    td.copy.blocks {
       border-right: var(--thick) solid var(--copyFore);
     }
   }
 
-  [row]:nth-child(3) {
+  [row]:nth-child(2) {
     td.copy {
-      border-top-left-radius: var(--br);
-      border-top-right-radius: var(--br);
       border-top: var(--thick) solid var(--copyFore);
+    }
+
+    td.copy:not(.blocks) {
+      border-top-left-radius: var(--br);
+    }
+
+    td.copy.blocks {
+      border-top-right-radius: var(--br);
     }
   }
 
   [row]:nth-last-child(2) {
     td.copy {
-      border-bottom-left-radius: var(--br);
-      border-bottom-right-radius: var(--br);
       border-bottom: var(--thick) solid var(--copyFore);
+    }
+
+    td.copy:not(.blocks) {
+      border-bottom-left-radius: var(--br);
+    }
+
+    td.copy.blocks {
+      border-bottom-right-radius: var(--br);
     }
   }
 

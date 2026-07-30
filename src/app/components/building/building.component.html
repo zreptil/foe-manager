@@ -73,23 +73,6 @@
         Table for rewards
         -->
         <table>
-          @if (showSniper) {
-            <!-- row for titles of calcmethods -->
-            <tr>
-              @if (isColumnVisible(-1)) {
-                <td colspan="3"></td>
-              } @else {
-                <td colspan="2"></td>
-              }
-              @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {
-                @if (isColumnVisible(calcIdx)) {
-                  <td>
-                    <div title>{{ calcTitles[calcIdx] }}</div>
-                  </td>
-                }
-              }
-            </tr>
-          }
           <tr first row>
             <!-- row for level and cost -->
             <td name>
@@ -101,29 +84,43 @@
             <td>
               <div cost>{{ nextLevel.cost }}</div>
             </td>
-            @if (showSniper) {
-              @if (isColumnVisible(-1)) {
-                <td></td>
-              }
+            <td>{{ isColumnVisible(-1) ? '' : calcTitles[gbUser.copyIdx] }}</td>
+            @if (showSniper && isColumnVisible(-1)) {
+              <!-- titles of calcmethods -->
               @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {
-                @let v = calcPlaceValue(calcIdx, nextLevel, -2, gbUser.ownerValue);
                 @if (isColumnVisible(calcIdx)) {
-                  <td calccost cost>
-                    @if ((v ?? 0) > 0) {
-                      <div>
-                        <mat-icon>crown</mat-icon>
-                        {{ v }}
-                      </div>
-                    }
+                  <td colspan="2">
+                    <div title>{{ calcTitles[calcIdx] }}</div>
                   </td>
                 }
               }
-            } @else {
-              <td></td>
             }
           </tr>
+          <!--          <tr>-->
+          <!--            @if (showSniper) {-->
+          <!--              @if (isColumnVisible(-1)) {-->
+          <!--                <td colspan="3"></td>-->
+          <!--              }-->
+          <!--              @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {-->
+          <!--                @let v = calcPlaceValue(calcIdx, nextLevel, -2, gbUser.ownerValue);-->
+          <!--                @if (isColumnVisible(calcIdx)) {-->
+          <!--                  <td calccost cost>-->
+          <!--                    @if ((v ?? 0) > 0) {-->
+          <!--                      <div>-->
+          <!--                        <mat-icon>crown</mat-icon>-->
+          <!--                        {{ v }}-->
+          <!--                      </div>-->
+          <!--                    }-->
+          <!--                  </td>-->
+          <!--                }-->
+          <!--              }-->
+          <!--            } @else {-->
+          <!--              <td></td>-->
+          <!--            }-->
+          <!--          </tr>-->
           @if (showSniper) {
             <tr row>
+              <!-- row for own value -->
               <td></td>
               @if (isColumnVisible(-1)) {
                 <td [class]="classForCopy(-1)" owner reward>
@@ -132,21 +129,26 @@
                     {{ ownerValueMax(nextLevel) }}
                   </div>
                 </td>
-                <td></td>
-              } @else {
-                <td></td>
+                <td [class]="classForCopy(-1, ['blocks'])"></td>
               }
               @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {
-                @let v = calcPlaceValue(calcIdx, nextLevel, -1, gbUser.ownerValue);
+                @let v = calcPlaceValue(calcIdx, nextLevel, -2, gbUser.ownerValue);
                 @if (isColumnVisible(calcIdx)) {
                   <td [class]="classForCopy(calcIdx)">
                     @let pv = calcPlaceValue(calcIdx, nextLevel, -2, gbUser.ownerValue);
                     @if ((pv ?? 0) > 0 || gbUser.sniperValues?.length > 0) {
-                      <div (click)="clickCopyIdx($event, calcIdx)" calccost cost>{{ v }}</div>
+                      <div (click)="clickCopyIdx($event, calcIdx)" calccost cost>
+                        <mat-icon>crown</mat-icon>
+                        {{ v }}
+                      </div>
                     } @else {
-                      <div calccost cost>{{ v }}</div>
+                      <div calccost cost>
+                        <mat-icon>crown</mat-icon>
+                        {{ v }}
+                      </div>
                     }
                   </td>
+                  <td [class]="classForCopy(calcIdx, ['blocks'])"></td>
                 }
               }
             </tr>
@@ -160,20 +162,21 @@
                     {{ ownerValueMax(nextLevel) }}
                   </div>
                 </td>
-                <td></td>
+                <td [class]="classForCopy(-1, ['blocks'])"></td>
               }
             </tr>
           }
+          <!-- rows for places -->
           @for (reward of nextLevel.rewards; let rewardIdx = $index; track rewardIdx) {
             @if (reward !== 0) {
               <tr (click)="clickRow($event, rewardIdx)" [class]="classForReward(rewardIdx)" row>
                 <td title>P{{ rewardIdx + 1 }}</td>
                 @if (isColumnVisible(-1)) {
                   <td [class]="classForCopy(-1)" reward>{{ bs.calcReward(reward) }}</td>
-                  <td blocks>
-                    <div [class]="classForBlock(nextLevel, rewardIdx)" block>
-                      @let block = calcBlockValue(nextLevel, rewardIdx);
-                      @let last = calcBlockValue(nextLevel, rewardIdx - 1);
+                  <td [class]="classForCopy(-1, ['blocks'])">
+                    <div [class]="classForBlock(-1, nextLevel, rewardIdx)" block>
+                      @let block = calcBlockValue(-1, nextLevel, rewardIdx);
+                      @let last = calcBlockValue(-1, nextLevel, rewardIdx - 1);
                       @if ((rewardIdx === 0 || block > last) && block > 0) {
                         {{ block }}
                       } @else {
@@ -185,9 +188,6 @@
                 @if (showSniper) {
                   @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {
                     @if (isColumnVisible(calcIdx)) {
-                      @if (!isColumnVisible(-1)) {
-                        <td></td>
-                      }
                       <td [class]="classForCopy(calcIdx)">
                         <div [class]="classForPlaceValue(calcIdx, nextLevel, rewardIdx, gbUser.ownerValue)" calc>
                           @if (calcPlaceValue(calcIdx, nextLevel, -2, gbUser.ownerValue) > 0 || gbUser.sniperValues?.length > 0) {
@@ -202,6 +202,17 @@
                           }
                         </div>
                       </td>
+                      <td [class]="classForCopy(calcIdx, ['blocks'])">
+                        <div [class]="classForBlock(calcIdx, nextLevel, rewardIdx)" block>
+                          @let block = calcBlockValue(calcIdx, nextLevel, rewardIdx);
+                          @let last = calcBlockValue(calcIdx, nextLevel, rewardIdx - 1);
+                          @if ((rewardIdx === 0 || block > last) && block > 0) {
+                            {{ block }}
+                          } @else {
+                            <mat-icon i18n-title title="Der Platz ist mit dem Eigenanteil schon gesichert">thumb_up</mat-icon>
+                          }
+                        </div>
+                      </td>
                     }
                   }
                 }
@@ -211,10 +222,9 @@
           @if (showSniper) {
             <tr>
               @if (isColumnVisible(-1)) {
-                <td colspan="3">
-                </td>
+                <td colspan="3"></td>
               } @else {
-                <td colspan="2"></td>
+                <td></td>
               }
               @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {
                 @if (isColumnVisible(calcIdx)) {
@@ -226,6 +236,7 @@
                       }
                     </div>
                   </td>
+                  <td></td>
                 }
               }
             </tr>
