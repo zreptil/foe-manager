@@ -271,4 +271,10 @@ export class MainComponent implements OnInit {
     evt.preventDefault();
     navigator.clipboard.writeText(JSON.stringify(GLOBALS.sharedData));
   }
+
+  protected clickInfo(evt: PointerEvent) {
+    evt.preventDefault();
+    GLOBALS.user.showInfoGb = !GLOBALS.user.showInfoGb;
+    GLOBALS.saveSharedData();
+  }
 }

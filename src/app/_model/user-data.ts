@@ -32,6 +32,7 @@ export class UserData extends BaseData {
   readonly _activeGbKey = signal<string>(null);
   activeUserGb: GbUserData;
   activePlayer: string;
+  showInfoGb: boolean;
 
   constructor(json?: any) {
     super(json);
@@ -61,6 +62,7 @@ export class UserData extends BaseData {
       e: this.siteMode,
       f: this.activeGbKey,
       g: this.activeUserGb?.asJson,
+      h: this.showInfoGb
     };
 
     ret.f = {};
@@ -94,5 +96,6 @@ export class UserData extends BaseData {
     } else {
       this.activeUserGb = null;
     }
+    this.showInfoGb = json?.h ?? def?.showInfo ?? false;
   }
 }

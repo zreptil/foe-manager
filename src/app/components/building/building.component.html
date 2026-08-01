@@ -1,7 +1,9 @@
 <mat-card (click)="clickGBCard($event)" [class]="classForGb">
   @if (bs.isModeManage) {
     <button [matMenuTriggerFor]="colorMenu" btnMark mat-icon-button small-icon-button>
-      <mat-icon [class]="gb.iconClass">{{ gb.icon }}</mat-icon>
+      @for (icon of gb.icon; track $index) {
+        <mat-icon [class]="icon.class">{{ icon.key }}</mat-icon>
+      }
     </button>
     <mat-menu #colorMenu="matMenu" [overlapTrigger]="true" btnMark>
       @for (option of globals.siteConfig.colors; track $index) {
@@ -14,7 +16,9 @@
     </mat-menu>
   } @else if (bs.isModeBuildings || bs.isModeSelect) {
     <button btnMark mat-icon-button small-icon-button>
-      <mat-icon [class]="gb.iconClass">{{ gb.icon }}</mat-icon>
+      @for (icon of gb.icon; track $index) {
+        <mat-icon [class]="icon.class">{{ icon.key }}</mat-icon>
+      }
     </button>
   }
   <div card-title>
@@ -23,7 +27,7 @@
   @if (!bs.isModeManage && globals.isDebug) {
     <div i18n-title info title="Die Anzahl an Leveln für die es Daten gibt">{{ gb.levels.length }}</div>
   }
-  @if (bs.isModeBuildings || bs.isModeSelect) {
+  @if (bs.isModeBuildings || bs.isModeSelect || bs.showInfo) {
     <div gb-effects>
       @for (e of gb.effects; track $index) {
         <div>{{ e }}</div>

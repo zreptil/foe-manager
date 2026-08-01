@@ -38,6 +38,15 @@ export class GlobalsService {
   ICON_FORGE = 'scatter_plot';
   ICON_PEOPLE = 'people';
   ICON_GUILD = 'shield';
+  ICON_MONEY = 'paid';
+  ICON_HAPPY = 'mood';
+  ICON_PROTECT = 'admin_panel_settings';
+  ICON_MEDALS = 'workspace_premium';
+  ICON_TOWNGOODS = 'add_home_work';
+  ICON_ARMY = 'group_add';
+  ICON_BAG = 'money_bag';
+  ICON_DOUBLE = 'speed_2x';
+  ICON_REWARD = 'stars_2';
 
   version = VERSION;
   isNewVersion = false;
@@ -338,9 +347,9 @@ export class GlobalsService {
       case EnumSortmode.type:
         this._gbList = [...this._gbList].sort((a, b) => {
           if ((a.icon ?? 0) === (b.icon ?? 0)) {
-            return Utils.compare(a.iconClass ?? '', b.iconClass ?? '')
+            return Utils.compare(a.icon[0].class ?? '', b.icon[0].class ?? '')
           }
-          return Utils.compare(a.icon ?? 0, b.icon ?? 0);
+          return Utils.compare(a.icon[0].key ?? 0, b.icon[0].key ?? 0);
         });
         break;
     }

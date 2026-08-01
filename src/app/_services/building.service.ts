@@ -8,6 +8,10 @@ import {EnumSitemode} from '@/_model/user-data';
   providedIn: 'root',
 })
 export class BuildingService {
+  get showInfo() {
+    return GLOBALS.user.showInfoGb;
+  }
+
   get isModeSelect() {
     return GLOBALS.user.siteMode === EnumSitemode.select;
   }

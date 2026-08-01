@@ -68,285 +68,379 @@ export class AssistService {
   initData() {
     this.gbList = [
       new GbData({
-        a: 'Cosmic-Catalyst', b: 'Kosmischer Katalysator', d: GLOBALS.ICON_FIGHT, e: [
-          $localize`Spezialbonus des Kosmischen Katalysators`,
+        a: 'Cosmic-Catalyst', b: 'Kosmischer Katalysator',
+        d: [{key: GLOBALS.ICON_FIGHT}, {key: GLOBALS.ICON_GUILD}],
+        e: [
+          $localize`Chance, einer gegnerischen Einheit des selben Zeitalters 150% Schaden zuzufügen`,
           $localize`Produziert Güter für die Gildenkasse`,
-          $localize`Chance, einer gegnerischen Einheit des selben Zeitalters 150% Schaden zuzufügen`
+          $localize`Spezialbonus des Kosmischen Katalysators`
         ]
       }),
       new GbData({
-        a: 'Stellar-Warship', b: 'Stellares Kriegsschiff', d: GLOBALS.ICON_FIGHT, e: [
-          $localize`Produziert ungebundene Einheiten aus vorhandenen Militärgebäuden`,
-          $localize`Erhöht die Kampfwerte der angreifenden und verteidigenden Armee`
-        ], f: 'attackdefend'
+        a: 'Stellar-Warship', b: 'Stellares Kriegsschiff',
+        d: [{key: GLOBALS.ICON_FIGHT, class: 'attackdefend'}, {key: GLOBALS.ICON_ARMY}],
+        e: [
+          $localize`Erhöht die Kampfwerte der angreifenden und verteidigenden Armee`,
+          $localize`Produziert ungebundene Einheiten aus vorhandenen Militärgebäuden`
+        ]
       }),
       new GbData({
-        a: 'Saturn-VI-Gate-HYDRA', b: 'Saturn VI Gate HYDRA', d: GLOBALS.ICON_FIGHT, e: [
-          $localize`Produziert Güter für die Gildenkasse`,
-          $localize`Erhöht die Kampfwerte der angreifenden und verteidigenden Armee`
-        ], f: 'attackdefend'
-      }),
-      new GbData({
-        a: 'Saturn-VI-Gate-PEGASUS', b: 'Saturn VI Gate PEGASUS', d: GLOBALS.ICON_FIGHT, e: [
-          $localize`Produziert Forge-Punkte`,
-          $localize`Erhöht die Kampfwerte der verteidigenden Armee`
-        ], f: 'defend'
-      }),
-      new GbData({
-        a: 'Saturn-VI-Gate-CENTAURUS', b: 'Saturn VI Gate CENTAURUS', d: GLOBALS.ICON_FIGHT, e: [
-          $localize`Produziert Güter der vorherigen Epoche`,
-          $localize`Erhöht die Kampfwerte der angreifenden Armee`
-        ], f: 'attack'
-      }),
-      new GbData({
-        a: 'AI-Core', b: 'K.I. Kern', d: GLOBALS.ICON_GUILD, e: [
-          $localize`Spezialbonus des KI-Kerns`,
+        a: 'Saturn-VI-Gate-HYDRA', b: 'Saturn VI Gate HYDRA',
+        d: [{key: GLOBALS.ICON_FIGHT, class: 'attackdefend'}, {key: GLOBALS.ICON_GUILD}],
+        e: [
+          $localize`Erhöht die Kampfwerte der angreifenden und verteidigenden Armee`,
           $localize`Produziert Güter für die Gildenkasse`
         ]
       }),
       new GbData({
-        a: 'Flying-Island', b: 'Fliegende Insel', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Saturn-VI-Gate-PEGASUS', b: 'Saturn VI Gate PEGASUS',
+        d: [{key: GLOBALS.ICON_FIGHT, class: 'defend'}, {key: GLOBALS.ICON_FORGE}],
+        e: [
+          $localize`Erhöht die Kampfwerte der verteidigenden Armee`,
+          $localize`Produziert Forge-Punkte`
+        ]
+      }),
+      new GbData({
+        a: 'Saturn-VI-Gate-CENTAURUS', b: 'Saturn VI Gate CENTAURUS',
+        d: [{key: GLOBALS.ICON_FIGHT, class: 'attack'}, {key: GLOBALS.ICON_GOODS}],
+        e: [
+          $localize`Erhöht die Kampfwerte der angreifenden Armee`,
+          $localize`Produziert Güter der vorherigen Epoche`
+        ]
+      }),
+      new GbData({
+        a: 'AI-Core', b: 'K.I. Kern',
+        d: [{key: GLOBALS.ICON_GUILD}],
+        e: [
+          $localize`Produziert Güter für die Gildenkasse`,
+          $localize`Spezialbonus des KI-Kerns`
+        ]
+      }),
+      new GbData({
+        a: 'Flying-Island', b: 'Fliegende Insel',
+        d: [{key: GLOBALS.ICON_GOODS}],
+        e: [
           $localize`Ermöglicht den Fund besonderer Scherben beziehungsweise Belohnungen`
         ]
       }),
       new GbData({
-        a: 'Space-Carrier', b: 'Weltraumfrachter', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Space-Carrier', b: 'Weltraumfrachter',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_GOODS}],
+        e: [
           $localize`Gewährt zusätzliche Belohnungen bei erfolgreichen Verhandlungen`,
           $localize`Ermöglicht den Transfer spezieller Ressourcen`
         ]
       }),
       new GbData({
-        a: 'The-Virgo-Project', b: 'Virgo Projekt', d: GLOBALS.ICON_FIGHT, e: [
+        a: 'The-Virgo-Project', b: 'Virgo Projekt',
+        d: [{key: GLOBALS.ICON_FIGHT}, {key: GLOBALS.ICON_MONEY}],
+        e: [
           $localize`Chance, zu Kampfbeginn gegnerische Einheiten auszuschalten`,
           $localize`Produziert Münzen`
         ]
       }),
       new GbData({
-        a: 'Star-Gazer', b: 'Star Gazer', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Star-Gazer', b: 'Star Gazer', d: [{key: GLOBALS.ICON_GOODS}], e: [
           $localize`Produziert Güter der vorherigen Epoche`
         ]
       }),
       new GbData({
-        a: 'Terracotta-Army', b: 'Terrakotta Armee', d: GLOBALS.ICON_FIGHT, e: [
+        a: 'Terracotta-Army', b: 'Terrakotta Armee',
+        d: [{key: GLOBALS.ICON_FIGHT, class: 'attackdefend'}],
+        e: [
           $localize`Erhöht die Kampfwerte der angreifenden und verteidigenden Armee`
-        ], f: 'attackdefend'
+        ]
       }),
       new GbData({
-        a: 'Himeji-Castle', b: 'Burg Himeji', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Himeji-Castle', b: 'Burg Himeji',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_GOODS}],
+        e: [
           $localize`Chance auf eine zusätzliche Belohnung nach gewonnenen Kämpfen`,
           $localize`Produziert Vorräte`
         ]
       }),
       new GbData({
-        a: 'Atlantis-Museum', b: 'Atlantis Museum', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Atlantis-Museum', b: 'Atlantis Museum',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_BAG}],
+        e: [
           $localize`Produziert Güter der aktuellen Epoche`,
           $localize`Verbessert die Erträge beim Plündern`
         ]
       }),
       new GbData({
-        a: 'The-Kraken', b: 'Der Kraken', d: GLOBALS.ICON_FIGHT, e: [
-          $localize`Produziert Forge-Punkte`,
-          $localize`Chance, zu Kampfbeginn eine gegnerische Einheit auszuschalten`
+        a: 'The-Kraken', b: 'Der Kraken',
+        d: [{key: GLOBALS.ICON_FIGHT}, {key: GLOBALS.ICON_FORGE}],
+        e: [
+          $localize`Chance, zu Kampfbeginn eine gegnerische Einheit auszuschalten`,
+          $localize`Produziert Forge-Punkte`
         ]
       }),
       new GbData({
-        a: 'The-Blue-Galaxy', b: 'Die blaue Galaxie', d: GLOBALS.ICON_GOODS, e: [
+        a: 'The-Blue-Galaxy', b: 'Die blaue Galaxie',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_DOUBLE}],
+        e: [
           $localize`Produziert Medaillen`,
           $localize`Chance, die reguläre Produktion eines motivierten Gebäudes doppelt einzusammeln`
         ]
       }),
       new GbData({
-        a: 'Gaea-Statue', b: 'Gaea-Statue', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Gaea-Statue', b: 'Gaea-Statue',
+        d: [{key: GLOBALS.ICON_MEDALS}, {key: GLOBALS.ICON_HAPPY}],
+        e: [
           $localize`Produziert Medaillen`,
           $localize`Erhöht die Zufriedenheit der Stadt`
         ]
       }),
       new GbData({
-        a: 'Arctic-Orangery', b: 'Arktische Orangerie', d: GLOBALS.ICON_FIGHT, e: [
-          $localize`Produziert Forge-Punkte`,
-          $localize`Chance, einer gegnerischen Einheit des selben Zeitalters 150% Schaden zuzufügen`
+        a: 'Arctic-Orangery', b: 'Arktische Orangerie',
+        d: [{key: GLOBALS.ICON_FIGHT}, {key: GLOBALS.ICON_FORGE}],
+        e: [
+          $localize`Chance, einer gegnerischen Einheit des selben Zeitalters 150% Schaden zuzufügen`,
+          $localize`Produziert Forge-Punkte`
         ]
       }),
       new GbData({
-        a: 'Seed-Vault', b: 'Saatgut-Tresor', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Seed-Vault', b: 'Saatgut-Tresor',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_BAG}],
+        e: [
           $localize`Produziert Vorräte`,
           $localize`Chance auf Güter oder andere Belohnungen beim Motivieren beziehungsweise Polieren`
         ]
       }),
       new GbData({
-        a: 'Rain-Forest-Project', b: 'Regenwald-Projekt', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Rain-Forest-Project', b: 'Regenwald-Projekt',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_BAG}],
+        e: [
           $localize`Produziert Güter der aktuellen Epoche`,
           $localize`Erhöht die Chance auf Blaupausen beim Motivieren beziehungsweise Polieren`
         ]
       }),
       new GbData({
-        a: 'The-Arc', b: 'Die Arche', d: GLOBALS.ICON_GUILD, e: [
+        a: 'The-Arc', b: 'Die Arche',
+        d: [{key: GLOBALS.ICON_GUILD}, {key: GLOBALS.ICON_REWARD}],
+        e: [
           $localize`Produziert Güter für die Gildenkasse`,
           $localize`Erhöht Belohnungen für Einzahlungen in Legendäre Gebäude`
         ]
       }),
       new GbData({
-        a: 'Voyager-V1', b: 'Voyager V1', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Voyager-V1', b: 'Voyager V1',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_BAG}],
+        e: [
           $localize`Produziert Vorräte`,
           $localize`Gewährt zusätzliche Güter beim erfolgreichen Plündern`
         ]
       }),
       new GbData({
-        a: 'Trust-Tower', b: 'Friedensturm', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Trust-Tower', b: 'Friedensturm',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_BAG}],
+        e: [
           $localize`Produziert Vorräte`,
           $localize`Chance auf Güter beim Motivieren beziehungsweise Polieren`
         ]
       }),
       new GbData({
-        a: 'Innovation-Tower', b: 'Innovation Tower', d: GLOBALS.ICON_PEOPLE, e: [
+        a: 'Innovation-Tower', b: 'Innovation Tower',
+        d: [{key: GLOBALS.ICON_FORGE}, {key: GLOBALS.ICON_PEOPLE}],
+        e: [
           $localize`Produziert Forge-Punkte`,
           $localize`Stellt Bevölkerung bereit`
         ]
       }),
       new GbData({
-        a: 'Lotus-Temple', b: 'Lotustempel', d: GLOBALS.ICON_PEOPLE, e: [
+        a: 'Lotus-Temple', b: 'Lotustempel',
+        d: [{key: GLOBALS.ICON_MONEY}, {key: GLOBALS.ICON_HAPPY}],
+        e: [
           $localize`Produziert Münzen`,
           $localize`Erhöht die Zufriedenheit der Stadt`
         ]
       }),
       new GbData({
-        a: 'Cape-Canaveral', b: 'Cape Canaveral', d: GLOBALS.ICON_FORGE, e: [
+        a: 'Cape-Canaveral', b: 'Cape Canaveral',
+        d: [{key: GLOBALS.ICON_FORGE}],
+        e: [
           $localize`Produziert Forge-Punkte`
         ]
       }),
       new GbData({
-        a: 'The-Habitat', b: 'Das Habitat', d: GLOBALS.ICON_PEOPLE, e: [
+        a: 'The-Habitat', b: 'Das Habitat',
+        d: [{key: GLOBALS.ICON_MONEY}, {key: GLOBALS.ICON_PEOPLE}],
+        e: [
           $localize`Produziert Münzen`,
           $localize`Stellt Bevölkerung bereit`
         ]
       }),
       new GbData({
-        a: 'Space-Needle', b: 'Space Needle', d: GLOBALS.ICON_PEOPLE, e: [
+        a: 'Space-Needle', b: 'Space Needle',
+        d: [{key: GLOBALS.ICON_MONEY}, {key: GLOBALS.ICON_HAPPY}],
+        e: [
           $localize`Produziert Münzen`,
           $localize`Erhöht die Zufriedenheit der Stadt`
         ]
       }),
       new GbData({
-        a: 'Atomium', b: 'Atomium', d: GLOBALS.ICON_GUILD, e: [
+        a: 'Atomium', b: 'Atomium',
+        d: [{key: GLOBALS.ICON_GUILD}, {key: GLOBALS.ICON_HAPPY}],
+        e: [
           $localize`Produziert Güter für die Gildenkasse`,
           $localize`Erhöht die Zufriedenheit der Stadt`
         ]
       }),
       new GbData({
-        a: 'Château-Frontenac', b: 'Château Frontenac', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Château-Frontenac', b: 'Château Frontenac',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_BAG}],
+        e: [
           $localize`Produziert Münzen`,
           $localize`Erhöht die meisten Belohnungen aus Quests`
         ]
       }),
       new GbData({
-        a: 'Alcatraz', b: 'Alcatraz', d: GLOBALS.ICON_FIGHT, e: [
+        a: 'Alcatraz', b: 'Alcatraz',
+        d: [{key: GLOBALS.ICON_ARMY}, {key: GLOBALS.ICON_HAPPY}],
+        e: [
           $localize`Produziert ungebundene Einheiten aus vorhandenen Militärgebäuden`,
           $localize`Erhöht die Zufriedenheit der Stadt`
         ]
       }),
       new GbData({
-        a: 'Capitol', b: 'Capitol', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Capitol', b: 'Capitol',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_PEOPLE}],
+        e: [
           $localize`Produziert Vorräte`,
           $localize`Stellt Bevölkerung bereit`
         ]
       }),
       new GbData({
-        a: 'Royal-Albert-Hall', b: 'Royal Albert Hall', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Royal-Albert-Hall', b: 'Royal Albert Hall',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_TOWNGOODS}],
+        e: [
           $localize`Produziert Güter der aktuellen Epoche`,
           $localize`Erhöht die Vorratsproduktion der Stadt`
         ]
       }),
       new GbData({
-        a: 'Deal-Castle', b: 'Deal Castle', d: GLOBALS.ICON_FIGHT, e: [
-          $localize`Produziert Medaillen`,
-          $localize`Erhöht die Kampfwerte der verteidigenden Armee`
-        ], f: 'defend'
+        a: 'Deal-Castle', b: 'Deal Castle',
+        d: [{key: GLOBALS.ICON_FIGHT, class: 'defend'}, {key: GLOBALS.ICON_MEDALS}],
+        e: [
+          $localize`Erhöht die Kampfwerte der verteidigenden Armee`,
+          $localize`Produziert Medaillen`
+        ]
       }),
       new GbData({
-        a: 'Frauenkirche-of-Dresden', b: 'Dresdner Frauenkirche', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Frauenkirche-of-Dresden', b: 'Dresdner Frauenkirche',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_HAPPY}],
+        e: [
           $localize`Produziert Güter der aktuellen Epoche`,
           $localize`Erhöht die Zufriedenheit der Stadt`
         ]
       }),
       new GbData({
-        a: 'Saint-Basils-Cathedral', b: 'Basilius-Kathedrale', d: GLOBALS.ICON_FIGHT, e: [
-          $localize`Produziert Münzen`,
-          $localize`Erhöht die Kampfwerte der verteidigenden Armee`
-        ], f: 'defend'
+        a: 'Saint-Basils-Cathedral', b: 'Basilius-Kathedrale',
+        d: [{key: GLOBALS.ICON_FIGHT, class: 'defend'}, {key: GLOBALS.ICON_MONEY}],
+        e: [
+          $localize`Erhöht die Kampfwerte der verteidigenden Armee`,
+          $localize`Produziert Münzen`
+        ]
       }),
       new GbData({
-        a: 'Castel-del-Monte', b: 'Castel del Monte', d: GLOBALS.ICON_FIGHT, e: [
-          $localize`Produziert Forge-Punkte`,
-          $localize`Erhöht die Kampfwerte der angreifenden Armee`
-        ], f: 'attack'
+        a: 'Castel-del-Monte', b: 'Castel del Monte',
+        d: [{key: GLOBALS.ICON_FIGHT, class: 'attack'}, {key: GLOBALS.ICON_FORGE}],
+        e: [
+          $localize`Erhöht die Kampfwerte der angreifenden Armee`,
+          $localize`Produziert Forge-Punkte`
+        ]
       }),
       new GbData({
-        a: 'St.-Marks-Basilica', b: 'Markusdom', d: GLOBALS.ICON_GOODS, e: [
+        a: 'St.-Marks-Basilica', b: 'Markusdom',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_MONEY}],
+        e: [
           $localize`Produziert Güter der aktuellen Epoche`,
           $localize`Erhöht die Münzproduktion der Stadt`
         ]
       }),
       new GbData({
-        a: 'Notre-Dame', b: 'Notre Dame', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Notre-Dame', b: 'Notre Dame',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_HAPPY}],
+        e: [
           $localize`Produziert Vorräte`,
           $localize`Erhöht die Zufriedenheit der Stadt`
         ]
       }),
       new GbData({
-        a: 'Cathedral-of-Aachen', b: 'Aachener Dom', d: GLOBALS.ICON_FIGHT, e: [
-          $localize`Produziert Münzen`,
-          $localize`Erhöht die Kampfwerte der angreifenden Armee`
-        ], f: 'attack'
+        a: 'Cathedral-of-Aachen', b: 'Aachener Dom',
+        d: [{key: GLOBALS.ICON_FIGHT, class: 'attack'}, {key: GLOBALS.ICON_MONEY}],
+        e: [
+          $localize`Erhöht die Kampfwerte der angreifenden Armee`,
+          $localize`Produziert Münzen`
+        ]
       }),
       new GbData({
-        a: 'Hagia-Sophia', b: 'Hagia Sophia', d: GLOBALS.ICON_FORGE, e: [
+        a: 'Hagia-Sophia', b: 'Hagia Sophia',
+        d: [{key: GLOBALS.ICON_FORGE}, {key: GLOBALS.ICON_HAPPY}],
+        e: [
           $localize`Produziert Forge-Punkte`,
           $localize`Erhöht die Zufriedenheit der Stadt`
         ]
       }),
       new GbData({
-        a: 'Galata-Tower', b: 'Galataturm', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Galata-Tower', b: 'Galataturm',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_PROTECT}],
+        e: [
           $localize`Produziert Güter der aktuellen Epoche`,
           $localize`Chance, einen Plünderungsversuch abzuwehren`
         ]
       }),
       new GbData({
-        a: 'Colosseum', b: 'Kolosseum', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Colosseum', b: 'Kolosseum',
+        d: [{key: GLOBALS.ICON_MEDALS}, {key: GLOBALS.ICON_HAPPY}],
+        e: [
           $localize`Produziert Medaillen`,
           $localize`Erhöht die Zufriedenheit der Stadt`
         ]
       }),
       new GbData({
-        a: 'Lighthouse-of-Alexandria', b: 'Leuchtturm von Alexandria', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Lighthouse-of-Alexandria', b: 'Leuchtturm von Alexandria',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_TOWNGOODS}],
+        e: [
           $localize`Produziert Güter der aktuellen Epoche`,
           $localize`Erhöht die Vorratsproduktion der Stadt`
         ]
       }),
       new GbData({
-        a: 'Tower-of-Babel', b: 'Turm zu Babel', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Tower-of-Babel', b: 'Turm zu Babel',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_PEOPLE}],
+        e: [
           $localize`Produziert Güter der aktuellen Epoche`,
           $localize`Stellt Bevölkerung bereit`
         ]
       }),
       new GbData({
-        a: 'Statue-of-Zeus', b: 'Zeusstatue', d: GLOBALS.ICON_FIGHT, e: [
+        a: 'Statue-of-Zeus', b: 'Zeusstatue',
+        d: [{key: GLOBALS.ICON_FIGHT, class: 'attack'}],
+        e: [
           $localize`Erhöht die Kampfwerte der angreifenden Armee`
-        ], f: 'attack'
+        ]
       }),
       new GbData({
-        a: 'Observatory', b: 'Observatorium', d: GLOBALS.ICON_FIGHT, e: [
-          $localize`Produziert Güter für die Gildenkasse`,
-          $localize`Erhöht die Kampfwerte der verteidigenden Armee`
-        ], f: 'defend'
+        a: 'Observatory', b: 'Observatorium',
+        d: [{key: GLOBALS.ICON_FIGHT, class: 'defend'}, {key: GLOBALS.ICON_GUILD}],
+        e: [
+          $localize`Erhöht die Kampfwerte der verteidigenden Armee`,
+          $localize`Produziert Güter für die Gildenkasse`
+        ]
       }),
       new GbData({
-        a: 'Oracle-of-Delphi', b: 'Orakel von Delphi', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Oracle-of-Delphi', b: 'Orakel von Delphi',
+        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_HAPPY}],
+        e: [
           $localize`Produziert Vorräte`,
           $localize`Erhöht die Zufriedenheit der Stadt`
         ]
       }),
       new GbData({
-        a: 'Temple-of-Relics', b: 'Relikttempel', d: GLOBALS.ICON_GOODS, e: [
+        a: 'Temple-of-Relics', b: 'Relikttempel',
+        d: [{key: GLOBALS.ICON_GOODS}],
+        e: [
           $localize`Ermöglicht Reliktfunde in der Gildenexpedition`
         ]
       }),

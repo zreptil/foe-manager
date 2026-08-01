@@ -4,8 +4,7 @@ import {LevelData} from '@/_model/level-data';
 export class GbData extends BaseData {
   key: string;
   name: string;
-  icon: string;
-  iconClass: string;
+  icon: { key: string, class: string }[];
   levels: LevelData[];
   effects: string[];
 
@@ -20,7 +19,6 @@ export class GbData extends BaseData {
       c: [],
       d: this.icon,
       e: this.effects,
-      f: this.iconClass
     };
     for (const level of this.levels) {
       ret.c.push(level.asJson);
@@ -36,8 +34,7 @@ export class GbData extends BaseData {
     for (const level of src) {
       this.levels.push(new LevelData(level));
     }
-    this.icon = json?.d ?? def?.icon ?? 'apartment';
+    this.icon = json?.d ?? def?.icon ?? [{key: 'apartment'}];
     this.effects = json?.e ?? def?.effects ?? [];
-    this.iconClass = json?.f ?? def?.iconClass ?? '';
   }
 }

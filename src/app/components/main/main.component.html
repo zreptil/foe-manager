@@ -59,9 +59,14 @@
         <button (click)="clickName($event)" mat-button>
           {{ globals.user.username }}
         </button>
-        <button (click)="clickZoom($event)" mat-button>
+        <button (click)="clickZoom($event)" matIconButton small-icon-button>
           <mat-icon>
             {{ ['zoom_in', 'zoom_out'][globals.user.userzoom] }}
+          </mat-icon>
+        </button>
+        <button (click)="clickInfo($event)" matIconButton small-icon-button>
+          <mat-icon>
+            {{ globals.user.showInfoGb ? 'info' : 'help' }}
           </mat-icon>
         </button>
       }
