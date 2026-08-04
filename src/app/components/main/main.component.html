@@ -1,124 +1,132 @@
 <div mainpanel>
-  <div toolbar>
-    <div>
-      <div>{{ toolbarTitle }}</div>
-      <ng-template #btnBack>
-        <button (click)="clickBuildingsBack($event)" matIconButton small-icon-button>
-          <mat-icon>keyboard_arrow_left</mat-icon>
-        </button>
-      </ng-template>
-      <ng-template #btnSiteMode let-mode="mode">
-        <button (click)="toggleMode($event, mode)" matIconButton small-icon-button>
-          <mat-icon>{{ iconForMode(mode) }}</mat-icon>
-        </button>
-      </ng-template>
-      @switch (globals.user.siteMode) {
-        @case (EnumSitemode.manage) {
-          @if (globals.user.activeUserGb == null) {
-            <ng-container [ngTemplateOutletContext]="{}" [ngTemplateOutlet]="btnSiteMode"/>
-            <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.buildings}" [ngTemplateOutlet]="btnSiteMode"/>
-            @if (globals.isDebug) {
-              <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.players}" [ngTemplateOutlet]="btnSiteMode"/>
+  @if (assist.fullyLoaded) {
+    <div toolbar>
+      <div>
+        <div>{{ toolbarTitle }}</div>
+        <ng-template #btnBack>
+          <button (click)="clickBuildingsBack($event)" matIconButton small-icon-button>
+            <mat-icon>keyboard_arrow_left</mat-icon>
+          </button>
+        </ng-template>
+        <ng-template #btnSiteMode let-mode="mode">
+          <button (click)="toggleMode($event, mode)" matIconButton small-icon-button>
+            <mat-icon>{{ iconForMode(mode) }}</mat-icon>
+          </button>
+        </ng-template>
+        @switch (globals.user.siteMode) {
+          @case (EnumSitemode.manage) {
+            @if (globals.user.activeUserGb == null) {
+              <ng-container [ngTemplateOutletContext]="{}" [ngTemplateOutlet]="btnSiteMode"/>
+              <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.buildings}" [ngTemplateOutlet]="btnSiteMode"/>
+              @if (globals.isDebug) {
+                <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.players}" [ngTemplateOutlet]="btnSiteMode"/>
+              }
+            } @else {
+              <ng-container [ngTemplateOutlet]="btnBack"/>
             }
-          } @else {
+          }
+          @case (EnumSitemode.select) {
+            <ng-container [ngTemplateOutletContext]="{}" [ngTemplateOutlet]="btnSiteMode"/>
+          }
+          @case (EnumSitemode.buildings) {
+            <ng-container [ngTemplateOutlet]="btnBack"/>
+          }
+          @case (EnumSitemode.players) {
             <ng-container [ngTemplateOutlet]="btnBack"/>
           }
         }
-        @case (EnumSitemode.select) {
-          <ng-container [ngTemplateOutletContext]="{}" [ngTemplateOutlet]="btnSiteMode"/>
-        }
-        @case (EnumSitemode.buildings) {
-          <ng-container [ngTemplateOutlet]="btnBack"/>
-        }
-        @case (EnumSitemode.players) {
-          <ng-container [ngTemplateOutlet]="btnBack"/>
-        }
-      }
-    </div>
-    @if (globals.user.siteMode !== 2 || globals.user.activeGbKey == null) {
-      <div>
-        <button [matMenuTriggerFor]="sortMenu" mat-icon-button small-icon-button>
-          <mat-icon>{{ iconForSort(globals.user?.gbSort?.[globals.user.siteMode]?.mode) }}</mat-icon>
-        </button>
-        <mat-menu #sortMenu="matMenu" class="menuSettings">
-          @for (mode of globals.sortModesFor(globals.user.siteMode); track $index) {
-            <button (click)="clickSort($event, mode.mode)" matButton small-icon-button>
-              <mat-icon>{{ iconForSort(mode.mode, true) }}</mat-icon>
-              {{ mode.label }}
-            </button>
-          }
-        </mat-menu>
       </div>
-    }
-    <div>
-      @if (globals.siteConfig.editField === 'user') {
-        <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input (focus)="bs.onFocus($event)"
-                 (keydown.enter)="saveName()"
-                 [(ngModel)]="globals.user.username"
-                 autofocus matInput>
-        </mat-form-field>
-        <button (click)="saveName()" mat-button>
-          <mat-icon>done</mat-icon>
-        </button>
-      } @else {
-        <button (click)="clickName($event)" mat-button>
-          {{ globals.user.username }}
-        </button>
-        <button [matMenuTriggerFor]="settingsMenu" mat-icon-button small-icon-button>
-          <mat-icon>settings</mat-icon>
-        </button>
-        <mat-menu #settingsMenu="matMenu" class="menuSettings">
-          <button (click)="clickInfo($event)" matButton>
-            <mat-icon>
-              {{ globals.user.showInfoGb ? 'info' : 'help' }}
-            </mat-icon>
-            <span i18n>Info</span>
+      @if (globals.user.siteMode !== 2 || globals.user.activeGbKey == null) {
+        <div>
+          <button [matMenuTriggerFor]="sortMenu" mat-icon-button small-icon-button>
+            <mat-icon>{{ iconForSort(globals.user?.gbSort?.[globals.user.siteMode]?.mode) }}</mat-icon>
           </button>
-          <button (click)="clickZoom($event)" matButton>
-            <mat-icon>
-              {{ ['zoom_in', 'zoom_out'][globals.user.userzoom] }}
-            </mat-icon>
-            <span i18n>Zoom</span>
-          </button>
-          <button (click)="clickShowLevelArrows($event)" matButton>
-            <mat-icon>
-              {{ ['unfold_more', 'close'][globals.user.showLevelArrows ? 0 : 1] }}
-            </mat-icon>
-            <span i18n>Level Pfeile</span>
-          </button>
-          <!--          <mat-slide-toggle (click)="clickShowLevelArrows($event)" [ngModel]="globals.user.showLevelArrows">-->
-          <!--            <span i18n>Level Pfeile</span>-->
-          <!--          </mat-slide-toggle>-->
-        </mat-menu>
+          <mat-menu #sortMenu="matMenu" class="menuSettings">
+            @for (mode of globals.sortModesFor(globals.user.siteMode); track $index) {
+              <button (click)="clickSort($event, mode.mode)" matButton small-icon-button>
+                <mat-icon>{{ iconForSort(mode.mode, true) }}</mat-icon>
+                {{ mode.label }}
+              </button>
+            }
+          </mat-menu>
+        </div>
       }
+      <div>
+        @if (globals.siteConfig.editField === 'user') {
+          <mat-form-field>
+            <mat-label>Name</mat-label>
+            <input (focus)="bs.onFocus($event)"
+                   (keydown.enter)="saveName()"
+                   [(ngModel)]="globals.user.username"
+                   autofocus matInput>
+          </mat-form-field>
+          <button (click)="saveName()" mat-button>
+            <mat-icon>done</mat-icon>
+          </button>
+        } @else {
+          <button (click)="clickName($event)" mat-button>
+            {{ globals.user.username }}
+          </button>
+          <button [matMenuTriggerFor]="settingsMenu" mat-icon-button small-icon-button>
+            <mat-icon>settings</mat-icon>
+          </button>
+          <mat-menu #settingsMenu="matMenu" class="menuSettings">
+            <button (click)="clickInfo($event)" matButton>
+              <mat-icon>
+                {{ globals.user.showInfoGb ? 'info' : 'help' }}
+              </mat-icon>
+              <span i18n>Info</span>
+            </button>
+            <button (click)="clickZoom($event)" matButton>
+              <mat-icon>
+                {{ ['zoom_in', 'zoom_out'][globals.user.userzoom] }}
+              </mat-icon>
+              <span i18n>Zoom</span>
+            </button>
+            <button (click)="clickShowLevelArrows($event)" matButton>
+              <mat-icon>
+                {{ ['unfold_more', 'close'][globals.user.showLevelArrows ? 0 : 1] }}
+              </mat-icon>
+              <span i18n>Level Pfeile</span>
+            </button>
+            <!--          <mat-slide-toggle (click)="clickShowLevelArrows($event)" [ngModel]="globals.user.showLevelArrows">-->
+            <!--            <span i18n>Level Pfeile</span>-->
+            <!--          </mat-slide-toggle>-->
+          </mat-menu>
+        }
 
-      @if (globals.isDebug) {
-        <button (click)="clickImport($event)" mat-button>Importieren</button>
-        <button (click)="clickCopy($event)" mat-button>
-          <mat-icon>content_copy</mat-icon>
-        </button>
-      }
-      <!-- button (click)="sync.toggleSyncDropbox()" id="sync" mat-icon-button>
-        <ng-container *ngIf="!sync.hasSync">
-          <mat-icon>sync_disabled</mat-icon>
-        </ng-container>
-        <ng-container *ngIf="sync.hasSync">
-          <img alt="dropbox" src="../../../assets/images/dropbox.png">
-        </ng-container>
-      </button -->
-      <app-close-button [data]="closeData"></app-close-button>
+        @if (globals.isDebug) {
+          <button (click)="clickImport($event)" mat-button>Importieren</button>
+          <button (click)="clickCopy($event)" mat-button>
+            <mat-icon>content_copy</mat-icon>
+          </button>
+        }
+        <!-- button (click)="sync.toggleSyncDropbox()" id="sync" mat-icon-button>
+          <ng-container *ngIf="!sync.hasSync">
+            <mat-icon>sync_disabled</mat-icon>
+          </ng-container>
+          <ng-container *ngIf="sync.hasSync">
+            <img alt="dropbox" src="../../../assets/images/dropbox.png">
+          </ng-container>
+        </button -->
+        <app-close-button [data]="closeData"></app-close-button>
+      </div>
     </div>
-  </div>
+  }
   <div>
     <div [class]="classForContent" [style]="styleForContent" content>
       @if (assist.importDone) {
         <textarea>{{ gbJson }}</textarea>
       } @else if (!assist.hasData) {
-        <div gbListError>
-          Die Daten aus dem Cache sind falsch. Bitte den Cache leeren und neu versuchen.
-        </div>
+        @if (!assist.fullyLoaded) {
+          <div gbListLoading i18n>
+            Initialisierung läuft...
+          </div>
+        } @else {
+          <div gbListError i18n>
+            Die Daten aus dem Cache sind falsch. Bitte den Cache leeren und neu versuchen.
+          </div>
+        }
       } @else if (assist.loadDone) {
         <div gbList>
           @for (gb of globals.gbList; track $index) {

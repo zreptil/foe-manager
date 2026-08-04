@@ -13,6 +13,7 @@ export class AssistService {
   gbList: GbData[];
   importDone = false;
   loadDone = false;
+  fullyLoaded = false;
 
   constructor(public http: HttpClient) {
   }
@@ -29,10 +30,12 @@ export class AssistService {
       {responseType: 'json'});
     let body: any;
     this.loadDone = false;
+    this.fullyLoaded = false;
     this.http.request(req).subscribe({
       next: (data: any) => {
         body = data;
       }, error: (err) => {
+        this.fullyLoaded = true;
         console.error(err);
       }, complete: () => {
         const response = body.body;
@@ -60,6 +63,7 @@ export class AssistService {
           }));
         }
         this.loadDone = true;
+        this.fullyLoaded = true;
         onDone?.(this.gbList);
       }
     });

@@ -100,9 +100,7 @@ export class BuildingComponent {
         } else {
           reward = this.bs.calcReward(reward);
         }
-        if (reward > 0) {
-          rewards.push(`P${i + 1}(${reward})`);
-        }
+        rewards.push(`P${i + 1}(${Math.abs(reward)})`);
       }
     }
     return [...ret, ...rewards.reverse()].join(' ');

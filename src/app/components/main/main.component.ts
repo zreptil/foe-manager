@@ -74,19 +74,6 @@ export class MainComponent implements OnInit {
   }
 
   get toolbarTitle() {
-    /*      @if (globals.user.siteMode < 2) {
-        @switch (globals.user.siteMode) {
-          @case (0) {
-            <div i18n>Bitte die Gebäude auswählen, die in Deiner Stadt stehen</div>
-          }
-          @case (1) {
-            <div i18n>Liste der Gebäude in der Stadt</div>
-          }
-          @default {
-            <div i18n>Liste der Gebäude in der Stadt</div>
-          }
-        }
-*/
     switch (GLOBALS.user.siteMode) {
       case EnumSitemode.manage:
         if (GLOBALS.user.activeUserGb != null) {
@@ -139,7 +126,7 @@ export class MainComponent implements OnInit {
       case EnumSitemode.select:
         return 'check';
       case EnumSitemode.manage:
-        return 'edit';
+        return 'select_check_box';
       case EnumSitemode.players:
         return 'group';
     }
@@ -241,6 +228,7 @@ export class MainComponent implements OnInit {
 
   protected clickSort(evt: PointerEvent, sort: any) {
     evt.preventDefault();
+    evt.stopPropagation();
     if (GLOBALS.user.gbSort[GLOBALS.user.siteMode].mode === sort) {
       GLOBALS.user.gbSort[GLOBALS.user.siteMode].asc = !GLOBALS.user.gbSort[GLOBALS.user.siteMode].asc;
     } else {

@@ -162,7 +162,7 @@ app-log {
   bottom: 0;
 }
 
-[gbListError] {
+[gbListError], [gbListLoading] {
   display: flex;
   flex-flow: row;
   align-items: center;
@@ -170,8 +170,16 @@ app-log {
   height: 100%;
   width: 100%;
   font-size: 2em;
+}
+
+[gbListError] {
   background: red;
   color: rgba(255, 255, 0, 0.9);
+}
+
+[gbListLoading] {
+  background: var(--mainBodyBack);
+  color: var(--mainBodyFore);
 }
 
 [version] {

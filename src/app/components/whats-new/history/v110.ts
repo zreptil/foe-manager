@@ -96,6 +96,9 @@ import {MatIcon} from '@angular/material/icon';
       Einstellungsmenü verschoben. Das Aussehen des Buttons für die Umschaltung
       der Level Pfeile wurde an die anderen Buttons angepasst.
     </li>
+    <li class="changed" i18n="110c4">
+      Das Icon für die Umschaltung zur Auswahl der Gebäude für die Stadt wurde geändert.
+    </li>
   </ul>
   `,
   imports: [

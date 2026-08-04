@@ -1872,6 +1872,14 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         </context-group>
         <note priority="1" from="description">110c3</note>
       </trans-unit>
+      <trans-unit id="4414016309053132091" datatype="html">
+        <source> Das Icon für die Umschaltung zur Auswahl der Gebäude für die Stadt wurde geändert. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
+          <context context-type="linenumber">100,101</context>
+        </context-group>
+        <note priority="1" from="description">110c4</note>
+      </trans-unit>
       <trans-unit id="5694922864459713986" datatype="html">
         <source>Should the color changes be discarded?</source>
         <context-group purpose="location">
