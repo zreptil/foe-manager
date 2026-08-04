@@ -25,7 +25,7 @@ export class LanguageService {
   activate(langCode?: string) {
     // const messages: any = {default: [{'id': 'en-GB', 'data': {}}]}
     if (langCode == null) {
-      langCode = JSON.parse(localStorage.getItem('webData'))?.w0 ?? 'en-GB';
+      langCode = JSON.parse(localStorage.getItem('webData'))?.w0 ?? 'de-DE';
     }
     let lng = (messages as any).default.find((lang: any) => lang.id === langCode);
     if (lng == null) {

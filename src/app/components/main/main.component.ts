@@ -73,21 +73,6 @@ export class MainComponent implements OnInit {
     return '';
   }
 
-  get iconForSort() {
-    switch (GLOBALS.user?.gbSort?.[GLOBALS.user.siteMode]) {
-      case EnumSortmode.none:
-        return 'mobiledata_off';
-      case EnumSortmode.alpha:
-        return 'sort_by_alpha';
-      case EnumSortmode.level:
-        return 'format_list_numbered';
-      case EnumSortmode.timeCopied:
-        return 'access_time';
-      case EnumSortmode.type:
-        return 'swords';
-    }
-  }
-
   get toolbarTitle() {
     /*      @if (globals.user.siteMode < 2) {
         @switch (globals.user.siteMode) {
@@ -117,6 +102,35 @@ export class MainComponent implements OnInit {
       default:
         return $localize`Liste der Gebäude in der Stadt`;
     }
+  }
+
+  iconForSort(sortMode: EnumSortmode, checkCurrent = false) {
+    if (checkCurrent) {
+      const currSort = GLOBALS.user?.gbSort?.[GLOBALS.user.siteMode];
+      if (sortMode === currSort?.mode) {
+        switch (sortMode) {
+          case EnumSortmode.own:
+            return currSort.asc ? 'lock_open' : 'lock';
+          default:
+            return currSort.asc ? 'arrow_upward' : 'arrow_downward';
+        }
+      }
+    }
+    switch (sortMode) {
+      case EnumSortmode.none:
+        return 'mobiledata_off';
+      case EnumSortmode.alpha:
+        return 'sort_by_alpha';
+      case EnumSortmode.level:
+        return 'format_list_numbered';
+      case EnumSortmode.timeCopied:
+        return 'access_time';
+      case EnumSortmode.type:
+        return 'swords';
+      case EnumSortmode.own:
+        return 'swipe';
+    }
+    return '';
   }
 
   iconForMode(mode?: number) {
@@ -225,19 +239,25 @@ export class MainComponent implements OnInit {
     GLOBALS.saveSharedData();
   }
 
-  protected clickSort(evt: PointerEvent) {
+  protected clickSort(evt: PointerEvent, sort: any) {
     evt.preventDefault();
-    let sort = GLOBALS.user.gbSort[GLOBALS.user.siteMode] + 1;
-    if (sort >= Object.keys(EnumSortmode).filter(key => isNaN(Number(key))).length) {
-      sort = 0;
+    if (GLOBALS.user.gbSort[GLOBALS.user.siteMode].mode === sort) {
+      GLOBALS.user.gbSort[GLOBALS.user.siteMode].asc = !GLOBALS.user.gbSort[GLOBALS.user.siteMode].asc;
+    } else {
+      GLOBALS.user.gbSort[GLOBALS.user.siteMode] = {mode: sort, asc: true};
     }
-    GLOBALS.user.gbSort[GLOBALS.user.siteMode] = sort;
+    // let sort = GLOBALS.user.gbSort[GLOBALS.user.siteMode] + 1;
+    // if (sort >= Object.keys(EnumSortmode).filter(key => isNaN(Number(key))).length) {
+    //   sort = 0;
+    // }
+    // GLOBALS.user.gbSort[GLOBALS.user.siteMode] = sort;
     GLOBALS._gbList = null;
     GLOBALS.saveSharedData();
   }
 
   protected clickZoom(evt: PointerEvent) {
     evt.preventDefault();
+    evt.stopPropagation();
     GLOBALS.user.userzoom = 1 - GLOBALS.user.userzoom;
     GLOBALS.saveSharedData();
   }
@@ -274,7 +294,15 @@ export class MainComponent implements OnInit {
 
   protected clickInfo(evt: PointerEvent) {
     evt.preventDefault();
+    evt.stopPropagation();
     GLOBALS.user.showInfoGb = !GLOBALS.user.showInfoGb;
+    GLOBALS.saveSharedData();
+  }
+
+  protected clickShowLevelArrows(evt: PointerEvent) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    GLOBALS.user.showLevelArrows = !GLOBALS.user.showLevelArrows;
     GLOBALS.saveSharedData();
   }
 }

@@ -187,3 +187,24 @@ app-log {
   right: 5px;
   bottom: 25px;
 }
+
+::ng-deep .menuSettings {
+  --mat-menu-container-color: var(--mainHeadBack);
+  --mat-menu-container-elevation-shadow: initial;
+
+  .mat-mdc-slide-toggle .mat-internal-form-field {
+    --mat-slide-toggle-label-text-color: var(--mainHeadFore);
+  }
+
+  .mat-mdc-button:not(:disabled) {
+    --mat-button-text-label-text-color: var(--mainHeadFore);
+  }
+
+  .mat-mdc-menu-content {
+    display: flex;
+    flex-flow: column;
+    overflow-y: hidden;
+    align-items: flex-start;
+    padding: 0.5em;
+  }
+}

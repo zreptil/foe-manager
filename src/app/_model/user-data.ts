@@ -18,16 +18,18 @@ export enum EnumSortmode {
   alpha,
   level,
   timeCopied,
-  type
+  type,
+  own
 }
 
 export class UserData extends BaseData {
   username: string;
+  showLevelArrows: boolean;
   userzoom: number;
   permissions: number[];
   usertype: number;
   readonly _siteMode = signal<EnumSitemode>(EnumSitemode.select);
-  gbSort: { [key: string]: EnumSortmode };
+  gbSort: { [key: string]: { mode: EnumSortmode, asc: boolean } };
   listGb: { [key: string]: GbUserData };
   readonly _activeGbKey = signal<string>(null);
   activeUserGb: GbUserData;
@@ -62,7 +64,8 @@ export class UserData extends BaseData {
       e: this.siteMode,
       f: this.activeGbKey,
       g: this.activeUserGb?.asJson,
-      h: this.showInfoGb
+      h: this.showInfoGb,
+      i: this.showLevelArrows
     };
 
     ret.f = {};
@@ -97,5 +100,6 @@ export class UserData extends BaseData {
       this.activeUserGb = null;
     }
     this.showInfoGb = json?.h ?? def?.showInfo ?? false;
+    this.showLevelArrows = json?.i ?? def?.showLevelArrows ?? true;
   }
 }

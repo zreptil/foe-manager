@@ -28,7 +28,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">86</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/link-picture/link-picture.component.ts</context>
@@ -129,6 +129,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/lang-data.ts</context>
           <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/classes/utils.ts</context>
+          <context context-type="linenumber">159</context>
         </context-group>
         <note priority="1" from="description">this is the dateformat, please use dd for days, MM for months and yyyy for year. It has to be the english formatstring.</note>
       </trans-unit>
@@ -399,6 +403,10 @@
           <context context-type="sourcefile">src/app/_model/theme-data.ts</context>
           <context context-type="linenumber">78</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/main/main.component.html</context>
+          <context context-type="linenumber">77,78</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="7911416166208830577" datatype="html">
         <source>Help</source>
@@ -420,10 +428,6 @@
           <context context-type="sourcefile">src/app/_model/theme-data.ts</context>
           <context context-type="linenumber">81</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">78</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="8645499116170704011" datatype="html">
         <source>Shortcut</source>
@@ -440,7 +444,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">80</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1980504865097627824" datatype="html">
@@ -468,11 +472,15 @@
           <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3920972348773563211" datatype="html">
-        <source>Spezialbonus des Kosmischen Katalysators</source>
+      <trans-unit id="5252108727153836391" datatype="html">
+        <source>Chance, einer gegnerischen Einheit des selben Zeitalters 150% Schaden zuzufügen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
           <context context-type="linenumber">74</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">198</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8980446424651806185" datatype="html">
@@ -483,404 +491,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">92</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">106</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">186</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">233</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">340</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5252108727153836391" datatype="html">
-        <source>Chance, einer gegnerischen Einheit des selben Zeitalters 150% Schaden zuzufügen</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">76</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">169</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8322350097262998128" datatype="html">
-        <source>Produziert ungebundene Einheiten aus vorhandenen Militärgebäuden</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">81</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">245</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7929036219097200195" datatype="html">
-        <source>Erhöht die Kampfwerte der angreifenden und verteidigenden Armee</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">82</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">88</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">133</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1101515190631434531" datatype="html">
-        <source>Produziert Forge-Punkte</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">93</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">150</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">168</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">204</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">216</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">281</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">305</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3720479159369715206" datatype="html">
-        <source>Erhöht die Kampfwerte der verteidigenden Armee</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">94</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">264</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">276</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">341</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="169184353757566483" datatype="html">
-        <source>Produziert Güter der vorherigen Epoche</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">99</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">128</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2166711377960997715" datatype="html">
-        <source>Erhöht die Kampfwerte der angreifenden Armee</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">100</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">282</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">300</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">335</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5598277901769245545" datatype="html">
-        <source>Spezialbonus des KI-Kerns</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">105</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1666822066603548382" datatype="html">
-        <source>Ermöglicht den Fund besonderer Scherben beziehungsweise Belohnungen</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">111</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4758788407173391193" datatype="html">
-        <source>Gewährt zusätzliche Belohnungen bei erfolgreichen Verhandlungen</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">116</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4751453938671785489" datatype="html">
-        <source>Ermöglicht den Transfer spezieller Ressourcen</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">117</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2776153736098804355" datatype="html">
-        <source>Chance, zu Kampfbeginn gegnerische Einheiten auszuschalten</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">122</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4474394825578630767" datatype="html">
-        <source>Produziert Münzen</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">123</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">210</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">221</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">227</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">239</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">275</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">299</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3681306008888616953" datatype="html">
-        <source>Chance auf eine zusätzliche Belohnung nach gewonnenen Kämpfen</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">138</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5354947544403229167" datatype="html">
-        <source>Produziert Vorräte</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">139</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">174</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">192</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">198</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">251</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">293</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">346</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7573085921348841336" datatype="html">
-        <source>Produziert Güter der aktuellen Epoche</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">144</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">180</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">257</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">269</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">287</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">311</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">323</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">329</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8956442083901274712" datatype="html">
-        <source>Verbessert die Erträge beim Plündern</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">145</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4011327815231589858" datatype="html">
-        <source>Chance, zu Kampfbeginn eine gegnerische Einheit auszuschalten</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">151</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4835451062694449535" datatype="html">
-        <source>Produziert Medaillen</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">156</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">162</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">263</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">317</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="627307216887604539" datatype="html">
-        <source>Chance, die reguläre Produktion eines motivierten Gebäudes doppelt einzusammeln</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">157</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1216282704392248319" datatype="html">
-        <source>Erhöht die Zufriedenheit der Stadt</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">163</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">211</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">228</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">234</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">246</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">270</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">294</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">306</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">318</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">347</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3540477190857236613" datatype="html">
-        <source>Chance auf Güter oder andere Belohnungen beim Motivieren beziehungsweise Polieren</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">175</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8500459659125417840" datatype="html">
-        <source>Erhöht die Chance auf Blaupausen beim Motivieren beziehungsweise Polieren</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">181</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8839479859647478421" datatype="html">
-        <source>Erhöht Belohnungen für Einzahlungen in Legendäre Gebäude</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">187</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1240603319707342470" datatype="html">
-        <source>Gewährt zusätzliche Güter beim erfolgreichen Plündern</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">193</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8675514053191431932" datatype="html">
-        <source>Chance auf Güter beim Motivieren beziehungsweise Polieren</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">199</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5652862867765137151" datatype="html">
-        <source>Stellt Bevölkerung bereit</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">205</context>
+          <context context-type="linenumber">115</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
@@ -888,148 +503,583 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">252</context>
+          <context context-type="linenumber">285</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">330</context>
+          <context context-type="linenumber">429</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3920972348773563211" datatype="html">
+        <source>Spezialbonus des Kosmischen Katalysators</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7929036219097200195" datatype="html">
+        <source>Erhöht die Kampfwerte der angreifenden und verteidigenden Armee</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">151</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8322350097262998128" datatype="html">
+        <source>Produziert ungebundene Einheiten aus vorhandenen Militärgebäuden</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">301</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3720479159369715206" datatype="html">
+        <source>Erhöht die Kampfwerte der verteidigenden Armee</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">325</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">341</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">428</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1101515190631434531" datatype="html">
+        <source>Produziert Forge-Punkte</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">175</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">199</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">246</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">262</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">350</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">381</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2166711377960997715" datatype="html">
+        <source>Erhöht die Kampfwerte der angreifenden Armee</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">107</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">349</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">373</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">421</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="169184353757566483" datatype="html">
+        <source>Produziert Güter der vorherigen Epoche</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">108</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">144</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5598277901769245545" datatype="html">
+        <source>Spezialbonus des KI-Kerns</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1666822066603548382" datatype="html">
+        <source>Ermöglicht den Fund besonderer Scherben beziehungsweise Belohnungen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">123</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4758788407173391193" datatype="html">
+        <source>Gewährt zusätzliche Belohnungen bei erfolgreichen Verhandlungen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">130</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4751453938671785489" datatype="html">
+        <source>Ermöglicht den Transfer spezieller Ressourcen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">131</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2776153736098804355" datatype="html">
+        <source>Chance, zu Kampfbeginn gegnerische Einheiten auszuschalten</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">138</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4474394825578630767" datatype="html">
+        <source>Produziert Münzen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">139</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">254</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">269</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">277</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">293</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">342</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">374</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3681306008888616953" datatype="html">
+        <source>Chance auf eine zusätzliche Belohnung nach gewonnenen Kämpfen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">158</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5354947544403229167" datatype="html">
+        <source>Produziert Vorräte</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">159</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">206</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">230</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">238</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">309</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">365</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">436</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7573085921348841336" datatype="html">
+        <source>Produziert Güter der aktuellen Epoche</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">166</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">214</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">317</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">333</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">357</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">389</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">405</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">413</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8956442083901274712" datatype="html">
+        <source>Verbessert die Erträge beim Plündern</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">167</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4011327815231589858" datatype="html">
+        <source>Chance, zu Kampfbeginn eine gegnerische Einheit auszuschalten</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">174</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4835451062694449535" datatype="html">
+        <source>Produziert Medaillen</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">182</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">190</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">326</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">397</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="627307216887604539" datatype="html">
+        <source>Chance, die reguläre Produktion eines motivierten Gebäudes doppelt einzusammeln</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">183</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1216282704392248319" datatype="html">
+        <source>Erhöht die Zufriedenheit der Stadt</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">191</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">255</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">278</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">286</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">302</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">334</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">366</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">382</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">398</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">437</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3540477190857236613" datatype="html">
+        <source>Chance auf Güter oder andere Belohnungen beim Motivieren beziehungsweise Polieren</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">207</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8500459659125417840" datatype="html">
+        <source>Erhöht die Chance auf Blaupausen beim Motivieren beziehungsweise Polieren</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">215</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8839479859647478421" datatype="html">
+        <source>Erhöht Belohnungen für Einzahlungen in Legendäre Gebäude</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">223</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1240603319707342470" datatype="html">
+        <source>Gewährt zusätzliche Güter beim erfolgreichen Plündern</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">231</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8675514053191431932" datatype="html">
+        <source>Chance auf Güter beim Motivieren beziehungsweise Polieren</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">239</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5652862867765137151" datatype="html">
+        <source>Stellt Bevölkerung bereit</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">247</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">270</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">310</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
+          <context context-type="linenumber">414</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7809000301937245879" datatype="html">
         <source>Erhöht die meisten Belohnungen aus Quests</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">240</context>
+          <context context-type="linenumber">294</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4820939114819287491" datatype="html">
         <source>Erhöht die Vorratsproduktion der Stadt</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">258</context>
+          <context context-type="linenumber">318</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">324</context>
+          <context context-type="linenumber">406</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6935468011312765233" datatype="html">
         <source>Erhöht die Münzproduktion der Stadt</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">288</context>
+          <context context-type="linenumber">358</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6979521192216077410" datatype="html">
         <source>Chance, einen Plünderungsversuch abzuwehren</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">312</context>
+          <context context-type="linenumber">390</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4168024759592012334" datatype="html">
         <source>Ermöglicht Reliktfunde in der Gildenexpedition</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/assist.service.ts</context>
-          <context context-type="linenumber">352</context>
+          <context context-type="linenumber">444</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2440387227608016606" datatype="html">
         <source>Passwordchange</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5605123772636494177" datatype="html">
         <source>Plan</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6904866445262015585" datatype="html">
         <source>Tasks</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4118544540439207596" datatype="html">
         <source>Daily Schedule</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">84</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4759312981227880392" datatype="html">
         <source>Dataprotection</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1547876271716599756" datatype="html">
         <source>Impressum</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3219657520864092005" datatype="html">
         <source>Welcome to FOE-manager</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3884532559361891104" datatype="html">
+        <source>Was bisher geschah...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
+          <context context-type="linenumber">89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2597766462454032605" datatype="html">
         <source>Link Picture</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">90</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3456612057806187199" datatype="html">
         <source>Imgur Picture Selector</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8953033926734869941" datatype="html">
+        <source>Name</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3733215288982610673" datatype="html">
+        <source>Level</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/building/building.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6286088794530615614" datatype="html">
+        <source>Gebäudetyp</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5512183818548253079" datatype="html">
+        <source>Zeitpunkt Kopie</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6485835710343125282" datatype="html">
+        <source>Eigene Sortierung</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
+          <context context-type="linenumber">98</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2798807656507405918" datatype="html">
         <source>Standard</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7824393297214377658" datatype="html">
         <source>Gelb</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">112</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1614079796280331914" datatype="html">
         <source>Grün</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3064268475866034352" datatype="html">
         <source>Lila</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">114</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7646507470496958959" datatype="html">
         <source>Own</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">128</context>
+          <context context-type="linenumber">146</context>
         </context-group>
         <note priority="1" from="meaning">theme selection - own</note>
       </trans-unit>
@@ -1037,7 +1087,7 @@
         <source>Automatic</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">139</context>
+          <context context-type="linenumber">157</context>
         </context-group>
         <note priority="1" from="meaning">theme selection - automatic</note>
       </trans-unit>
@@ -1045,7 +1095,7 @@
         <source>Standard</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">143</context>
+          <context context-type="linenumber">161</context>
         </context-group>
         <note priority="1" from="meaning">theme selection - standard</note>
       </trans-unit>
@@ -1053,7 +1103,7 @@
         <source>X-Mas</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">147</context>
+          <context context-type="linenumber">165</context>
         </context-group>
         <note priority="1" from="meaning">theme selection - christmas</note>
       </trans-unit>
@@ -1061,49 +1111,49 @@
         <source>Selected Period</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">273</context>
+          <context context-type="linenumber">291</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6479681338512278715" datatype="html">
         <source>One Month ago</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">274</context>
+          <context context-type="linenumber">292</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4634686543910917221" datatype="html">
         <source>Two Months ago</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">275</context>
+          <context context-type="linenumber">293</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3391680301204048086" datatype="html">
         <source>Three Months ago</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">276</context>
+          <context context-type="linenumber">294</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1494116721319611637" datatype="html">
         <source>Six Months ago</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">277</context>
+          <context context-type="linenumber">295</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7792248046138362602" datatype="html">
         <source>One Year ago</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">278</context>
+          <context context-type="linenumber">296</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6899006172769799970" datatype="html">
         <source>There was no answer within <x id="PH" equiv-text="params.timeout / 1000"/> seconds at <x id="PH_1" equiv-text="url"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">502</context>
+          <context context-type="linenumber">555</context>
         </context-group>
       </trans-unit>
       <trans-unit id="328801838200143891" datatype="html">
@@ -1264,60 +1314,50 @@ beyond the control of foe-manager. Should the confirmation process be started?</
           <context context-type="linenumber">114</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7674001075959655563" datatype="html">
-        <source>dd/MM/yyyy, hh:mm</source>
+      <trans-unit id="3874345800986431846" datatype="html">
+        <source>dd.MM.yyyy, hh:mm</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/classes/utils.ts</context>
           <context context-type="linenumber">154</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="671740983484503056" datatype="html">
-        <source>dd/MM/yyyy</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/classes/utils.ts</context>
-          <context context-type="linenumber">159</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2828499970823437367" datatype="html">
         <source>Die Anzahl an Leveln für die es Daten gibt</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/building/building.component.html</context>
-          <context context-type="linenumber">24</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3733215288982610673" datatype="html">
-        <source>Level</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/components/building/building.component.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9187102794850384720" datatype="html">
         <source>Der Platz ist mit dem Eigenanteil schon gesichert</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/building/building.component.html</context>
-          <context context-type="linenumber">153</context>
+          <context context-type="linenumber">191</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/building/building.component.html</context>
+          <context context-type="linenumber">220</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6928169574977102398" datatype="html">
         <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>crown<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Eingezahlter Eigenanteil </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/building/building.component.html</context>
-          <context context-type="linenumber">201,203</context>
+          <context context-type="linenumber">259,261</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7321563947436597665" datatype="html">
         <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>target<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Eingezahlter Anteil </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/building/building.component.html</context>
-          <context context-type="linenumber">217,219</context>
+          <context context-type="linenumber">275,277</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2577916285831366531" datatype="html">
         <source>Fremdanteil</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/building/building.component.html</context>
-          <context context-type="linenumber">247,248</context>
+          <context context-type="linenumber">305,306</context>
         </context-group>
       </trans-unit>
       <trans-unit id="851610571799133221" datatype="html">
@@ -1388,50 +1428,64 @@ beyond the control of foe-manager. Should the confirmation process be started?</
           <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="6421460271971606186" datatype="html">
+        <source>Zoom</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/main/main.component.html</context>
+          <context context-type="linenumber">83,84</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3656052262936020219" datatype="html">
+        <source>Level Pfeile</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/main/main.component.html</context>
+          <context context-type="linenumber">89,90</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="8221180690764668958" datatype="html">
         <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>target<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Spielername </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">101,103</context>
+          <context context-type="linenumber">132,134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8255800615111557774" datatype="html">
         <source>Liste der Gebäude in der Stadt</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">95</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">118</context>
+          <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7830748668316120486" datatype="html">
         <source>Bitte die Gebäude auswählen, die in Deiner Stadt stehen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">97</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2107568235118415750" datatype="html">
         <source>Gebäude</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1042510364414173861" datatype="html">
         <source>Gebäude anderer Spieler</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">116</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7387510550620861155" datatype="html">
         <source>Name eingeben</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">251</context>
+          <context context-type="linenumber">271</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4360072995007239979" datatype="html">
@@ -1745,6 +1799,78 @@ beyond the control of foe-manager. Should the confirmation process be started?</
           <context context-type="linenumber">10,12</context>
         </context-group>
         <note priority="1" from="description">107c1</note>
+      </trans-unit>
+      <trans-unit id="6848466231571154682" datatype="html">
+        <source> Ein Icon zur Kennzeichnung von Gebäuden, die zur Gildenkasse beitragen wurde hinzugefügt. Hier die vollständige Liste:<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION" equiv-text="{{ globals.ICON_FIGHT }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Bonus für Kampf<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_1" equiv-text="{{ globals.ICON_GOODS }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Resourcen<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_2" equiv-text="{{ globals.ICON_GUILD }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Ressourcen für die Gildenkasse<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_3" equiv-text="{{ globals.ICON_FORGE }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Forgepunkte<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_4" equiv-text="{{ globals.ICON_PEOPLE }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Bevölkerung<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/whats-new/history/v108.ts</context>
+          <context context-type="linenumber">11,34</context>
+        </context-group>
+        <note priority="1" from="description">108a1</note>
+      </trans-unit>
+      <trans-unit id="5976746205689351782" datatype="html">
+        <source> Es ist nun möglich, bei der Editierung eines eigenen Gebäudes festzulegen, welche Spalte für die Kopie verwendet werden soll. Die entsprechende Spalte wird mit einem Rahmen markiert und dann auch auf der Übersichtsseite der eigenen Gebäude entsprechend angezeigt. Aktiviert wird die Spalte, indem die Zeile oberhalb der P1-Zeile angeklickt wird. Die Spalte wird wieder auf den Standard zurückgesetzt, wenn der Level geändert wird. Dabei werden auch der eingegebene Eigenanteil und die Fremdanteile gelöscht. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/whats-new/history/v109.ts</context>
+          <context context-type="linenumber">10,16</context>
+        </context-group>
+        <note priority="1" from="description">109a1</note>
+      </trans-unit>
+      <trans-unit id="8490815159345725113" datatype="html">
+        <source> In der Titelleiste gibt es rechts oben einen Button, mit dem man die Informationen zu den Gebäuden ein- und ausblenden kann. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
+          <context context-type="linenumber">11,13</context>
+        </context-group>
+        <note priority="1" from="description">110a1</note>
+      </trans-unit>
+      <trans-unit id="8607982702947837899" datatype="html">
+        <source> Es gibt neue Icons für die Gbäude. Es werden jetzt auch bis zu zwei Icons für jedes Gebäude angezeigt. Eins links und eins rechts. Hier die vollständige Liste der Icons: <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION" equiv-text="{{ globals.ICON_FIGHT }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Bonus für Kampf<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_1" equiv-text="{{ globals.ICON_GOODS }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Resourcen<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_2" equiv-text="{{ globals.ICON_GUILD }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Ressourcen für die Gildenkasse<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_3" equiv-text="{{ globals.ICON_FORGE }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Forgepunkte<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_4" equiv-text="{{ globals.ICON_PEOPLE }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Bevölkerung<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_5" equiv-text="{{ globals.ICON_MONEY }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Geld<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_6" equiv-text="{{ globals.ICON_HAPPY }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erhöht die Zufriedenheit<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_7" equiv-text="{{ globals.ICON_PROTECT }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Chance, einen Plünderungsversuch abzuwehren<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_8" equiv-text="{{ globals.ICON_MEDALS }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Medaillen<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_9" equiv-text="{{ globals.ICON_TOWNGOODS }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erhöht die Vorratsproduktion in der Stadt<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_10" equiv-text="{{ globals.ICON_ARMY }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Einheiten<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_11" equiv-text="{{ globals.ICON_BAG }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Bonus auf diverse Ressourcen<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_12" equiv-text="{{ globals.ICON_DOUBLE }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Doppelter Bonus auf diverse Ressourcen<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_13" equiv-text="{{ globals.ICON_REWARD }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erhöhung des Mäzenbonus<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
+          <context context-type="linenumber">15,74</context>
+        </context-group>
+        <note priority="1" from="description">110a2</note>
+      </trans-unit>
+      <trans-unit id="1847599197008572027" datatype="html">
+        <source> Es gibt jetzt eine Option, um die Pfeile für die Änderung des Levels ein- und auszuschalten. Diese befindet sich im neuen Einstellungsmenü rechts oben. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
+          <context context-type="linenumber">75,77</context>
+        </context-group>
+        <note priority="1" from="description">110a3</note>
+      </trans-unit>
+      <trans-unit id="3658783737728268536" datatype="html">
+        <source> Die Sortierung wird jetzt über ein Menü gesteuert. Das wird über den gleichen Button wie bisher aufgerufen. Die Sortierung kann dann durch Anklicken der Sortierbuttons festgelegt werden. Durch erneutes Anklicken des Buttons wird die Sortierung umgedreht. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
+          <context context-type="linenumber">79,81</context>
+        </context-group>
+        <note priority="1" from="description">110c2</note>
+      </trans-unit>
+      <trans-unit id="6126228058551454831" datatype="html">
+        <source> Bei der Sortierung gibt es jetzt die Option, die Sortierung selbst vorzunehmen. Wenn dieser Modus aktiviert ist, kann die Sortierung durch Anklicken der Pfeile am unteren Rand der Gebäude vorgenommen werden, die statt des Kopierbuttons angezeigt werden. Wenn die Option für die eigene Sortierung nochmal angeklickt wird, wird die Reihenfolge festgesetzt und die Kopierung der Gebäude wieder ermöglicht. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
+          <context context-type="linenumber">84,88</context>
+        </context-group>
+        <note priority="1" from="description">110a4</note>
+      </trans-unit>
+      <trans-unit id="3720389941629685497" datatype="html">
+        <source> Die Anzeige der Spalten für die Einzahlungen wurde verbessert. Es gibt jetzt für jede Spalte eine Spalte mit dem benötigen Eigenanteil, um den Wert abzusichern. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
+          <context context-type="linenumber">91,93</context>
+        </context-group>
+        <note priority="1" from="description">110c1</note>
+      </trans-unit>
+      <trans-unit id="5833999116688405683" datatype="html">
+        <source> Die Buttons für die Umschaltung des Zooms und der Gebäudeinfo wurden in das Einstellungsmenü verschoben. Das Aussehen des Buttons für die Umschaltung der Level Pfeile wurde an die anderen Buttons angepasst. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
+          <context context-type="linenumber">95,97</context>
+        </context-group>
+        <note priority="1" from="description">110c3</note>
       </trans-unit>
       <trans-unit id="5694922864459713986" datatype="html">
         <source>Should the color changes be discarded?</source>

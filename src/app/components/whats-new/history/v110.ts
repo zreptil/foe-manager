@@ -71,9 +71,30 @@ import {MatIcon} from '@angular/material/icon';
         <span>Erhöhung des Mäzenbonus</span>
       </div>
     </li>
+    <li class="added" i18n="110a3">
+      Es gibt jetzt eine Option, um die Pfeile für die Änderung des Levels ein- und auszuschalten.
+      Diese befindet sich im neuen Einstellungsmenü rechts oben.
+    </li>
+    <li class="changed" i18n="110c2">
+      Die Sortierung wird jetzt über ein Menü gesteuert. Das wird über den gleichen Button
+      wie bisher aufgerufen. Die Sortierung kann dann durch Anklicken der Sortierbuttons
+      festgelegt werden. Durch erneutes Anklicken des Buttons wird die Sortierung umgedreht.
+    </li>
+    <li class="added" i18n="110a4">
+      Bei der Sortierung gibt es jetzt die Option, die Sortierung selbst vorzunehmen. Wenn dieser
+      Modus aktiviert ist, kann die Sortierung durch Anklicken der Pfeile am unteren Rand der
+      Gebäude vorgenommen werden, die statt des Kopierbuttons angezeigt werden. Wenn die Option
+      für die eigene Sortierung nochmal angeklickt wird, wird die Reihenfolge festgesetzt und
+      die Kopierung der Gebäude wieder ermöglicht.
+    </li>
     <li class="changed" i18n="110c1">
       Die Anzeige der Spalten für die Einzahlungen wurde verbessert. Es gibt jetzt für
       jede Spalte eine Spalte mit dem benötigen Eigenanteil, um den Wert abzusichern.
+    </li>
+    <li class="changed" i18n="110c3">
+      Die Buttons für die Umschaltung des Zooms und der Gebäudeinfo wurden in das
+      Einstellungsmenü verschoben. Das Aussehen des Buttons für die Umschaltung
+      der Level Pfeile wurde an die anderen Buttons angepasst.
     </li>
   </ul>
   `,

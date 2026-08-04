@@ -1,3 +1,8 @@
+::ng-deep .menuGb {
+  --mat-menu-container-color: transparent;
+  --mat-menu-container-elevation-shadow: none;
+}
+
 :host {
   --mat-form-field-filled-input-text-color: var(--bodyFore);
   --mat-form-field-filled-label-text-color: var(--bodyFore);
@@ -458,3 +463,11 @@ mat-icon.attackdefend {
     }
   }
 }
+
+[copyPanel] {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+

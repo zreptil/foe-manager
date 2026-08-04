@@ -151,12 +151,12 @@ export class Utils {
     if (typeof date === 'number') {
       date = new Date(date);
     }
-    return Utils.fmtDate(date, $localize`dd/MM/yyyy, hh:mm`);
+    return Utils.fmtDate(date, $localize`dd.MM.yyyy, hh:mm`);
   }
 
   static fmtDate(date: Date, fmt: string = null): string {
     if (fmt == null) {
-      fmt = $localize`dd/MM/yyyy`;
+      fmt = $localize`dd.MM.yyyy`;
     }
     let ret = fmt;
     ret = ret.replace(/dddd/g, DatepickerPeriod.dowName(date));

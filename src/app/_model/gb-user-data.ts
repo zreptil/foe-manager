@@ -10,6 +10,7 @@ export class GbUserData extends BaseData {
   copyIdx: number;
   active: boolean;
   player: string;
+  sortIdx: number;
 
   constructor(json?: any) {
     super(json);
@@ -25,7 +26,8 @@ export class GbUserData extends BaseData {
       f: this.player,
       g: +this.ownerValue,
       h: this.sniperValues,
-      i: this.copyIdx
+      i: this.copyIdx,
+      j: this.sortIdx
     };
   }
 
@@ -47,6 +49,7 @@ export class GbUserData extends BaseData {
     this.ownerValue = +(json?.g ?? def?.ownerValue ?? 0);
     this.sniperValues = json?.h ?? def?.sniperValues ?? [];
     this.copyIdx = json?.i ?? def?.copyIdx ?? -1;
+    this.sortIdx = json?.j ?? def?.sortIdx ?? -1;
   }
 }
 

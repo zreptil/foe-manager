@@ -37,17 +37,24 @@
     </div>
     @if (globals.user.siteMode !== 2 || globals.user.activeGbKey == null) {
       <div>
-        <button (click)="clickSort($event)" matIconButton small-icon-button>
-          <mat-icon>{{ iconForSort }}</mat-icon>
+        <button [matMenuTriggerFor]="sortMenu" mat-icon-button small-icon-button>
+          <mat-icon>{{ iconForSort(globals.user?.gbSort?.[globals.user.siteMode]?.mode) }}</mat-icon>
         </button>
+        <mat-menu #sortMenu="matMenu" class="menuSettings">
+          @for (mode of globals.sortModesFor(globals.user.siteMode); track $index) {
+            <button (click)="clickSort($event, mode.mode)" matButton small-icon-button>
+              <mat-icon>{{ iconForSort(mode.mode, true) }}</mat-icon>
+              {{ mode.label }}
+            </button>
+          }
+        </mat-menu>
       </div>
     }
     <div>
       @if (globals.siteConfig.editField === 'user') {
         <mat-form-field>
           <mat-label>Name</mat-label>
-          <input (blur)="saveName()"
-                 (focus)="bs.onFocus($event)"
+          <input (focus)="bs.onFocus($event)"
                  (keydown.enter)="saveName()"
                  [(ngModel)]="globals.user.username"
                  autofocus matInput>
@@ -59,16 +66,32 @@
         <button (click)="clickName($event)" mat-button>
           {{ globals.user.username }}
         </button>
-        <button (click)="clickZoom($event)" matIconButton small-icon-button>
-          <mat-icon>
-            {{ ['zoom_in', 'zoom_out'][globals.user.userzoom] }}
-          </mat-icon>
+        <button [matMenuTriggerFor]="settingsMenu" mat-icon-button small-icon-button>
+          <mat-icon>settings</mat-icon>
         </button>
-        <button (click)="clickInfo($event)" matIconButton small-icon-button>
-          <mat-icon>
-            {{ globals.user.showInfoGb ? 'info' : 'help' }}
-          </mat-icon>
-        </button>
+        <mat-menu #settingsMenu="matMenu" class="menuSettings">
+          <button (click)="clickInfo($event)" matButton>
+            <mat-icon>
+              {{ globals.user.showInfoGb ? 'info' : 'help' }}
+            </mat-icon>
+            <span i18n>Info</span>
+          </button>
+          <button (click)="clickZoom($event)" matButton>
+            <mat-icon>
+              {{ ['zoom_in', 'zoom_out'][globals.user.userzoom] }}
+            </mat-icon>
+            <span i18n>Zoom</span>
+          </button>
+          <button (click)="clickShowLevelArrows($event)" matButton>
+            <mat-icon>
+              {{ ['unfold_more', 'close'][globals.user.showLevelArrows ? 0 : 1] }}
+            </mat-icon>
+            <span i18n>Level Pfeile</span>
+          </button>
+          <!--          <mat-slide-toggle (click)="clickShowLevelArrows($event)" [ngModel]="globals.user.showLevelArrows">-->
+          <!--            <span i18n>Level Pfeile</span>-->
+          <!--          </mat-slide-toggle>-->
+        </mat-menu>
       }
 
       @if (globals.isDebug) {

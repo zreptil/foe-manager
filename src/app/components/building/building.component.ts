@@ -4,7 +4,7 @@ import {GbUserData} from '@/_model/gb-user-data';
 import {LevelData} from '@/_model/level-data';
 import {BuildingService} from '@/_services/building.service';
 import {GLOBALS, GlobalsService} from '@/_services/globals.service';
-import {EnumSitemode} from '@/_model/user-data';
+import {EnumSitemode, EnumSortmode} from '@/_model/user-data';
 import {Utils} from '@/classes/utils';
 import {MessageService} from '@/_services/message.service';
 
@@ -41,6 +41,11 @@ export class BuildingComponent {
       (GLOBALS.user.siteMode === EnumSitemode.manage &&
         (GLOBALS.user.activeGbKey != null || this.gbUser.copyIdx >= 0)
       );
+  }
+
+  get ownSort() {
+    const sort = GLOBALS.user?.gbSort?.[GLOBALS.user.siteMode];
+    return sort?.mode === EnumSortmode.own && sort?.asc;
   }
 
   protected get classForGb() {
@@ -322,13 +327,6 @@ export class BuildingComponent {
     return ret;
   }
 
-  protected clickColor(evt: PointerEvent, idx: number) {
-    if (this.gbUser != null) {
-      this.gbUser.colorIdx = idx;
-      GLOBALS.saveSharedData();
-    }
-  }
-
   // protected clickGBMark(evt: PointerEvent) {
   //   evt.preventDefault();
   //   if (this.gbUser != null) {
@@ -336,6 +334,13 @@ export class BuildingComponent {
   //     GLOBALS.saveSharedData();
   //   }
   // }
+
+  protected clickColor(evt: PointerEvent, idx: number) {
+    if (this.gbUser != null) {
+      this.gbUser.colorIdx = idx;
+      GLOBALS.saveSharedData();
+    }
+  }
 
   protected clickGBEdit(evt: PointerEvent) {
     evt.preventDefault();
@@ -387,5 +392,20 @@ export class BuildingComponent {
     evt?.preventDefault();
     this.gbUser.copyIdx = +idx;
     GLOBALS.saveSharedData();
+  }
+
+  protected clickOwnSort(evt: PointerEvent, diff: number) {
+    let gbUser: GbUserData = null;
+    for (let i = 0; i < GLOBALS.gbList.length && gbUser == null; i++) {
+      const temp = this.bs.gbForUser(GLOBALS.gbList[i]);
+      if (temp.sortIdx === this.gbUser.sortIdx + diff) {
+        gbUser = temp;
+      }
+    }
+    if (gbUser != null) {
+      gbUser.sortIdx = this.gbUser.sortIdx;
+      this.gbUser.sortIdx += diff;
+      GLOBALS.saveSharedData();
+    }
   }
 }

@@ -177,7 +177,7 @@ export class AssistService {
       }),
       new GbData({
         a: 'The-Blue-Galaxy', b: 'Die blaue Galaxie',
-        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_DOUBLE}],
+        d: [{key: GLOBALS.ICON_MEDALS}, {key: GLOBALS.ICON_DOUBLE}],
         e: [
           $localize`Produziert Medaillen`,
           $localize`Chance, die reguläre Produktion eines motivierten Gebäudes doppelt einzusammeln`
@@ -288,7 +288,7 @@ export class AssistService {
       }),
       new GbData({
         a: 'Château-Frontenac', b: 'Château Frontenac',
-        d: [{key: GLOBALS.ICON_GOODS}, {key: GLOBALS.ICON_BAG}],
+        d: [{key: GLOBALS.ICON_MONEY}, {key: GLOBALS.ICON_BAG}],
         e: [
           $localize`Produziert Münzen`,
           $localize`Erhöht die meisten Belohnungen aus Quests`

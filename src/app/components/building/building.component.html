@@ -5,7 +5,7 @@
         <mat-icon [class]="icon.class">{{ icon.key }}</mat-icon>
       }
     </button>
-    <mat-menu #colorMenu="matMenu" [overlapTrigger]="true" btnMark>
+    <mat-menu #colorMenu="matMenu" [overlapTrigger]="true" btnMark class="menuGb">
       @for (option of globals.siteConfig.colors; track $index) {
         <button (click)="clickColor($event, $index)" [style]="{backgroundColor: option.color}" mat-menu-item>
         </button>
@@ -51,25 +51,29 @@
         </div>
       } @else {
         <div level>
-          <button
-            (contextmenu)="$event.preventDefault()"
-            (pointercancel)="stopLevelChange($event)"
-            (pointerdown)="startLevelChange($event, -1)"
-            (pointerleave)="stopLevelChange($event)"
-            (pointerup)="stopLevelChange($event)"
-            [disabled]="gbUser.level < 2" matIconButton small-icon-button>
-            <mat-icon>arrow_drop_down</mat-icon>
-          </button>
+          @if (globals.user.showLevelArrows) {
+            <button
+              (contextmenu)="$event.preventDefault()"
+              (pointercancel)="stopLevelChange($event)"
+              (pointerdown)="startLevelChange($event, -1)"
+              (pointerleave)="stopLevelChange($event)"
+              (pointerup)="stopLevelChange($event)"
+              [disabled]="gbUser.level < 2" matIconButton small-icon-button>
+              <mat-icon>arrow_drop_down</mat-icon>
+            </button>
+          }
           <button (click)="clickEditLevel($event)" mat-button>{{ gbUser.level }}</button>
-          <button
-            (contextmenu)="$event.preventDefault()"
-            (pointercancel)="stopLevelChange($event)"
-            (pointerdown)="startLevelChange($event, 1)"
-            (pointerleave)="stopLevelChange($event)"
-            (pointerup)="stopLevelChange($event)"
-            [disabled]="gbUser.level >= gb.levels.length-1" matIconButton small-icon-button>
-            <mat-icon>arrow_drop_up</mat-icon>
-          </button>
+          @if (globals.user.showLevelArrows) {
+            <button
+              (contextmenu)="$event.preventDefault()"
+              (pointercancel)="stopLevelChange($event)"
+              (pointerdown)="startLevelChange($event, 1)"
+              (pointerleave)="stopLevelChange($event)"
+              (pointerup)="stopLevelChange($event)"
+              [disabled]="gbUser.level >= gb.levels.length-1" matIconButton small-icon-button>
+              <mat-icon>arrow_drop_up</mat-icon>
+            </button>
+          }
         </div>
       }
       @if (nextLevel != null) {
@@ -304,9 +308,28 @@
           }
         }
         @if (bs.isModeManage) {
-          <button (click)="clickCopyAction($event, nextLevel)" copyButton mat-button>
-            <span>{{ copyData(nextLevel) }}</span>
-          </button>
+          @if (ownSort) {
+            <div copyPanel>
+              @if (gbUser.sortIdx > 0) {
+                <button (click)="clickOwnSort($event, -1)" mat-icon-button small-icon-button>
+                  <mat-icon>keyboard_arrow_left</mat-icon>
+                </button>
+              } @else {
+                <div></div>
+              }
+              @if (gbUser.sortIdx < globals.gbList.length - 1) {
+                <button (click)="clickOwnSort($event, 1)" mat-icon-button small-icon-button>
+                  <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+              } @else {
+                <div></div>
+              }
+            </div>
+          } @else {
+            <button (click)="clickCopyAction($event, nextLevel)" copyButton mat-button>
+              <span>{{ copyData(nextLevel) }}</span>
+            </button>
+          }
         }
       }
     </mat-card-content>

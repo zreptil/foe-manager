@@ -43,12 +43,13 @@ export class GlobalsService {
   ICON_PROTECT = 'admin_panel_settings';
   ICON_MEDALS = 'workspace_premium';
   ICON_TOWNGOODS = 'add_home_work';
-  ICON_ARMY = 'group_add';
+  ICON_ARMY = 'sword_rose';
   ICON_BAG = 'money_bag';
   ICON_DOUBLE = 'speed_2x';
   ICON_REWARD = 'stars_2';
 
   version = VERSION;
+  subversion = '1';
   isNewVersion = false;
   skipStorageClear = false;
   devSupport = false;
@@ -85,10 +86,17 @@ export class GlobalsService {
     help: $localize`Information`,
     impressum: $localize`Impressum`,
     welcome: $localize`Welcome to FOE-manager`,
-    whatsnew: $localize`Once upon a time...`,
+    whatsnew: $localize`Was bisher geschah...`,
     linkPicture: $localize`Link Picture`,
     imgurSelector: $localize`Imgur Picture Selector`,
   };
+  _sortModes: { label: string, mode: EnumSortmode }[] = [
+    {label: $localize`Name`, mode: EnumSortmode.alpha},
+    {label: $localize`Level`, mode: EnumSortmode.level},
+    {label: $localize`Gebäudetyp`, mode: EnumSortmode.type},
+    {label: $localize`Zeitpunkt Kopie`, mode: EnumSortmode.timeCopied},
+    {label: $localize`Eigene Sortierung`, mode: EnumSortmode.own},
+  ];
   siteConfig: any = {
     pdfTarget: '',
     pdfData: null,
@@ -299,6 +307,7 @@ export class GlobalsService {
   }
 
   _gbList: GbData[];
+
   get gbList() {
     if (GLOBALS.user.activeGbKey != null) {
       if (this._gbList == null) {
@@ -330,33 +339,39 @@ export class GlobalsService {
           this._gbList = this.assist.gbList;
       }
     }
-    switch (GLOBALS.user.gbSort[GLOBALS.user.siteMode]) {
+    const asc = GLOBALS.user.gbSort[GLOBALS.user.siteMode]?.asc ? 1 : -1;
+    switch (GLOBALS.user.gbSort[GLOBALS.user.siteMode]?.mode) {
       case EnumSortmode.none:
         break;
       case EnumSortmode.alpha:
-        this._gbList = [...this._gbList].sort((a, b) => a.name.localeCompare(b.name));
+        this._gbList = [...this._gbList].sort((a, b) => asc * a.name.localeCompare(b.name));
         break;
       case EnumSortmode.level:
         this._gbList = [...this._gbList].sort((a, b) =>
-          -Utils.compare(this.bs.gbForUser(a)?.level, this.bs.gbForUser(b)?.level));
+          asc * -Utils.compare(this.bs.gbForUser(a)?.level, this.bs.gbForUser(b)?.level));
         break;
       case EnumSortmode.timeCopied:
         this._gbList = [...this._gbList].sort((a, b) =>
-          -Utils.compare(this.bs.gbForUser(a)?.timeCopied ?? 0, this.bs.gbForUser(b)?.timeCopied ?? 0));
+          asc * -Utils.compare(this.bs.gbForUser(a)?.timeCopied ?? 0, this.bs.gbForUser(b)?.timeCopied ?? 0));
         break;
       case EnumSortmode.type:
         this._gbList = [...this._gbList].sort((a, b) => {
           if ((a.icon ?? 0) === (b.icon ?? 0)) {
-            return Utils.compare(a.icon[0].class ?? '', b.icon[0].class ?? '')
+            return asc * Utils.compare(a.icon[0].class ?? '', b.icon[0].class ?? '')
           }
-          return Utils.compare(a.icon[0].key ?? 0, b.icon[0].key ?? 0);
+          return asc * Utils.compare(a.icon[0].key ?? 0, b.icon[0].key ?? 0);
         });
+        break;
+      case EnumSortmode.own:
+        this._gbList = [...this._gbList].sort((a, b) =>
+          Utils.compare(this.bs.gbForUser(a)?.sortIdx, this.bs.gbForUser(b)?.sortIdx));
         break;
     }
     return this._gbList;
   }
 
   _playerList: GbUserData[];
+
   get playerList() {
     if (this._playerList == null) {
       this._playerList = [];
@@ -381,9 +396,25 @@ export class GlobalsService {
       s6: GLOBALS.user.activeGbKey,
       s7: GLOBALS.user.activeUserGb?.asJson,
       s8: GLOBALS.user.userzoom,
+      s9: GLOBALS.user.showLevelArrows,
     };
     for (const key of Object.keys(GLOBALS.user.listGb)) {
       ret.s2[key] = GLOBALS.user.listGb[key].asJson;
+    }
+    return ret;
+  }
+
+  sortModesFor(mode: EnumSitemode) {
+    let ret: any = [...this._sortModes];
+    switch (mode) {
+      case EnumSitemode.select:
+      case EnumSitemode.buildings:
+        ret = ret.filter((m: any) =>
+          m.mode !== EnumSortmode.level &&
+          m.mode !== EnumSortmode.timeCopied &&
+          m.mode !== EnumSortmode.own
+        );
+        break;
     }
     return ret;
   }
@@ -419,15 +450,21 @@ export class GlobalsService {
       }
     }
     const src = storage.s2 ?? {};
+    let idx = 0;
     for (const key of Object.keys(src)) {
       GLOBALS.user.listGb[key] = new GbUserData(src[key]);
+      if (GLOBALS.user.listGb[key].sortIdx === -1) {
+        GLOBALS.user.listGb[key].sortIdx = idx;
+      }
+      idx = Math.max(idx + 1, GLOBALS.user.listGb[key].sortIdx);
     }
     GLOBALS.user.siteMode = storage.s3 ?? EnumSitemode.select;
     GLOBALS.user.username = storage.s4 ?? 'Bitte Name eingeben';
-    if (typeof (storage.s5) !== 'object') {
-      storage.s5 = {0: EnumSortmode.timeCopied, 1: EnumSortmode.alpha, 2: EnumSortmode.alpha};
+    const defSort = {0: {mode: EnumSortmode.timeCopied, asc: true}, 1: {mode: EnumSortmode.alpha, asc: true}, 2: {mode: EnumSortmode.alpha, asc: true}};
+    if (typeof (storage.s5) !== 'object' || storage.s5[0]?.mode == null) {
+      storage.s5 = defSort;
     }
-    GLOBALS.user.gbSort = storage.s5 ?? {0: EnumSortmode.timeCopied, 1: EnumSortmode.alpha, 2: EnumSortmode.alpha};
+    GLOBALS.user.gbSort = storage.s5 ?? defSort;
     GLOBALS.user.activeGbKey = storage.s6;
     if (storage.s7 != null) {
       GLOBALS.user.activeUserGb = new GbUserData(storage.s7);
@@ -435,6 +472,7 @@ export class GlobalsService {
       GLOBALS.user.activeUserGb = null;
     }
     GLOBALS.user.userzoom = storage.s8 ?? 0;
+    GLOBALS.user.showLevelArrows = storage.s9 ?? true;
   }
 
   saveSharedData(): void {
@@ -452,13 +490,16 @@ export class GlobalsService {
     } catch {
     }
 
-    const code = storage.w0 ?? 'en-GB';
+    let code = storage.w0 ?? 'de-DE';
+    if (this.subversion === '1') {
+      code = 'de-DE';
+    }
     this.language = this.ls.languageList.find((lang) => lang.code === code);
     this._syncType = storage.w1 ?? oauth2SyncType.none;
     this.oauth2AccessToken = storage.w2;
     this.theme = storage.w3 ?? 'standard';
     this.devSupport = storage.w4 ?? false;
-    this.isNewVersion = this.version !== storage.w5;
+    this.isNewVersion = `${this.version}-${this.subversion}` !== storage.w5;
 
     // validate values
     if (this.oauth2AccessToken == null) {
@@ -473,7 +514,7 @@ export class GlobalsService {
       w2: this.oauth2AccessToken,
       w3: this.theme,
       w4: this.devSupport,
-      w5: this.version
+      w5: `${this.version}-${this.subversion}`
     };
     localStorage.setItem('webData', JSON.stringify(storage));
   }
