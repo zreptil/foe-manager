@@ -104,28 +104,6 @@
               }
             }
           </tr>
-          <!--          <tr>-->
-          <!--            @if (showSniper) {-->
-          <!--              @if (isColumnVisible(-1)) {-->
-          <!--                <td colspan="3"></td>-->
-          <!--              }-->
-          <!--              @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {-->
-          <!--                @let v = calcPlaceValue(calcIdx, nextLevel, -2, gbUser.ownerValue);-->
-          <!--                @if (isColumnVisible(calcIdx)) {-->
-          <!--                  <td calccost cost>-->
-          <!--                    @if ((v ?? 0) > 0) {-->
-          <!--                      <div>-->
-          <!--                        <mat-icon>crown</mat-icon>-->
-          <!--                        {{ v }}-->
-          <!--                      </div>-->
-          <!--                    }-->
-          <!--                  </td>-->
-          <!--                }-->
-          <!--              }-->
-          <!--            } @else {-->
-          <!--              <td></td>-->
-          <!--            }-->
-          <!--          </tr>-->
           @if (showSniper) {
             <tr row>
               <!-- row for own value -->
@@ -170,7 +148,14 @@
                     {{ ownerValueMax(nextLevel) }}
                   </div>
                 </td>
-                <td [class]="classForCopy(-1, ['blocks'])"></td>
+                <td [class]="classForCopy(-1, ['blocks'])">
+                  @if (gbUser.ownerValue > 0 && +gbUser.ownerValue !== +ownerValueMax(nextLevel)) {
+                    <div block>
+                      <mat-icon>crown</mat-icon>
+                      -{{ +ownerValueMax(nextLevel) - +gbUser.ownerValue }}
+                    </div>
+                  }
+                </td>
               }
             </tr>
           }

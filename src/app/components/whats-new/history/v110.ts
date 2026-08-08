@@ -110,6 +110,11 @@ import {MatIcon} from '@angular/material/icon';
       Die eigene Sortierung wurde korrigiert und mit zusätzlichen Buttons versehen, die das
       entsprechende Gebäude an den Anfang oder das Ende verschieben.
     </li>
+    <li class="added" i18n="110a6">
+      In der Spalte der Eigenanteile wird bei Auswahl der 1,9er Spalte jetzt auch an, was noch
+      vom Eigenanteil fehlt, wenn er noch nicht dem benötigten Eigenanteil zur Absicherung von
+      P1 bis P5 entspricht.
+    </li>
   </ul>
   `,
   imports: [
