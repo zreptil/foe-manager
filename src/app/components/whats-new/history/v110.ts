@@ -87,6 +87,13 @@ import {MatIcon} from '@angular/material/icon';
       für die eigene Sortierung nochmal angeklickt wird, wird die Reihenfolge festgesetzt und
       die Kopierung der Gebäude wieder ermöglicht.
     </li>
+    <li class="added" i18n="110a5">
+      Im Editmodus der eigenen Gebäude ist es nun möglich die Spalte, die kopiert werden soll,
+      mit dem Button <b>"Spalte" absichern</b> mit den Werten für die Absicherung aller Plätze
+      zu versehen. Dabei werden die Fremdanteile eingetragen und der Eigenanteil entsprechend
+      berechnet und auch eingetragen. Der Button ist nur verfügbar, wenn eine andere Spalte
+      als die erste ausgewählt wurde.
+    </li>
     <li class="changed" i18n="110c1">
       Die Anzeige der Spalten für die Einzahlungen wurde verbessert. Es gibt jetzt für
       jede Spalte eine Spalte mit dem benötigen Eigenanteil, um den Wert abzusichern.
@@ -98,6 +105,10 @@ import {MatIcon} from '@angular/material/icon';
     </li>
     <li class="changed" i18n="110c4">
       Das Icon für die Umschaltung zur Auswahl der Gebäude für die Stadt wurde geändert.
+    </li>
+    <li class="changed" i18n="110c5">
+      Die eigene Sortierung wurde korrigiert und mit zusätzlichen Buttons versehen, die das
+      entsprechende Gebäude an den Anfang oder das Ende verschieben.
     </li>
   </ul>
   `,

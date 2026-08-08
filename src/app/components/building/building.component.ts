@@ -215,6 +215,13 @@ export class BuildingComponent {
     GLOBALS.saveSharedData();
   }
 
+  protected clearOwnerValue(evt?: PointerEvent) {
+    evt?.preventDefault();
+    this.gbUser.ownerValue = null;
+    GLOBALS.siteConfig.editField = null;
+    GLOBALS.saveSharedData();
+  }
+
   protected saveSniperValue(evt?: PointerEvent, addNewValue = false) {
     evt?.preventDefault();
     this.gbUser.sniperValues ??= [];
@@ -394,16 +401,37 @@ export class BuildingComponent {
 
   protected clickOwnSort(evt: PointerEvent, diff: number) {
     let gbUser: GbUserData = null;
-    for (let i = 0; i < GLOBALS.gbList.length && gbUser == null; i++) {
-      const temp = this.bs.gbForUser(GLOBALS.gbList[i]);
-      if (temp.sortIdx === this.gbUser.sortIdx + diff) {
-        gbUser = temp;
+    if (diff === -2) {
+      this.gbUser.sortIdx = -1;
+    } else if (diff === 2) {
+      this.gbUser.sortIdx = GLOBALS.gbList.length;
+    } else {
+      for (let i = 0; i < GLOBALS.gbList.length && gbUser == null; i++) {
+        const temp = this.bs.gbForUser(GLOBALS.gbList[i]);
+        if (temp.sortIdx === this.gbUser.sortIdx + diff) {
+          gbUser = temp;
+        }
+      }
+      if (gbUser != null) {
+        gbUser.sortIdx = this.gbUser.sortIdx;
+        this.gbUser.sortIdx += diff;
       }
     }
-    if (gbUser != null) {
-      gbUser.sortIdx = this.gbUser.sortIdx;
-      this.gbUser.sortIdx += diff;
-      GLOBALS.saveSharedData();
+    GLOBALS.saveSharedData();
+  }
+
+  protected clickSecure(evt: PointerEvent) {
+    evt?.preventDefault();
+    let idx = 0;
+    for (const reward of this.nextLevel.rewards) {
+      const value = this.calcPlaceValue(this.gbUser.copyIdx, this.nextLevel, idx, this.gbUser.ownerValue);
+      if (value > 0) {
+        this.gbUser.sniperValues.push(value);
+        this.gbUser.sniperValues = this.gbUser.sniperValues.map(a => +a)
+        this.gbUser.sniperValues.sort((a, b) => b - a);
+      }
+      idx++;
     }
+    this.gbUser.ownerValue = this.calcBlockValue(this.gbUser.copyIdx, this.nextLevel, idx - 1);
   }
 }

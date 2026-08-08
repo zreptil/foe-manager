@@ -49,7 +49,7 @@ export class GlobalsService {
   ICON_REWARD = 'stars_2';
 
   version = VERSION;
-  subversion = '2';
+  subversion = '4';
   isNewVersion = false;
   skipStorageClear = false;
   devSupport = false;
@@ -364,7 +364,8 @@ export class GlobalsService {
         break;
       case EnumSortmode.own:
         this._gbList = [...this._gbList].sort((a, b) =>
-          Utils.compare(this.bs.gbForUser(a)?.sortIdx, this.bs.gbForUser(b)?.sortIdx));
+          Utils.compare(this.bs.gbForUser(a)?.sortIdx, this.bs.gbForUser(b)?.sortIdx))
+          .filter((gb) => this.bs.gbForUser(gb)?.active);
         break;
     }
     return this._gbList;
@@ -398,8 +399,11 @@ export class GlobalsService {
       s8: GLOBALS.user.userzoom,
       s9: GLOBALS.user.showLevelArrows,
     };
+    this.adjustGbSort();
     for (const key of Object.keys(GLOBALS.user.listGb)) {
-      ret.s2[key] = GLOBALS.user.listGb[key].asJson;
+      if (GLOBALS.user.listGb[key].active) {
+        ret.s2[key] = GLOBALS.user.listGb[key].asJson;
+      }
     }
     return ret;
   }
@@ -453,7 +457,7 @@ export class GlobalsService {
     let idx = 0;
     for (const key of Object.keys(src)) {
       GLOBALS.user.listGb[key] = new GbUserData(src[key]);
-      if (GLOBALS.user.listGb[key].sortIdx === -1) {
+      if (+GLOBALS.user.listGb[key].sortIdx === -1) {
         GLOBALS.user.listGb[key].sortIdx = idx;
       }
       idx = Math.max(idx + 1, GLOBALS.user.listGb[key].sortIdx);
@@ -473,6 +477,22 @@ export class GlobalsService {
     }
     GLOBALS.user.userzoom = storage.s8 ?? 0;
     GLOBALS.user.showLevelArrows = storage.s9 ?? true;
+
+    // validate data
+    this.adjustGbSort();
+  }
+
+  adjustGbSort(): void {
+    const numberList: any[] = [];
+    for (const key of Object.keys(GLOBALS.user.listGb)) {
+      if (GLOBALS.user.listGb[key].active) {
+        numberList.push({k: key, n: +GLOBALS.user.listGb[key].sortIdx});
+      }
+    }
+    numberList.sort((a, b) => a.n - b.n);
+    for (let i = 0; i < numberList.length; i++) {
+      GLOBALS.user.listGb[numberList[i].k].sortIdx = i;
+    }
   }
 
   saveSharedData(): void {

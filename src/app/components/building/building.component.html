@@ -259,13 +259,15 @@
                   <mat-icon>crown</mat-icon>
                   Eingezahlter Eigenanteil
                 </mat-label>
-                <input (blur)="saveOwnerValue()"
-                       (focus)="bs.onFocus($event)"
+                <input (focus)="bs.onFocus($event)"
                        (keydown.enter)="globals.siteConfig.editField = ((gbUser.sniperValues?.length ?? 5)<5 ? 'sniper' : null)"
                        [(ngModel)]="gbUser.ownerValue" autofocus matInput>
               </mat-form-field>
-              <button (click)="saveOwnerValue($event)" mat-button>
+              <button (click)="saveOwnerValue($event)" matIconButton small-icon-button>
                 <mat-icon>done</mat-icon>
+              </button>
+              <button (click)="clearOwnerValue($event)" matIconButton small-icon-button>
+                <mat-icon>delete</mat-icon>
               </button>
             </div>
           } @else if (globals.siteConfig.editField === 'sniper') {
@@ -305,21 +307,33 @@
                 <span i18n>Fremdanteil</span>
               </button>
             }
+            @if (globals.user.siteMode === 1 && gbUser.copyIdx >= 0) {
+              <button (click)="clickSecure($event)" mat-button owner>
+                <mat-icon>local_police</mat-icon>
+                <span i18n>"{{ this.calcTitles[gbUser.copyIdx] }}" absichern</span>
+              </button>
+            }
           }
         }
         @if (bs.isModeManage) {
           @if (ownSort) {
             <div copyPanel>
               @if (gbUser.sortIdx > 0) {
+                <button (click)="clickOwnSort($event, -2)" mat-icon-button small-icon-button>
+                  <mat-icon>skip_previous</mat-icon>
+                </button>
                 <button (click)="clickOwnSort($event, -1)" mat-icon-button small-icon-button>
-                  <mat-icon>keyboard_arrow_left</mat-icon>
+                  <mat-icon>arrow_back_2</mat-icon>
                 </button>
               } @else {
                 <div></div>
               }
               @if (gbUser.sortIdx < globals.gbList.length - 1) {
                 <button (click)="clickOwnSort($event, 1)" mat-icon-button small-icon-button>
-                  <mat-icon>keyboard_arrow_right</mat-icon>
+                  <mat-icon>play_arrow</mat-icon>
+                </button>
+                <button (click)="clickOwnSort($event, 2)" mat-icon-button small-icon-button>
+                  <mat-icon>skip_next</mat-icon>
                 </button>
               } @else {
                 <div></div>
