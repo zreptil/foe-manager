@@ -150,7 +150,7 @@
               Spielername
             </mat-label>
             <input (blur)="savePlayer()"
-                   (focus)="bs.onFocus($event)"
+                   (focus)="globals.onFocus($event)"
                    [(ngModel)]="editPlayer" autofocus matInput>
           </mat-form-field>
         } @else {

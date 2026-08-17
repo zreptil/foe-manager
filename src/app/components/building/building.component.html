@@ -41,7 +41,7 @@
           <mat-form-field>
             <mat-label i18n>Level</mat-label>
             <input (blur)="saveLevel()"
-                   (focus)="bs.onFocus($event)"
+                   (focus)="globals.onFocus($event)"
                    (keydown.enter)="saveLevel()"
                    [(ngModel)]="globals.siteConfig.levelValue" autofocus matInput>
           </mat-form-field>
@@ -244,7 +244,7 @@
                   <mat-icon>crown</mat-icon>
                   Eingezahlter Eigenanteil
                 </mat-label>
-                <input (focus)="bs.onFocus($event)"
+                <input (focus)="globals.onFocus($event)"
                        (keydown.enter)="globals.siteConfig.editField = ((gbUser.sniperValues?.length ?? 5)<5 ? 'sniper' : null)"
                        [(ngModel)]="gbUser.ownerValue" autofocus matInput>
               </mat-form-field>
@@ -263,7 +263,7 @@
                   Eingezahlter Anteil
                 </mat-label>
                 <input (blur)="saveSniperValue()"
-                       (focus)="bs.onFocus($event)"
+                       (focus)="globals.onFocus($event)"
                        (keydown.enter)="saveSniperValue(null, true)"
                        [(ngModel)]="globals.siteConfig.sniperValue" autofocus matInput>
               </mat-form-field>

@@ -321,8 +321,12 @@ export class BuildingComponent {
     let rewIdx = 0;
     while (idx >= 0) {
       const rew = this.bs.calcReward(level.rewards[rewIdx]);
-      ret = Math.min(base - rew, Math.floor(base / 2));
-      if (ret <= sl[sniperIdx]) {
+      if (rew > base) {
+        ret = Math.floor(base / 2);
+      } else {
+        ret = Math.min(base - rew, Math.floor(base / 2));
+      }
+      if (ret <= sl[sniperIdx] || rew === sl[sniperIdx]) {
         if (idx === 0) {
           return -sl[sniperIdx];
         }
@@ -330,7 +334,7 @@ export class BuildingComponent {
         sniperIdx++;
       }
       base -= ret;
-      if (base < 0) {
+      if (base <= 0) {
         return 0;
       }
       idx--;
