@@ -64,6 +64,7 @@ export class QuantenInvasionComponent {
 
   startMoving(evt: PointerEvent, building: QiBuilding, createCopy = false): void {
     evt.preventDefault();
+    evt.stopPropagation();
 
     if (createCopy) {
       building = new QiBuilding(building.x - 1, building.y, building.qiData);
@@ -135,13 +136,18 @@ export class QuantenInvasionComponent {
   }
 
   protected clickAdd(evt: PointerEvent, qi: QiData) {
-    const cellSize = this.size + this.gap;
-    const rect = this.zero?.nativeElement?.getBoundingClientRect();
-    const dx = evt.clientX - rect.x - cellSize;
-    const dy = evt.clientY - rect.y - cellSize;
-    const x = Math.round(dx / cellSize);
-    const y = Math.round(dy / cellSize);
-    this.startMoving(evt, new QiBuilding(x, y, qi));
+    // const cellSize = this.size + this.gap;
+    // const rect = this.zero?.nativeElement?.getBoundingClientRect();
+    // const dx = evt.clientX - rect.x - cellSize;
+    // const dy = evt.clientY - rect.y - cellSize;
+    // const x = Math.round(dx / cellSize);
+    // const y = Math.round(dy / cellSize);
+    const town = this.buildings.find((b: QiBuilding) => b.qiData.key === 'town-1');
+    if (town != null) {
+      this.buildings.push(new QiBuilding(town.x, town.y, qi));
+      this.buildOpen = false;
+    }
+    //this.startMoving(evt, new QiBuilding(x, y, qi));
   }
 
   protected clickAddGroup(evt: PointerEvent) {

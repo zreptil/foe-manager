@@ -42,7 +42,9 @@
       <div [class]="key" qi-group>
         <div title>{{ qiGroups[key] }}</div>
         @for (qi of qiListFor(key); track $index) {
-          <div (pointerdown)="clickAdd($event, qi)" [innerHtml]="qi.name" entry></div>
+          <div (contextmenu)="$event.preventDefault()"
+               (pointerdown)="clickAdd($event, qi)"
+               [innerHtml]="qi.name" entry></div>
           <div line></div>
         }
       </div>
