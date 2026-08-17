@@ -1,6 +1,7 @@
 import {BaseData} from '@/_model/base-data';
 import {GbUserData} from '@/_model/gb-user-data';
 import {signal} from '@angular/core';
+import {QiDef} from '@/_model/qi-def';
 
 export enum EnumPermission {
   keepUserToken
@@ -10,7 +11,8 @@ export enum EnumSitemode {
   select,
   manage,
   buildings,
-  players
+  players,
+  qi
 }
 
 export enum EnumSortmode {
@@ -31,6 +33,8 @@ export class UserData extends BaseData {
   readonly _siteMode = signal<EnumSitemode>(EnumSitemode.select);
   gbSort: { [key: string]: { mode: EnumSortmode, asc: boolean } };
   listGb: { [key: string]: GbUserData };
+  listQi: QiDef[];
+  qiGroupIdx: number;
   readonly _activeGbKey = signal<string>(null);
   activeUserGb: GbUserData;
   activePlayer: string;
@@ -65,7 +69,8 @@ export class UserData extends BaseData {
       f: this.activeGbKey,
       g: this.activeUserGb?.asJson,
       h: this.showInfoGb,
-      i: this.showLevelArrows
+      i: this.showLevelArrows,
+      j: this.qiGroupIdx
     };
 
     ret.f = {};
@@ -101,5 +106,6 @@ export class UserData extends BaseData {
     }
     this.showInfoGb = json?.h ?? def?.showInfo ?? false;
     this.showLevelArrows = json?.i ?? def?.showLevelArrows ?? true;
+    this.qiGroupIdx = json?.j ?? def?.qiGroupIdx ?? 0;
   }
 }

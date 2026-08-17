@@ -28,10 +28,6 @@ export class BuildingService {
     return GLOBALS.user.siteMode === EnumSitemode.players;
   }
 
-  onFocus(evt: FocusEvent): void {
-    (evt?.target as HTMLInputElement)?.select();
-  }
-
   calcReward(reward: number) {
     return Math.round(reward * 1.9);
   }

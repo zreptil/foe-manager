@@ -89,16 +89,16 @@ export class DialogData {
     ],
     [DialogType.warning, {
       type: DialogType.warning,
-      title: $localize`Warning`,
+      title: $localize`Warnung`,
       buttons: [
-        {title: $localize`No`, result: {btn: DialogResultButton.no}, icon: 'close'},
-        {title: $localize`Yes`, result: {btn: DialogResultButton.yes}, focus: true, icon: 'done'}
+        {title: $localize`Nein`, result: {btn: DialogResultButton.no}, icon: 'close'},
+        {title: $localize`Ja`, result: {btn: DialogResultButton.yes}, focus: true, icon: 'done'}
       ]
     }
     ],
     [DialogType.error, {
       type: DialogType.error,
-      title: $localize`Error`,
+      title: $localize`Fehler`,
       buttons: [
         {title: $localize`Ok`, result: {btn: DialogResultButton.ok}, icon: 'done'}
       ]
@@ -106,7 +106,7 @@ export class DialogData {
     ],
     [DialogType.debug, {
       type: DialogType.debug,
-      title: $localize`Debug Message`,
+      title: $localize`Debug Nachricht`,
       buttons: [
         {title: $localize`Ok`, result: {btn: DialogResultButton.ok}, icon: 'done'}
       ]
@@ -114,19 +114,19 @@ export class DialogData {
     ],
     [DialogType.confirm, {
       type: DialogType.confirm,
-      title: $localize`Confirmation`,
+      title: $localize`Bestätigung`,
       buttons: [
-        {title: $localize`No`, result: {btn: DialogResultButton.no}, icon: 'close'},
-        {title: $localize`Yes`, result: {btn: DialogResultButton.yes}, focus: true, icon: 'done'}
+        {title: $localize`Nein`, result: {btn: DialogResultButton.no}, icon: 'close'},
+        {title: $localize`Ja`, result: {btn: DialogResultButton.yes}, focus: true, icon: 'done'}
       ]
     }
     ],
     [DialogType.confirmNo, {
       type: DialogType.confirmNo,
-      title: $localize`Confirmation`,
+      title: $localize`Bestätigung`,
       buttons: [
-        {title: $localize`No`, result: {btn: DialogResultButton.no}, focus: true, icon: 'close'},
-        {title: $localize`Yes`, result: {btn: DialogResultButton.yes}, icon: 'done'}
+        {title: $localize`Nein`, result: {btn: DialogResultButton.no}, focus: true, icon: 'close'},
+        {title: $localize`Ja`, result: {btn: DialogResultButton.yes}, icon: 'done'}
       ]
     }
     ]

@@ -54,15 +54,15 @@
           <context context-type="linenumber">89,92</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6759205696902713848" datatype="html">
-        <source>Warning</source>
+      <trans-unit id="377884716801533964" datatype="html">
+        <source>Warnung</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/dialog-data.ts</context>
           <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3542042671420335679" datatype="html">
-        <source>No</source>
+      <trans-unit id="5982204146953564471" datatype="html">
+        <source>Nein</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/dialog-data.ts</context>
           <context context-type="linenumber">94</context>
@@ -76,8 +76,8 @@
           <context context-type="linenumber">128</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="2807800733729323332" datatype="html">
-        <source>Yes</source>
+      <trans-unit id="8807722618432376624" datatype="html">
+        <source>Ja</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/dialog-data.ts</context>
           <context context-type="linenumber">95</context>
@@ -91,26 +91,22 @@
           <context context-type="linenumber">129</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1519954996184640001" datatype="html">
-        <source>Error</source>
+      <trans-unit id="9175670018185396326" datatype="html">
+        <source>Fehler</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/dialog-data.ts</context>
           <context context-type="linenumber">101</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_model/theme-data.ts</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
       </trans-unit>
-      <trans-unit id="6026586747124992284" datatype="html">
-        <source>Debug Message</source>
+      <trans-unit id="4118589193088063479" datatype="html">
+        <source>Debug Nachricht</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/dialog-data.ts</context>
           <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1234709746630139322" datatype="html">
-        <source>Confirmation</source>
+      <trans-unit id="8702309441108344248" datatype="html">
+        <source>Bestätigung</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/dialog-data.ts</context>
           <context context-type="linenumber">117</context>
@@ -250,6 +246,13 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_model/theme-data.ts</context>
           <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1519954996184640001" datatype="html">
+        <source>Error</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_model/theme-data.ts</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2906587845957718064" datatype="html">
@@ -405,7 +408,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">78,79</context>
+          <context context-type="linenumber">82,83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7911416166208830577" datatype="html">
@@ -1153,7 +1156,7 @@
         <source>There was no answer within <x id="PH" equiv-text="params.timeout / 1000"/> seconds at <x id="PH_1" equiv-text="url"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">562</context>
+          <context context-type="linenumber">577</context>
         </context-group>
       </trans-unit>
       <trans-unit id="328801838200143891" datatype="html">
@@ -1332,39 +1335,39 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source>Der Platz ist mit dem Eigenanteil schon gesichert</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/building/building.component.html</context>
-          <context context-type="linenumber">191</context>
+          <context context-type="linenumber">176</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/building/building.component.html</context>
-          <context context-type="linenumber">220</context>
+          <context context-type="linenumber">205</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6928169574977102398" datatype="html">
         <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>crown<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Eingezahlter Eigenanteil </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/building/building.component.html</context>
-          <context context-type="linenumber">259,261</context>
+          <context context-type="linenumber">244,246</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7321563947436597665" datatype="html">
         <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>target<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Eingezahlter Anteil </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/building/building.component.html</context>
-          <context context-type="linenumber">277,279</context>
+          <context context-type="linenumber">262,264</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2577916285831366531" datatype="html">
         <source>Fremdanteil</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/building/building.component.html</context>
-          <context context-type="linenumber">307,308</context>
+          <context context-type="linenumber">292,293</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2913251831460178525" datatype="html">
         <source>&quot;<x id="INTERPOLATION" equiv-text="{{ this.calcTitles[gbUser.copyIdx] }}"/>&quot; absichern</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/building/building.component.html</context>
-          <context context-type="linenumber">313,314</context>
+          <context context-type="linenumber">298,299</context>
         </context-group>
       </trans-unit>
       <trans-unit id="851610571799133221" datatype="html">
@@ -1439,35 +1442,35 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source>Zoom</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">84,85</context>
+          <context context-type="linenumber">88,89</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3656052262936020219" datatype="html">
         <source>Level Pfeile</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">90,91</context>
+          <context context-type="linenumber">94,95</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1546319556558396470" datatype="html">
         <source> Initialisierung läuft... </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">127</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4847028901160817707" datatype="html">
         <source> Die Daten aus dem Cache sind falsch. Bitte den Cache leeren und neu versuchen. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">127</context>
+          <context context-type="linenumber">131</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8221180690764668958" datatype="html">
         <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>target<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Spielername </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">140,142</context>
+          <context context-type="linenumber">149,151</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8255800615111557774" datatype="html">
@@ -1478,7 +1481,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7830748668316120486" datatype="html">
@@ -1502,11 +1505,18 @@ beyond the control of foe-manager. Should the confirmation process be started?</
           <context context-type="linenumber">88</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="2473040132597168324" datatype="html">
+        <source>Quanteninvasion</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
+          <context context-type="linenumber">90</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="7387510550620861155" datatype="html">
         <source>Name eingeben</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">259</context>
+          <context context-type="linenumber">263</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4360072995007239979" datatype="html">
@@ -1877,8 +1887,8 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         </context-group>
         <note priority="1" from="description">110a4</note>
       </trans-unit>
-      <trans-unit id="1250216841510545576" datatype="html">
-        <source> Im Editmodus der eigenen Gebäude ist es nun möglich die Spalte, die kopiert werden soll, mit dem Button <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>&quot;Spalte&quot; absichern<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> mit den Werten für die Absicherung aller Plätze zu versehen. Dabei werden die Fremdanteile eingetragen und der Eigenanteil entsprechend berechnet und auch eingetragen. Der Button ist nur verfügbar, wenn bisher noch keine Fremdanteile eingetragen wurden. </source>
+      <trans-unit id="555693117201018076" datatype="html">
+        <source> Im Editmodus der eigenen Gebäude ist es nun möglich die Spalte, die kopiert werden soll, mit dem Button <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>&quot;Spalte&quot; absichern<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> mit den Werten für die Absicherung aller Plätze zu versehen. Dabei werden die Fremdanteile eingetragen und der Eigenanteil entsprechend berechnet und auch eingetragen. Der Button ist nur verfügbar, wenn eine andere Spalte als die erste ausgewählt wurde. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
           <context context-type="linenumber">91,95</context>
@@ -1908,6 +1918,22 @@ beyond the control of foe-manager. Should the confirmation process be started?</
           <context context-type="linenumber">107,108</context>
         </context-group>
         <note priority="1" from="description">110c4</note>
+      </trans-unit>
+      <trans-unit id="2705826630429852770" datatype="html">
+        <source> Die eigene Sortierung wurde korrigiert und mit zusätzlichen Buttons versehen, die das entsprechende Gebäude an den Anfang oder das Ende verschieben. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
+          <context context-type="linenumber">110,112</context>
+        </context-group>
+        <note priority="1" from="description">110c5</note>
+      </trans-unit>
+      <trans-unit id="6718829770051125168" datatype="html">
+        <source> In der Spalte der Eigenanteile wird bei Auswahl der 1,9er Spalte jetzt auch an, was noch vom Eigenanteil fehlt, wenn er noch nicht dem benötigten Eigenanteil zur Absicherung von P1 bis P5 entspricht. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
+          <context context-type="linenumber">114,116</context>
+        </context-group>
+        <note priority="1" from="description">110a6</note>
       </trans-unit>
       <trans-unit id="5694922864459713986" datatype="html">
         <source>Should the color changes be discarded?</source>

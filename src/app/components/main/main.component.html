@@ -21,6 +21,7 @@
               @if (globals.isDebug) {
                 <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.players}" [ngTemplateOutlet]="btnSiteMode"/>
               }
+              <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.qi}" [ngTemplateOutlet]="btnSiteMode"/>
             } @else {
               <ng-container [ngTemplateOutlet]="btnBack"/>
             }
@@ -34,16 +35,19 @@
           @case (EnumSitemode.players) {
             <ng-container [ngTemplateOutlet]="btnBack"/>
           }
+          @case (EnumSitemode.qi) {
+            <ng-container [ngTemplateOutlet]="btnBack"/>
+          }
         }
       </div>
-      @if (globals.user.siteMode !== 2 || globals.user.activeGbKey == null) {
+      @if (globals.user.siteMode !== EnumSitemode.buildings || globals.user.activeGbKey == null) {
         <div>
           <button [matMenuTriggerFor]="sortMenu" mat-icon-button small-icon-button>
             <mat-icon>{{ iconForSort(globals.user?.gbSort?.[globals.user.siteMode]?.mode) }}</mat-icon>
           </button>
           <mat-menu #sortMenu="matMenu" class="menuSettings">
             @for (mode of globals.sortModesFor(globals.user.siteMode); track $index) {
-              <button (click)="clickSort($event, mode.mode)" matButton small-icon-button>
+              <button (click)="clickSort($event, mode.mode)" mat-button small-icon-button>
                 <mat-icon>{{ iconForSort(mode.mode, true) }}</mat-icon>
                 {{ mode.label }}
               </button>
@@ -55,7 +59,7 @@
         @if (globals.siteConfig.editField === 'user') {
           <mat-form-field>
             <mat-label>Name</mat-label>
-            <input (focus)="bs.onFocus($event)"
+            <input (focus)="globals.onFocus($event)"
                    (keydown.enter)="saveName()"
                    [(ngModel)]="globals.user.username"
                    autofocus matInput>
@@ -128,29 +132,33 @@
           </div>
         }
       } @else if (assist.loadDone) {
-        <div gbList>
-          @for (gb of globals.gbList; track $index) {
-            <app-building [building]="gb"></app-building>
-          }
-        </div>
-        @if (bs.isModePlayers) {
-          @if (editPlayer != null) {
-            <mat-form-field>
-              <mat-label i18n>
-                <mat-icon>target</mat-icon>
-                Spielername
-              </mat-label>
-              <input (blur)="savePlayer()"
-                     (focus)="bs.onFocus($event)"
-                     [(ngModel)]="editPlayer" autofocus matInput>
-            </mat-form-field>
-          } @else {
-            <!--            @for (player of globals.playerList; track $index) {-->
-              <!--            }-->
-            <button (click)="clickPlayersAdd($event)" btnAdd mat-fab>
-              <mat-icon> add</mat-icon>
-            </button>
-          }
+        @if (globals.user.siteMode === EnumSitemode.qi) {
+          <app-quanten-invasion></app-quanten-invasion>
+        } @else {
+          <div gbList>
+            @for (gb of globals.gbList; track $index) {
+              <app-building [building]="gb"></app-building>
+            }
+          </div>
+        }
+      }
+      @if (bs.isModePlayers) {
+        @if (editPlayer != null) {
+          <mat-form-field>
+            <mat-label i18n>
+              <mat-icon>target</mat-icon>
+              Spielername
+            </mat-label>
+            <input (blur)="savePlayer()"
+                   (focus)="bs.onFocus($event)"
+                   [(ngModel)]="editPlayer" autofocus matInput>
+          </mat-form-field>
+        } @else {
+          <!--            @for (player of globals.playerList; track $index) {-->
+            <!--            }-->
+          <button (click)="clickPlayersAdd($event)" btnAdd mat-fab>
+            <mat-icon> add</mat-icon>
+          </button>
         }
       }
     </div>

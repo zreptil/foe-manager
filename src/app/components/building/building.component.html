@@ -333,4 +333,9 @@
       }
     </mat-card-content>
   }
+  @if (bs.isModeManage) {
+    <button (click)="clickGBEdit($event)" btnEditHover mat-mini-fab>
+      <mat-icon>{{ globals.user.activeGbKey != null ? 'keyboard_arrow_left' : 'edit' }}</mat-icon>
+    </button>
+  }
 </mat-card>

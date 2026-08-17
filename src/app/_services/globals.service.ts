@@ -398,6 +398,8 @@ export class GlobalsService {
       s7: GLOBALS.user.activeUserGb?.asJson,
       s8: GLOBALS.user.userzoom,
       s9: GLOBALS.user.showLevelArrows,
+      s10: GLOBALS.user.listQi,
+      s11: GLOBALS.user.qiGroupIdx
     };
     this.adjustGbSort();
     for (const key of Object.keys(GLOBALS.user.listGb)) {
@@ -477,9 +479,15 @@ export class GlobalsService {
     }
     GLOBALS.user.userzoom = storage.s8 ?? 0;
     GLOBALS.user.showLevelArrows = storage.s9 ?? true;
+    GLOBALS.user.listQi = storage.s10 ?? [{name: 'Erster Tag', area: []}];
+    GLOBALS.user.qiGroupIdx = storage.s11 ?? 0;
 
     // validate data
     this.adjustGbSort();
+  }
+
+  onFocus(evt: FocusEvent): void {
+    (evt?.target as HTMLInputElement)?.select();
   }
 
   adjustGbSort(): void {

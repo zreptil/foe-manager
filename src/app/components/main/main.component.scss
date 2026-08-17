@@ -133,8 +133,17 @@
 }
 
 ::ng-deep .mat-menu-panel {
-  background-color: var(--menuBack);
-  color: var(--menuFore);
+  background-color: var(--mainHeadBack);
+  color: var(--mainHeadFore);
+}
+
+::ng-deep .menuSettings button:hover {
+  color: var(--mainHeadBack);
+}
+
+::ng-deep .menuSettings button:hover .mat-mdc-button-persistent-ripple::before {
+  background-color: var(--mainHeadFore) !important;
+  opacity: 1 !important;
 }
 
 [mainpanel] {

@@ -1,0 +1,212 @@
+:host {
+  display: flex;
+  flex-flow: row;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+[map] {
+  position: relative;
+  background: rgba(0, 0, 0, 0.3);
+
+  [area] {
+    position: absolute;
+    touch-action: none;
+    user-select: none;
+
+    [building] {
+      cursor: grab;
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      left: var(--gap);
+      top: var(--gap);
+      width: calc(100% - var(--gap));
+      height: calc(100% - var(--gap));
+      font-size: 75%;
+    }
+
+    --alpha: 0.4;
+  }
+
+  [moving] {
+    --alpha: 0.8;
+    --cursor: grabbing;
+    pointer-events: none;
+    z-index: 1000;
+
+    [building] {
+      cursor: var(--cursor);
+      pointer-events: all;
+      border-radius: 20%;
+    }
+  }
+}
+
+[build] {
+  position: absolute;
+  top: 52px;
+  left: 5px;
+
+  mat-icon {
+    transition: transform 1000ms ease;
+  }
+}
+
+[build].open > button mat-icon {
+  transform: rotate(360deg);
+}
+
+[qi-groups] {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  padding-left: 40px;
+  display: flex;
+  gap: 4px;
+
+  opacity: 0;
+  transform: translateX(-100%);
+  pointer-events: none;
+
+  transition: transform 750ms ease,
+  opacity 300ms ease;
+  --color: #000;
+  --hoverColor: rgba(255, 255, 255, 0.7);
+
+  [qi-group] {
+    cursor: pointer;
+    --alpha: 1;
+    padding: 0.5em;
+    border-radius: 1em;
+    height: fit-content;
+
+    [entry] {
+      display: none;
+      border-radius: 0.5em;
+      padding: 0.25em;
+    }
+  }
+
+  [qi-group]:hover {
+    [title] {
+      font-weight: bold;
+    }
+
+    [entry] {
+      display: flex;
+    }
+
+    [line] {
+      border-bottom: 1px solid var(--color);
+    }
+
+    [entry]:hover {
+      background: var(--hoverColor);
+    }
+  }
+}
+
+[build].open [qi-groups] {
+  opacity: 1;
+  transform: translateX(0%);
+  pointer-events: auto;
+}
+
+.town {
+  background: rgba(255, 255, 0, var(--alpha));
+}
+
+.resi {
+  background: rgba(0, 255, 0, var(--alpha));
+}
+
+.goods {
+  background: rgba(200, 0, 0, var(--alpha));
+  --color: #fff;
+  color: var(--color);
+  --hoverColor: rgba(0, 0, 0, 0.3);
+}
+
+.deco {
+  background: rgba(0, 200, 0, var(--alpha));
+}
+
+.supp {
+  background: rgba(240, 0, 240, var(--alpha));
+  --color: #fff;
+  color: var(--color);
+  --hoverColor: rgba(0, 0, 0, 0.3);
+}
+
+.cultural {
+  background: rgba(51, 51, 255, var(--alpha));
+  --color: #fff;
+  color: var(--color);
+  --hoverColor: rgba(0, 0, 0, 0.3);
+}
+
+.mili {
+  background: rgba(255, 51, 51, var(--alpha));
+  --color: #fff;
+  color: var(--color);
+  --hoverColor: rgba(0, 0, 0, 0.3);
+}
+
+.empty {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+[groups] {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  display: flex;
+  align-items: center;
+  flex-flow: row;
+  flex-wrap: wrap;
+  gap: 1em;
+
+  [group] {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+
+    button[small-icon-button] {
+      --size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      --mat-icon-button-state-layer-size: var(--size);
+
+      mat-icon {
+        font-size: var(--size);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  ::ng-deep [small-input].mat-mdc-form-field {
+    --mat-form-field-container-height: 36px;
+    --mat-form-field-container-vertical-padding: 6px;
+  }
+
+  ::ng-deep [small-input] .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+
+  [group].selected {
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+  }
+
+  mat-icon {
+    transition: transform 500ms ease;
+  }
+}
+

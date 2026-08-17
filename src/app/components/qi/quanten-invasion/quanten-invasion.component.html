@@ -1,0 +1,78 @@
+<div [style]="styleForMap" map>
+  <div #zero area></div>
+  @if (true) {
+    @for (y of range(height); track $index) {
+      @for (x of range(width); track $index) {
+        @let b = empty(x, y);
+        <div [style]="styleForBuilding(b)" area>
+          <div [class]="classForBuilding(b)" building></div>
+        </div>
+      }
+    }
+  }
+  @for (b of buildings; track $index) {
+    <div (pointerdown)="startMoving($event, b)" [style]="styleForBuilding(b)" area>
+      <div [class]="classForBuilding(b)" [innerHtml]="b.name" building>
+      </div>
+    </div>
+  }
+  <div [style]="styleForBuilding(movingBuilding)" area moving>
+    <div [class]="classForBuilding(movingBuilding)" [innerHtml]="movingBuilding?.name" building>
+    </div>
+  </div>
+</div>
+
+<div groups>
+  @for (group of globals.user.listQi; track $index) {
+    <div [class.selected]="$index === globals.user.qiGroupIdx" group>
+      @if ($index === globals.user.qiGroupIdx) {
+        <mat-form-field small-input>
+          <input (focus)="globals.onFocus($event)"
+                 [(ngModel)]="group.name"
+                 autofocus matInput>
+        </mat-form-field>
+        @if ($index > 0) {
+          <button (click)="clickDeleteGroup($event, $index)" mat-icon-button small-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        }
+      } @else {
+        <button (click)="clickGroup($event, $index)" mat-button>
+          {{ group.name }}
+        </button>
+      }
+    </div>
+  }
+  <button [matMenuTriggerFor]="addMenu" mat-icon-button small-icon-button>
+    <mat-icon>add</mat-icon>
+  </button>
+  <mat-menu #addMenu="matMenu" class="menuSettings">
+    @for (std of qiSrv.qiStandardList; track $index) {
+      <button (click)="clickAddStandardGroup($event, std)" mat-button small-icon-button>
+        <mat-icon>cloud_download</mat-icon>
+        {{ std.name }}
+      </button>
+    }
+    <button (click)="clickAddGroup($event)" mat-button small-icon-button>
+      <mat-icon>new_window</mat-icon>
+      Nächster Tag
+    </button>
+  </mat-menu>
+</div>
+
+<div [class.open]="buildOpen" build>
+  <div qi-groups>
+    @for (key of qiKeys; track $index) {
+      <div [class]="key" qi-group>
+        <div title>{{ qiGroups[key] }}</div>
+        @for (qi of qiListFor(key); track $index) {
+          <div (pointerdown)="clickAdd($event, qi)" [innerHtml]="qi.name" entry></div>
+          <div line></div>
+        }
+      </div>
+    }
+  </div>
+  <button (click)="buildOpen = !buildOpen" mat-mini-fab>
+    <mat-icon>apartment</mat-icon>
+  </button>
+</div>

@@ -1,0 +1,253 @@
+{
+  "version": "1.0",
+  "empty-0": {
+    "b": "",
+    "c": 1,
+    "d": 1
+  },
+  "town-1": {
+    "b": "Rat&shy;haus",
+    "c": 7,
+    "d": 6
+  },
+  "resi-1": {
+    "b": "Mehr&shy;ge&shy;schoss&shy;i&shy;ges Haus",
+    "c": 2,
+    "d": 2
+  },
+  "resi-2": {
+    "b": "Fach&shy;werk&shy;haus",
+    "c": 2,
+    "d": 2
+  },
+  "resi-3": {
+    "b": "Schin&shy;del&shy;haus",
+    "c": 2,
+    "d": 2
+  },
+  "resi-4": {
+    "b": "Her&shy;ren&shy;haus",
+    "c": 2,
+    "d": 2
+  },
+  "resi-5": {
+    "b": "Sand&shy;stein&shy;haus",
+    "c": 2,
+    "d": 2
+  },
+  "resi-6": {
+    "b": "Stadt&shy;haus",
+    "c": 2,
+    "d": 2
+  },
+  "resi-7": {
+    "b": "Guts&shy;haus",
+    "c": 2,
+    "d": 2
+  },
+  "resi-8": {
+    "b": "Miets&shy;haus",
+    "c": 2,
+    "d": 2
+  },
+  "resi-9": {
+    "b": "Land&shy;gut",
+    "c": 2,
+    "d": 2
+  },
+  "supp-1": {
+    "b": "Bä&shy;cke&shy;rei",
+    "c": 4,
+    "d": 3
+  },
+  "supp-2": {
+    "b": "Schu&shy;ster&shy;werk&shy;statt",
+    "c": 3,
+    "d": 3
+  },
+  "supp-3": {
+    "b": "Ger&shy;be&shy;rei",
+    "c": 3,
+    "d": 3
+  },
+  "supp-4": {
+    "b": "Al&shy;che&shy;mist&shy;en&shy;la&shy;bor",
+    "c": 3,
+    "d": 2
+  },
+  "supp-5": {
+    "b": "Bau&shy;ern&shy;hof",
+    "c": 4,
+    "d": 5
+  },
+  "supp-6": {
+    "b": "Wind&shy;müh&shy;le",
+    "c": 3,
+    "d": 4
+  },
+  "supp-7": {
+    "b": "Küf&shy;er&shy;ei",
+    "c": 3,
+    "d": 4
+  },
+  "supp-8": {
+    "b": "Brau&shy;er&shy;ei",
+    "c": 3,
+    "d": 3
+  },
+  "supp-9": {
+    "b": "Ge&shy;würz&shy;hand&shy;lung",
+    "c": 3,
+    "d": 3
+  },
+  "goods-1": {
+    "b": "Im&shy;ker&shy;ei",
+    "c": 3,
+    "d": 3
+  },
+  "goods-2": {
+    "b": "Sei&shy;ler&shy;ei",
+    "c": 3,
+    "d": 2
+  },
+  "goods-3": {
+    "b": "Schieß&shy;pul&shy;ver-Manu&shy;fak&shy;tur",
+    "c": 3,
+    "d": 3
+  },
+  "cultural-1": {
+    "b": "Gal&shy;gen",
+    "c": 2,
+    "d": 2
+  },
+  "cultural-2": {
+    "b": "Markt&shy;platz",
+    "c": 3,
+    "d": 3
+  },
+  "cultural-3": {
+    "b": "Prang&shy;er",
+    "c": 2,
+    "d": 2
+  },
+  "cultural-4": {
+    "b": "Kir&shy;che",
+    "c": 3,
+    "d": 3
+  },
+  "cultural-5": {
+    "b": "Dok&shy;tor",
+    "c": 3,
+    "d": 3
+  },
+  "cultural-6": {
+    "b": "Druck&shy;er&shy;ei",
+    "c": 3,
+    "d": 3
+  },
+  "cultural-7": {
+    "b": "Kar&shy;to&shy;graph",
+    "c": 3,
+    "d": 2
+  },
+  "cultural-8": {
+    "b": "Bü&shy;che&shy;rei",
+    "c": 4,
+    "d": 4
+  },
+  "cultural-9": {
+    "b": "Pa&shy;last",
+    "c": 4,
+    "d": 4
+  },
+  "deco-1": {
+    "b": "Zy&shy;pres&shy;se",
+    "c": 1,
+    "d": 1
+  },
+  "deco-2": {
+    "b": "Hec&shy;ke mit Blu&shy;men",
+    "c": 1,
+    "d": 1
+  },
+  "deco-3": {
+    "b": "Teich",
+    "c": 2,
+    "d": 2
+  },
+  "deco-4": {
+    "b": "Fäh&shy;re",
+    "c": 1,
+    "d": 1
+  },
+  "deco-5": {
+    "b": "Was&shy;ser&shy;spei&shy;er",
+    "c": 1,
+    "d": 1
+  },
+  "deco-6": {
+    "b": "Weg&shy;wei&shy;ser",
+    "c": 1,
+    "d": 1
+  },
+  "deco-7": {
+    "b": "Turm&shy;ru&shy;i&shy;ne",
+    "c": 2,
+    "d": 2
+  },
+  "deco-8": {
+    "b": "See&shy;fahr&shy;rer-Sta&shy;tue",
+    "c": 1,
+    "d": 1
+  },
+  "deco-9": {
+    "b": "Baum&shy;grup&shy;pe",
+    "c": 2,
+    "d": 2
+  },
+  "mili-1": {
+    "b": "Be&shy;rit&shy;te&shy;ne-Bo&shy;gen&shy;schüt&shy;zen-Schieß&shy;stand",
+    "c": 3,
+    "d": 4
+  },
+  "mili-2": {
+    "b": "Ge&shy;pan&shy;zer&shy;te-In&shy;fan&shy;te&shy;rie-Ka&shy;ser&shy;ne",
+    "c": 3,
+    "d": 3
+  },
+  "mili-3": {
+    "b": "Ka&shy;ta&shy;pult-Camp",
+    "c": 3,
+    "d": 3
+  },
+  "mili-4": {
+    "b": "Arm&shy;brust&shy;schieß&shy;stand",
+    "c": 3,
+    "d": 3
+  },
+  "mili-5": {
+    "b": "Schwe&shy;re-In&shy;fan&shy;te&shy;rie-Ka&shy;ser&shy;ne",
+    "c": 3,
+    "d": 3
+  },
+  "mili-6": {
+    "b": "Bli&shy;den-Camp",
+    "c": 3,
+    "d": 3
+  },
+  "mili-7": {
+    "b": "Lang&shy;bo&shy;gen&shy;schüt&shy;zen-Schieß&shy;stand",
+    "c": 3,
+    "d": 3
+  },
+  "mili-8": {
+    "b": "Kö&shy;nig&shy;lich&shy;e-Wach&shy;en-Ka&shy;ser&shy;ne",
+    "c": 3,
+    "d": 4
+  },
+  "mili-9": {
+    "b": "Ka&shy;no&shy;nen-Camp",
+    "c": 3,
+    "d": 4
+  }
+}

@@ -86,6 +86,8 @@ export class MainComponent implements OnInit {
         return $localize`Gebäude`;
       case EnumSitemode.players:
         return $localize`Gebäude anderer Spieler`;
+      case EnumSitemode.qi:
+        return $localize`Quanteninvasion`;
       default:
         return $localize`Liste der Gebäude in der Stadt`;
     }
@@ -129,6 +131,8 @@ export class MainComponent implements OnInit {
         return 'select_check_box';
       case EnumSitemode.players:
         return 'group';
+      case EnumSitemode.qi:
+        return 'map';
     }
     return 'apartment';
   }
