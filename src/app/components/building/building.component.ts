@@ -18,8 +18,8 @@ export class BuildingComponent {
   building = input.required<GbData>();
   gbUser: GbUserData;
   nextLevel: LevelData;
-  calcMethods = [this.calcSafePlaces, this.calcNicePlaces];
-  calcTitles = [$localize`Sicher`, $localize`Nett`];
+  calcMethods = [this.calcSafePlaces, this.calcNicePlaces, this.calcSupportPlaces];
+  calcTitles = [$localize`Sicher`, $localize`Nett`, $localize`Förderung`];
 
   constructor(public globals: GlobalsService,
               public msg: MessageService,
@@ -286,6 +286,42 @@ export class BuildingComponent {
     while (idx >= 0) {
       const rew = this.bs.calcReward(level.rewards[rewIdx]);
       ret = Math.min(rew, Math.floor(base / 2));
+      if (ret <= sl[sniperIdx]) {
+        if (idx === 0) {
+          return -sl[sniperIdx];
+        }
+        ret = sl[sniperIdx];
+        sniperIdx++;
+      }
+      base -= ret;
+      if (base < 0) {
+        return 0;
+      }
+      idx--;
+      rewIdx++;
+    }
+    return Math.min(reward, base);
+  }
+
+  protected calcSupportPlaces(level: LevelData, idx: number, ownerValue: number) {
+    if (Utils.isEmpty(ownerValue) || +ownerValue === 0) {
+      ownerValue = this.calcBlockValue(-1, level, 0);
+    }
+    switch (idx) {
+      case -2:
+        return ownerValue;
+      case -1:
+        return level.cost - ownerValue;
+    }
+    const sl = [...this.gbUser.sniperValues, 0];
+    let base = level.cost - +(ownerValue ?? 0);
+    let ret = base;
+    let sniperIdx = 0;
+    const reward = this.bs.calcReward(level.rewards[idx]);
+    let rewIdx = 0;
+    while (idx >= 0) {
+      const rew = this.bs.calcReward(level.rewards[rewIdx]);
+      ret = Math.min(base - rew, Math.floor(base / 2));
       if (ret <= sl[sniperIdx]) {
         if (idx === 0) {
           return -sl[sniperIdx];
