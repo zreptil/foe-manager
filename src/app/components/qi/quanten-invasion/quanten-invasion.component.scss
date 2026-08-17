@@ -1,55 +1,79 @@
 :host {
   display: flex;
-  flex-flow: row;
+  flex-flow: column;
   height: 100%;
   width: 100%;
-  align-items: center;
-  justify-content: center;
-}
 
-[map] {
-  position: relative;
-  background: rgba(0, 0, 0, 0.3);
+  [container] {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
 
-  [area] {
-    position: absolute;
-    touch-action: none;
-    user-select: none;
+    [map] {
+      position: relative;
+      background: rgba(0, 0, 0, 0.3);
 
-    [building] {
-      cursor: grab;
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      left: var(--gap);
-      top: var(--gap);
-      width: calc(100% - var(--gap));
-      height: calc(100% - var(--gap));
-      font-size: 75%;
-    }
+      [area] {
+        position: absolute;
+        touch-action: none;
+        user-select: none;
 
-    --alpha: 0.4;
-  }
+        [building] {
+          cursor: grab;
+          position: absolute;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          left: var(--gap);
+          top: var(--gap);
+          width: calc(100% - var(--gap));
+          height: calc(100% - var(--gap));
+          font-size: 75%;
+        }
 
-  [moving] {
-    --alpha: 0.8;
-    --cursor: grabbing;
-    pointer-events: none;
-    z-index: 1000;
+        [copyHandle] {
+          display: none;
+          align-items: center;
+          justify-content: center;
+          position: absolute;
+          cursor: copy;
+          z-index: 10000;
+          background: rgba(255, 255, 255, 0.6);
+          border-radius: 20%;
+        }
 
-    [building] {
-      cursor: var(--cursor);
-      pointer-events: all;
-      border-radius: 20%;
+        --alpha: 0.4;
+      }
+
+      [area]:hover [copyHandle] {
+        display: flex;
+      }
+
+      [moving] {
+        --alpha: 0.8;
+        --cursor: grabbing;
+        pointer-events: none;
+        z-index: 1000;
+
+        [building] {
+          cursor: var(--cursor);
+          pointer-events: all;
+          border-radius: 20%;
+        }
+      }
     }
   }
 }
 
 [build] {
-  position: absolute;
-  top: 52px;
-  left: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
+  z-index: 10;
 
   mat-icon {
     transition: transform 1000ms ease;
@@ -88,6 +112,7 @@
       display: none;
       border-radius: 0.5em;
       padding: 0.25em;
+      cursor: grab;
     }
   }
 
@@ -161,9 +186,6 @@
 }
 
 [groups] {
-  position: absolute;
-  top: 5px;
-  left: 5px;
   display: flex;
   align-items: center;
   flex-flow: row;
@@ -174,6 +196,8 @@
     display: flex;
     flex-flow: row;
     align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 
     button[small-icon-button] {
       --size: 20px;

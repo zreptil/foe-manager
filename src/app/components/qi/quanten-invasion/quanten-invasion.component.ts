@@ -62,8 +62,13 @@ export class QuantenInvasionComponent {
 
   readonly range = (n: number) => Array.from({length: n}, (_, i) => i);
 
-  startMoving(evt: PointerEvent, building: QiBuilding): void {
+  startMoving(evt: PointerEvent, building: QiBuilding, createCopy = false): void {
     evt.preventDefault();
+
+    if (createCopy) {
+      building = new QiBuilding(building.x - 1, building.y, building.qiData);
+      this.buildings.push(building);
+    }
 
     this.pointerId = evt.pointerId;
 
@@ -81,6 +86,19 @@ export class QuantenInvasionComponent {
     window.addEventListener('pointermove', this.moveBuilding);
     window.addEventListener('pointerup', this.stopMoving);
     window.addEventListener('pointercancel', this.stopMoving);
+  }
+
+  protected styleForCopyHandle() {
+    const ret: any = {
+      left: `${-this.size}px`,
+      top: `0px`,
+      width: `${this.size}px`,
+      height: `${this.size}px`
+    };
+    if (this.movingSource != null) {
+      ret.display = 'none';
+    }
+    return ret;
   }
 
   protected styleForBuilding(b: QiBuilding) {

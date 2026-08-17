@@ -1,27 +1,3 @@
-<div [style]="styleForMap" map>
-  <div #zero area></div>
-  @if (true) {
-    @for (y of range(height); track $index) {
-      @for (x of range(width); track $index) {
-        @let b = empty(x, y);
-        <div [style]="styleForBuilding(b)" area>
-          <div [class]="classForBuilding(b)" building></div>
-        </div>
-      }
-    }
-  }
-  @for (b of buildings; track $index) {
-    <div (pointerdown)="startMoving($event, b)" [style]="styleForBuilding(b)" area>
-      <div [class]="classForBuilding(b)" [innerHtml]="b.name" building>
-      </div>
-    </div>
-  }
-  <div [style]="styleForBuilding(movingBuilding)" area moving>
-    <div [class]="classForBuilding(movingBuilding)" [innerHtml]="movingBuilding?.name" building>
-    </div>
-  </div>
-</div>
-
 <div groups>
   @for (group of globals.user.listQi; track $index) {
     <div [class.selected]="$index === globals.user.qiGroupIdx" group>
@@ -29,7 +5,7 @@
         <mat-form-field small-input>
           <input (focus)="globals.onFocus($event)"
                  [(ngModel)]="group.name"
-                 autofocus matInput>
+                 matInput>
         </mat-form-field>
         @if ($index > 0) {
           <button (click)="clickDeleteGroup($event, $index)" mat-icon-button small-icon-button>
@@ -75,4 +51,35 @@
   <button (click)="buildOpen = !buildOpen" mat-mini-fab>
     <mat-icon>apartment</mat-icon>
   </button>
+</div>
+
+<div container>
+  <div [style]="styleForMap" map>
+    <div #zero area></div>
+    @if (true) {
+      @for (y of range(height); track $index) {
+        @for (x of range(width); track $index) {
+          @let b = empty(x, y);
+          <div [style]="styleForBuilding(b)" area>
+            <div [class]="classForBuilding(b)" building></div>
+          </div>
+        }
+      }
+    }
+    @for (b of buildings; track $index) {
+      <div [style]="styleForBuilding(b)" area>
+        <div (pointerdown)="startMoving($event, b)" [class]="classForBuilding(b)" [innerHtml]="b.name" building>
+        </div>
+        @if (b.qiData.key !== 'town-1') {
+          <div (pointerdown)="startMoving($event, b, true)" [style]="styleForCopyHandle()" copyHandle>
+            <mat-icon>content_copy</mat-icon>
+          </div>
+        }
+      </div>
+    }
+    <div [style]="styleForBuilding(movingBuilding)" area moving>
+      <div [class]="classForBuilding(movingBuilding)" [innerHtml]="movingBuilding?.name" building>
+      </div>
+    </div>
+  </div>
 </div>
