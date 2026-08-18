@@ -48,6 +48,15 @@ export class BuildingComponent {
     return sort?.mode === EnumSortmode.own && sort?.asc;
   }
 
+  get showEditIcon() {
+    const currSort = GLOBALS.user?.gbSort?.[GLOBALS.user.siteMode];
+    let ret = this.bs.isModeManage;
+    if (currSort?.mode === EnumSortmode.own) {
+      ret &&= !currSort.asc;
+    }
+    return ret;
+  }
+
   protected get classForGb() {
     const ret: string[] = [];
     if (GLOBALS.user.siteMode === EnumSitemode.buildings) {
@@ -314,16 +323,16 @@ export class BuildingComponent {
         return level.cost - ownerValue;
     }
     const sl = [...this.gbUser.sniperValues, 0];
-    let base = level.cost - +(ownerValue ?? 0);
+    let base = level.cost - +(ownerValue ?? 0) - 1;
     let ret = base;
     let sniperIdx = 0;
     const reward = this.bs.calcReward(level.rewards[idx]);
     let rewIdx = 0;
-    // console.log(idx);
+    GLOBALS.show(idx);
     while (idx >= 0) {
       const rew = this.bs.calcReward(level.rewards[rewIdx]);
-      ret = Math.min(ret, Math.floor(base / 2));
-      // console.log(idx, `rew=${rew}, base=${base}, ret=${ret}, sniper=${sl[sniperIdx]}`);
+      ret = Math.min(rew, Math.floor(base / 2));
+      GLOBALS.show(idx, `rew=${rew}, base=${base}, ret=${ret}, sniper=${sl[sniperIdx]}`, sl);
       if (ret <= sl[sniperIdx]) {
         if (idx === 0) {
           return -sl[sniperIdx];
@@ -331,9 +340,9 @@ export class BuildingComponent {
         ret = sl[sniperIdx];
         sniperIdx++;
       } else {
-        const rest = base - sl.slice(sniperIdx).reduce((s, v) => s + v, 0);
-        // console.log(`rest=${rest}`);
         if (ret < rew) {
+          const rest = base - sl.slice(sniperIdx).reduce((s, v) => s + v, 0);
+          GLOBALS.show(`base=${base}, rest=${rest}`);
           if (rew > rest) {
             ret = rest;
           } else {
@@ -353,6 +362,14 @@ export class BuildingComponent {
     }
     return Math.min(reward, base);
   }
+
+  // protected clickGBMark(evt: PointerEvent) {
+  //   evt.preventDefault();
+  //   if (this.gbUser != null) {
+  //     this.gbUser.colorIdx = !this.gbUser.colorIdx;
+  //     GLOBALS.saveSharedData();
+  //   }
+  // }
 
   protected calcSafePlaces(level: LevelData, idx: number, ownerValue: number) {
     switch (idx) {
@@ -382,14 +399,6 @@ export class BuildingComponent {
     }
     return ret;
   }
-
-  // protected clickGBMark(evt: PointerEvent) {
-  //   evt.preventDefault();
-  //   if (this.gbUser != null) {
-  //     this.gbUser.colorIdx = !this.gbUser.colorIdx;
-  //     GLOBALS.saveSharedData();
-  //   }
-  // }
 
   protected clickColor(evt: PointerEvent, idx: number) {
     if (this.gbUser != null) {
@@ -473,16 +482,18 @@ export class BuildingComponent {
 
   protected clickSecure(evt: PointerEvent) {
     evt?.preventDefault();
-    let idx = 0;
-    for (const reward of this.nextLevel.rewards) {
+    GLOBALS.showConDebug = false;
+    for (let idx = 0; idx < this.nextLevel.rewards.length; idx++) {
       const value = this.calcPlaceValue(this.gbUser.copyIdx, this.nextLevel, idx, this.gbUser.ownerValue);
+      GLOBALS.show(idx, value);
       if (value > 0) {
         this.gbUser.sniperValues.push(value);
         this.gbUser.sniperValues = this.gbUser.sniperValues.map(a => +a)
         this.gbUser.sniperValues.sort((a, b) => b - a);
       }
-      idx++;
     }
-    this.gbUser.ownerValue = this.calcBlockValue(this.gbUser.copyIdx, this.nextLevel, idx - 1);
+    GLOBALS.show('snipers', this.gbUser.sniperValues);
+    this.gbUser.ownerValue = this.calcBlockValue(this.gbUser.copyIdx, this.nextLevel, this.nextLevel.rewards.length - 1);
+    GLOBALS.showConDebug = false;
   }
 }

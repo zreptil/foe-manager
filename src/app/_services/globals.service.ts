@@ -121,6 +121,7 @@ export class GlobalsService {
   showCompleted = false;
   _styleForPanels: any = {};
   formListParams: any;
+  showConDebug = false;
   private flags = '';
 
   constructor(public http: HttpClient,
@@ -408,6 +409,12 @@ export class GlobalsService {
       }
     }
     return ret;
+  }
+
+  show(message?: any, ...optionalParams: any[]) {
+    if (this.showConDebug) {
+      console.log(message, optionalParams);
+    }
   }
 
   sortModesFor(mode: EnumSitemode) {
