@@ -25,7 +25,7 @@ export class GbUserData extends BaseData {
       e: this.active,
       f: this.player,
       g: +this.ownerValue,
-      h: this.sniperValues,
+      h: (this.sniperValues ?? []).filter(a => a != null && a > 0),
       i: this.copyIdx,
       j: this.sortIdx
     };

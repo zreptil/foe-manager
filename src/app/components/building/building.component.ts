@@ -225,7 +225,7 @@ export class BuildingComponent {
   protected saveSniperValue(evt?: PointerEvent, addNewValue = false) {
     evt?.preventDefault();
     this.gbUser.sniperValues ??= [];
-    if (!Utils.isEmpty(GLOBALS.siteConfig.sniperValue)) {
+    if (!Utils.isEmpty(GLOBALS.siteConfig.sniperValue) && GLOBALS.siteConfig.sniperValue > 0) {
       this.gbUser.sniperValues.push(GLOBALS.siteConfig.sniperValue);
       this.gbUser.sniperValues = this.gbUser.sniperValues.map(a => +a)
       this.gbUser.sniperValues.sort((a, b) => b - a);
@@ -319,22 +319,33 @@ export class BuildingComponent {
     let sniperIdx = 0;
     const reward = this.bs.calcReward(level.rewards[idx]);
     let rewIdx = 0;
+    // console.log(idx);
     while (idx >= 0) {
       const rew = this.bs.calcReward(level.rewards[rewIdx]);
-      if (rew > base) {
-        ret = Math.floor(base / 2);
-      } else {
-        ret = Math.min(base - rew, Math.floor(base / 2));
-      }
-      if (ret <= sl[sniperIdx] || rew === sl[sniperIdx]) {
+      ret = Math.min(ret, Math.floor(base / 2));
+      // console.log(idx, `rew=${rew}, base=${base}, ret=${ret}, sniper=${sl[sniperIdx]}`);
+      if (ret <= sl[sniperIdx]) {
         if (idx === 0) {
           return -sl[sniperIdx];
         }
         ret = sl[sniperIdx];
         sniperIdx++;
+      } else {
+        const rest = base - sl.slice(sniperIdx).reduce((s, v) => s + v, 0);
+        // console.log(`rest=${rest}`);
+        if (ret < rew) {
+          if (rew > rest) {
+            ret = rest;
+          } else {
+            ret = rew;
+          }
+          if (idx === 0) {
+            return ret;
+          }
+        }
       }
       base -= ret;
-      if (base <= 0) {
+      if (base < 0) {
         return 0;
       }
       idx--;

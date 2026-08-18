@@ -301,7 +301,7 @@
           }
         }
         @if (bs.isModeManage) {
-          @if (ownSort) {
+          @if (ownSort && globals.user.activeGbKey == null) {
             <div copyPanel>
               @if (gbUser.sortIdx > 0) {
                 <button (click)="clickOwnSort($event, -2)" mat-icon-button small-icon-button>
