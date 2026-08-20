@@ -161,7 +161,7 @@ export class QuantenInvasionComponent {
 
   protected clickAddStandardGroup(evt: PointerEvent, std: QiDef) {
     evt.preventDefault();
-    GLOBALS.user.listQi.push(std);
+    GLOBALS.user.listQi.push(new QiDef(std.asJson));
     this.buildings = this.qiSrv.activateGroup(GLOBALS.user.listQi.length - 1);
   }
 

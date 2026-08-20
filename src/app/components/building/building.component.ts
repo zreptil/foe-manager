@@ -186,19 +186,29 @@ export class BuildingComponent {
     return ret;
   }
 
-  protected calcBlockValue(method: number, level: LevelData, idx: number) {
+  protected calcBlockValue(method: number, level: LevelData, idx: number, calcPlaces = method >= 0) {
     let calc = level.cost;
+    // calc -= this.gbUser.sniperValues.reduce((acc, cur) => {
+    //   return acc + cur;
+    // }, 0);
     let ret = 0;
+    let sniperIdx = 0;
     for (let i = 0; i <= idx; i++) {
       let reward = this.bs.calcReward(level.rewards[i]);
-      if (method >= 0) {
-        reward = Math.abs(this.calcPlaceValue(method, level, i, this.gbUser.ownerValue));
-      }
-      if (reward > 0) {
-        if (calc - 2 * reward > ret) {
-          ret = calc - 2 * reward;
+      if (method >= 0 && this.gbUser.sniperValues[sniperIdx] >= reward) {
+        ret = 0;
+        calc -= this.gbUser.sniperValues[sniperIdx];
+        sniperIdx++;
+      } else {
+        if (calcPlaces) {
+          reward = Math.abs(this.calcPlaceValue(method, level, i, this.gbUser.ownerValue));
         }
-        calc -= reward;
+        if (reward > 0) {
+          if (calc - 2 * reward > ret) {
+            ret = calc - 2 * reward;
+          }
+          calc -= reward;
+        }
       }
     }
     return ret;
@@ -314,7 +324,7 @@ export class BuildingComponent {
 
   protected calcSupportPlaces(level: LevelData, idx: number, ownerValue: number) {
     if (Utils.isEmpty(ownerValue) || +ownerValue === 0) {
-      ownerValue = this.calcBlockValue(-1, level, 0);
+      ownerValue = this.calcBlockValue(2, level, 0, false);
     }
     switch (idx) {
       case -2:
@@ -492,8 +502,26 @@ export class BuildingComponent {
         this.gbUser.sniperValues.sort((a, b) => b - a);
       }
     }
-    GLOBALS.show('snipers', this.gbUser.sniperValues);
-    this.gbUser.ownerValue = this.calcBlockValue(this.gbUser.copyIdx, this.nextLevel, this.nextLevel.rewards.length - 1);
+    let sum = this.nextLevel.cost;
+    let hasLast = false;
+    for (let i = this.gbUser.sniperValues.length - 1; i >= 0; i--) {
+      sum -= this.gbUser.sniperValues[i];
+      if (this.gbUser.sniperValues[i] >= 0 && !hasLast) {
+        hasLast = true;
+        sum -= this.gbUser.sniperValues[i];
+      }
+    }
+    GLOBALS.show('ach guck', sum, this.nextLevel.cost);
+    if (this.gbUser.ownerValue > sum) {
+      GLOBALS.msg.error(`Der eingezahlte Eigenanteil übersteigt die benötigte Absicherung von ${sum}.`);
+      // .subscribe((result: DialogResult) => {
+      //   if (result.btn === DialogResultButton.yes) {
+      //     this.gbUser.ownerValue = sum;
+      //   }
+      // });
+    } else {
+      this.gbUser.ownerValue = sum;
+    }
     GLOBALS.showConDebug = false;
   }
 }

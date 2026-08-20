@@ -413,7 +413,7 @@ export class GlobalsService {
 
   show(message?: any, ...optionalParams: any[]) {
     if (this.showConDebug) {
-      console.log(message, optionalParams);
+      console.log(message, ...optionalParams);
     }
   }
 
