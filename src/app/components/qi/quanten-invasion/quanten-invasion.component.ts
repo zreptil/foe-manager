@@ -5,6 +5,7 @@ import {QiBuilding} from '@/_model/qi-building';
 import {GLOBALS, GlobalsService} from '@/_services/globals.service';
 import {QiDef} from '@/_model/qi-def';
 import {DialogResult, DialogResultButton} from '@/_model/dialog-data';
+import {MessageService} from '@/_services/message.service';
 
 @Component({
   selector: 'app-quanten-invasion',
@@ -38,7 +39,8 @@ export class QuantenInvasionComponent {
   private pointerId: number | null = null;
 
   constructor(public globals: GlobalsService,
-              public qiSrv: QiService) {
+              public qiSrv: QiService,
+              public msg: MessageService) {
     this.qiSrv.loadFromAsset((_qiList: { [key: string]: QiData }) => {
       this.buildings = this.qiSrv.activateGroup(GLOBALS.user.qiGroupIdx);
     });
@@ -163,6 +165,13 @@ export class QuantenInvasionComponent {
     evt.preventDefault();
     GLOBALS.user.listQi.push(new QiDef(std.asJson));
     this.buildings = this.qiSrv.activateGroup(GLOBALS.user.listQi.length - 1);
+  }
+
+  protected clickExportGroup(evt: PointerEvent, idx: number) {
+    evt.preventDefault();
+    const qi = GLOBALS.user.listQi[idx];
+    navigator.clipboard.writeText(JSON.stringify(qi._asJson));
+    this.msg.info(`"${qi.name}" wurde in die Zwischenablage kopiert`);
   }
 
   protected clickDeleteGroup(evt: PointerEvent, idx: number) {

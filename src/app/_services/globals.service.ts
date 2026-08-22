@@ -19,6 +19,7 @@ import {GbUserData} from '@/_model/gb-user-data';
 import {GbData} from '@/_model/gb-data';
 import {AssistService} from '@/_services/assist.service';
 import {BuildingService} from '@/_services/building.service';
+import {QiDef} from '@/_model/qi-def';
 
 class CustomTimeoutError extends Error {
   constructor() {
@@ -399,7 +400,7 @@ export class GlobalsService {
       s7: GLOBALS.user.activeUserGb?.asJson,
       s8: GLOBALS.user.userzoom,
       s9: GLOBALS.user.showLevelArrows,
-      s10: GLOBALS.user.listQi,
+      s10: [],
       s11: GLOBALS.user.qiGroupIdx
     };
     this.adjustGbSort();
@@ -407,6 +408,9 @@ export class GlobalsService {
       if (GLOBALS.user.listGb[key].active) {
         ret.s2[key] = GLOBALS.user.listGb[key].asJson;
       }
+    }
+    for (const qi of GLOBALS.user.listQi) {
+      ret.s10.push(qi.asJson);
     }
     return ret;
   }
@@ -462,7 +466,7 @@ export class GlobalsService {
         storage.s2[item.a] = {a: item.b, b: item.c};
       }
     }
-    const src = storage.s2 ?? {};
+    let src = storage.s2 ?? {};
     let idx = 0;
     for (const key of Object.keys(src)) {
       GLOBALS.user.listGb[key] = new GbUserData(src[key]);
@@ -486,8 +490,16 @@ export class GlobalsService {
     }
     GLOBALS.user.userzoom = storage.s8 ?? 0;
     GLOBALS.user.showLevelArrows = storage.s9 ?? true;
-    GLOBALS.user.listQi = storage.s10 ?? [{name: 'Erster Tag', area: []}];
+    GLOBALS.user.listQi = [];
     GLOBALS.user.qiGroupIdx = storage.s11 ?? 0;
+    src = storage.s10 ?? [{a: 'Erster Tag', b: []}];
+    if (src[0].id != null) {
+      GLOBALS.user.listQi = src;
+    } else {
+      for (const entry of src) {
+        GLOBALS.user.listQi.push(new QiDef(entry));
+      }
+    }
 
     // validate data
     this.adjustGbSort();

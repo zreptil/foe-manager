@@ -7,6 +7,11 @@
                  [(ngModel)]="group.name"
                  matInput>
         </mat-form-field>
+        @if (globals.mayDebug) {
+          <button (click)="clickExportGroup($event, $index)" mat-icon-button small-icon-button>
+            <mat-icon>file_export</mat-icon>
+          </button>
+        }
         @if (globals.user.listQi.length > 1) {
           <button (click)="clickDeleteGroup($event, $index)" mat-icon-button small-icon-button>
             <mat-icon>delete</mat-icon>
