@@ -144,6 +144,10 @@
               @if (isColumnVisible(-1)) {
                 <td [class]="classForCopy(-1)" owner reward>
                   <div>
+                    <div (click)="clickCopyIdx($event, -1)">
+                      <mat-icon>crown</mat-icon>
+                      {{ ownerValueMax(nextLevel) }}
+                    </div>
                     <mat-icon>crown</mat-icon>
                     {{ ownerValueMax(nextLevel) }}
                   </div>
@@ -292,7 +296,7 @@
                 <span i18n>Fremdanteil</span>
               </button>
             }
-            @if (globals.user.siteMode === 1 && gbUser.copyIdx >= 0) {
+            @if (gbUser.copyIdx >= 0) {
               <button (click)="clickSecure($event)" mat-button owner>
                 <mat-icon>local_police</mat-icon>
                 <span i18n>"{{ this.calcTitles[gbUser.copyIdx] }}" absichern</span>
