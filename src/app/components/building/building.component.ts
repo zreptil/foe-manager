@@ -59,19 +59,20 @@ export class BuildingComponent {
 
   protected get classForGb() {
     const ret: string[] = [];
-    if (GLOBALS.user.siteMode === EnumSitemode.buildings) {
-      return GLOBALS.user.activeGbKey === this.gb.key ? 'selected' : 'buildings';
-    }
-    if (GLOBALS.user.listGb[this.gb.key]?.active) {
-      ret.push('selected');
-    }
-    if (GLOBALS.user.siteMode === EnumSitemode.manage) {
+    if (GLOBALS.user.siteMode === EnumSitemode.manage || GLOBALS.user.siteMode === EnumSitemode.buildings) {
       if (this.gbUser?.colorIdx) {
         ret.push(`gb-color-${this.gbUser.colorIdx}`);
       }
       if (GLOBALS.user.activeGbKey != null) {
         ret.push('edit');
       }
+    }
+    if (GLOBALS.user.siteMode === EnumSitemode.buildings) {
+      ret.push(GLOBALS.user.activeGbKey === this.gb.key ? 'selected' : 'buildings');
+      return ret;
+    }
+    if (GLOBALS.user.listGb[this.gb.key]?.active) {
+      ret.push('selected');
     }
     ret.push(Object.keys(EnumSitemode).filter(key => isNaN(Number(key)))[GLOBALS.user.siteMode]);
     return ret.join(' ');
