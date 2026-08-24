@@ -324,40 +324,46 @@ export class GlobalsService {
       }
     }
     if (this._gbList == null) {
-      switch (GLOBALS.user.siteMode) {
-        case EnumSitemode.manage:
-          this._gbList = this.assist.gbList.filter(gb =>
-            GLOBALS.user.listGb[gb.key] != null
-            && GLOBALS.user.listGb[gb.key].active
-            && GLOBALS.user.listGb[gb.key].player == null);
-          break;
-        case EnumSitemode.players:
-          this._gbList = this.assist.gbList.filter(gb =>
-            GLOBALS.user.listGb[gb.key] != null
-            && GLOBALS.user.listGb[gb.key].active
-            && GLOBALS.user.listGb[gb.key].player != null);
-          break;
-        default:
-          this._gbList = this.assist.gbList;
-      }
+      this._gbList = this.gbListInternal;
+    }
+    return this._gbList;
+  }
+
+  get gbListInternal() {
+    let ret: GbData[];
+    switch (GLOBALS.user.siteMode) {
+      case EnumSitemode.manage:
+        ret = this.assist.gbList.filter(gb =>
+          GLOBALS.user.listGb[gb.key] != null
+          && GLOBALS.user.listGb[gb.key].active
+          && GLOBALS.user.listGb[gb.key].player == null);
+        break;
+      case EnumSitemode.players:
+        ret = this.assist.gbList.filter(gb =>
+          GLOBALS.user.listGb[gb.key] != null
+          && GLOBALS.user.listGb[gb.key].active
+          && GLOBALS.user.listGb[gb.key].player != null);
+        break;
+      default:
+        ret = this.assist.gbList;
     }
     const asc = GLOBALS.user.gbSort[GLOBALS.user.siteMode]?.asc ? 1 : -1;
     switch (GLOBALS.user.gbSort[GLOBALS.user.siteMode]?.mode) {
       case EnumSortmode.none:
         break;
       case EnumSortmode.alpha:
-        this._gbList = [...this._gbList].sort((a, b) => asc * a.name.localeCompare(b.name));
+        ret = [...ret].sort((a, b) => asc * a.name.localeCompare(b.name));
         break;
       case EnumSortmode.level:
-        this._gbList = [...this._gbList].sort((a, b) =>
+        ret = [...ret].sort((a, b) =>
           asc * -Utils.compare(this.bs.gbForUser(a)?.level, this.bs.gbForUser(b)?.level));
         break;
       case EnumSortmode.timeCopied:
-        this._gbList = [...this._gbList].sort((a, b) =>
+        ret = [...ret].sort((a, b) =>
           asc * -Utils.compare(this.bs.gbForUser(a)?.timeCopied ?? 0, this.bs.gbForUser(b)?.timeCopied ?? 0));
         break;
       case EnumSortmode.type:
-        this._gbList = [...this._gbList].sort((a, b) => {
+        ret = [...ret].sort((a, b) => {
           if ((a.icon ?? 0) === (b.icon ?? 0)) {
             return asc * Utils.compare(a.icon[0].class ?? '', b.icon[0].class ?? '')
           }
@@ -365,12 +371,12 @@ export class GlobalsService {
         });
         break;
       case EnumSortmode.own:
-        this._gbList = [...this._gbList].sort((a, b) =>
+        ret = [...ret].sort((a, b) =>
           Utils.compare(this.bs.gbForUser(a)?.sortIdx, this.bs.gbForUser(b)?.sortIdx))
           .filter((gb) => this.bs.gbForUser(gb)?.active);
         break;
     }
-    return this._gbList;
+    return ret;
   }
 
   _playerList: GbUserData[];

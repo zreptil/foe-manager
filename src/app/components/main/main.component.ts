@@ -93,6 +93,18 @@ export class MainComponent implements OnInit {
     }
   }
 
+  get classForGbList() {
+    const ret: string[] = [];
+    if (this.showNavigation) {
+      ret.push('navigate');
+    }
+    return ret;
+  }
+
+  get showNavigation() {
+    return GLOBALS.user.activeGbKey != null;
+  }
+
   iconForSort(sortMode: EnumSortmode, checkCurrent = false) {
     if (checkCurrent) {
       const currSort = GLOBALS.user?.gbSort?.[GLOBALS.user.siteMode];
@@ -295,6 +307,22 @@ export class MainComponent implements OnInit {
     evt.preventDefault();
     evt.stopPropagation();
     GLOBALS.user.showLevelArrows = !GLOBALS.user.showLevelArrows;
+    GLOBALS.saveSharedData();
+  }
+
+  protected clickNav(evt: PointerEvent, diff: number) {
+    evt.preventDefault();
+    const list = GLOBALS.gbListInternal;
+    let idx = list.findIndex((gb) => gb.key === GLOBALS.user.activeGbKey);
+    idx += diff;
+    if (idx < 0) {
+      idx = list.length - 1;
+    }
+    if (idx >= list.length) {
+      idx = 0;
+    }
+    GLOBALS.user.activeGbKey = list[idx].key;
+    GLOBALS.user.activeUserGb = this.bs.gbForUser(list[idx]);
     GLOBALS.saveSharedData();
   }
 }

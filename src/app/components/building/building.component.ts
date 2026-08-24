@@ -323,6 +323,14 @@ export class BuildingComponent {
     return Math.min(reward, base);
   }
 
+  // protected clickGBMark(evt: PointerEvent) {
+  //   evt.preventDefault();
+  //   if (this.gbUser != null) {
+  //     this.gbUser.colorIdx = !this.gbUser.colorIdx;
+  //     GLOBALS.saveSharedData();
+  //   }
+  // }
+
   protected calcSupportPlaces(level: LevelData, idx: number, ownerValue: number) {
     if (Utils.isEmpty(ownerValue) || +ownerValue === 0) {
       ownerValue = this.calcBlockValue(2, level, 0, false);
@@ -373,14 +381,6 @@ export class BuildingComponent {
     }
     return Math.min(reward, base);
   }
-
-  // protected clickGBMark(evt: PointerEvent) {
-  //   evt.preventDefault();
-  //   if (this.gbUser != null) {
-  //     this.gbUser.colorIdx = !this.gbUser.colorIdx;
-  //     GLOBALS.saveSharedData();
-  //   }
-  // }
 
   protected calcSafePlaces(level: LevelData, idx: number, ownerValue: number) {
     switch (idx) {

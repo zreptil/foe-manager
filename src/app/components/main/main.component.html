@@ -135,9 +135,19 @@
         @if (globals.user.siteMode === EnumSitemode.qi) {
           <app-quanten-invasion></app-quanten-invasion>
         } @else {
-          <div gbList>
+          <div [class]="classForGbList" gbList>
+            @if (showNavigation) {
+              <button (click)="clickNav($event, -1)" mat-button>
+                <mat-icon>arrow_back_2</mat-icon>
+              </button>
+            }
             @for (gb of globals.gbList; track $index) {
               <app-building [building]="gb"></app-building>
+            }
+            @if (showNavigation) {
+              <button (click)="clickNav($event, 1)" mat-button>
+                <mat-icon>play_arrow</mat-icon>
+              </button>
             }
           </div>
         }

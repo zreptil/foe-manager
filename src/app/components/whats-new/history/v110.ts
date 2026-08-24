@@ -115,6 +115,10 @@ import {MatIcon} from '@angular/material/icon';
       vom Eigenanteil fehlt, wenn er noch nicht dem benötigten Eigenanteil zur Absicherung von
       P1 bis P5 entspricht.
     </li>
+    <li class="added" i18n="110a7">
+      Bei der Editierung von Gebäuden kann jetzt mit Navigationsbuttons rechts und links durch
+      die Liste der Gebäude geblättert werden.
+    </li>
   </ul>
   `,
   imports: [

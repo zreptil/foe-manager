@@ -95,6 +95,19 @@
       }
     }
 
+    [gbList].navigate {
+      display: flex;
+      flex-flow: row;
+      width: 100vw;
+      align-items: center;
+      justify-content: space-around;
+
+      button {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
     textarea {
       display: flex;
       flex: 1;
