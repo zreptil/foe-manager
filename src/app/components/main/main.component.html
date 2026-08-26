@@ -34,6 +34,7 @@
           }
           @case (EnumSitemode.players) {
             <ng-container [ngTemplateOutlet]="btnBack"/>
+            <ng-container [ngTemplateOutletContext]="{mode: 1}" [ngTemplateOutlet]="btnSiteMode"/>
           }
           @case (EnumSitemode.qi) {
             <ng-container [ngTemplateOutlet]="btnBack"/>

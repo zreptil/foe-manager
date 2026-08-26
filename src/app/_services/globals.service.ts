@@ -323,9 +323,7 @@ export class GlobalsService {
         GLOBALS.user.activeUserGb = null;
       }
     }
-    if (this._gbList == null) {
-      this._gbList = this.gbListInternal;
-    }
+    this._gbList ??= this.gbListInternal;
     return this._gbList;
   }
 

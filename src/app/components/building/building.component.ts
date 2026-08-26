@@ -95,6 +95,7 @@ export class BuildingComponent {
     evt.stopPropagation();
     navigator.clipboard.writeText(this.copyData(level));
     this.gbUser.timeCopied = Date.now();
+    GLOBALS._gbList = null;
     GLOBALS.saveSharedData();
     // this.msg.info($localize`${this.gb.name} wurde kopiert`);
   }
@@ -155,6 +156,7 @@ export class BuildingComponent {
       GLOBALS.user.activeUserGb = this.gbUser;
     }
     if (GLOBALS.user.siteMode === EnumSitemode.manage || GLOBALS.user.siteMode === EnumSitemode.buildings) {
+      GLOBALS._gbList = null;
       GLOBALS.saveSharedData();
     }
   }
@@ -362,8 +364,17 @@ export class BuildingComponent {
         if (ret < rew) {
           const rest = base - sl.slice(sniperIdx).reduce((s, v) => s + v, 0);
           GLOBALS.show(`base=${base}, rest=${rest}`);
+          console.log(`idx=${idx}, base=${base}, rest=${rest}, rew=${rew}`);
           if (rew > rest) {
-            ret = rest;
+            if (sl[sniperIdx] > rest) {
+              ret = sl[sniperIdx];
+              sniperIdx++;
+              if (idx === 0) {
+                return -ret;
+              }
+            } else {
+              ret = rest;
+            }
           } else {
             ret = rew;
           }
