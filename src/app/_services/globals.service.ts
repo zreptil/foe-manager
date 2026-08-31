@@ -405,7 +405,8 @@ export class GlobalsService {
       s8: GLOBALS.user.userzoom,
       s9: GLOBALS.user.showLevelArrows,
       s10: [],
-      s11: GLOBALS.user.qiGroupIdx
+      s11: GLOBALS.user.qiGroupIdx,
+      s12: GLOBALS.user.resetLevelColor
     };
     this.adjustGbSort();
     for (const key of Object.keys(GLOBALS.user.listGb)) {
@@ -496,6 +497,7 @@ export class GlobalsService {
     GLOBALS.user.showLevelArrows = storage.s9 ?? true;
     GLOBALS.user.listQi = [];
     GLOBALS.user.qiGroupIdx = storage.s11 ?? 0;
+    GLOBALS.user.resetLevelColor = storage.s12 ?? false;
     src = storage.s10 ?? [{a: 'Erster Tag', b: []}];
     if (src[0].id != null) {
       GLOBALS.user.listQi = src;

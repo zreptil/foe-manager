@@ -310,6 +310,13 @@ export class MainComponent implements OnInit {
     GLOBALS.saveSharedData();
   }
 
+  protected clickResetLevelColor(evt: PointerEvent) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    GLOBALS.user.resetLevelColor = !GLOBALS.user.resetLevelColor;
+    GLOBALS.saveSharedData();
+  }
+
   protected clickNav(evt: PointerEvent, diff: number) {
     evt.preventDefault();
     const list = GLOBALS.gbListInternal;

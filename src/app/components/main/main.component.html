@@ -94,9 +94,12 @@
               </mat-icon>
               <span i18n>Level Pfeile</span>
             </button>
-            <!--          <mat-slide-toggle (click)="clickShowLevelArrows($event)" [ngModel]="globals.user.showLevelArrows">-->
-            <!--            <span i18n>Level Pfeile</span>-->
-            <!--          </mat-slide-toggle>-->
+            <button (click)="clickResetLevelColor($event)" matButton>
+              <mat-icon>
+                {{ ['reset_colors', 'close'][globals.user.resetLevelColor ? 0 : 1] }}
+              </mat-icon>
+              <span i18n>Level Farbe zurücksetzen</span>
+            </button>
           </mat-menu>
         }
 

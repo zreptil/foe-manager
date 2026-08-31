@@ -27,6 +27,7 @@ export enum EnumSortmode {
 export class UserData extends BaseData {
   username: string;
   showLevelArrows: boolean;
+  resetLevelColor: boolean;
   userzoom: number;
   permissions: number[];
   usertype: number;
@@ -70,7 +71,8 @@ export class UserData extends BaseData {
       g: this.activeUserGb?.asJson,
       h: this.showInfoGb,
       i: this.showLevelArrows,
-      j: this.qiGroupIdx
+      j: this.qiGroupIdx,
+      k: this.resetLevelColor
     };
 
     ret.f = {};
@@ -107,5 +109,6 @@ export class UserData extends BaseData {
     this.showInfoGb = json?.h ?? def?.showInfo ?? false;
     this.showLevelArrows = json?.i ?? def?.showLevelArrows ?? true;
     this.qiGroupIdx = json?.j ?? def?.qiGroupIdx ?? 0;
+    this.resetLevelColor = json?.k ?? def?.resetLevelColor ?? false;
   }
 }

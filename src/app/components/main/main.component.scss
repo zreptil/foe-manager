@@ -75,6 +75,7 @@
     overflow-y: auto;
     display: flex;
     flex-flow: column;
+    overflow-x: hidden;
 
     [gbList] {
       display: grid;
