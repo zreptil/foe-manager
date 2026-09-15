@@ -292,6 +292,32 @@ mat-card.gb-color-3 {
   --block: rgba(255, 255, 255, 0.5);
 }
 
+mat-card.gb-color-4 {
+  background: #fb0;
+  --iconAttack: rgba(255, 160, 160);
+  --iconDefend: rgba(0, 0, 255);
+  --calcNegative: rgba(255, 70, 70);
+  --calcPositive: rgba(0, 140, 0);
+  --ownerFore: black;
+  --copyFore: rgba(0, 0, 0, 0.7);
+  --rowMark: rgba(0, 0, 0, 0.1);
+  --calcCost: rgba(200, 0, 200, 0.8);
+  --block: rgba(0, 0, 0, 0.5);
+}
+
+mat-card.gb-color-5 {
+  background: #fbb;
+  --iconAttack: rgba(255, 0, 0);
+  --iconDefend: rgba(0, 0, 255);
+  --calcNegative: rgba(255, 70, 70);
+  --calcPositive: rgba(0, 140, 0);
+  --ownerFore: black;
+  --copyFore: rgba(0, 0, 0, 0.7);
+  --rowMark: rgba(0, 0, 0, 0.1);
+  --calcCost: rgba(200, 0, 200, 0.8);
+  --block: rgba(0, 0, 0, 0.5);
+}
+
 [row].marked {
   background: var(--rowMark);
 }

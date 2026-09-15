@@ -56,11 +56,15 @@ div[header] {
       align-items: flex-start;
     }
 
-    div[list] {
+    div[list], div[line] {
       display: flex;
       flex-flow: row;
       align-items: flex-start;
       gap: 0.5em;
+    }
+
+    div[line] {
+      gap: 0;
     }
 
     mat-icon {
@@ -115,5 +119,9 @@ div[header] {
 
   .hidden {
     display: none;
+  }
+
+  [bold] {
+    font-weight: bold;
   }
 }

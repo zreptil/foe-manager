@@ -157,6 +157,7 @@ export class BuildingComponent {
     }
     if (GLOBALS.user.resetLevelColor) {
       this.gbUser.colorIdx = 0;
+      this.gbUser.levelMarked = [true, true, true, true, true];
     }
     if (GLOBALS.user.siteMode === EnumSitemode.manage || GLOBALS.user.siteMode === EnumSitemode.buildings) {
       GLOBALS._gbList = null;
@@ -503,6 +504,7 @@ export class BuildingComponent {
         this.gbUser.sortIdx += diff;
       }
     }
+    GLOBALS._gbList = null;
     GLOBALS.saveSharedData();
   }
 

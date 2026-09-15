@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {HistoryBase} from './history-base';
 import {GLOBALS} from '@/_services/globals.service';
 import {MatIcon} from '@angular/material/icon';
+import {EnumSortmode} from '@/_model/user-data';
 
 @Component({
   selector: 'app-v110',
@@ -119,6 +120,29 @@ import {MatIcon} from '@angular/material/icon';
       Bei der Editierung von Gebäuden kann jetzt mit Navigationsbuttons rechts und links durch
       die Liste der Gebäude geblättert werden.
     </li>
+    <li class="added" i18n="110a8">
+      Es gibt eine neue Option <span bold>Level Farbe zurücksetzen</span>. Wenn diese aktiviert ist, dann
+      wird beim Ändern des Levels eines Gebäudes die Farbe auf den Standardwert zurückgesetzt. Ausserdem
+      werden alle Plätze markiert.
+    </li>
+    <li class="added" i18n="110a9">
+      <div line>
+        Es gibt eine neue Sortierung namens&nbsp;<span bold>Zeitalter</span>. Diese wird mit dem Icon
+        <mat-icon>{{ globals.iconForSort(EnumSortmode.epoch) }}</mat-icon>
+        dargestellt.
+      </div>
+      Diese Sortierung funktioniert ähnlich wie die eigene Sortierung. Wenn man sie anklickt,
+      wird zunächst die Sortierung aktiviert. Dann kann man mit kleinen Pfeilchen links und rechts der
+      Zeitalterbezeichnungen die Sortierung ändern. Wenn man in diesem Modus das Zeitalter selbst anklickt,
+      wird es an die erste Stelle gesetzt.
+      <div line>Beim ersten und letzten Zeitalter gibt es einen Button, der so aussieht:&nbsp;
+        <mat-icon>format_list_numbered</mat-icon>
+      </div>
+      Wenn man diesen Button anklickt, werden die Zeitalter so sortiert, wie sie im Spiel vorkommen.
+      Wenn man im Sortierungsmenü die Option mit der Zeitalter Sortierung noch einmal anklickt, wird
+      die Sortierung fixiert und kann erst dann wieder geändert werden, wenn man diese Option erneut
+      anklickt.
+    </li>
   </ul>
   `,
   imports: [
@@ -129,4 +153,5 @@ import {MatIcon} from '@angular/material/icon';
 export class V110 extends HistoryBase {
   data = [110, 20260729];
   protected readonly globals = GLOBALS;
+  protected readonly EnumSortmode = EnumSortmode;
 }

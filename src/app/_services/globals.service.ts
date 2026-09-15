@@ -16,7 +16,7 @@ import {ImgurService} from '@/_services/oauth2/imgur.service';
 import {FormConfig} from '@/forms/form-config';
 import {EnumSitemode, EnumSortmode, UserData} from '@/_model/user-data';
 import {GbUserData} from '@/_model/gb-user-data';
-import {GbData} from '@/_model/gb-data';
+import {EnumEpoch, GbData} from '@/_model/gb-data';
 import {AssistService} from '@/_services/assist.service';
 import {BuildingService} from '@/_services/building.service';
 import {QiDef} from '@/_model/qi-def';
@@ -50,7 +50,7 @@ export class GlobalsService {
   ICON_REWARD = 'stars_2';
 
   version = VERSION;
-  subversion = '5';
+  subversion = '6';
   isNewVersion = false;
   skipStorageClear = false;
   devSupport = false;
@@ -96,6 +96,7 @@ export class GlobalsService {
     {label: $localize`Level`, mode: EnumSortmode.level},
     {label: $localize`Gebäudetyp`, mode: EnumSortmode.type},
     {label: $localize`Zeitpunkt Kopie`, mode: EnumSortmode.timeCopied},
+    {label: $localize`Zeitalter`, mode: EnumSortmode.epoch},
     {label: $localize`Eigene Sortierung`, mode: EnumSortmode.own},
   ];
   siteConfig: any = {
@@ -112,7 +113,9 @@ export class GlobalsService {
       {name: $localize`Standard`, color: 'var(--mainBodyBack)'},
       {name: $localize`Gelb`, color: '#FFFF00'},
       {name: $localize`Grün`, color: '#008000'},
-      {name: $localize`Lila`, color: '#808'}
+      {name: $localize`Lila`, color: '#808'},
+      {name: $localize`Orange`, color: '#fb0'},
+      {name: $localize`Rosa`, color: '#fbb'}
     ]
   }
   urlPlayground = 'http://pdf.zreptil.de/playground.php';
@@ -373,6 +376,10 @@ export class GlobalsService {
           Utils.compare(this.bs.gbForUser(a)?.sortIdx, this.bs.gbForUser(b)?.sortIdx))
           .filter((gb) => this.bs.gbForUser(gb)?.active);
         break;
+      case EnumSortmode.epoch:
+        ret = [...ret].sort((a, b) =>
+          Utils.compare(this.sortEpoch(a.epoch), this.sortEpoch(b.epoch), [a.name, b.name]));
+        break;
     }
     return ret;
   }
@@ -406,7 +413,8 @@ export class GlobalsService {
       s9: GLOBALS.user.showLevelArrows,
       s10: [],
       s11: GLOBALS.user.qiGroupIdx,
-      s12: GLOBALS.user.resetLevelColor
+      s12: GLOBALS.user.resetLevelColor,
+      s13: GLOBALS.user.epochList
     };
     this.adjustGbSort();
     for (const key of Object.keys(GLOBALS.user.listGb)) {
@@ -418,6 +426,19 @@ export class GlobalsService {
       ret.s10.push(qi.asJson);
     }
     return ret;
+  }
+
+  sortEpoch(epoch: EnumEpoch) {
+    return this.user.epochList.findIndex((e) => e === epoch);
+  }
+
+  epochName(epoch: EnumEpoch) {
+    return ['Alle Zeitalter', 'Bronzezeit', 'Eisenzeit', 'Frühes Mittelalter',
+      'Hochmittelalter', 'Spätes Mittelalter', 'Kolonialzeit', 'Industriezeitalter',
+      'Jahrhundertwende', 'Die Moderne', 'Die Postmoderne', 'Gegenwart', 'Morgen', 'Zukunft',
+      'Arktische Zukunft', 'Ozeanische Zukunft', 'Virtuelle Zukunft', 'Raumfahrt: Mars',
+      'Raumfahrt: Asteroidengürtel', 'Raumfahrt: Venus', 'Raumfahrt: Jupitermond',
+      'Raumfahrt: Titan', 'Raumfahrt: Weltraumbasis', 'Stellares Zeitalter: Entdeckung'][epoch];
   }
 
   show(message?: any, ...optionalParams: any[]) {
@@ -498,6 +519,14 @@ export class GlobalsService {
     GLOBALS.user.listQi = [];
     GLOBALS.user.qiGroupIdx = storage.s11 ?? 0;
     GLOBALS.user.resetLevelColor = storage.s12 ?? false;
+    const values = new Set(storage.s13);
+    if (values.size !== storage.s13.length ||
+      !storage.s13.every((_: any, i: number) => values.has(i))) {
+      GLOBALS.user._epochList = null;
+    } else {
+      GLOBALS.user._epochList = storage.s13;
+    }
+
     src = storage.s10 ?? [{a: 'Erster Tag', b: []}];
     if (src[0].id != null) {
       GLOBALS.user.listQi = src;
@@ -652,6 +681,39 @@ export class GlobalsService {
     if (activeElement) {
       activeElement.blur();
     }
+  }
+
+  iconForSort(sortMode: EnumSortmode, checkCurrent = false) {
+    if (checkCurrent) {
+      const currSort = GLOBALS.user?.gbSort?.[GLOBALS.user.siteMode];
+      if (sortMode === currSort?.mode) {
+        switch (sortMode) {
+          case EnumSortmode.own:
+            return currSort.asc ? 'lock_open' : 'lock';
+          case EnumSortmode.epoch:
+            return currSort.asc ? 'lock_open' : 'lock';
+          default:
+            return currSort.asc ? 'arrow_upward' : 'arrow_downward';
+        }
+      }
+    }
+    switch (sortMode) {
+      case EnumSortmode.none:
+        return 'mobiledata_off';
+      case EnumSortmode.alpha:
+        return 'sort_by_alpha';
+      case EnumSortmode.level:
+        return 'format_list_numbered';
+      case EnumSortmode.timeCopied:
+        return 'access_time';
+      case EnumSortmode.type:
+        return 'swords';
+      case EnumSortmode.own:
+        return 'swipe';
+      case EnumSortmode.epoch:
+        return 'hourglass_empty';
+    }
+    return '';
   }
 
   private may(key: string): boolean {

@@ -17,6 +17,7 @@ import {AssistService} from '@/_services/assist.service';
 import {EnumSitemode, EnumSortmode} from '@/_model/user-data';
 import {BuildingService} from '@/_services/building.service';
 import {GbUserData} from '@/_model/gb-user-data';
+import {EnumEpoch, GbData} from '@/_model/gb-data';
 
 @Component({
   selector: 'app-main',
@@ -103,35 +104,6 @@ export class MainComponent implements OnInit {
 
   get showNavigation() {
     return GLOBALS.user.activeGbKey != null;
-  }
-
-  iconForSort(sortMode: EnumSortmode, checkCurrent = false) {
-    if (checkCurrent) {
-      const currSort = GLOBALS.user?.gbSort?.[GLOBALS.user.siteMode];
-      if (sortMode === currSort?.mode) {
-        switch (sortMode) {
-          case EnumSortmode.own:
-            return currSort.asc ? 'lock_open' : 'lock';
-          default:
-            return currSort.asc ? 'arrow_upward' : 'arrow_downward';
-        }
-      }
-    }
-    switch (sortMode) {
-      case EnumSortmode.none:
-        return 'mobiledata_off';
-      case EnumSortmode.alpha:
-        return 'sort_by_alpha';
-      case EnumSortmode.level:
-        return 'format_list_numbered';
-      case EnumSortmode.timeCopied:
-        return 'access_time';
-      case EnumSortmode.type:
-        return 'swords';
-      case EnumSortmode.own:
-        return 'swipe';
-    }
-    return '';
   }
 
   iconForMode(mode?: number) {
@@ -330,6 +302,58 @@ export class MainComponent implements OnInit {
     }
     GLOBALS.user.activeGbKey = list[idx].key;
     GLOBALS.user.activeUserGb = this.bs.gbForUser(list[idx]);
+    GLOBALS.saveSharedData();
+  }
+
+  protected showEpoch(idx: number) {
+    if (GLOBALS.user.gbSort[GLOBALS.user.siteMode]?.mode !== EnumSortmode.epoch) {
+      return false;
+    }
+    if (idx === 0) {
+      return true;
+    }
+    return GLOBALS.gbList[idx].epoch !== GLOBALS.gbList[idx - 1].epoch;
+  }
+
+  protected classForEpoch(epoch: EnumEpoch) {
+    const ret: string[] = [];
+    if (epoch === GLOBALS.user?.currentEpoch) {
+      ret.push('current');
+    }
+    return ret;
+  }
+
+  protected clickEpoch(evt: PointerEvent, gb: GbData) {
+    evt.preventDefault();
+    GLOBALS.user.currentEpoch = gb?.epoch ?? EnumEpoch.none;
+    GLOBALS.saveSharedData();
+  }
+
+  protected clickSortEpoch(evt: PointerEvent, gbIdx: number, epoch: number, dir: number) {
+    evt.preventDefault();
+    let idx = GLOBALS.user.epochList.findIndex((e) => +e === +epoch);
+    let found = false;
+    if (dir === 0) {
+      const tmp = GLOBALS.user.epochList[0];
+      GLOBALS.user.epochList[0] = GLOBALS.user.epochList[idx];
+      GLOBALS.user.epochList[idx] = tmp;
+      found = true;
+    } else {
+      while (!found && gbIdx + dir >= 0 && gbIdx + dir < GLOBALS.gbList.length) {
+        gbIdx += dir;
+        if (GLOBALS.gbList[gbIdx].epoch !== epoch) {
+          const srcIdx = GLOBALS.sortEpoch(GLOBALS.gbList[gbIdx].epoch);
+          const tmp = GLOBALS.user.epochList[srcIdx];
+          GLOBALS.user.epochList[srcIdx] = GLOBALS.user.epochList[idx];
+          GLOBALS.user.epochList[idx] = tmp;
+          found = true;
+        }
+      }
+    }
+    if (!found) {
+      GLOBALS.user._epochList = null;
+    }
+    GLOBALS._gbList = null;
     GLOBALS.saveSharedData();
   }
 }

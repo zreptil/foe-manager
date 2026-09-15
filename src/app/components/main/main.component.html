@@ -44,12 +44,12 @@
       @if (globals.user.siteMode !== EnumSitemode.buildings || globals.user.activeGbKey == null) {
         <div>
           <button [matMenuTriggerFor]="sortMenu" mat-icon-button small-icon-button>
-            <mat-icon>{{ iconForSort(globals.user?.gbSort?.[globals.user.siteMode]?.mode) }}</mat-icon>
+            <mat-icon>{{ globals.iconForSort(globals.user?.gbSort?.[globals.user.siteMode]?.mode) }}</mat-icon>
           </button>
           <mat-menu #sortMenu="matMenu" class="menuSettings">
             @for (mode of globals.sortModesFor(globals.user.siteMode); track $index) {
               <button (click)="clickSort($event, mode.mode)" mat-button small-icon-button>
-                <mat-icon>{{ iconForSort(mode.mode, true) }}</mat-icon>
+                <mat-icon>{{ globals.iconForSort(mode.mode, true) }}</mat-icon>
                 {{ mode.label }}
               </button>
             }
@@ -146,6 +146,31 @@
               </button>
             }
             @for (gb of globals.gbList; track $index) {
+              @if (showEpoch($index)) {
+                <div [class]="classForEpoch(gb.epoch)" epoch>
+                  <div>
+                    @if (globals.user?.gbSort?.[globals.user.siteMode].asc) {
+                      <button (click)="clickSortEpoch($event, $index, gb.epoch, -1)" matIconButton small-icon-button>
+                        @if (globals.sortEpoch(gb.epoch) > 0) {
+                          <mat-icon>arrow_drop_up</mat-icon>
+                        } @else {
+                          <mat-icon>format_list_numbered</mat-icon>
+                        }
+                      </button>
+                      <button (click)="clickSortEpoch($event, $index, gb.epoch, 0)" label mat-button>{{ globals.epochName(gb.epoch) }}</button>
+                      <button (click)="clickSortEpoch($event, $index, gb.epoch, 1)" matIconButton small-icon-button>
+                        @if (globals.sortEpoch(gb.epoch) < globals.sortEpoch(globals.gbList[globals.gbList.length - 1].epoch)) {
+                          <mat-icon>arrow_drop_down</mat-icon>
+                        } @else {
+                          <mat-icon>format_list_numbered</mat-icon>
+                        }
+                      </button>
+                    } @else {
+                      <div label>{{ globals.epochName(gb.epoch) }}</div>
+                    }
+                  </div>
+                </div>
+              }
               <app-building [building]="gb"></app-building>
             }
             @if (showNavigation) {

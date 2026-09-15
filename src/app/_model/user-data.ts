@@ -2,6 +2,7 @@ import {BaseData} from '@/_model/base-data';
 import {GbUserData} from '@/_model/gb-user-data';
 import {signal} from '@angular/core';
 import {QiDef} from '@/_model/qi-def';
+import {EnumEpoch} from '@/_model/gb-data';
 
 export enum EnumPermission {
   keepUserToken
@@ -21,7 +22,8 @@ export enum EnumSortmode {
   level,
   timeCopied,
   type,
-  own
+  own,
+  epoch,
 }
 
 export class UserData extends BaseData {
@@ -40,9 +42,22 @@ export class UserData extends BaseData {
   activeUserGb: GbUserData;
   activePlayer: string;
   showInfoGb: boolean;
+  currentEpoch: EnumEpoch;
 
   constructor(json?: any) {
     super(json);
+  }
+
+  _epochList: number[];
+
+  get epochList(): number[] {
+    if (this._epochList == null) {
+      this._epochList = [];
+      for (let i = 0; i < Object.keys(EnumEpoch).length; i++) {
+        this._epochList.push(i);
+      }
+    }
+    return this._epochList;
   }
 
   get siteMode(): EnumSitemode {
@@ -72,7 +87,8 @@ export class UserData extends BaseData {
       h: this.showInfoGb,
       i: this.showLevelArrows,
       j: this.qiGroupIdx,
-      k: this.resetLevelColor
+      k: this.resetLevelColor,
+      l: this._epochList
     };
 
     ret.f = {};
@@ -110,5 +126,6 @@ export class UserData extends BaseData {
     this.showLevelArrows = json?.i ?? def?.showLevelArrows ?? true;
     this.qiGroupIdx = json?.j ?? def?.qiGroupIdx ?? 0;
     this.resetLevelColor = json?.k ?? def?.resetLevelColor ?? false;
+    this._epochList = json?.l ?? def?.epochList;
   }
 }

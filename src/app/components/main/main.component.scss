@@ -83,6 +83,36 @@
       grid-template-columns: repeat(auto-fill, minmax(13em, 2fr));
       grid-gap: 0.2em;
 
+      div[epoch] {
+        display: grid;
+        align-items: center;
+        grid-column: 1 / -1;
+        height: 3em;
+
+        div {
+          display: flex;
+          flex-flow: row;
+          align-items: center;
+
+          [label] {
+            font-style: italic;
+            //border: 5px solid red;
+            border-radius: 1em;
+            width: fit-content;
+            padding: 0.5em 1em;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+          }
+        }
+      }
+
+      div[epoch].current {
+        div [label] {
+          background: rgba(255, 255, 255, 0.5);
+          color: black;
+        }
+      }
+
       button[small-icon-button] {
         --size: 24px;
         display: flex;

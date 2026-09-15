@@ -231,13 +231,18 @@ export class Utils {
    * compare two values
    * @param a first value
    * @param b second value
+   * @param equals if the comparision result is 0 and equals is not null and has more than one element, then the comparision will
+   * be called again with the first two values of equals and the rest of equals as new equals-argument
    * @returns
    * 0 if a === b
    * -1 if a < b
    * 1 if a > b
    */
-  static compare(a: any, b: any): number {
+  static compare(a: any, b: any, equals?: any[]): number {
     if (a === b) {
+      if (equals?.length > 1) {
+        return Utils.compare(equals[0], equals[1], equals.splice(2));
+      }
       return 0;
     }
     return (a < b) ? -1 : 1;
