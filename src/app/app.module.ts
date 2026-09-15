@@ -51,7 +51,8 @@ import {V107} from '@/components/whats-new/history/v107';
 import {V108} from '@/components/whats-new/history/v108';
 import {V109} from '@/components/whats-new/history/v109';
 import {V110} from '@/components/whats-new/history/v110';
-import { QuantenInvasionComponent } from './components/qi/quanten-invasion/quanten-invasion.component';
+import {QuantenInvasionComponent} from './components/qi/quanten-invasion/quanten-invasion.component';
+import {EpochComponent} from '@/components/epoch/epoch.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { QuantenInvasionComponent } from './components/qi/quanten-invasion/quant
     LinkPictureComponent,
     ImageListComponent,
     BuildingComponent,
+    EpochComponent,
     QuantenInvasionComponent,
   ],
   bootstrap: [AppComponent],

@@ -519,6 +519,10 @@ export class GlobalsService {
     GLOBALS.user.listQi = [];
     GLOBALS.user.qiGroupIdx = storage.s11 ?? 0;
     GLOBALS.user.resetLevelColor = storage.s12 ?? false;
+    if (storage.s13?.length === 0) {
+      GLOBALS.user._epochList = null;
+      storage.s13 = GLOBALS.user.epochList;
+    }
     const values = new Set(storage.s13);
     if (values.size !== storage.s13.length ||
       !storage.s13.every((_: any, i: number) => values.has(i))) {
@@ -526,8 +530,10 @@ export class GlobalsService {
     } else {
       GLOBALS.user._epochList = storage.s13;
     }
-
-    src = storage.s10 ?? [{a: 'Erster Tag', b: []}];
+    if (storage.s10?.length === 0) {
+      storage.s10 = [{a: 'Erster Tag', b: []}];
+    }
+    src = storage.s10;
     if (src[0].id != null) {
       GLOBALS.user.listQi = src;
     } else {
@@ -714,6 +720,29 @@ export class GlobalsService {
         return 'hourglass_empty';
     }
     return '';
+  }
+
+  clickSortEpoch(evt: PointerEvent, epoch: number, dir: number) {
+    evt.preventDefault();
+    let idx = GLOBALS.user.epochList.findIndex((e) => +e === +epoch);
+    let found = false;
+    if (dir === 0) {
+      GLOBALS.user.epochList.splice(0, 0, GLOBALS.user.epochList[idx]);
+      GLOBALS.user.epochList.splice(idx + 1, 1);
+      found = true;
+    } else {
+      if (idx + dir >= 0 && idx + dir < GLOBALS.user.epochList.length) {
+        const tmp = GLOBALS.user.epochList[idx];
+        GLOBALS.user.epochList[idx] = GLOBALS.user.epochList[idx + dir];
+        GLOBALS.user.epochList[idx + dir] = tmp;
+        found = true;
+      }
+    }
+    if (!found) {
+      GLOBALS.user._epochList = null;
+    }
+    GLOBALS._gbList = null;
+    GLOBALS.saveSharedData();
   }
 
   private may(key: string): boolean {

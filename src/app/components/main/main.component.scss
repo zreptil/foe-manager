@@ -77,6 +77,16 @@
     flex-flow: column;
     overflow-x: hidden;
 
+    [gbList].epoch {
+      grid-template-columns: repeat(auto-fill, minmax(45%, 2fr));
+    }
+
+    @media (max-width: 900px) {
+      [gbList].epoch {
+        grid-template-columns: repeat(auto-fill, minmax(100%, 2fr));
+      }
+    }
+
     [gbList] {
       display: grid;
       padding: 0.5em;

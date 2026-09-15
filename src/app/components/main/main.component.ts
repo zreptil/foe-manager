@@ -34,6 +34,7 @@ export class MainComponent implements OnInit {
   editPlayer: string;
   protected readonly Utils = Utils;
   protected readonly EnumSitemode = EnumSitemode;
+  protected readonly EnumSortmode = EnumSortmode;
 
   constructor(public globals: GlobalsService,
               public msg: MessageService,
@@ -99,6 +100,7 @@ export class MainComponent implements OnInit {
     if (this.showNavigation) {
       ret.push('navigate');
     }
+    ret.push(EnumSortmode[GLOBALS.user?.gbSort[GLOBALS.user?.siteMode].mode]);
     return ret;
   }
 
@@ -329,31 +331,7 @@ export class MainComponent implements OnInit {
     GLOBALS.saveSharedData();
   }
 
-  protected clickSortEpoch(evt: PointerEvent, gbIdx: number, epoch: number, dir: number) {
-    evt.preventDefault();
-    let idx = GLOBALS.user.epochList.findIndex((e) => +e === +epoch);
-    let found = false;
-    if (dir === 0) {
-      const tmp = GLOBALS.user.epochList[0];
-      GLOBALS.user.epochList[0] = GLOBALS.user.epochList[idx];
-      GLOBALS.user.epochList[idx] = tmp;
-      found = true;
-    } else {
-      while (!found && gbIdx + dir >= 0 && gbIdx + dir < GLOBALS.gbList.length) {
-        gbIdx += dir;
-        if (GLOBALS.gbList[gbIdx].epoch !== epoch) {
-          const srcIdx = GLOBALS.sortEpoch(GLOBALS.gbList[gbIdx].epoch);
-          const tmp = GLOBALS.user.epochList[srcIdx];
-          GLOBALS.user.epochList[srcIdx] = GLOBALS.user.epochList[idx];
-          GLOBALS.user.epochList[idx] = tmp;
-          found = true;
-        }
-      }
-    }
-    if (!found) {
-      GLOBALS.user._epochList = null;
-    }
-    GLOBALS._gbList = null;
-    GLOBALS.saveSharedData();
+  protected hasGbForEpoch(epoch: number) {
+    return GLOBALS.gbList.some(gb => gb.epoch === epoch);
   }
 }

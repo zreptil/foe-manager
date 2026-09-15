@@ -145,33 +145,41 @@
                 <mat-icon>arrow_back_2</mat-icon>
               </button>
             }
-            @for (gb of globals.gbList; track $index) {
-              @if (showEpoch($index)) {
-                <div [class]="classForEpoch(gb.epoch)" epoch>
-                  <div>
-                    @if (globals.user?.gbSort?.[globals.user.siteMode].asc) {
-                      <button (click)="clickSortEpoch($event, $index, gb.epoch, -1)" matIconButton small-icon-button>
-                        @if (globals.sortEpoch(gb.epoch) > 0) {
-                          <mat-icon>arrow_drop_up</mat-icon>
-                        } @else {
-                          <mat-icon>format_list_numbered</mat-icon>
-                        }
-                      </button>
-                      <button (click)="clickSortEpoch($event, $index, gb.epoch, 0)" label mat-button>{{ globals.epochName(gb.epoch) }}</button>
-                      <button (click)="clickSortEpoch($event, $index, gb.epoch, 1)" matIconButton small-icon-button>
-                        @if (globals.sortEpoch(gb.epoch) < globals.sortEpoch(globals.gbList[globals.gbList.length - 1].epoch)) {
-                          <mat-icon>arrow_drop_down</mat-icon>
-                        } @else {
-                          <mat-icon>format_list_numbered</mat-icon>
-                        }
-                      </button>
-                    } @else {
-                      <div label>{{ globals.epochName(gb.epoch) }}</div>
-                    }
-                  </div>
-                </div>
+            @if (globals.user?.gbSort?.[globals.user.siteMode]?.mode === EnumSortmode.epoch && !showNavigation) {
+              @for (epoch of globals.user?.epochList; track $index) {
+                @if (hasGbForEpoch(epoch)) {
+                  <app-epoch [epoch]="epoch"></app-epoch>
+                }
               }
-              <app-building [building]="gb"></app-building>
+            } @else {
+              @for (gb of globals.gbList; track $index) {
+                <!--                @if (!showNavigation && showEpoch($index)) {-->
+                  <!--                  <div [class]="classForEpoch(gb.epoch)" epoch>-->
+                  <!--                    <div>-->
+                  <!--                      @if (globals.user?.gbSort?.[globals.user.siteMode].asc) {-->
+                  <!--                        <button (click)="globals.clickSortEpoch($event, $index, gb.epoch, -1)" matIconButton small-icon-button>-->
+                  <!--                          @if (globals.sortEpoch(gb.epoch) > 0) {-->
+                  <!--                            <mat-icon>arrow_drop_up</mat-icon>-->
+                  <!--                          } @else {-->
+                  <!--                            <mat-icon>format_list_numbered</mat-icon>-->
+                  <!--                          }-->
+                  <!--                        </button>-->
+                  <!--                        <button (click)="globals.clickSortEpoch($event, $index, gb.epoch, 0)" label mat-button>{{ globals.epochName(gb.epoch) }}</button>-->
+                  <!--                        <button (click)="globals.clickSortEpoch($event, $index, gb.epoch, 1)" matIconButton small-icon-button>-->
+                  <!--                          @if (globals.sortEpoch(gb.epoch) < globals.sortEpoch(globals.gbList[globals.gbList.length - 1].epoch)) {-->
+                  <!--                            <mat-icon>arrow_drop_down</mat-icon>-->
+                  <!--                          } @else {-->
+                  <!--                            <mat-icon>format_list_numbered</mat-icon>-->
+                  <!--                          }-->
+                  <!--                        </button>-->
+                  <!--                      } @else {-->
+                  <!--                        <div label>{{ globals.epochName(gb.epoch) }}</div>-->
+                  <!--                      }-->
+                  <!--                    </div>-->
+                  <!--                  </div>-->
+                  <!--                }-->
+                <app-building [building]="gb"></app-building>
+              }
             }
             @if (showNavigation) {
               <button (click)="clickNav($event, 1)" mat-button>
