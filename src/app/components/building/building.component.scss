@@ -23,6 +23,7 @@ mat-card:hover {
 
 
 mat-card {
+  --ownerBack: var(--mainBodyBack);
   --cardFore: var(--bodyFore);
   --iconAttack: rgba(255, 160, 160);
   --iconDefend: rgba(0, 0, 255);
@@ -31,6 +32,7 @@ mat-card {
   --rowMark: rgba(255, 255, 255, 0.1);
   --calcCost: rgba(255, 255, 0, 0.8);
   --block: rgba(0, 0, 0, 0.5);
+  background: var(--ownerBack);
 
   min-height: 3em;
   display: flex;
@@ -139,7 +141,7 @@ mat-card {
 }
 
 mat-card.selected {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgb(110 153 222);
 
   [card-title] {
     color: var(--ownerFore);
@@ -256,8 +258,29 @@ mat-label {
   }
 }
 
-mat-card.gb-color-1 {
-  background: #ff0;
+[btnColor] {
+  ::ng-deep .mat-mdc-menu-item-text {
+    display: flex;
+  }
+
+  --ownerBack: var(--mainBodyBack);
+  --mat-menu-item-hover-state-layer-color: var(--ownerBack);
+  color: var(--ownerFore);
+  background: var(--ownerBack);
+  align-items: center;
+  justify-content: center;
+
+  mat-icon {
+    margin: 0;
+  }
+}
+
+[btnColor]:hover {
+  border: 10px solid var(--ownerFore);
+}
+
+mat-card.gb-color-1, .color-1 {
+  --ownerBack: #ff0;
   --iconAttack: rgba(255, 160, 160);
   --iconDefend: rgba(0, 0, 255);
   --calcNegative: rgba(255, 70, 70);
@@ -267,10 +290,11 @@ mat-card.gb-color-1 {
   --rowMark: rgba(0, 0, 0, 0.1);
   --calcCost: rgba(200, 0, 200, 0.8);
   --block: rgba(0, 0, 0, 0.5);
+  background: var(--ownerBack);
 }
 
-mat-card.gb-color-2 {
-  background: #080;
+mat-card.gb-color-2, .color-2 {
+  --ownerBack: #080;
   --cardFore: rgba(255, 255, 255, 0.8);
   --ownerFore: rgba(255, 255, 255, 0.8);
   --copyFore: rgba(255, 255, 255, 0.7);
@@ -279,10 +303,11 @@ mat-card.gb-color-2 {
   --rowMark: rgba(0, 0, 0, 0.1);
   --calcCost: rgba(0, 255, 0, 0.8);
   --block: rgba(255, 255, 255, 0.5);
+  background: var(--ownerBack);
 }
 
-mat-card.gb-color-3 {
-  background: #808;
+mat-card.gb-color-3, .color-3 {
+  --ownerBack: #808;
   --cardFore: rgba(255, 255, 255, 0.8);
   --ownerFore: rgba(255, 255, 255, 0.9);
   --copyFore: rgba(255, 255, 255, 0.7);
@@ -290,10 +315,11 @@ mat-card.gb-color-3 {
   --rowMark: rgba(255, 255, 255, 0.1);
   --calcCost: rgba(255, 255, 0, 0.8);
   --block: rgba(255, 255, 255, 0.5);
+  background: var(--ownerBack);
 }
 
-mat-card.gb-color-4 {
-  background: #fb0;
+mat-card.gb-color-4, .color-4 {
+  --ownerBack: #fb0;
   --iconAttack: rgba(255, 160, 160);
   --iconDefend: rgba(0, 0, 255);
   --calcNegative: rgba(255, 70, 70);
@@ -303,10 +329,11 @@ mat-card.gb-color-4 {
   --rowMark: rgba(0, 0, 0, 0.1);
   --calcCost: rgba(200, 0, 200, 0.8);
   --block: rgba(0, 0, 0, 0.5);
+  background: var(--ownerBack);
 }
 
-mat-card.gb-color-5 {
-  background: #fbb;
+mat-card.gb-color-5, .color-5 {
+  --ownerBack: #fbb;
   --iconAttack: rgba(255, 0, 0);
   --iconDefend: rgba(0, 0, 255);
   --calcNegative: rgba(255, 70, 70);
@@ -316,6 +343,7 @@ mat-card.gb-color-5 {
   --rowMark: rgba(0, 0, 0, 0.1);
   --calcCost: rgba(200, 0, 200, 0.8);
   --block: rgba(0, 0, 0, 0.5);
+  background: var(--ownerBack);
 }
 
 [row].marked {

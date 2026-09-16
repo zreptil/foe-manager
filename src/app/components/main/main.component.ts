@@ -17,7 +17,6 @@ import {AssistService} from '@/_services/assist.service';
 import {EnumSitemode, EnumSortmode} from '@/_model/user-data';
 import {BuildingService} from '@/_services/building.service';
 import {GbUserData} from '@/_model/gb-user-data';
-import {EnumEpoch, GbData} from '@/_model/gb-data';
 
 @Component({
   selector: 'app-main',
@@ -304,30 +303,6 @@ export class MainComponent implements OnInit {
     }
     GLOBALS.user.activeGbKey = list[idx].key;
     GLOBALS.user.activeUserGb = this.bs.gbForUser(list[idx]);
-    GLOBALS.saveSharedData();
-  }
-
-  protected showEpoch(idx: number) {
-    if (GLOBALS.user.gbSort[GLOBALS.user.siteMode]?.mode !== EnumSortmode.epoch) {
-      return false;
-    }
-    if (idx === 0) {
-      return true;
-    }
-    return GLOBALS.gbList[idx].epoch !== GLOBALS.gbList[idx - 1].epoch;
-  }
-
-  protected classForEpoch(epoch: EnumEpoch) {
-    const ret: string[] = [];
-    if (epoch === GLOBALS.user?.currentEpoch) {
-      ret.push('current');
-    }
-    return ret;
-  }
-
-  protected clickEpoch(evt: PointerEvent, gb: GbData) {
-    evt.preventDefault();
-    GLOBALS.user.currentEpoch = gb?.epoch ?? EnumEpoch.none;
     GLOBALS.saveSharedData();
   }
 

@@ -95,6 +95,9 @@ export class BuildingComponent {
     evt.stopPropagation();
     navigator.clipboard.writeText(this.copyData(level));
     this.gbUser.timeCopied = Date.now();
+    if (GLOBALS.user.copyColorIdx >= 0) {
+      this.gbUser.colorIdx = GLOBALS.user.copyColorIdx;
+    }
     GLOBALS._gbList = null;
     GLOBALS.saveSharedData();
     // this.msg.info($localize`${this.gb.name} wurde kopiert`);
@@ -428,6 +431,13 @@ export class BuildingComponent {
 
   protected clickColor(evt: PointerEvent, idx: number) {
     if (this.gbUser != null) {
+      if (this.gbUser.colorIdx === idx) {
+        if (GLOBALS.user.copyColorIdx === idx) {
+          GLOBALS.user.copyColorIdx = -1;
+        } else {
+          GLOBALS.user.copyColorIdx = idx;
+        }
+      }
       this.gbUser.colorIdx = idx;
       GLOBALS.saveSharedData();
     }
@@ -541,5 +551,9 @@ export class BuildingComponent {
       this.gbUser.ownerValue = sum;
     }
     GLOBALS.showConDebug = false;
+  }
+
+  protected classForColor(idx: number) {
+    return `color-${idx}`;
   }
 }

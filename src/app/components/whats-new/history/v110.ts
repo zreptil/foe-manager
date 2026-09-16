@@ -8,6 +8,23 @@ import {EnumSortmode} from '@/_model/user-data';
   selector: 'app-v110',
   template: `<h2 [innerHTML]="version"></h2>
   <ul>
+    <li class="added" i18n="110a10">
+      Bei der Farbauswahl kann man jetzt die Farbe festlegen, die gesetzt werden soll, wenn man den
+      Text kopiert. Man schaltet das um, indem man die gleiche Farbe anklickt, die gerade beim Gebäude
+      hinterlegt ist. Die Icons auf den Farben haben folgende Bedeutung:
+      <div list>
+        <mat-icon>done</mat-icon>
+        wird für die aktuelle Farbe angezeigt
+      </div>
+      <div list>
+        <mat-icon>content_copy</mat-icon>
+        wird angezeigt, wenn die Farbe beim Kopieren des Textes gesetzt wird
+      </div>
+      <div list>
+        <mat-icon>difference</mat-icon>
+        wird angezeigt, wenn die Farbe beim Kopieren des Textes gesetzt wird und es sich um die aktuelle Farbe handelt
+      </div>
+    </li>
     <li class="added" i18n="110a1">
       In der Titelleiste gibt es rechts oben einen Button, mit dem man die Informationen
       zu den Gebäuden ein- und ausblenden kann.

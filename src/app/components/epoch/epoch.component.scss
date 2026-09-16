@@ -15,7 +15,8 @@ mat-card[epoch] {
   --calcCost: rgba(255, 255, 0, 0.8);
   --block: rgba(0, 0, 0, 0.5);
 
-  background: transparent;
+  color: var(--cardFore);
+  background: var(--mainBodyBack);
   border: 1px solid rgba(0, 0, 0, 0.5);
   min-height: 3em;
   display: flex;
@@ -27,7 +28,6 @@ mat-card[epoch] {
   border-radius: 1em;
   height: 100%;
   position: relative;
-  color: var(--cardFore);
   --mat-form-field-filled-label-text-color: var(--ownerFore);
   --mat-form-field-filled-hover-label-text-color: var(--ownerFore);
   --mat-form-field-filled-input-text-color: var(--ownerFore);

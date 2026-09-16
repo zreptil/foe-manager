@@ -6,8 +6,22 @@
       }
     </button>
     <mat-menu #colorMenu="matMenu" [overlapTrigger]="true" btnMark class="menuGb">
-      @for (option of globals.siteConfig.colors; track $index) {
-        <button (click)="clickColor($event, $index)" [style]="{backgroundColor: option.color}" mat-menu-item>
+      @for (_option of globals.siteConfig.colors; track $index) {
+        <button (click)="clickColor($event, $index)" [class]="classForColor($index)" btnColor mat-menu-item>
+          @if ($index === globals.user.copyColorIdx) {
+            @if ($index === gbUser.colorIdx) {
+              <mat-icon>difference</mat-icon>
+            } @else {
+              <mat-icon>content_copy</mat-icon>
+            }
+          } @else if ($index === gbUser.colorIdx) {
+            @if ($index === globals.user.copyColorIdx) {
+              <mat-icon>content_copy</mat-icon>
+            } @else {
+              <mat-icon>done</mat-icon>
+            }
+          } @else {
+          }
         </button>
       }
       <button (click)="clickGBEdit($event)" btnEdit mat-menu-item>

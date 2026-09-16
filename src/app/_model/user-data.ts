@@ -42,7 +42,7 @@ export class UserData extends BaseData {
   activeUserGb: GbUserData;
   activePlayer: string;
   showInfoGb: boolean;
-  currentEpoch: EnumEpoch;
+  copyColorIdx: number;
 
   constructor(json?: any) {
     super(json);

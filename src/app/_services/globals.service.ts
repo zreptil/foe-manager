@@ -50,7 +50,7 @@ export class GlobalsService {
   ICON_REWARD = 'stars_2';
 
   version = VERSION;
-  subversion = '6';
+  subversion = '7';
   isNewVersion = false;
   skipStorageClear = false;
   devSupport = false;
@@ -414,7 +414,8 @@ export class GlobalsService {
       s10: [],
       s11: GLOBALS.user.qiGroupIdx,
       s12: GLOBALS.user.resetLevelColor,
-      s13: GLOBALS.user.epochList
+      s13: GLOBALS.user.epochList,
+      s14: GLOBALS.user.copyColorIdx
     };
     this.adjustGbSort();
     for (const key of Object.keys(GLOBALS.user.listGb)) {
@@ -541,6 +542,7 @@ export class GlobalsService {
         GLOBALS.user.listQi.push(new QiDef(entry));
       }
     }
+    GLOBALS.user.copyColorIdx = storage.s14 ?? -1;
 
     // validate data
     this.adjustGbSort();
