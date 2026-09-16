@@ -341,9 +341,19 @@
               }
             </div>
           } @else {
-            <button (click)="clickCopyAction($event, nextLevel)" copyButton mat-button>
-              <span>{{ copyData(nextLevel) }}</span>
-            </button>
+            <div copyButton>
+              <button (click)="clickCopyAction($event, nextLevel)" mat-button>
+                <span>{{ copyData(nextLevel) }}</span>
+                @if (globals.user.copyColorIdx >= 0 && globals.user.copyColorIdx !== gbUser.colorIdx) {
+                  <mat-icon></mat-icon>
+                }
+              </button>
+              @if (globals.user.copyColorIdx >= 0 && globals.user.copyColorIdx !== gbUser.colorIdx) {
+                <div [class]="classForCopyButton" frame>
+                  <mat-icon>colors</mat-icon>
+                </div>
+              }
+            </div>
           }
         }
       }

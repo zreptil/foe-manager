@@ -57,11 +57,19 @@ export class BuildingComponent {
     return ret;
   }
 
+  get classForCopyButton() {
+    const ret = [];
+    if (GLOBALS.user.copyColorIdx >= 0) {
+      ret.push(`color-${GLOBALS.user.copyColorIdx}`);
+    }
+    return ret;
+  }
+
   protected get classForGb() {
     const ret: string[] = [];
     if (GLOBALS.user.siteMode === EnumSitemode.manage || GLOBALS.user.siteMode === EnumSitemode.buildings) {
       if (this.gbUser?.colorIdx) {
-        ret.push(`gb-color-${this.gbUser.colorIdx}`);
+        ret.push(`gb color-${this.gbUser.colorIdx}`);
       }
       if (GLOBALS.user.activeGbKey != null) {
         ret.push('edit');

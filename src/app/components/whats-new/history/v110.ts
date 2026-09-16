@@ -24,6 +24,15 @@ import {EnumSortmode} from '@/_model/user-data';
         <mat-icon>difference</mat-icon>
         wird angezeigt, wenn die Farbe beim Kopieren des Textes gesetzt wird und es sich um die aktuelle Farbe handelt
       </div>
+      <div line>
+        Wenn eine Farbe festgelegt wurde, dann wird der Button für die Kopie mit einem entsprechende gefärbten
+        Rahmen umgeben.
+      </div>
+      <div line>
+        Davor ist das Icon
+        &nbsp;<mat-icon>colors</mat-icon>&nbsp;
+        in der entsprechenden Farbe zu sehen.
+      </div>
     </li>
     <li class="added" i18n="110a1">
       In der Titelleiste gibt es rechts oben einen Button, mit dem man die Informationen

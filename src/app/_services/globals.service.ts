@@ -50,7 +50,7 @@ export class GlobalsService {
   ICON_REWARD = 'stars_2';
 
   version = VERSION;
-  subversion = '7';
+  subversion = '8';
   isNewVersion = false;
   skipStorageClear = false;
   devSupport = false;
