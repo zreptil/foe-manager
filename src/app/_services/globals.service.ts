@@ -733,11 +733,16 @@ export class GlobalsService {
       GLOBALS.user.epochList.splice(idx + 1, 1);
       found = true;
     } else {
-      if (idx + dir >= 0 && idx + dir < GLOBALS.user.epochList.length) {
-        const tmp = GLOBALS.user.epochList[idx];
-        GLOBALS.user.epochList[idx] = GLOBALS.user.epochList[idx + dir];
-        GLOBALS.user.epochList[idx + dir] = tmp;
-        found = true;
+      const orgIdx = idx;
+      while (!found && idx + dir >= 0 && idx + dir < GLOBALS.user.epochList.length) {
+        const tmp = GLOBALS.user.epochList[idx + dir];
+        if (GLOBALS.gbList.some((gb) => gb.epoch === tmp)) {
+          GLOBALS.user.epochList[idx + dir] = GLOBALS.user.epochList[orgIdx];
+          GLOBALS.user.epochList[orgIdx] = tmp;
+          found = true;
+        } else {
+          idx += dir;
+        }
       }
     }
     if (!found) {
