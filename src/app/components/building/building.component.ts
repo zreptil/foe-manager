@@ -99,11 +99,11 @@ export class BuildingComponent {
     return ret;
   }
 
-  clickCopyAction(evt: MouseEvent, level: LevelData) {
+  clickCopyAction(evt: MouseEvent, level: LevelData, setColor = false) {
     evt.stopPropagation();
     navigator.clipboard.writeText(this.copyData(level));
     this.gbUser.timeCopied = Date.now();
-    if (GLOBALS.user.copyColorIdx >= 0) {
+    if (setColor && GLOBALS.user.copyColorIdx >= 0) {
       this.gbUser.colorIdx = GLOBALS.user.copyColorIdx;
     }
     GLOBALS._gbList = null;
@@ -447,6 +447,7 @@ export class BuildingComponent {
         }
       }
       this.gbUser.colorIdx = idx;
+      navigator.clipboard.writeText(this.copyData(this.nextLevel));
       GLOBALS.saveSharedData();
     }
   }
@@ -562,6 +563,10 @@ export class BuildingComponent {
   }
 
   protected classForColor(idx: number) {
-    return `color-${idx}`;
+    const ret: string[] = [`color-${idx}`];
+    if (idx === this.gbUser.colorIdx) {
+      ret.push('current');
+    }
+    return ret;
   }
 }

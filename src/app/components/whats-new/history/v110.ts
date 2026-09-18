@@ -8,30 +8,32 @@ import {EnumSortmode} from '@/_model/user-data';
   selector: 'app-v110',
   template: `<h2 [innerHTML]="version"></h2>
   <ul>
+    <li class="added" i18n="110a11">
+      Wenn eine Farbe ausgewählt wird, wird der Text kopiert. Damit kann man nach Auswahl der Farbe
+      die aktuelle Platzverteilung woanders einfügen.
+    </li>
     <li class="added" i18n="110a10">
-      Bei der Farbauswahl kann man jetzt die Farbe festlegen, die gesetzt werden soll, wenn man den
-      Text kopiert. Man schaltet das um, indem man die gleiche Farbe anklickt, die gerade beim Gebäude
-      hinterlegt ist. Die Icons auf den Farben haben folgende Bedeutung:
+      Bei der Farbauswahl kann man jetzt eine Farbe für das Kopieren festlegen.
+      <div line>
+        Wenn sie definiert wurde, dann erscheint vor dem Kopierbutton das Icon
+        &nbsp;<mat-icon>colors</mat-icon>&nbsp;
+        in der entsprechenden Farbe.
+      </div>
+      Wenn man dieses anklickt, dann wird der Text kopiert und gleichzeitig die entsprechende Farbe
+      für das Gebäude gesetzt. Beim Anklicken des Textes selbst wird immer nur der Text kopiert ohne
+      dass die Farbe gesetzt wird. Man setzt diese Farbe, indem man die gleiche Farbe anklickt,
+      die gerade beim Gebäude hinterlegt ist. Die Icons auf den Farben haben folgende Bedeutung:
       <div list>
         <mat-icon>done</mat-icon>
         wird für die aktuelle Farbe angezeigt
       </div>
       <div list>
         <mat-icon>content_copy</mat-icon>
-        wird angezeigt, wenn die Farbe beim Kopieren des Textes gesetzt wird
+        wird angezeigt, wenn es diese Farbe als Button beim Text gibt
       </div>
       <div list>
         <mat-icon>difference</mat-icon>
-        wird angezeigt, wenn die Farbe beim Kopieren des Textes gesetzt wird und es sich um die aktuelle Farbe handelt
-      </div>
-      <div line>
-        Wenn eine Farbe festgelegt wurde, dann wird der Button für die Kopie mit einem entsprechende gefärbten
-        Rahmen umgeben.
-      </div>
-      <div line>
-        Davor ist das Icon
-        &nbsp;<mat-icon>colors</mat-icon>&nbsp;
-        in der entsprechenden Farbe zu sehen.
+        wird angezeigt, wenn es diese Farbe als Button beim Text gibt und es sich um die aktuelle Farbe handelt
       </div>
     </li>
     <li class="added" i18n="110a1">

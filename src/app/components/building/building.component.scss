@@ -1,6 +1,14 @@
 ::ng-deep .menuGb {
   --mat-menu-container-color: transparent;
   --mat-menu-container-elevation-shadow: none;
+
+  .mat-mdc-menu-content {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 4px;
+  }
 }
 
 :host {
@@ -173,30 +181,44 @@ mat-card mat-card-content [upgrade] {
   }
 }
 
-[copyButton] {
+[editPanel] {
   margin-top: 1em;
-  position: relative;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  gap: 0.5em;
 
-  button {
-    height: inherit;
-    font-size: 75%;
-    --mat-button-text-label-text-color: var(--copyFore);
-  }
-
-  [frame] {
-    position: absolute;
-    top: -3px;
-    left: 0;
-    right: 0;
-    bottom: -3px;
-    border-radius: 0.5em;
-    border: 2px solid var(--ownerBack);
-    padding: 0.5em;
+  [copyButton] {
+    --border: none; //2px solid var(--ownerBack);
+    --borderRadius: 5px;
     display: flex;
+    flex-flow: row;
     align-items: center;
+    position: relative;
+    --mat-button-text-label-text-color: var(--copyFore);
+    border: var(--border);
+    border-radius: var(--borderRadius);
 
-    mat-icon {
-      --mat-icon-color: var(--ownerBack);
+    button {
+      height: inherit;
+      font-size: 75%;
+      padding: 0.2em 0;
+      min-width: initial;
+    }
+
+    [copyColorButton] {
+      width: 48px;
+      align-self: stretch;
+      //background-color: var(--ownerBack);
+      //border-top-right-radius: 0;
+      //border-bottom-right-radius: 0;
+
+      mat-icon {
+        --mat-button-text-icon-spacing: 0;
+        --mat-icon-color: var(--ownerBack);
+      }
     }
   }
 }
@@ -294,6 +316,10 @@ mat-label {
   mat-icon {
     margin: 0;
   }
+}
+
+[btnColor].current {
+  outline: 1px solid var(--ownerFore);
 }
 
 [btnColor]:hover {
@@ -444,27 +470,11 @@ table {
   }
 }
 
-[mat-menu-item] {
-  height: 24px;
-  width: 24px;
-  --mat-menu-item-icon-size: 24px;
-  border-radius: 50%;
-  border: 10px solid rgba(0, 0, 0, 0.1);
-  margin-bottom: 5px;
-}
-
-[btnEditHover] {
-  position: absolute;
-  bottom: 5px;
-  left: 5px;
-  display: none;
-}
-
 [btnEdit] {
   border: none;
   background: var(--mainHeadBack);
   color: var(--mainHeadFore);
-  min-width: 48px;
+  min-width: 52px;
   padding: 0;
   display: flex;
   align-items: center;
@@ -477,6 +487,19 @@ table {
   ::ng-deep.mat-mdc-menu-item-text {
     display: none;
   }
+}
+
+[mat-menu-item] {
+  height: 100%;
+  width: 52px;
+  --mat-menu-item-icon-size: 24px;
+  border-radius: 0.3em;
+  border: 10px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 5px;
+}
+
+[btnEditHover] {
+  display: none;
 }
 
 [btnEdit]:hover {

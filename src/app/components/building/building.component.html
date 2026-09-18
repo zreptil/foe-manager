@@ -341,27 +341,31 @@
               }
             </div>
           } @else {
-            <div copyButton>
-              <button (click)="clickCopyAction($event, nextLevel)" mat-button>
-                <span>{{ copyData(nextLevel) }}</span>
-                @if (globals.user.copyColorIdx >= 0 && globals.user.copyColorIdx !== gbUser.colorIdx) {
-                  <mat-icon></mat-icon>
-                }
-              </button>
-              @if (globals.user.copyColorIdx >= 0 && globals.user.copyColorIdx !== gbUser.colorIdx) {
-                <div [class]="classForCopyButton" frame>
-                  <mat-icon>colors</mat-icon>
-                </div>
+            <div editPanel>
+              @if (showEditIcon) {
+                <button (click)="clickGBEdit($event)" btnEditHover mat-mini-fab>
+                  <mat-icon>{{ globals.user.activeGbKey != null ? 'keyboard_arrow_left' : 'edit' }}</mat-icon>
+                </button>
               }
+              <div [class]="classForCopyButton" copyButton>
+                @if (globals.user.copyColorIdx >= 0 && globals.user.copyColorIdx !== gbUser.colorIdx) {
+                  <button (click)="clickCopyAction($event, nextLevel, true)" copyColorButton mat-button>
+                    <mat-icon>colors</mat-icon>
+                  </button>
+                }
+                <button (click)="clickCopyAction($event, nextLevel)" mat-button>
+                  <span>{{ copyData(nextLevel) }}</span>
+                </button>
+                <!--                @if (globals.user.copyColorIdx >= 0 && globals.user.copyColorIdx !== gbUser.colorIdx) {-->
+                <!--                  <div [class]="classForCopyButton" frame>-->
+                <!--                    <mat-icon>colors</mat-icon>-->
+                <!--                  </div>-->
+                <!--                }-->
+              </div>
             </div>
           }
         }
       }
     </mat-card-content>
-  }
-  @if (showEditIcon) {
-    <button (click)="clickGBEdit($event)" btnEditHover mat-mini-fab>
-      <mat-icon>{{ globals.user.activeGbKey != null ? 'keyboard_arrow_left' : 'edit' }}</mat-icon>
-    </button>
   }
 </mat-card>
