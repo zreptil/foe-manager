@@ -8,18 +8,39 @@ import {EnumSortmode} from '@/_model/user-data';
   selector: 'app-v110',
   template: `<h2 [innerHTML]="version"></h2>
   <ul>
+    <li class="removed" i18n="110r1">
+      Die Spalten "Nett" und "Sicher" wurden entfernt.
+    </li>
+    <li class="changed" i18n="110c6">
+      Die Spalte "Förderung" wurde überarbeitet und sollte nun bessere Werte für die Verwaltung von
+      Snipern und sonstigen Einzahlern bieten. Das Icon für die Einzahlungen wurde geändert, wenn
+      die Einzahlung dem Wert für die Förderung des Platzes entspricht.
+      <div list>
+        <mat-icon>check_circle</mat-icon>
+        Die Einzahlung entspricht dem Wert, der für den Platz
+        vorgesehen ist.
+      </div>
+      <div list>
+        <mat-icon>target</mat-icon>
+        Die Einzahlung ist höher oder niedriger als der Wert für
+        den Platz.
+      </div>
+    </li>
+    <li class="changed" i18n="110c7">
+      Der Wert für den Eigenanteil in der Spalte Förderung (oberhalb der Plätze) entspricht
+      nun immer dem Wert, der benötigt wird, um den letzten Platz abzusichern. Daneben wird
+      angezeigt, wieviel beim Eigenanteil noch fehlt, also die Differenz zwischen dem, was
+      im Gebäude als Eigenanteil eingetragen wurde und dem, was benötigt wird.
+    </li>
     <li class="added" i18n="110a11">
       Wenn eine Farbe ausgewählt wird, wird der Text kopiert. Damit kann man nach Auswahl der Farbe
       die aktuelle Platzverteilung woanders einfügen.
     </li>
     <li class="added" i18n="110a10">
       Bei der Farbauswahl kann man jetzt eine Farbe für das Kopieren festlegen.
-      <div line>
-        Wenn sie definiert wurde, dann erscheint vor dem Kopierbutton das Icon
-        &nbsp;<mat-icon>colors</mat-icon>&nbsp;
-        in der entsprechenden Farbe.
-      </div>
-      Wenn man dieses anklickt, dann wird der Text kopiert und gleichzeitig die entsprechende Farbe
+      Wenn sie definiert wurde, dann erscheint vor dem Kopierbutton dieses Icon:&nbsp;<mat-icon>colors</mat-icon>&nbsp;
+      Das Icon hat die entsprechende Farbe. Wenn das Gebäude diese Farbe schon hat, dann erscheint das
+      Icon nicht. Wenn man dieses anklickt, dann wird der Text kopiert und gleichzeitig die entsprechende Farbe
       für das Gebäude gesetzt. Beim Anklicken des Textes selbst wird immer nur der Text kopiert ohne
       dass die Farbe gesetzt wird. Man setzt diese Farbe, indem man die gleiche Farbe anklickt,
       die gerade beim Gebäude hinterlegt ist. Die Icons auf den Farben haben folgende Bedeutung:

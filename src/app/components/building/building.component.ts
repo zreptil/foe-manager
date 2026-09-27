@@ -8,6 +8,13 @@ import {EnumSitemode, EnumSortmode} from '@/_model/user-data';
 import {Utils} from '@/classes/utils';
 import {MessageService} from '@/_services/message.service';
 
+class PlacesData {
+  rewards: number[] = [];
+  blocks: number[] = [];
+  ownerValue: number;
+  ownerRest: number;
+}
+
 @Component({
   selector: 'app-building',
   standalone: false,
@@ -18,8 +25,13 @@ export class BuildingComponent {
   building = input.required<GbData>();
   gbUser: GbUserData;
   nextLevel: LevelData;
-  calcMethods = [this.calcSafePlaces, this.calcNicePlaces, this.calcSupportPlaces];
-  calcTitles = [$localize`Sicher`, $localize`Nett`, $localize`Förderung`];
+//  calcMethods: any = [this.calcSafePlaces, this.calcNicePlaces, this.calcSupportPlaces];
+//  calcTitles = [$localize`Sicher`, $localize`Nett`, $localize`Förderung`];
+  calcMethods: any = [this.calcSupportPlaces];
+  calcTitles = [$localize`Förderung`];
+  calcPlaceMethods: any = [this.calcPlacesRewards, this.calcPlacesSupport];
+  calcPlaceTitles = [null, $localize`Förderung`];
+  placesData: PlacesData[] = [];
 
   constructor(public globals: GlobalsService,
               public msg: MessageService,
@@ -28,7 +40,13 @@ export class BuildingComponent {
       GLOBALS.user._siteMode();
       GLOBALS.user._activeGbKey();
       this.gbUser = this.bs.gbForUser(this.building());
+      if (this.gbUser != null && this.gbUser.copyIdx > this.calcMethods.length - 1) {
+        this.gbUser.copyIdx = this.calcMethods.length - 1;
+      }
       this.nextLevel = this.bs.levelForUser(this.building(), this.gbUser);
+      if (this.gbUser != null) {
+        this.calcPlaces(this.nextLevel, this.gbUser.ownerValue);
+      }
     })
   }
 
@@ -96,6 +114,9 @@ export class BuildingComponent {
     if (+idx === +(this.gbUser?.copyIdx ?? -1)) {
       ret.push('copy');
     }
+    if (this.placesData[idx + 1].ownerValue < 0) {
+      ret.push('negative');
+    }
     return ret;
   }
 
@@ -107,7 +128,7 @@ export class BuildingComponent {
       this.gbUser.colorIdx = GLOBALS.user.copyColorIdx;
     }
     GLOBALS._gbList = null;
-    GLOBALS.saveSharedData();
+    this.saveSharedData();
     // this.msg.info($localize`${this.gb.name} wurde kopiert`);
   }
 
@@ -151,209 +172,100 @@ export class BuildingComponent {
     clearInterval(GLOBALS.siteConfig.repeatTimer);
   }
 
-  protected saveLevel(evt?: PointerEvent) {
-    evt?.preventDefault();
-    this.gbUser.level = Math.max(Math.min(+GLOBALS.siteConfig.levelValue, this.gb.levels.length - 1), 1);
-    this.updateLevel();
-  }
-
-  protected updateLevel() {
-    this.nextLevel = this.bs.levelForUser(this.gb, this.gbUser);
-    GLOBALS.siteConfig.levelGbKey = null;
-    this.gbUser.ownerValue = 0;
-    this.gbUser.sniperValues = [];
-    this.gbUser.copyIdx = -1;
-    if (GLOBALS.user.siteMode === EnumSitemode.buildings && this.gb.key === GLOBALS.user.activeGbKey) {
-      GLOBALS.user.activeUserGb = this.gbUser;
-    }
-    if (GLOBALS.user.resetLevelColor) {
-      this.gbUser.colorIdx = 0;
-      this.gbUser.levelMarked = [true, true, true, true, true];
-    }
-    if (GLOBALS.user.siteMode === EnumSitemode.manage || GLOBALS.user.siteMode === EnumSitemode.buildings) {
-      GLOBALS._gbList = null;
-      GLOBALS.saveSharedData();
+  calcPlaces(level: LevelData, ownerValue: number) {
+    this.placesData = [];
+    for (let method = 0; method < this.calcPlaceMethods.length; method++) {
+      this.placesData.push(this.calcPlaceMethods[method].bind(this)(level, ownerValue));
     }
   }
 
-  protected classForReward(idx: number) {
-    if (GLOBALS.user.siteMode === EnumSitemode.buildings) {
-      return '';
-    }
-    return this.gbUser.levelMarked[idx] ? 'marked' : '';
-  }
-
-  protected clickRow(evt: PointerEvent, idx: number) {
-    evt.stopPropagation();
-    this.gbUser.levelMarked[idx] = !this.gbUser.levelMarked[idx];
+  saveSharedData() {
+    this.calcPlaces(this.nextLevel, this.gbUser.ownerValue);
     GLOBALS.saveSharedData();
   }
 
-  protected ownerValueMax(level: LevelData) {
-    let calc = level.cost;
-    let ret = 0;
+  protected calcPlacesRewards(level: LevelData, ownerValue: number) {
+    const ret = new PlacesData();
+    let rest = level.cost;
+    let lastBlock = 0;
     for (let i = 0; i < level.rewards.length; i++) {
       const reward = this.bs.calcReward(level.rewards[i]);
+      ret.rewards.push(reward);
       if (reward > 0) {
-        if (calc - 2 * reward > ret) {
-          ret = calc - 2 * reward;
-        }
-        calc -= reward;
+        rest -= reward;
+        ownerValue = rest - reward;
       }
+      if (ownerValue > lastBlock) {
+        lastBlock = ownerValue;
+      }
+      ret.blocks.push(ownerValue);
     }
+    ret.ownerValue = lastBlock;
+    ret.ownerRest = rest - lastBlock;
     return ret;
   }
 
-  protected calcBlockValue(method: number, level: LevelData, idx: number, calcPlaces = method >= 0) {
-    let calc = level.cost;
-    // calc -= this.gbUser.sniperValues.reduce((acc, cur) => {
-    //   return acc + cur;
-    // }, 0);
-    let ret = 0;
-    let sniperIdx = 0;
-    for (let i = 0; i <= idx; i++) {
-      let reward = this.bs.calcReward(level.rewards[i]);
-      if (method >= 0 && this.gbUser.sniperValues[sniperIdx] >= reward) {
-        ret = 0;
-        calc -= this.gbUser.sniperValues[sniperIdx];
-        sniperIdx++;
-      } else {
-        if (calcPlaces) {
-          reward = Math.abs(this.calcPlaceValue(method, level, i, this.gbUser.ownerValue));
-        }
-        if (reward > 0) {
-          if (calc - 2 * reward > ret) {
-            ret = calc - 2 * reward;
-          }
-          calc -= reward;
-        }
-      }
-    }
-    return ret;
-  }
-
-  protected classForBlock(method: number, level: LevelData, idx: number): string {
-    const bc = this.calcBlockValue(method, level, idx);
-    if (bc > 0) {
-      for (let i = idx + 1; i <= 5 && level.rewards[i] > 0; i++) {
-        const bn = this.calcBlockValue(method, level, i);
-        if (bn > 0) {
-          return '';
-        }
-      }
-      return ''; //'owner';
-    }
-    return '';
-  }
-
-  protected saveOwnerValue(evt?: PointerEvent) {
-    evt?.preventDefault();
-    GLOBALS.siteConfig.editField = null;
-    GLOBALS.saveSharedData();
-  }
-
-  protected clearOwnerValue(evt?: PointerEvent) {
-    evt?.preventDefault();
-    this.gbUser.ownerValue = null;
-    GLOBALS.siteConfig.editField = null;
-    GLOBALS.saveSharedData();
-  }
-
-  protected saveSniperValue(evt?: PointerEvent, addNewValue = false) {
-    evt?.preventDefault();
-    this.gbUser.sniperValues ??= [];
-    if (!Utils.isEmpty(GLOBALS.siteConfig.sniperValue) && GLOBALS.siteConfig.sniperValue > 0) {
-      this.gbUser.sniperValues.push(GLOBALS.siteConfig.sniperValue);
-      this.gbUser.sniperValues = this.gbUser.sniperValues.map(a => +a)
-      this.gbUser.sniperValues.sort((a, b) => b - a);
-    }
-    GLOBALS.siteConfig.sniperValue = null;
-    if (!addNewValue || this.gbUser.sniperValues.length >= 5) {
-      GLOBALS.siteConfig.editField = null;
-    }
-    GLOBALS.saveSharedData();
-  }
-
-  protected clickSniperValue(evt: PointerEvent, idx: number) {
-    evt.preventDefault();
-    this.gbUser.sniperValues.splice(idx, 1);
-  }
-
-  protected classForPlaceValue(method: number, level: LevelData, idx: number, ownerValue: number) {
-    const ret: string[] = [];
-    const value = Math.abs(this.calcPlaceValue(method, level, idx, ownerValue));
-    if (value <= 0 || this.bs.calcReward(level.rewards[idx]) < value) {
-      ret.push('negative');
-    } else {
-      ret.push('positive');
-    }
-    return ret;
-  }
-
-  protected calcPlaceValue(method: number, level: LevelData, idx: number, ownerValue: number) {
-    return this.calcMethods[method].bind(this)(level, idx, ownerValue);
-  }
-
-  protected calcTotal(method: number, level: LevelData, ownerValue: number) {
-    let ret = level.cost - this.calcMethods[method].bind(this)(level, -2, ownerValue);
+  protected calcPlacesSupport(level: LevelData, ownerValue: number) {
+    const ret = new PlacesData();
+    let sl = [...this.gbUser.sniperValues, 0];
+    let rest = level.cost - +(ownerValue ?? 0);
+    let calcOwnerValue = 0;
+    let lastReward = 0;
     for (let i = 0; i < level.rewards.length; i++) {
-      if (level.rewards[i] > 0) {
-        ret -= Math.abs(this.calcMethods[method].bind(this)(level, i, ownerValue));
+      let reward = this.bs.calcReward(level.rewards[i]);
+      const slRest = sl[0] === 0 ? sl.slice(1) : sl;
+      let sniperRest = 0;
+      if (rest - sl[0] > 0) {
+        sniperRest = slRest.reduce((s, v) => s + v, 0);
       }
+      if (sniperRest < 0 && sl[0] === 0) {
+        reward = 0;
+      }
+      GLOBALS.show(i, `reward=${reward}, rest=${rest}`, sl, sniperRest);
+      if (reward <= sl[0] || (sl[0] > 0 && sniperRest < rest)) {
+        reward = -sl[0];
+        if (sl[0] > 0) {
+          sl = sl.slice(1);
+        }
+      }
+      ret.rewards.push(reward);
+      rest -= Math.abs(reward);
+      calcOwnerValue = rest - Math.abs(reward);
+      if (reward > 0) {
+        lastReward = reward;
+      }
+      ret.blocks.push(calcOwnerValue);
+    }
+    if (+ownerValue > 0) {
+      if (rest < 0) {
+        ret.ownerValue = +ownerValue;
+        ret.ownerRest = rest;
+      } else {
+        ret.ownerValue = +ownerValue;
+        ret.ownerRest = level.cost - ret.rewards.reduce((s, v) => s + Math.abs(v), 0) - ownerValue;
+      }
+      if (ret.ownerRest > lastReward) {
+        ret.ownerValue += ret.ownerRest - lastReward;
+        ret.ownerRest = lastReward;
+      }
+    } else {
+      ret.ownerValue = rest - lastReward;
+      ret.ownerRest = level.cost - ret.rewards.reduce((s, v) => s + Math.abs(v), 0) - rest + lastReward;
     }
     return ret;
   }
 
-  protected calcNicePlaces(level: LevelData, idx: number, ownerValue: number) {
-    if (Utils.isEmpty(ownerValue) || +ownerValue === 0) {
-      ownerValue = this.calcBlockValue(-1, level, 0);
+  protected calcSupportPlaces(level: LevelData, idx: number, ownerValue: number, calcBlockValue: boolean) {
+    const methodIdx = this.calcMethods.indexOf(this.calcSupportPlaces);
+    if (calcBlockValue && (Utils.isEmpty(ownerValue) || +ownerValue === 0)) {
+      ownerValue = this.calcBlockValue(methodIdx, level, 4);
     }
     switch (idx) {
       case -2:
-        return ownerValue;
-      case -1:
-        return level.cost - ownerValue;
-    }
-    const sl = [...this.gbUser.sniperValues, 0];
-    let base = level.cost - +(ownerValue ?? 0);
-    let ret = base;
-    let sniperIdx = 0;
-    const reward = this.bs.calcReward(level.rewards[idx]);
-    let rewIdx = 0;
-    while (idx >= 0) {
-      const rew = this.bs.calcReward(level.rewards[rewIdx]);
-      ret = Math.min(rew, Math.floor(base / 2));
-      if (ret <= sl[sniperIdx]) {
-        if (idx === 0) {
-          return -sl[sniperIdx];
+        ownerValue = this.calcBlockValue(methodIdx, level, 4);
+        if (+(this.gbUser.ownerValue ?? 0) > 0 && ownerValue < +(this.gbUser.ownerValue ?? 0)) {
+          ownerValue = this.gbUser.ownerValue;
         }
-        ret = sl[sniperIdx];
-        sniperIdx++;
-      }
-      base -= ret;
-      if (base < 0) {
-        return 0;
-      }
-      idx--;
-      rewIdx++;
-    }
-    return Math.min(reward, base);
-  }
-
-  // protected clickGBMark(evt: PointerEvent) {
-  //   evt.preventDefault();
-  //   if (this.gbUser != null) {
-  //     this.gbUser.colorIdx = !this.gbUser.colorIdx;
-  //     GLOBALS.saveSharedData();
-  //   }
-  // }
-
-  protected calcSupportPlaces(level: LevelData, idx: number, ownerValue: number) {
-    if (Utils.isEmpty(ownerValue) || +ownerValue === 0) {
-      ownerValue = this.calcBlockValue(2, level, 0, false);
-    }
-    switch (idx) {
-      case -2:
         return ownerValue;
       case -1:
         return level.cost - ownerValue;
@@ -408,31 +320,191 @@ export class BuildingComponent {
     return Math.min(reward, base);
   }
 
-  protected calcSafePlaces(level: LevelData, idx: number, ownerValue: number) {
-    switch (idx) {
-      case -2:
-        return ownerValue;
-      case -1:
-        return level.cost - (ownerValue ?? 0);
+  protected saveLevel(evt?: PointerEvent) {
+    evt?.preventDefault();
+    this.gbUser.level = Math.max(Math.min(+GLOBALS.siteConfig.levelValue, this.gb.levels.length - 1), 1);
+    this.updateLevel();
+  }
+
+  protected updateLevel() {
+    this.nextLevel = this.bs.levelForUser(this.gb, this.gbUser);
+    GLOBALS.siteConfig.levelGbKey = null;
+    this.gbUser.ownerValue = 0;
+    this.gbUser.sniperValues = [];
+    this.gbUser.copyIdx = -1;
+    if (GLOBALS.user.siteMode === EnumSitemode.buildings && this.gb.key === GLOBALS.user.activeGbKey) {
+      GLOBALS.user.activeUserGb = this.gbUser;
     }
-    const sl = [...this.gbUser.sniperValues, 0];
-    let base = level.cost - +(ownerValue ?? 0);
-    let ret = base;
-    let sniperIdx = 0;
-    while (idx >= 0) {
-      ret = Math.ceil(base / 2);
-      if (ret <= sl[sniperIdx]) {
-        if (idx === 0) {
-          return -sl[sniperIdx];
+    if (GLOBALS.user.resetLevelColor) {
+      this.gbUser.colorIdx = 0;
+      this.gbUser.levelMarked = [true, true, true, true, true];
+    }
+    if (GLOBALS.user.siteMode === EnumSitemode.manage || GLOBALS.user.siteMode === EnumSitemode.buildings) {
+      GLOBALS._gbList = null;
+      this.saveSharedData();
+    }
+  }
+
+  protected classForReward(idx: number) {
+    if (GLOBALS.user.siteMode === EnumSitemode.buildings) {
+      return '';
+    }
+    return this.gbUser.levelMarked[idx] ? 'marked' : '';
+  }
+
+  protected clickRow(evt: PointerEvent, idx: number) {
+    evt.stopPropagation();
+    this.gbUser.levelMarked[idx] = !this.gbUser.levelMarked[idx];
+    this.saveSharedData();
+  }
+
+  protected ownerValueRest(method: number, level: LevelData) {
+    let max = this.calcBlockValue(method, level, 4);
+    if (this.gbUser.ownerValue > max) {
+      max = this.gbUser.ownerValue;
+    }
+    return +this.gbUser.ownerValue - max;
+  }
+
+  protected ownerValueMax(level: LevelData) {
+    let calc = level.cost;
+    let ret = 0;
+    for (let i = 0; i < level.rewards.length; i++) {
+      const reward = this.bs.calcReward(level.rewards[i]);
+      if (reward > 0) {
+        if (calc - 2 * reward > ret) {
+          ret = calc - 2 * reward;
         }
-        ret = sl[sniperIdx];
-        sniperIdx++;
+        calc -= reward;
       }
-      base -= ret;
-      if (base < 0) {
-        return 0;
+    }
+    return ret;
+  }
+
+  protected calcBlockValue(method: number, level: LevelData, idx: number) {
+    let calc = level.cost;
+    // calc -= this.gbUser.sniperValues.reduce((acc, cur) => {
+    //   return acc + cur;
+    // }, 0); 0 4 false
+    let ret = 0;
+    let ownerValue = this.gbUser.ownerValue;
+    const r: number[] = [];
+    if (method >= 0) {
+      ownerValue = calc - 2 * Math.abs(this.calcPlaceValue(method, level, 0, 0, false));
+    }
+    for (let i = 0; i <= idx; i++) {
+      let reward = this.bs.calcReward(level.rewards[i]);
+      if (method >= 0) {
+        reward = Math.abs(this.calcPlaceValue(method, level, i, ownerValue, false));
       }
-      idx--;
+      // if (method >= 0 && this.gbUser.sniperValues[sniperIdx] >= reward) {
+      //   // ret = 0;
+      //   reward = this.gbUser.sniperValues[sniperIdx];
+      //   sniperIdx++;
+      // } else if (method >= 0) {
+      //   reward = Math.abs(this.calcPlaceValue(method, level, i, ownerValue, false));
+      //   console.log('reward', i, reward);
+      // }
+      r.push(reward);
+      if (reward > 0) {
+        calc -= reward;
+        if (calc - reward > ret) {
+          ret = calc - reward;
+        }
+      }
+      // if (method >= 0 && i === 4 && idx === 4) {
+      //   console.log(method, calc, ret, ownerValue, r, this.bs.calcReward(level.rewards[i]),
+      //     this.calcPlaceValue(method, level, i, 0, false));
+      //   ret = 600;
+      // }
+    }
+    return ret;
+  }
+
+  protected classForBlock(method: number, level: LevelData, idx: number): string {
+    const bc = this.calcBlockValue(method, level, idx);
+    if (bc > 0) {
+      for (let i = idx + 1; i <= 5 && level.rewards[i] > 0; i++) {
+        const bn = this.calcBlockValue(method, level, i);
+        if (bn > 0) {
+          return '';
+        }
+      }
+      return ''; //'owner';
+    }
+    return '';
+  }
+
+  protected saveOwnerValue(evt?: PointerEvent) {
+    evt?.preventDefault();
+    GLOBALS.siteConfig.editField = null;
+    this.saveSharedData();
+  }
+
+  protected clearOwnerValue(evt?: PointerEvent) {
+    evt?.preventDefault();
+    this.gbUser.ownerValue = null;
+    GLOBALS.siteConfig.editField = null;
+    this.saveSharedData();
+  }
+
+  protected saveSniperValue(evt?: PointerEvent, addNewValue = false) {
+    evt?.preventDefault();
+    this.gbUser.sniperValues ??= [];
+    if (!Utils.isEmpty(GLOBALS.siteConfig.sniperValue) && GLOBALS.siteConfig.sniperValue > 0) {
+      this.gbUser.sniperValues.push(GLOBALS.siteConfig.sniperValue);
+      this.gbUser.sniperValues = this.gbUser.sniperValues.map(a => +a)
+      this.gbUser.sniperValues.sort((a, b) => b - a);
+    }
+    if (!addNewValue || this.gbUser.sniperValues.length >= 5 || Utils.isEmpty(GLOBALS.siteConfig.sniperValue)) {
+      GLOBALS.siteConfig.editField = null;
+    }
+    GLOBALS.siteConfig.sniperValue = null;
+    this.saveSharedData();
+  }
+
+  protected clickSniperValue(evt: PointerEvent, idx: number) {
+    evt.preventDefault();
+    this.gbUser.sniperValues.splice(idx, 1);
+    this.calcPlaces(this.nextLevel, this.gbUser.ownerValue);
+    this.saveSharedData();
+  }
+
+  protected classForPlace(placeIdx: number, level: LevelData, idx: number) {
+    const ret: string[] = [];
+    if (placeIdx > 0) {
+      const place = this.placesData[placeIdx];
+      const value = Math.abs(place.rewards[idx]);
+      if (value <= 0 || this.bs.calcReward(level.rewards[idx]) < value) {
+        ret.push('negative');
+      } else {
+        ret.push('positive');
+      }
+    }
+    return ret;
+  }
+
+  protected classForPlaceValue(method: number, level: LevelData, idx: number, ownerValue: number) {
+    const ret: string[] = [];
+    const value = Math.abs(this.calcPlaceValue(method, level, idx, ownerValue));
+    if (value <= 0 || this.bs.calcReward(level.rewards[idx]) < value) {
+      ret.push('negative');
+    } else {
+      ret.push('positive');
+    }
+    return ret;
+  }
+
+  protected calcPlaceValue(method: number, level: LevelData, idx: number, ownerValue: number, calcBlockValue = true) {
+    return this.calcMethods[method].bind(this)(level, idx, ownerValue, calcBlockValue);
+  }
+
+  protected calcTotal(method: number, level: LevelData, ownerValue: number, calcBlockValue = true) {
+    let ret = level.cost - this.calcMethods[method].bind(this)(level, -2, ownerValue, calcBlockValue);
+    for (let i = 0; i < level.rewards.length; i++) {
+      if (level.rewards[i] > 0) {
+        ret -= Math.abs(this.calcMethods[method].bind(this)(level, i, ownerValue, calcBlockValue));
+      }
     }
     return ret;
   }
@@ -448,7 +520,7 @@ export class BuildingComponent {
       }
       this.gbUser.colorIdx = idx;
       navigator.clipboard.writeText(this.copyData(this.nextLevel));
-      GLOBALS.saveSharedData();
+      this.saveSharedData();
     }
   }
 
@@ -462,6 +534,7 @@ export class BuildingComponent {
       GLOBALS.user.activeUserGb = null;
       GLOBALS._gbList = null;
     }
+    this.saveSharedData();
   }
 
   protected clickGBCard(evt: PointerEvent) {
@@ -474,7 +547,7 @@ export class BuildingComponent {
         } else {
           found.active = !found.active;
         }
-        GLOBALS.saveSharedData();
+        this.saveSharedData();
         break;
       case EnumSitemode.manage:
         break;
@@ -482,7 +555,7 @@ export class BuildingComponent {
         if (GLOBALS.user.activeGbKey !== this.gb.key) {
           GLOBALS.user.activeGbKey = this.gb.key;
           GLOBALS.user.activeUserGb = new GbUserData({a: 1});
-          GLOBALS.saveSharedData();
+          this.saveSharedData();
         }
         break;
     }
@@ -502,7 +575,7 @@ export class BuildingComponent {
   protected clickCopyIdx(evt: PointerEvent, idx: number) {
     evt?.preventDefault();
     this.gbUser.copyIdx = +idx;
-    GLOBALS.saveSharedData();
+    this.saveSharedData();
   }
 
   protected clickOwnSort(evt: PointerEvent, diff: number) {
@@ -524,7 +597,7 @@ export class BuildingComponent {
       }
     }
     GLOBALS._gbList = null;
-    GLOBALS.saveSharedData();
+    this.saveSharedData();
   }
 
   protected clickSecure(evt: PointerEvent) {

@@ -243,6 +243,10 @@ body {
   --mainBodyFore: var(--warnBodyFore);
 }
 
+[square-ripple].mat-mdc-icon-button .mat-mdc-button-ripple {
+  border-radius: 1em;
+}
+
 mat-icon[small] {
   display: flex;
   align-items: center;

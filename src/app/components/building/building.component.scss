@@ -296,7 +296,7 @@ mat-label {
     color: var(--calcPositive);
   }
 
-  [calc].negative {
+  [calc].negative, [reward].negative {
     color: var(--calcNegative);
   }
 }
