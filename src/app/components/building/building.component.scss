@@ -338,6 +338,19 @@ mat-card.gb {
   background: var(--ownerBack);
 }
 
+.color-0 {
+  --ownerBack: var(--mainBodyBack);
+  --iconAttack: rgba(255, 160, 160);
+  --iconDefend: rgba(0, 0, 255);
+  --calcNegative: rgba(255, 170, 170);
+  --calcPositive: rgba(180, 255, 180);
+  --rowMark: rgba(255, 255, 255, 0.1);
+  --calcCost: rgba(255, 255, 0, 0.8);
+  --block: rgba(0, 0, 0, 0.5);
+  --ownerFore: black;
+  --copyFore: rgba(0, 0, 0, 0.7);
+}
+
 .color-1 {
   --ownerBack: #ff0;
   --iconAttack: rgba(255, 160, 160);
