@@ -277,5 +277,10 @@ app-log {
     overflow-y: hidden;
     align-items: flex-start;
     padding: 0.5em;
+
+    button {
+      width: 100%;
+      justify-content: flex-start;
+    }
   }
 }
