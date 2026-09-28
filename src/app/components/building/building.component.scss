@@ -573,7 +573,7 @@ mat-icon.attackdefend {
     }
   }
 
-  [row]:nth-last-child(2) {
+  [row]:nth-last-child(1) {
     td.copy {
       border-bottom: var(--thick) solid var(--copyFore);
     }

@@ -91,9 +91,7 @@
         </div>
       }
       @if (nextLevel != null) {
-        <!--
-        Table for rewards
-        -->
+        <!--        Table for rewards        -->
         <table>
           <tr first row>
             <!-- row for level and cost -->
@@ -106,10 +104,11 @@
             <td>
               <div cost>{{ nextLevel.cost }}</div>
             </td>
+            <td></td>
             @if (showSniper) {
               <!-- titles of calcmethods -->
               @for (_place of placesData; let placeIdx = $index; track placeIdx) {
-                @if (isColumnVisible(placeIdx - 1)) {
+                @if (placeIdx > 0 && isColumnVisible(placeIdx - 1)) {
                   <td colspan="2">
                     <div title>{{ calcPlaceTitles[placeIdx] }}</div>
                   </td>
@@ -229,11 +228,11 @@
             }
           }
           @if (showSniper) {
-            <tr>
+            <tr row>
               <td></td>
-              @for (place of placesData; track $index) {
+              @for (place of placesData; let placeIdx = $index; track placeIdx) {
                 @if (isColumnVisible($index - 1)) {
-                  <td>
+                  <td [class]="classForCopy(placeIdx-1)">
                     <div calcTotal>
                       @if (place.ownerRest > 0 || gbUser.sniperValues?.length > 0) {
                         <mat-icon>crown</mat-icon>
@@ -241,7 +240,7 @@
                       }
                     </div>
                   </td>
-                  <td></td>
+                  <td [class]="classForCopy(placeIdx-1, ['blocks'])"></td>
                 }
               }
             </tr>

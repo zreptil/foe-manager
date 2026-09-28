@@ -25,8 +25,8 @@ export class BuildingComponent {
   building = input.required<GbData>();
   gbUser: GbUserData;
   nextLevel: LevelData;
-  calcPlaceMethods: any = [this.calcPlacesRewards, this.calcPlacesSupport];
-  calcPlaceTitles = [null, $localize`Förderung`];
+  calcPlaceMethods: any = [this.calcPlacesRewards, this.calcPlacesSupport, this.calcPlacesSniper];
+  calcPlaceTitles = [null, $localize`Förderung`, $localize`Sniper`];
   placesData: PlacesData[] = [];
 
   constructor(public globals: GlobalsService,
@@ -201,6 +201,50 @@ export class BuildingComponent {
     return ret;
   }
 
+  protected calcPlacesSniper(level: LevelData, ownerValue: number) {
+    GLOBALS.showConDebug = false;
+    const ret = new PlacesData();
+    let rest = level.cost - +(ownerValue ?? 0);
+    let lastBlock = 0;
+    let block = 0;
+    let sl = [...this.gbUser.sniperValues, 0];
+    for (let i = 0; i < level.rewards.length; i++) {
+      let reward = Math.ceil(rest / 2);
+      const slRest = sl[0] === 0 ? sl.slice(1) : sl;
+      let sniperRest = 0;
+      if (rest - sl[0] > 0) {
+        sniperRest = slRest.reduce((s, v) => s + v, 0);
+      }
+      if (sniperRest < 0 && sl[0] === 0) {
+        reward = 0;
+      }
+      GLOBALS.show(i, `reward=${reward}, rest=${rest}, sniperRest=${sniperRest}`, sl);
+      if (reward <= sl[0] || (sl[0] > 0 && sniperRest + reward > rest)) {
+        reward = -sl[0];
+        if (sl[0] > 0) {
+          sl = sl.slice(1);
+        }
+      }
+      if (rest - Math.abs(reward) <= 0 && reward > 0 && rest > 0) {
+        reward = rest - 1;
+      }
+      if (reward > rest) {
+        reward = rest;
+      }
+      ret.rewards.push(reward);
+      rest -= Math.abs(reward);
+      block = rest - Math.abs(reward);
+      if (reward > 0) {
+        lastBlock = reward;
+      }
+      ret.blocks.push(block);
+    }
+    ret.ownerValue = ownerValue;
+    ret.ownerRest = rest;
+    GLOBALS.showConDebug = false;
+    return ret;
+  }
+
   protected calcPlacesSupport(level: LevelData, ownerValue: number) {
     GLOBALS.showConDebug = false;
     const ret = new PlacesData();
@@ -218,15 +262,18 @@ export class BuildingComponent {
       if (sniperRest < 0 && sl[0] === 0) {
         reward = 0;
       }
-      GLOBALS.show(i, `reward=${reward}, rest=${rest}`, sl, sniperRest);
-      if (reward <= sl[0] || (sl[0] > 0 && sniperRest < rest)) {
+      GLOBALS.show(i, `reward=${reward}, rest=${rest}, sniperRest=${sniperRest}`, sl);
+      if (reward <= sl[0] || (sl[0] > 0 && sniperRest + reward > rest)) {
         reward = -sl[0];
         if (sl[0] > 0) {
           sl = sl.slice(1);
         }
       }
-      if (rest - Math.abs(reward) <= 0) {
+      if (rest - Math.abs(reward) <= 0 && reward > 0 && rest > 0) {
         reward = rest - 1;
+      }
+      if (reward > rest) {
+        reward = rest;
       }
       ret.rewards.push(reward);
       rest -= Math.abs(reward);

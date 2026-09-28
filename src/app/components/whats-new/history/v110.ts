@@ -26,6 +26,11 @@ import {EnumSortmode} from '@/_model/user-data';
         den Platz.
       </div>
     </li>
+    <li class="added" i18n="110a12">
+      Die Spalte "sniper" wurde hinzugefügt. In dieser Spalte werden die Werte so berechnet,
+      dass sie unter Berücksichtigung der bisher getätigten Einzahlungen dem minimalen Betrag
+      entsprechen, der eingezahlt werden muss, um nicht überboten werden zu können.
+    </li>
     <li class="changed" i18n="110c7">
       Der Wert für den Eigenanteil in der Spalte Förderung (oberhalb der Plätze) entspricht
       nun immer dem Wert, der benötigt wird, um den letzten Platz abzusichern. Daneben wird
