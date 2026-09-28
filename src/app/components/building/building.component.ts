@@ -25,10 +25,6 @@ export class BuildingComponent {
   building = input.required<GbData>();
   gbUser: GbUserData;
   nextLevel: LevelData;
-//  calcMethods: any = [this.calcSafePlaces, this.calcNicePlaces, this.calcSupportPlaces];
-//  calcTitles = [$localize`Sicher`, $localize`Nett`, $localize`Förderung`];
-  calcMethods: any = [this.calcSupportPlaces];
-  calcTitles = [$localize`Förderung`];
   calcPlaceMethods: any = [this.calcPlacesRewards, this.calcPlacesSupport];
   calcPlaceTitles = [null, $localize`Förderung`];
   placesData: PlacesData[] = [];
@@ -40,8 +36,8 @@ export class BuildingComponent {
       GLOBALS.user._siteMode();
       GLOBALS.user._activeGbKey();
       this.gbUser = this.bs.gbForUser(this.building());
-      if (this.gbUser != null && this.gbUser.copyIdx > this.calcMethods.length - 1) {
-        this.gbUser.copyIdx = this.calcMethods.length - 1;
+      if (this.gbUser != null && this.gbUser.copyIdx > this.calcPlaceMethods.length - 1) {
+        this.gbUser.copyIdx = this.calcPlaceMethods.length - 1;
       }
       this.nextLevel = this.bs.levelForUser(this.building(), this.gbUser);
       if (this.gbUser != null) {
@@ -139,7 +135,7 @@ export class BuildingComponent {
       if (this.gbUser.levelMarked[i] && level.rewards[i] > 0) {
         let reward = level.rewards[i];
         if (this.gbUser.copyIdx >= 0) {
-          reward = this.calcPlaceValue(this.gbUser.copyIdx, level, i, this.gbUser.ownerValue);
+          reward = this.placesData[this.gbUser.copyIdx + 1].rewards[i];
         } else {
           reward = this.bs.calcReward(reward);
         }
@@ -206,6 +202,7 @@ export class BuildingComponent {
   }
 
   protected calcPlacesSupport(level: LevelData, ownerValue: number) {
+    GLOBALS.showConDebug = false;
     const ret = new PlacesData();
     let sl = [...this.gbUser.sniperValues, 0];
     let rest = level.cost - +(ownerValue ?? 0);
@@ -227,6 +224,9 @@ export class BuildingComponent {
         if (sl[0] > 0) {
           sl = sl.slice(1);
         }
+      }
+      if (rest - Math.abs(reward) <= 0) {
+        reward = rest - 1;
       }
       ret.rewards.push(reward);
       rest -= Math.abs(reward);
@@ -252,72 +252,8 @@ export class BuildingComponent {
       ret.ownerValue = rest - lastReward;
       ret.ownerRest = level.cost - ret.rewards.reduce((s, v) => s + Math.abs(v), 0) - rest + lastReward;
     }
+    GLOBALS.showConDebug = false;
     return ret;
-  }
-
-  protected calcSupportPlaces(level: LevelData, idx: number, ownerValue: number, calcBlockValue: boolean) {
-    const methodIdx = this.calcMethods.indexOf(this.calcSupportPlaces);
-    if (calcBlockValue && (Utils.isEmpty(ownerValue) || +ownerValue === 0)) {
-      ownerValue = this.calcBlockValue(methodIdx, level, 4);
-    }
-    switch (idx) {
-      case -2:
-        ownerValue = this.calcBlockValue(methodIdx, level, 4);
-        if (+(this.gbUser.ownerValue ?? 0) > 0 && ownerValue < +(this.gbUser.ownerValue ?? 0)) {
-          ownerValue = this.gbUser.ownerValue;
-        }
-        return ownerValue;
-      case -1:
-        return level.cost - ownerValue;
-    }
-    const sl = [...this.gbUser.sniperValues, 0];
-    let base = level.cost - +(ownerValue ?? 0) - 1;
-    let ret = base;
-    let sniperIdx = 0;
-    const reward = this.bs.calcReward(level.rewards[idx]);
-    let rewIdx = 0;
-    GLOBALS.show(idx);
-    while (idx >= 0) {
-      const rew = this.bs.calcReward(level.rewards[rewIdx]);
-      ret = Math.min(rew, Math.floor(base / 2));
-      GLOBALS.show(idx, `rew=${rew}, base=${base}, ret=${ret}, sniper=${sl[sniperIdx]}`, sl);
-      if (ret <= sl[sniperIdx]) {
-        if (idx === 0) {
-          return -sl[sniperIdx];
-        }
-        ret = sl[sniperIdx];
-        sniperIdx++;
-      } else {
-        if (ret < rew) {
-          const rest = base - sl.slice(sniperIdx).reduce((s, v) => s + v, 0);
-          GLOBALS.show(`base=${base}, rest=${rest}`);
-          // console.log(`idx=${idx}, base=${base}, rest=${rest}, rew=${rew}`);
-          if (rew > rest) {
-            if (sl[sniperIdx] > rest) {
-              ret = sl[sniperIdx];
-              sniperIdx++;
-              if (idx === 0) {
-                return -ret;
-              }
-            } else {
-              ret = rest;
-            }
-          } else {
-            ret = rew;
-          }
-          if (idx === 0) {
-            return ret;
-          }
-        }
-      }
-      base -= ret;
-      if (base < 0) {
-        return 0;
-      }
-      idx--;
-      rewIdx++;
-    }
-    return Math.min(reward, base);
   }
 
   protected saveLevel(evt?: PointerEvent) {
@@ -356,83 +292,6 @@ export class BuildingComponent {
     evt.stopPropagation();
     this.gbUser.levelMarked[idx] = !this.gbUser.levelMarked[idx];
     this.saveSharedData();
-  }
-
-  protected ownerValueRest(method: number, level: LevelData) {
-    let max = this.calcBlockValue(method, level, 4);
-    if (this.gbUser.ownerValue > max) {
-      max = this.gbUser.ownerValue;
-    }
-    return +this.gbUser.ownerValue - max;
-  }
-
-  protected ownerValueMax(level: LevelData) {
-    let calc = level.cost;
-    let ret = 0;
-    for (let i = 0; i < level.rewards.length; i++) {
-      const reward = this.bs.calcReward(level.rewards[i]);
-      if (reward > 0) {
-        if (calc - 2 * reward > ret) {
-          ret = calc - 2 * reward;
-        }
-        calc -= reward;
-      }
-    }
-    return ret;
-  }
-
-  protected calcBlockValue(method: number, level: LevelData, idx: number) {
-    let calc = level.cost;
-    // calc -= this.gbUser.sniperValues.reduce((acc, cur) => {
-    //   return acc + cur;
-    // }, 0); 0 4 false
-    let ret = 0;
-    let ownerValue = this.gbUser.ownerValue;
-    const r: number[] = [];
-    if (method >= 0) {
-      ownerValue = calc - 2 * Math.abs(this.calcPlaceValue(method, level, 0, 0, false));
-    }
-    for (let i = 0; i <= idx; i++) {
-      let reward = this.bs.calcReward(level.rewards[i]);
-      if (method >= 0) {
-        reward = Math.abs(this.calcPlaceValue(method, level, i, ownerValue, false));
-      }
-      // if (method >= 0 && this.gbUser.sniperValues[sniperIdx] >= reward) {
-      //   // ret = 0;
-      //   reward = this.gbUser.sniperValues[sniperIdx];
-      //   sniperIdx++;
-      // } else if (method >= 0) {
-      //   reward = Math.abs(this.calcPlaceValue(method, level, i, ownerValue, false));
-      //   console.log('reward', i, reward);
-      // }
-      r.push(reward);
-      if (reward > 0) {
-        calc -= reward;
-        if (calc - reward > ret) {
-          ret = calc - reward;
-        }
-      }
-      // if (method >= 0 && i === 4 && idx === 4) {
-      //   console.log(method, calc, ret, ownerValue, r, this.bs.calcReward(level.rewards[i]),
-      //     this.calcPlaceValue(method, level, i, 0, false));
-      //   ret = 600;
-      // }
-    }
-    return ret;
-  }
-
-  protected classForBlock(method: number, level: LevelData, idx: number): string {
-    const bc = this.calcBlockValue(method, level, idx);
-    if (bc > 0) {
-      for (let i = idx + 1; i <= 5 && level.rewards[i] > 0; i++) {
-        const bn = this.calcBlockValue(method, level, i);
-        if (bn > 0) {
-          return '';
-        }
-      }
-      return ''; //'owner';
-    }
-    return '';
   }
 
   protected saveOwnerValue(evt?: PointerEvent) {
@@ -479,31 +338,6 @@ export class BuildingComponent {
         ret.push('negative');
       } else {
         ret.push('positive');
-      }
-    }
-    return ret;
-  }
-
-  protected classForPlaceValue(method: number, level: LevelData, idx: number, ownerValue: number) {
-    const ret: string[] = [];
-    const value = Math.abs(this.calcPlaceValue(method, level, idx, ownerValue));
-    if (value <= 0 || this.bs.calcReward(level.rewards[idx]) < value) {
-      ret.push('negative');
-    } else {
-      ret.push('positive');
-    }
-    return ret;
-  }
-
-  protected calcPlaceValue(method: number, level: LevelData, idx: number, ownerValue: number, calcBlockValue = true) {
-    return this.calcMethods[method].bind(this)(level, idx, ownerValue, calcBlockValue);
-  }
-
-  protected calcTotal(method: number, level: LevelData, ownerValue: number, calcBlockValue = true) {
-    let ret = level.cost - this.calcMethods[method].bind(this)(level, -2, ownerValue, calcBlockValue);
-    for (let i = 0; i < level.rewards.length; i++) {
-      if (level.rewards[i] > 0) {
-        ret -= Math.abs(this.calcMethods[method].bind(this)(level, i, ownerValue, calcBlockValue));
       }
     }
     return ret;
@@ -600,40 +434,40 @@ export class BuildingComponent {
     this.saveSharedData();
   }
 
-  protected clickSecure(evt: PointerEvent) {
-    evt?.preventDefault();
-    GLOBALS.showConDebug = false;
-    for (let idx = 0; idx < this.nextLevel.rewards.length; idx++) {
-      const value = this.calcPlaceValue(this.gbUser.copyIdx, this.nextLevel, idx, this.gbUser.ownerValue);
-      GLOBALS.show(idx, value);
-      if (value > 0) {
-        this.gbUser.sniperValues.push(value);
-        this.gbUser.sniperValues = this.gbUser.sniperValues.map(a => +a)
-        this.gbUser.sniperValues.sort((a, b) => b - a);
-      }
-    }
-    let sum = this.nextLevel.cost;
-    let hasLast = false;
-    for (let i = this.gbUser.sniperValues.length - 1; i >= 0; i--) {
-      sum -= this.gbUser.sniperValues[i];
-      if (this.gbUser.sniperValues[i] >= 0 && !hasLast) {
-        hasLast = true;
-        sum -= this.gbUser.sniperValues[i];
-      }
-    }
-    GLOBALS.show('ach guck', sum, this.nextLevel.cost);
-    if (this.gbUser.ownerValue > sum) {
-      GLOBALS.msg.error(`Der eingezahlte Eigenanteil übersteigt die benötigte Absicherung von ${sum}.`);
-      // .subscribe((result: DialogResult) => {
-      //   if (result.btn === DialogResultButton.yes) {
-      //     this.gbUser.ownerValue = sum;
-      //   }
-      // });
-    } else {
-      this.gbUser.ownerValue = sum;
-    }
-    GLOBALS.showConDebug = false;
-  }
+  // protected clickSecure(evt: PointerEvent) {
+  //   evt?.preventDefault();
+  //   GLOBALS.showConDebug = false;
+  //   for (let idx = 0; idx < this.nextLevel.rewards.length; idx++) {
+  //     const value = this.calcPlaceValue(this.gbUser.copyIdx, this.nextLevel, idx, this.gbUser.ownerValue);
+  //     GLOBALS.show(idx, value);
+  //     if (value > 0) {
+  //       this.gbUser.sniperValues.push(value);
+  //       this.gbUser.sniperValues = this.gbUser.sniperValues.map(a => +a)
+  //       this.gbUser.sniperValues.sort((a, b) => b - a);
+  //     }
+  //   }
+  //   let sum = this.nextLevel.cost;
+  //   let hasLast = false;
+  //   for (let i = this.gbUser.sniperValues.length - 1; i >= 0; i--) {
+  //     sum -= this.gbUser.sniperValues[i];
+  //     if (this.gbUser.sniperValues[i] >= 0 && !hasLast) {
+  //       hasLast = true;
+  //       sum -= this.gbUser.sniperValues[i];
+  //     }
+  //   }
+  //   GLOBALS.show('ach guck', sum, this.nextLevel.cost);
+  //   if (this.gbUser.ownerValue > sum) {
+  //     GLOBALS.msg.error(`Der eingezahlte Eigenanteil übersteigt die benötigte Absicherung von ${sum}.`);
+  //     // .subscribe((result: DialogResult) => {
+  //     //   if (result.btn === DialogResultButton.yes) {
+  //     //     this.gbUser.ownerValue = sum;
+  //     //   }
+  //     // });
+  //   } else {
+  //     this.gbUser.ownerValue = sum;
+  //   }
+  //   GLOBALS.showConDebug = false;
+  // }
 
   protected classForColor(idx: number) {
     const ret: string[] = [`color-${idx}`];

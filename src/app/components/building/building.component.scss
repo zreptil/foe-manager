@@ -103,6 +103,10 @@ mat-card {
     align-items: center;
     justify-content: center;
 
+    [owner][reward] {
+      color: var(--calcCost);
+    }
+
     [upgrade] {
       display: flex;
       flex-flow: column;
@@ -169,6 +173,10 @@ mat-card.selected {
 [topSpace] {
   margin-top: 1em;
   color: var(--mat-form-field-filled-input-text-color);
+  display: flex;
+  flex-flow: row;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 
 mat-card mat-card-content [upgrade] {

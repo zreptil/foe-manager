@@ -1,14 +1,3 @@
-<ng-template #calcMissing let-method="method">
-  <td [class]="classForCopy(method, ['blocks'])">
-    @if (gbUser.ownerValue > 0 && +ownerValueRest(method, nextLevel) !== 0) {
-      <div block>
-        <mat-icon>crown</mat-icon>
-        <!--        -{{ +ownerValueMax(nextLevel) - +gbUser.ownerValue }}-->
-        {{ +ownerValueRest(method, nextLevel) }}
-      </div>
-    }
-  </td>
-</ng-template>
 <mat-card (click)="clickGBCard($event)" [class]="classForGb">
   @if (bs.isModeManage) {
     <button [matMenuTriggerFor]="colorMenu" btnMark mat-icon-button small-icon-button square-ripple>
@@ -122,7 +111,7 @@
               @for (_place of placesData; let placeIdx = $index; track placeIdx) {
                 @if (isColumnVisible(placeIdx - 1)) {
                   <td colspan="2">
-                    <div title>{{ calcTitles[placeIdx - 1] }}</div>
+                    <div title>{{ calcPlaceTitles[placeIdx] }}</div>
                   </td>
                 }
               }
@@ -192,7 +181,7 @@
                   </div>
                 </td>
                 <td [class]="classForCopy(placeIdx-1, ['blocks'])">
-                  @if (gbUser.ownerValue > 0 && place.ownerValue - gbUser.ownerValue !== 0) {
+                  @if (gbUser.ownerValue > 0 && place.ownerValue - gbUser.ownerValue > 0) {
                     <div block>
                       <mat-icon>crown</mat-icon>
                       {{ gbUser.ownerValue - place.ownerValue }}
@@ -224,7 +213,7 @@
                       }
                     </td>
                     <td [class]="classForCopy(placeIdx-1, ['blocks'])">
-                      <div [class]="classForBlock(placeIdx-1, nextLevel, rewardIdx)" block>
+                      <div block>
                         @let block = place.blocks[rewardIdx];
                         @let last = place.blocks[rewardIdx - 1];
                         @if ((rewardIdx === 0 || block > last) && block > 0) {
@@ -390,12 +379,12 @@
                 <span i18n>Fremdanteil</span>
               </button>
             }
-            @if (gbUser.copyIdx >= 0) {
-              <button (click)="clickSecure($event)" mat-button owner>
-                <mat-icon>local_police</mat-icon>
-                <span i18n>"{{ this.calcTitles[gbUser.copyIdx] }}" absichern</span>
-              </button>
-            }
+            <!--            @if (gbUser.copyIdx >= 0) {-->
+              <!--              <button (click)="clickSecure($event)" mat-button owner>-->
+              <!--                <mat-icon>local_police</mat-icon>-->
+              <!--                <span i18n>"{{ this.calcPlaceTitles[gbUser.copyIdx] }}" absichern</span>-->
+              <!--              </button>-->
+              <!--            }-->
           }
         }
         @if (bs.isModeManage) {
