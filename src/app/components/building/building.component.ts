@@ -2,18 +2,11 @@ import {Component, effect, input} from '@angular/core';
 import {GbData} from '@/_model/gb-data';
 import {GbUserData} from '@/_model/gb-user-data';
 import {LevelData} from '@/_model/level-data';
-import {BuildingService} from '@/_services/building.service';
+import {BuildingService, PlacesData} from '@/_services/building.service';
 import {GLOBALS, GlobalsService} from '@/_services/globals.service';
 import {EnumSitemode, EnumSortmode} from '@/_model/user-data';
 import {Utils} from '@/classes/utils';
 import {MessageService} from '@/_services/message.service';
-
-class PlacesData {
-  rewards: number[] = [];
-  blocks: number[] = [];
-  ownerValue: number;
-  ownerRest: number;
-}
 
 @Component({
   selector: 'app-building',
@@ -25,8 +18,6 @@ export class BuildingComponent {
   building = input.required<GbData>();
   gbUser: GbUserData;
   nextLevel: LevelData;
-  calcPlaceMethods: any = [this.calcPlacesRewards, this.calcPlacesSupport, this.calcPlacesSniper];
-  calcPlaceTitles = [null, $localize`Förderung`, $localize`Sniper`];
   placesData: PlacesData[] = [];
 
   constructor(public globals: GlobalsService,
@@ -36,8 +27,8 @@ export class BuildingComponent {
       GLOBALS.user._siteMode();
       GLOBALS.user._activeGbKey();
       this.gbUser = this.bs.gbForUser(this.building());
-      if (this.gbUser != null && this.gbUser.copyIdx > this.calcPlaceMethods.length - 1) {
-        this.gbUser.copyIdx = this.calcPlaceMethods.length - 1;
+      if (this.gbUser != null && this.gbUser.copyIdx > this.bs.calcPlaceMethods.length - 1) {
+        this.gbUser.copyIdx = this.bs.calcPlaceMethods.length - 1;
       }
       this.nextLevel = this.bs.levelForUser(this.building(), this.gbUser);
       if (this.gbUser != null) {
@@ -170,137 +161,14 @@ export class BuildingComponent {
 
   calcPlaces(level: LevelData, ownerValue: number) {
     this.placesData = [];
-    for (let method = 0; method < this.calcPlaceMethods.length; method++) {
-      this.placesData.push(this.calcPlaceMethods[method].bind(this)(level, ownerValue));
+    for (let method = 0; method < this.bs.calcPlaceMethods.length; method++) {
+      this.placesData.push(this.bs.calcPlaceMethods[method].bind(this.bs)(level, this.gbUser, ownerValue));
     }
   }
 
   saveSharedData() {
     this.calcPlaces(this.nextLevel, this.gbUser.ownerValue);
     GLOBALS.saveSharedData();
-  }
-
-  protected calcPlacesRewards(level: LevelData, ownerValue: number) {
-    const ret = new PlacesData();
-    let rest = level.cost;
-    let lastBlock = 0;
-    for (let i = 0; i < level.rewards.length; i++) {
-      const reward = this.bs.calcReward(level.rewards[i]);
-      ret.rewards.push(reward);
-      if (reward > 0) {
-        rest -= reward;
-        ownerValue = rest - reward;
-      }
-      if (ownerValue > lastBlock) {
-        lastBlock = ownerValue;
-      }
-      ret.blocks.push(ownerValue);
-    }
-    ret.ownerValue = lastBlock;
-    ret.ownerRest = rest - lastBlock;
-    return ret;
-  }
-
-  protected calcPlacesSniper(level: LevelData, ownerValue: number) {
-    GLOBALS.showConDebug = false;
-    const ret = new PlacesData();
-    let rest = level.cost - +(ownerValue ?? 0);
-    let lastBlock = 0;
-    let block = 0;
-    let sl = [...this.gbUser.sniperValues, 0];
-    for (let i = 0; i < level.rewards.length; i++) {
-      let reward = Math.ceil(rest / 2);
-      const slRest = sl[0] === 0 ? sl.slice(1) : sl;
-      let sniperRest = 0;
-      if (rest - sl[0] > 0) {
-        sniperRest = slRest.reduce((s, v) => s + v, 0);
-      }
-      if (sniperRest < 0 && sl[0] === 0) {
-        reward = 0;
-      }
-      GLOBALS.show(i, `reward=${reward}, rest=${rest}, sniperRest=${sniperRest}`, sl);
-      if (reward <= sl[0] || (sl[0] > 0 && sniperRest + reward > rest)) {
-        reward = -sl[0];
-        if (sl[0] > 0) {
-          sl = sl.slice(1);
-        }
-      }
-      if (rest - Math.abs(reward) <= 0 && reward > 0 && rest > 0) {
-        reward = rest - 1;
-      }
-      if (reward > rest) {
-        reward = rest;
-      }
-      ret.rewards.push(reward);
-      rest -= Math.abs(reward);
-      block = rest - Math.abs(reward);
-      if (reward > 0) {
-        lastBlock = reward;
-      }
-      ret.blocks.push(block);
-    }
-    ret.ownerValue = ownerValue;
-    ret.ownerRest = rest;
-    GLOBALS.showConDebug = false;
-    return ret;
-  }
-
-  protected calcPlacesSupport(level: LevelData, ownerValue: number) {
-    GLOBALS.showConDebug = false;
-    const ret = new PlacesData();
-    let sl = [...this.gbUser.sniperValues, 0];
-    let rest = level.cost - +(ownerValue ?? 0);
-    let calcOwnerValue = 0;
-    let lastReward = 0;
-    for (let i = 0; i < level.rewards.length; i++) {
-      let reward = this.bs.calcReward(level.rewards[i]);
-      const slRest = sl[0] === 0 ? sl.slice(1) : sl;
-      let sniperRest = 0;
-      if (rest - sl[0] > 0) {
-        sniperRest = slRest.reduce((s, v) => s + v, 0);
-      }
-      if (sniperRest < 0 && sl[0] === 0) {
-        reward = 0;
-      }
-      GLOBALS.show(i, `reward=${reward}, rest=${rest}, sniperRest=${sniperRest}`, sl);
-      if (reward <= sl[0] || (sl[0] > 0 && sniperRest + reward > rest)) {
-        reward = -sl[0];
-        if (sl[0] > 0) {
-          sl = sl.slice(1);
-        }
-      }
-      if (rest - Math.abs(reward) <= 0 && reward > 0 && rest > 0) {
-        reward = rest - 1;
-      }
-      if (reward > rest) {
-        reward = rest;
-      }
-      ret.rewards.push(reward);
-      rest -= Math.abs(reward);
-      calcOwnerValue = rest - Math.abs(reward);
-      if (reward > 0) {
-        lastReward = reward;
-      }
-      ret.blocks.push(calcOwnerValue);
-    }
-    if (+ownerValue > 0) {
-      if (rest < 0) {
-        ret.ownerValue = +ownerValue;
-        ret.ownerRest = rest;
-      } else {
-        ret.ownerValue = +ownerValue;
-        ret.ownerRest = level.cost - ret.rewards.reduce((s, v) => s + Math.abs(v), 0) - ownerValue;
-      }
-      if (ret.ownerRest > lastReward) {
-        ret.ownerValue += ret.ownerRest - lastReward;
-        ret.ownerRest = lastReward;
-      }
-    } else {
-      ret.ownerValue = rest - lastReward;
-      ret.ownerRest = level.cost - ret.rewards.reduce((s, v) => s + Math.abs(v), 0) - rest + lastReward;
-    }
-    GLOBALS.showConDebug = false;
-    return ret;
   }
 
   protected saveLevel(evt?: PointerEvent) {

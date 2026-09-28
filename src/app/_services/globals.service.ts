@@ -496,11 +496,15 @@ export class GlobalsService {
     let src = storage.s2 ?? {};
     let idx = 0;
     for (const key of Object.keys(src)) {
-      GLOBALS.user.listGb[key] = new GbUserData(src[key]);
-      if (+GLOBALS.user.listGb[key].sortIdx === -1) {
-        GLOBALS.user.listGb[key].sortIdx = idx;
+      const gbUser = new GbUserData(src[key]);
+      if (gbUser.copyIdx >= this.bs.calcPlaceMethods.length - 1) {
+        gbUser.copyIdx = 0;
       }
-      idx = Math.max(idx + 1, GLOBALS.user.listGb[key].sortIdx);
+      if (+gbUser.sortIdx === -1) {
+        gbUser.sortIdx = idx;
+      }
+      idx = Math.max(idx + 1, gbUser.sortIdx);
+      GLOBALS.user.listGb[key] = gbUser;
     }
     GLOBALS.user.siteMode = storage.s3 ?? EnumSitemode.select;
     GLOBALS.user.username = storage.s4 ?? 'Bitte Name eingeben';
