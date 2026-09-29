@@ -40,6 +40,10 @@ export class GbData extends BaseData {
     super(json);
   }
 
+  get maxLevel() {
+    return Math.max(0, ...this.levels?.map?.(item => item.level));
+  }
+
   override get _asJson(): any {
     const ret: any = {
       a: this.key,
@@ -66,5 +70,13 @@ export class GbData extends BaseData {
     this.icon = json?.d ?? def?.icon ?? [{key: 'apartment'}];
     this.effects = json?.e ?? def?.effects ?? [];
     this.epoch = json?.f ?? def?.epoch ?? EnumEpoch.none;
+  }
+
+  addLevels(src: any) {
+    for (const level of src) {
+      if (!this.levels.some(l => l.level === level.a)) {
+        this.levels.push(new LevelData(level));
+      }
+    }
   }
 }

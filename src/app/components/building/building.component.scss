@@ -611,3 +611,11 @@ mat-icon.attackdefend {
   height: 2em;
   border: 2px solid var(--ownerBack);
 }
+
+[levelHint] {
+  background-color: red;
+  color: white;
+  border-radius: 0.4em;
+  padding: 0.5em;
+  margin: 0.5em 0;
+}

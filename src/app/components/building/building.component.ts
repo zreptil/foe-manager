@@ -19,6 +19,7 @@ export class BuildingComponent {
   gbUser: GbUserData;
   nextLevel: LevelData;
   placesData: PlacesData[] = [];
+  showLevelHint = false;
 
   constructor(public globals: GlobalsService,
               public msg: MessageService,
@@ -147,8 +148,28 @@ export class BuildingComponent {
     }, 500);
   }
 
+  isMaxLevel(gb: GbData, gbUser: GbUserData) {
+    return !gb.levels.some(l => l.level > gbUser.level + 1);
+  }
+
   changeLevel(diff: number) {
-    this.gbUser.level += diff;
+    if (diff !== 0) {
+      this.gbUser.level += diff;
+      const max = this.gb.maxLevel;
+      const min = 2;
+      let done = false;
+      while (!done && !this.gb.levels.some(l => l.level === this.gbUser.level + 1)) {
+        if (this.gbUser.level < min) {
+          this.gbUser.level = min;
+          done = true;
+        } else if (this.gbUser.level > max) {
+          this.gbUser.level = max - 1;
+          done = true;
+        } else {
+          this.gbUser.level += diff;
+        }
+      }
+    }
     this.updateLevel();
   }
 
@@ -167,17 +188,26 @@ export class BuildingComponent {
   }
 
   saveSharedData() {
-    this.calcPlaces(this.nextLevel, this.gbUser.ownerValue);
+    if (this.gbUser != null) {
+      this.calcPlaces(this.nextLevel, this.gbUser.ownerValue);
+    }
     GLOBALS.saveSharedData();
   }
 
   protected saveLevel(evt?: PointerEvent) {
     evt?.preventDefault();
-    this.gbUser.level = Math.max(Math.min(+GLOBALS.siteConfig.levelValue, this.gb.levels.length - 1), 1);
-    this.updateLevel();
+    let levelValid = +GLOBALS.siteConfig.levelValue > 1 && this.gb.levels.some(l => l.level === +GLOBALS.siteConfig.levelValue + 1);
+    if (levelValid) {
+      this.gbUser.level = +GLOBALS.siteConfig.levelValue;
+      this.updateLevel();
+    } else {
+      GLOBALS.siteConfig.levelGbKey = null;
+    }
+    this.showLevelHint = !levelValid;
   }
 
   protected updateLevel() {
+    this.showLevelHint = false;
     this.nextLevel = this.bs.levelForUser(this.gb, this.gbUser);
     GLOBALS.siteConfig.levelGbKey = null;
     this.gbUser.ownerValue = 0;

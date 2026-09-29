@@ -23,7 +23,7 @@ export class AssistService {
   }
 
   loadFromAsset(onDone?: (data: any) => void) {
-    const req = new HttpRequest(
+    let req = new HttpRequest(
       'GET',
       `assets/gb-data.json?v=${GLOBALS.version}`,
       null,
@@ -43,21 +43,6 @@ export class AssistService {
         this.initData();
         if (this.gbVersion === this.assistVersion) {
           const list = response.list;
-          // add data that is not available in foe-assist
-          response.list.push({
-            '0': 1, 'a': 'Shattered-Horizon', 'b': 'Horizontriss-Siphon',
-            'c': [
-              {'0': 1, 'a': 1, 'b': 1240, 'c': [15, 10, 5, 0, 0]},
-              {'0': 1, 'a': 2, 'b': 1750, 'c': [20, 10, 5, 0, 0], 'd': -1, 'e': -1, 'f': -1},
-              {'0': 1, 'a': 3, 'b': 3080, 'c': [0, 0, 0, 0, 0], 'd': -1, 'e': -1, 'f': -1},
-              {'0': 1, 'a': 4, 'b': 4630, 'c': [0, 0, 0, 0, 0], 'd': -1, 'e': -1, 'f': -1},
-              {'0': 1, 'a': 5, 'b': 6070, 'c': [0, 0, 0, 0, 0], 'd': -1, 'e': -1, 'f': -1},
-              {'0': 1, 'a': 6, 'b': 7620, 'c': [80, 0, 0, 0, 0], 'd': -1, 'e': -1, 'f': -1},
-              {'0': 1, 'a': 7, 'b': 9380, 'c': [100, 50, 0, 0, 0], 'd': -1, 'e': -1, 'f': -1},
-              {'0': 1, 'a': 8, 'b': 11000, 'c': [120, 60, 20, 0, 0], 'd': -1, 'e': -1, 'f': -1},
-              {'0': 1, 'a': 9, 'b': 12870, 'c': [135, 70, 25, 5, 0], 'd': -1, 'e': -1, 'f': -1}
-            ]
-          });
           for (const src of list) {
             const gb = this.gbList.find((gb) => gb.key === src.a);
             if (gb != null) {
@@ -77,9 +62,32 @@ export class AssistService {
               {'0': 2, 'a': 2, 'b': 100, 'c': [20, 17, 9, 7, 3], 'd': [null, null, null, null, null], 'e': 10, 'f': 10, 'g': 10}]
           }));
         }
-        this.loadDone = true;
-        this.fullyLoaded = true;
-        onDone?.(this.gbList);
+        req = new HttpRequest(
+          'GET',
+          `assets/gb-data-update.json?v=${GLOBALS.version}`,
+          null,
+          {responseType: 'json'});
+        this.http.request(req).subscribe({
+          next: (data: any) => {
+            body = data;
+          }, error: (err) => {
+            this.fullyLoaded = true;
+            console.error(err);
+          }, complete: () => {
+            for (const key of Object.keys(body.body)) {
+              const gb = this.gbList.find((gb) => gb.key === key);
+              if (gb != null) {
+                gb.addLevels(body.body[key]);
+              } else {
+                console.error(`Unknown GB: ${key}`);
+              }
+              // this.gbList.push(new GbData(src));
+            }
+            this.loadDone = true;
+            this.fullyLoaded = true;
+            onDone?.(this.gbList);
+          }
+        });
       }
     });
   }

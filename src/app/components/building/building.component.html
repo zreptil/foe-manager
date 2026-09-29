@@ -50,6 +50,15 @@
   }
   @if (globals.user.siteMode > 0 && gbUser != null) {
     <mat-card-content>
+      @if (showLevelHint && globals.siteConfig.levelGbKey !== gb.key) {
+        <div levelHint>
+          @if (globals.siteConfig.levelValue > 1 && globals.siteConfig.levelValue < gb.maxLevel) {
+            Für Level {{ globals.siteConfig.levelValue }} gibt es aktuell keine Daten.
+          } @else {
+            Der Level muss im Bereich von 2 bis {{ gb.maxLevel - 1 }} liegen.
+          }
+        </div>
+      }
       @if (globals.siteConfig.levelGbKey === gb.key) {
         <div levelEdit>
           <mat-form-field>
@@ -84,7 +93,7 @@
               (pointerdown)="startLevelChange($event, 1)"
               (pointerleave)="stopLevelChange($event)"
               (pointerup)="stopLevelChange($event)"
-              [disabled]="gbUser.level >= gb.levels.length-1" matIconButton small-icon-button>
+              [disabled]="isMaxLevel(gb, gbUser)" matIconButton small-icon-button>
               <mat-icon>arrow_drop_up</mat-icon>
             </button>
           }

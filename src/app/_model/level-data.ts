@@ -27,9 +27,9 @@ export class LevelData extends BaseData {
     this.level = json?.a ?? def?.level;
     this.cost = json?.b ?? def?.cost;
     this.rewards = json?.c ?? def?.rewards;
-    this.ownerCost = json?.d ?? def?.ownerCost;
-    this.ownerPercent = json?.e ?? def?.ownerPercent;
-    this.ownerSum = json?.f ?? def?.ownerSum;
+    this.ownerCost = json?.d ?? def?.ownerCost ?? -1;
+    this.ownerPercent = json?.e ?? def?.ownerPercent ?? -1;
+    this.ownerSum = json?.f ?? def?.ownerSum ?? -1;
   }
 }
 
