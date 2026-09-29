@@ -288,12 +288,11 @@ app-log {
       justify-content: flex-start;
     }
 
-    > div {
+    > div[row] {
       display: flex;
       flex-flow: row;
       align-items: center;
-      overflow: hidden;
-      //.mat-mdc-menu-content
+      gap: 0.2em;
 
       mat-icon {
         --size: 24px;
@@ -301,7 +300,15 @@ app-log {
         height: var(--size);
         color: var(--mainHeadFore);
         padding-left: var(--mat-button-text-with-icon-horizontal-padding);
+        padding-right: 2px;
       }
+    }
+
+    > div {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      overflow: hidden;
 
       button[small-icon-button] {
         --size: 16px;

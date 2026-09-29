@@ -74,92 +74,94 @@
           }
         }
       </div>
-      @if (globals.user.siteMode !== EnumSitemode.buildings || globals.user.activeGbKey == null) {
-        <div>
-          <button [matMenuTriggerFor]="sortMenu" mat-icon-button small-icon-button>
-            <mat-icon>{{ globals.iconForSort(globals.user?.gbSort?.[globals.user.siteMode]?.mode) }}</mat-icon>
-          </button>
-          <mat-menu #sortMenu="matMenu" class="menuSettings">
-            @for (mode of globals.sortModesFor(globals.user.siteMode); track $index) {
-              <button (click)="clickSort($event, mode.mode)" mat-button small-icon-button>
-                <mat-icon>{{ globals.iconForSort(mode.mode, true) }}</mat-icon>
-                {{ mode.label }}
-              </button>
-            }
-          </mat-menu>
-        </div>
-      }
-      <div>
-        @if (globals.siteConfig.editField === 'user') {
-          <mat-form-field>
-            <mat-label i18n>Name</mat-label>
-            <input (focus)="globals.onFocus($event)"
-                   (keydown.enter)="saveEdit()"
-                   [(ngModel)]="globals.user.username"
-                   autofocus matInput>
-          </mat-form-field>
-          <button (click)="saveEdit()" mat-button>
-            <mat-icon>done</mat-icon>
-          </button>
-        } @else {
-          <button (click)="clickEdit($event, 'user')" mat-button>
-            {{ globals.user.username }}
-          </button>
-          <button [matMenuTriggerFor]="settingsMenu" mat-icon-button small-icon-button>
-            <mat-icon>settings</mat-icon>
-          </button>
-          <mat-menu #settingsMenu="matMenu" class="menuSettings">
-            <button (click)="clickInfo($event)" mat-button>
-              <mat-icon>
-                {{ globals.user.showInfoGb ? 'info' : 'help' }}
-              </mat-icon>
-              <span i18n>Info</span>
+      @if (globals.siteConfig.editField !== 'world') {
+        @if (globals.user.siteMode !== EnumSitemode.buildings || globals.user.activeGbKey == null) {
+          <div>
+            <button [matMenuTriggerFor]="sortMenu" mat-icon-button small-icon-button>
+              <mat-icon>{{ globals.iconForSort(globals.user?.gbSort?.[globals.user.siteMode]?.mode) }}</mat-icon>
             </button>
-            <button (click)="clickZoom($event)" mat-button>
-              <mat-icon>
-                {{ ['zoom_in', 'zoom_out'][globals.user.userzoom] }}
-              </mat-icon>
-              <span i18n>Zoom</span>
-            </button>
-            <button (click)="clickShowLevelArrows($event)" mat-button>
-              <mat-icon>
-                {{ ['unfold_more', 'close'][globals.user.showLevelArrows ? 0 : 1] }}
-              </mat-icon>
-              <span i18n>Level Pfeile</span>
-            </button>
-            <button (click)="clickResetLevelColor($event)" mat-button>
-              <mat-icon>
-                {{ ['reset_colors', 'close'][globals.user.resetLevelColor ? 0 : 1] }}
-              </mat-icon>
-              <span i18n>Level Farbe zurücksetzen</span>
-            </button>
-            <div>
-              <mat-icon>calculate</mat-icon>
-              @for (factor of globals.factorList; track $index) {
-                <button (click)="clickFactor($event, factor)" [class]="classForFactor(factor)" mat-button>
-                  <span>{{ factor | number:'1.1-2' }}</span>
+            <mat-menu #sortMenu="matMenu" class="menuSettings">
+              @for (mode of globals.sortModesFor(globals.user.siteMode); track $index) {
+                <button (click)="clickSort($event, mode.mode)" mat-button small-icon-button>
+                  <mat-icon>{{ globals.iconForSort(mode.mode, true) }}</mat-icon>
+                  {{ mode.label }}
                 </button>
               }
-            </div>
-          </mat-menu>
+            </mat-menu>
+          </div>
         }
+        <div>
+          @if (globals.siteConfig.editField === 'user') {
+            <mat-form-field>
+              <mat-label i18n>Name</mat-label>
+              <input (focus)="globals.onFocus($event)"
+                     (keydown.enter)="saveEdit()"
+                     [(ngModel)]="globals.user.username"
+                     autofocus matInput>
+            </mat-form-field>
+            <button (click)="saveEdit()" mat-button>
+              <mat-icon>done</mat-icon>
+            </button>
+          } @else {
+            <button (click)="clickEdit($event, 'user')" mat-button>
+              {{ globals.user.username }}
+            </button>
+            <button [matMenuTriggerFor]="settingsMenu" mat-icon-button small-icon-button>
+              <mat-icon>settings</mat-icon>
+            </button>
+            <mat-menu #settingsMenu="matMenu" class="menuSettings">
+              <button (click)="clickInfo($event)" mat-button>
+                <mat-icon>
+                  {{ globals.user.showInfoGb ? 'info' : 'help' }}
+                </mat-icon>
+                <span i18n>Info</span>
+              </button>
+              <button (click)="clickZoom($event)" mat-button>
+                <mat-icon>
+                  {{ ['zoom_in', 'zoom_out'][globals.user.userzoom] }}
+                </mat-icon>
+                <span i18n>Zoom</span>
+              </button>
+              <button (click)="clickShowLevelArrows($event)" mat-button>
+                <mat-icon>
+                  {{ ['unfold_more', 'close'][globals.user.showLevelArrows ? 0 : 1] }}
+                </mat-icon>
+                <span i18n>Level Pfeile</span>
+              </button>
+              <button (click)="clickResetLevelColor($event)" mat-button>
+                <mat-icon>
+                  {{ ['reset_colors', 'close'][globals.user.resetLevelColor ? 0 : 1] }}
+                </mat-icon>
+                <span i18n>Level Farbe zurücksetzen</span>
+              </button>
+              <div row>
+                <mat-icon>calculate</mat-icon>
+                @for (factor of globals.factorList; track $index) {
+                  <button (click)="clickFactor($event, factor)" [class]="classForFactor(factor)" mat-button>
+                    <span>{{ factor | number:'1.1-2' }}</span>
+                  </button>
+                }
+              </div>
+            </mat-menu>
+          }
 
-        @if (globals.isDebug) {
-          <button (click)="clickImport($event)" mat-button>Importieren</button>
-          <button (click)="clickCopy($event)" mat-button>
-            <mat-icon>content_copy</mat-icon>
-          </button>
-        }
-        <!-- button (click)="sync.toggleSyncDropbox()" id="sync" mat-icon-button>
-          <ng-container *ngIf="!sync.hasSync">
-            <mat-icon>sync_disabled</mat-icon>
-          </ng-container>
-          <ng-container *ngIf="sync.hasSync">
-            <img alt="dropbox" src="../../../assets/images/dropbox.png">
-          </ng-container>
-        </button -->
-        <app-close-button [data]="closeData"></app-close-button>
-      </div>
+          @if (globals.isDebug) {
+            <button (click)="clickImport($event)" mat-button>Importieren</button>
+            <button (click)="clickCopy($event)" mat-button>
+              <mat-icon>content_copy</mat-icon>
+            </button>
+          }
+          <!-- button (click)="sync.toggleSyncDropbox()" id="sync" mat-icon-button>
+            <ng-container *ngIf="!sync.hasSync">
+              <mat-icon>sync_disabled</mat-icon>
+            </ng-container>
+            <ng-container *ngIf="sync.hasSync">
+              <img alt="dropbox" src="../../../assets/images/dropbox.png">
+            </ng-container>
+          </button -->
+          <app-close-button [data]="closeData"></app-close-button>
+        </div>
+      }
     </div>
   }
   <div>
