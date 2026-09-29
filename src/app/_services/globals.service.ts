@@ -50,7 +50,7 @@ export class GlobalsService {
   ICON_REWARD = 'stars_2';
 
   version = VERSION;
-  subversion = '10';
+  subversion = '12';
   isNewVersion = false;
   skipStorageClear = false;
   devSupport = false;
@@ -118,6 +118,8 @@ export class GlobalsService {
       {name: $localize`Rosa`, color: '#fbb'}
     ]
   }
+
+  factorList: number[] = [1.9, 1.95, 2.0];
   urlPlayground = 'http://pdf.zreptil.de/playground.php';
   appData: AppData;
   user: UserData;
@@ -339,12 +341,6 @@ export class GlobalsService {
           && GLOBALS.user.listGb[gb.key].active
           && GLOBALS.user.listGb[gb.key].player == null);
         break;
-      case EnumSitemode.players:
-        ret = this.assist.gbList.filter(gb =>
-          GLOBALS.user.listGb[gb.key] != null
-          && GLOBALS.user.listGb[gb.key].active
-          && GLOBALS.user.listGb[gb.key].player != null);
-        break;
       default:
         ret = this.assist.gbList;
     }
@@ -403,7 +399,7 @@ export class GlobalsService {
     const ret: any = {
       s0: Date.now(),
       s1: this.version,
-      s2: {},
+      s2: [],
       s3: GLOBALS.user.siteMode,
       s4: this.user.username,
       s5: this.user.gbSort,
@@ -415,13 +411,19 @@ export class GlobalsService {
       s11: GLOBALS.user.qiGroupIdx,
       s12: GLOBALS.user.resetLevelColor,
       s13: GLOBALS.user.epochList,
-      s14: GLOBALS.user.copyColorIdx
+      s14: GLOBALS.user.copyColorIdx,
+      s15: GLOBALS.user.worldIdx,
+      s16: GLOBALS.user.factor
     };
     this.adjustGbSort();
-    for (const key of Object.keys(GLOBALS.user.listGb)) {
-      if (GLOBALS.user.listGb[key].active) {
-        ret.s2[key] = GLOBALS.user.listGb[key].asJson;
+    for (const world of GLOBALS.user.listWorld) {
+      const listGb: any = {};
+      for (const key of Object.keys(world.listGb)) {
+        if (world.listGb[key].active) {
+          listGb[key] = world.listGb[key].asJson;
+        }
       }
+      ret.s2.push({a: world.name, b: listGb});
     }
     for (const qi of GLOBALS.user.listQi) {
       ret.s10.push(qi.asJson);
@@ -485,27 +487,42 @@ export class GlobalsService {
     }
 
     this.storageVersion = storage.s1;
-    GLOBALS.user.listGb = {};
-    if (Array.isArray(storage.s2)) {
-      const src = storage.s2;
-      storage.s2 = {};
-      for (const item of src) {
-        storage.s2[item.a] = {a: item.b, b: item.c};
-      }
+    GLOBALS.user.listWorld = [];
+    if (!Array.isArray(storage.s2)) {
+      storage.s2 = [{a: null, b: storage.s2}];
     }
-    let src = storage.s2 ?? {};
+    let src = storage.s2 ?? [];
+    GLOBALS.user.listWorld = [];
     let idx = 0;
-    for (const key of Object.keys(src)) {
-      const gbUser = new GbUserData(src[key]);
-      if (gbUser.copyIdx >= this.bs.calcPlaceMethods.length - 1) {
-        gbUser.copyIdx = 0;
+    for (let i = 0; i < src.length; i++) {
+      const world = {name: src[i].a, listGb: {} as any};
+      for (const key of Object.keys(src[i].b)) {
+        const gbUser = new GbUserData(src[i].b[key]);
+        if (gbUser.copyIdx >= this.bs.calcPlaceMethods.length - 1) {
+          gbUser.copyIdx = 0;
+        }
+        if (+gbUser.sortIdx === -1) {
+          gbUser.sortIdx = idx;
+        }
+        idx = Math.max(idx + 1, gbUser.sortIdx);
+        world.listGb[key] = gbUser;
       }
-      if (+gbUser.sortIdx === -1) {
-        gbUser.sortIdx = idx;
-      }
-      idx = Math.max(idx + 1, gbUser.sortIdx);
-      GLOBALS.user.listGb[key] = gbUser;
+      GLOBALS.user.listWorld.push(world);
     }
+
+    // let src = storage.s2 ?? {};
+    // let idx = 0;
+    // for (const key of Object.keys(src)) {
+    //   const gbUser = new GbUserData(src[key]);
+    //   if (gbUser.copyIdx >= this.bs.calcPlaceMethods.length - 1) {
+    //     gbUser.copyIdx = 0;
+    //   }
+    //   if (+gbUser.sortIdx === -1) {
+    //     gbUser.sortIdx = idx;
+    //   }
+    //   idx = Math.max(idx + 1, gbUser.sortIdx);
+    //   GLOBALS.user.listGb[key] = gbUser;
+    // }
     GLOBALS.user.siteMode = storage.s3 ?? EnumSitemode.select;
     GLOBALS.user.username = storage.s4 ?? 'Bitte Name eingeben';
     const defSort = {0: {mode: EnumSortmode.timeCopied, asc: true}, 1: {mode: EnumSortmode.alpha, asc: true}, 2: {mode: EnumSortmode.alpha, asc: true}};
@@ -547,6 +564,8 @@ export class GlobalsService {
       }
     }
     GLOBALS.user.copyColorIdx = storage.s14 ?? -1;
+    GLOBALS.user.worldIdx = storage.s15 ?? 0;
+    GLOBALS.user.factor = storage.s16 ?? 1.9;
 
     // validate data
     this.adjustGbSort();
@@ -572,6 +591,7 @@ export class GlobalsService {
   saveSharedData(): void {
     const data = JSON.stringify(this.sharedData);
     localStorage.setItem('sharedData', data);
+    // console.error('Die Speicherung wird aktuell nicht ausgeführt!!!!', this.sharedData);
     if (this.sync.hasSync) {
       this.sync.uploadFile(this.env.settingsFilename, data);
     }

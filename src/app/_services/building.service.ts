@@ -35,12 +35,8 @@ export class BuildingService {
     return GLOBALS.user.siteMode === EnumSitemode.manage;
   }
 
-  get isModePlayers() {
-    return GLOBALS.user.siteMode === EnumSitemode.players;
-  }
-
   calcReward(reward: number) {
-    return Math.round(reward * 1.9);
+    return Math.round(reward * (GLOBALS.user.factor ?? 1.9));
   }
 
   gbForUser(gb: GbData): GbUserData {

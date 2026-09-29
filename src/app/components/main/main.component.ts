@@ -7,7 +7,6 @@ import {ImpressumComponent} from '@/components/impressum/impressum.component';
 import {WelcomeComponent} from '@/components/welcome/welcome.component';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
 import {SettingsComponent} from '@/components/settings/settings.component';
-import {TypeUser} from '@/_model/app-data';
 import {Utils} from '@/classes/utils';
 import {DsgvoComponent} from '@/components/dsgvo/dsgvo.component';
 import {EnvironmentService} from '@/_services/environment.service';
@@ -16,7 +15,7 @@ import {GoogleService} from '@/_services/oauth2/google.service';
 import {AssistService} from '@/_services/assist.service';
 import {EnumSitemode, EnumSortmode} from '@/_model/user-data';
 import {BuildingService} from '@/_services/building.service';
-import {GbUserData} from '@/_model/gb-user-data';
+import {DialogResult, DialogResultButton} from '@/_model/dialog-data';
 
 @Component({
   selector: 'app-main',
@@ -30,7 +29,7 @@ export class MainComponent implements OnInit {
     colorKey: 'main',
     showClose: false
   };
-  editPlayer: string;
+  defaultWorldName = 'Stadt';
   protected readonly Utils = Utils;
   protected readonly EnumSitemode = EnumSitemode;
   protected readonly EnumSortmode = EnumSortmode;
@@ -80,17 +79,15 @@ export class MainComponent implements OnInit {
         if (GLOBALS.user.activeUserGb != null) {
           return null;
         }
-        return $localize`Liste der Gebäude in der Stadt`;
+        return $localize`Liste der Gebäude in`;
       case EnumSitemode.select:
-        return $localize`Bitte die Gebäude auswählen, die in Deiner Stadt stehen`;
+        return $localize`Bitte die Gebäude auswählen, die in ${GLOBALS.user.worldName ?? $localize` Deiner Stadt`} stehen`;
       case EnumSitemode.buildings:
         return $localize`Gebäude`;
-      case EnumSitemode.players:
-        return $localize`Gebäude anderer Spieler`;
       case EnumSitemode.qi:
         return $localize`Quanteninvasion`;
       default:
-        return $localize`Liste der Gebäude in der Stadt`;
+        return $localize`Liste der Gebäude in`;
     }
   }
 
@@ -114,8 +111,6 @@ export class MainComponent implements OnInit {
         return 'check';
       case EnumSitemode.manage:
         return 'select_check_box';
-      case EnumSitemode.players:
-        return 'group';
       case EnumSitemode.qi:
         return 'map';
     }
@@ -156,18 +151,6 @@ export class MainComponent implements OnInit {
     }
   }
 
-  clickType(type: TypeUser) {
-    GLOBALS.currentUserType = type;
-  }
-
-  classForType(type: TypeUser): string[] {
-    const ret: string[] = [];
-    if (type.value === GLOBALS.currentUserType?.value) {
-      ret.push('current');
-    }
-    return ret;
-  }
-
   protected clickImport(evt: PointerEvent) {
     evt.preventDefault();
     this.assist.importData();
@@ -193,12 +176,42 @@ export class MainComponent implements OnInit {
     GLOBALS.saveSharedData();
   }
 
-  protected clickName(evt: PointerEvent) {
+  protected clickWorld(evt: PointerEvent, idx: number) {
     evt.preventDefault();
-    GLOBALS.siteConfig.editField = 'user';
+    GLOBALS.user.worldIdx = idx;
+    GLOBALS._gbList = null;
+    GLOBALS.saveSharedData();
   }
 
-  protected saveName() {
+  protected clickAddWorld(evt: PointerEvent) {
+    evt.preventDefault();
+    GLOBALS.user.listWorld.push({name: $localize`Neue Welt`, listGb: {}});
+    GLOBALS.user.worldIdx = GLOBALS.user.listWorld.length - 1;
+    GLOBALS._gbList = null;
+    GLOBALS.siteConfig.editField = 'world';
+  }
+
+  protected clickDeleteWorld(evt: PointerEvent, idx: number) {
+    evt.preventDefault();
+    if (GLOBALS.user.listWorld.length > 1) {
+      GLOBALS.msg.confirm(`Soll @${GLOBALS.user.listWorld[idx].name}@ wirklich entfernt werden?`).subscribe((result: DialogResult) => {
+        if (result.btn === DialogResultButton.yes) {
+          GLOBALS.user.listWorld.splice(idx, 1);
+          GLOBALS.saveSharedData();
+        }
+      });
+    }
+  }
+
+  protected clickEdit(evt: PointerEvent, key: string) {
+    evt.preventDefault();
+    GLOBALS.siteConfig.editField = key;
+  }
+
+  protected saveEdit() {
+    if (Utils.isEmpty(GLOBALS.user.worldName)) {
+      GLOBALS.user.worldName = null;
+    }
     GLOBALS.saveSharedData();
     GLOBALS.siteConfig.editField = null;
   }
@@ -241,27 +254,6 @@ export class MainComponent implements OnInit {
 
   protected showWhatsNew() {
     this.msg.showPopup(WhatsNewComponent, 'whatsnew', {});
-  }
-
-  protected clickPlayersAdd(evt: PointerEvent) {
-    evt.preventDefault();
-    this.editPlayer = $localize`Name eingeben`;
-  }
-
-  protected savePlayer() {
-    if (!Utils.isEmpty(this.editPlayer)) {
-      GLOBALS._playerList = null;
-      const list = GLOBALS.playerList;
-      if (GLOBALS.user.activePlayer != null) {
-        const playerList = list.filter((player) => player.player === GLOBALS.user.activePlayer);
-        for (const entry of playerList) {
-          entry.player = this.editPlayer;
-        }
-      } else {
-        GLOBALS.user.activePlayer = this.editPlayer;
-        list.push(new GbUserData({}));
-      }
-    }
   }
 
   protected clickCopy(evt: PointerEvent) {
@@ -308,5 +300,19 @@ export class MainComponent implements OnInit {
 
   protected hasGbForEpoch(epoch: number) {
     return GLOBALS.gbList.some(gb => gb.epoch === epoch);
+  }
+
+  protected clickFactor(evt: PointerEvent, factor: number) {
+    evt?.preventDefault();
+    GLOBALS.user.factor = factor;
+    GLOBALS.saveSharedData();
+  }
+
+  protected classForFactor(factor: number) {
+    const ret: string[] = [];
+    if (factor === GLOBALS.user.factor) {
+      ret.push('current');
+    }
+    return ret;
   }
 }

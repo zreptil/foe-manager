@@ -278,9 +278,48 @@ app-log {
     align-items: flex-start;
     padding: 0.5em;
 
-    button {
+    button.current {
+      background-color: var(--mainHeadFore);
+      color: var(--mainHeadBack);
+    }
+
+    > button {
       width: 100%;
       justify-content: flex-start;
+    }
+
+    > div {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+      overflow: hidden;
+      //.mat-mdc-menu-content
+
+      mat-icon {
+        --size: 24px;
+        font-size: var(--size);
+        height: var(--size);
+        color: var(--mainHeadFore);
+        padding-left: var(--mat-button-text-with-icon-horizontal-padding);
+      }
+
+      button[small-icon-button] {
+        --size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        --mat-icon-button-state-layer-size: var(--size);
+        --mat-icon-color: var(--mainHeadFore);
+
+        mat-icon {
+          font-size: var(--size);
+          height: var(--size);
+        }
+      }
+
+      button[small-icon-button]:hover {
+        --mat-icon-color: var(--mainHeadBack);
+      }
     }
   }
 }

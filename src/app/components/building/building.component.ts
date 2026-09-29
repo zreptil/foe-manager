@@ -25,6 +25,7 @@ export class BuildingComponent {
               public msg: MessageService,
               public bs: BuildingService) {
     effect(() => {
+      GLOBALS.user._factor();
       GLOBALS.user._siteMode();
       GLOBALS.user._activeGbKey();
       this.gbUser = this.bs.gbForUser(this.building());
@@ -32,7 +33,7 @@ export class BuildingComponent {
         this.gbUser.copyIdx = this.bs.calcPlaceMethods.length - 1;
       }
       this.nextLevel = this.bs.levelForUser(this.building(), this.gbUser);
-      if (this.gbUser != null) {
+      if (this.gbUser != null && this.nextLevel != null) {
         this.calcPlaces(this.nextLevel, this.gbUser.ownerValue);
       }
     })

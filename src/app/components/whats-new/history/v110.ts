@@ -8,6 +8,25 @@ import {EnumSortmode} from '@/_model/user-data';
   selector: 'app-v110',
   template: `<h2 [innerHTML]="version"></h2>
   <ul>
+    <li class="added" i18n="110a14">
+      Im Einstellungsmenü gibt es eine neue Option.
+      <div list>
+        <mat-icon>calculate</mat-icon>
+        <div>
+          Hiermit wird der Berechnungsfaktor für die Plätze festgelegt. Bisher wurde immer
+          mit 1,9 gerechnet, nun kann man den Wert entsprechend seiner Arche anpassen. Bei
+          einer Änderung werden alle Berechnungen aktualisiert.
+        </div>
+      </div>
+    </li>
+    <li class="added" i18n="110a13">
+      Es ist jetzt möglich, die Gebäude verschiedener Welten zu verwalten. Dazu einfach in
+      der Titelleiste den Namen der Welt anklicken und auswählen. Wenn daran noch nichts
+      geändert wurde, dann einfach "der Stadt" anklicken. Dann kommt das Menü, in dem man
+      eine neue Welt hinzufügen kann. Das Icon rechts neben dem Weltnamen kann verwendet werden,
+      um die aktuelle Welt umzubenennen. Wenn es mehrere Welten gibt, dann gibt es bei den
+      Welten, die nicht aktuell angezeigt werden, ein Icon zum Löschen dieser Welt.
+    </li>
     <li class="removed" i18n="110r1">
       Die Spalten "Nett" und "Sicher" wurden entfernt.
     </li>

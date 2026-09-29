@@ -3,6 +3,46 @@
     <div toolbar>
       <div>
         <div>{{ toolbarTitle }}</div>
+        @if (bs.isModeManage) {
+          @if (globals.siteConfig.editField === 'world') {
+            <mat-form-field>
+              <mat-label i18n>Name der Welt</mat-label>
+              <input (focus)="globals.onFocus($event)"
+                     (keydown.enter)="saveEdit()"
+                     [(ngModel)]="globals.user.worldName"
+                     autofocus matInput>
+            </mat-form-field>
+            <button (click)="saveEdit()" mat-button>
+              <mat-icon>done</mat-icon>
+            </button>
+          } @else {
+            <button [matMenuTriggerFor]="worldMenu" mat-button>
+              {{ globals.user.worldName ?? ' der Stadt' }}
+            </button>
+            <mat-menu #worldMenu="matMenu" class="menuSettings">
+              @for (world of globals.user.listWorld; track $index) {
+                <div>
+                  <button (click)="clickWorld($event, $index)" mat-button>
+                    <mat-icon>globe</mat-icon>
+                    <span>{{ world.name ?? defaultWorldName }}</span>
+                  </button>
+                  @if (globals.user.worldIdx === $index) {
+                    <button (click)="clickEdit($event, 'world')" mat-icon-button small-icon-button>
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  } @else if (globals.user.listWorld.length > 1) {
+                    <button (click)="clickDeleteWorld($event, $index)" mat-icon-button small-icon-button>
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  }
+                </div>
+              }
+              <button (click)="clickAddWorld($event)" mat-button>
+                <mat-icon>add</mat-icon>
+              </button>
+            </mat-menu>
+          }
+        }
         <ng-template #btnBack>
           <button (click)="clickBuildingsBack($event)" matIconButton small-icon-button>
             <mat-icon>keyboard_arrow_left</mat-icon>
@@ -18,9 +58,6 @@
             @if (globals.user.activeUserGb == null) {
               <ng-container [ngTemplateOutletContext]="{}" [ngTemplateOutlet]="btnSiteMode"/>
               <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.buildings}" [ngTemplateOutlet]="btnSiteMode"/>
-              @if (globals.isDebug) {
-                <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.players}" [ngTemplateOutlet]="btnSiteMode"/>
-              }
               <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.qi}" [ngTemplateOutlet]="btnSiteMode"/>
             } @else {
               <ng-container [ngTemplateOutlet]="btnBack"/>
@@ -31,10 +68,6 @@
           }
           @case (EnumSitemode.buildings) {
             <ng-container [ngTemplateOutlet]="btnBack"/>
-          }
-          @case (EnumSitemode.players) {
-            <ng-container [ngTemplateOutlet]="btnBack"/>
-            <ng-container [ngTemplateOutletContext]="{mode: 1}" [ngTemplateOutlet]="btnSiteMode"/>
           }
           @case (EnumSitemode.qi) {
             <ng-container [ngTemplateOutlet]="btnBack"/>
@@ -59,47 +92,55 @@
       <div>
         @if (globals.siteConfig.editField === 'user') {
           <mat-form-field>
-            <mat-label>Name</mat-label>
+            <mat-label i18n>Name</mat-label>
             <input (focus)="globals.onFocus($event)"
-                   (keydown.enter)="saveName()"
+                   (keydown.enter)="saveEdit()"
                    [(ngModel)]="globals.user.username"
                    autofocus matInput>
           </mat-form-field>
-          <button (click)="saveName()" mat-button>
+          <button (click)="saveEdit()" mat-button>
             <mat-icon>done</mat-icon>
           </button>
         } @else {
-          <button (click)="clickName($event)" mat-button>
+          <button (click)="clickEdit($event, 'user')" mat-button>
             {{ globals.user.username }}
           </button>
           <button [matMenuTriggerFor]="settingsMenu" mat-icon-button small-icon-button>
             <mat-icon>settings</mat-icon>
           </button>
           <mat-menu #settingsMenu="matMenu" class="menuSettings">
-            <button (click)="clickInfo($event)" matButton>
+            <button (click)="clickInfo($event)" mat-button>
               <mat-icon>
                 {{ globals.user.showInfoGb ? 'info' : 'help' }}
               </mat-icon>
               <span i18n>Info</span>
             </button>
-            <button (click)="clickZoom($event)" matButton>
+            <button (click)="clickZoom($event)" mat-button>
               <mat-icon>
                 {{ ['zoom_in', 'zoom_out'][globals.user.userzoom] }}
               </mat-icon>
               <span i18n>Zoom</span>
             </button>
-            <button (click)="clickShowLevelArrows($event)" matButton>
+            <button (click)="clickShowLevelArrows($event)" mat-button>
               <mat-icon>
                 {{ ['unfold_more', 'close'][globals.user.showLevelArrows ? 0 : 1] }}
               </mat-icon>
               <span i18n>Level Pfeile</span>
             </button>
-            <button (click)="clickResetLevelColor($event)" matButton>
+            <button (click)="clickResetLevelColor($event)" mat-button>
               <mat-icon>
                 {{ ['reset_colors', 'close'][globals.user.resetLevelColor ? 0 : 1] }}
               </mat-icon>
               <span i18n>Level Farbe zurücksetzen</span>
             </button>
+            <div>
+              <mat-icon>calculate</mat-icon>
+              @for (factor of globals.factorList; track $index) {
+                <button (click)="clickFactor($event, factor)" [class]="classForFactor(factor)" mat-button>
+                  <span>{{ factor | number:'1.1-2' }}</span>
+                </button>
+              }
+            </div>
           </mat-menu>
         }
 
@@ -187,25 +228,6 @@
               </button>
             }
           </div>
-        }
-      }
-      @if (bs.isModePlayers) {
-        @if (editPlayer != null) {
-          <mat-form-field>
-            <mat-label i18n>
-              <mat-icon>target</mat-icon>
-              Spielername
-            </mat-label>
-            <input (blur)="savePlayer()"
-                   (focus)="globals.onFocus($event)"
-                   [(ngModel)]="editPlayer" autofocus matInput>
-          </mat-form-field>
-        } @else {
-          <!--            @for (player of globals.playerList; track $index) {-->
-            <!--            }-->
-          <button (click)="clickPlayersAdd($event)" btnAdd mat-fab>
-            <mat-icon> add</mat-icon>
-          </button>
         }
       }
     </div>

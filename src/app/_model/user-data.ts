@@ -12,7 +12,6 @@ export enum EnumSitemode {
   select,
   manage,
   buildings,
-  players,
   qi
 }
 
@@ -33,19 +32,50 @@ export class UserData extends BaseData {
   userzoom: number;
   permissions: number[];
   usertype: number;
-  readonly _siteMode = signal<EnumSitemode>(EnumSitemode.select);
-  gbSort: { [key: string]: { mode: EnumSortmode, asc: boolean } };
-  listGb: { [key: string]: GbUserData };
   listQi: QiDef[];
+  readonly _siteMode = signal<EnumSitemode>(EnumSitemode.select);
+  readonly _factor = signal<number>(1.9);
+  gbSort: { [key: string]: { mode: EnumSortmode, asc: boolean } };
+  listWorld: {
+    name: string;
+    listGb: { [key: string]: GbUserData };
+  }[];
   qiGroupIdx: number;
   readonly _activeGbKey = signal<string>(null);
   activeUserGb: GbUserData;
   activePlayer: string;
   showInfoGb: boolean;
   copyColorIdx: number;
+  worldIdx: number;
 
   constructor(json?: any) {
     super(json);
+  }
+
+  get factor() {
+    return this._factor?.() ?? 1.9;
+  }
+
+  set factor(value: number) {
+    this._factor?.set?.(value);
+  }
+
+  get listGb() {
+    return this.listWorld?.[this.worldIdx]?.listGb ?? {};
+  }
+
+  get worldName(): string {
+    if (this.worldIdx > this.listWorld?.length) {
+      this.worldIdx = 0;
+    }
+    return this.listWorld?.[this.worldIdx]?.name;
+  }
+
+  set worldName(value: string) {
+    const world = this.listWorld[this.worldIdx];
+    if (world != null) {
+      world.name = value;
+    }
   }
 
   _epochList: number[];
@@ -88,7 +118,8 @@ export class UserData extends BaseData {
       i: this.showLevelArrows,
       j: this.qiGroupIdx,
       k: this.resetLevelColor,
-      l: this._epochList
+      l: this._epochList,
+      m: this.factor
     };
 
     ret.f = {};
@@ -102,16 +133,8 @@ export class UserData extends BaseData {
     this.username = json?.a ?? def?.username ?? 'Bitte Name eingeben';
     this.permissions = (json?.b ?? def?.permission ?? []).map((entry: string) => +entry);
     this.usertype = json?.c ?? def?.usertype;
-    this.listGb = {};
-    let src = json?.d ?? def?.gbList;
-    if (src != null) {
-      json.f = {};
-      for (const entry of src) {
-        json.f[entry.a] = {a: entry.b, b: entry.c};
-      }
-    }
     this.siteMode = json?.e ?? def?.siteMode ?? EnumSitemode.select;
-    src = json?.f ?? def?.listGb ?? {};
+    let src = json?.f ?? def?.listGb ?? {};
     for (const key of Object.keys(src)) {
       this.listGb[key] = new GbUserData(src[key]);
     }
@@ -127,5 +150,6 @@ export class UserData extends BaseData {
     this.qiGroupIdx = json?.j ?? def?.qiGroupIdx ?? 0;
     this.resetLevelColor = json?.k ?? def?.resetLevelColor ?? false;
     this._epochList = json?.l ?? def?.epochList;
+    this.factor = json?.m ?? def?.factor ?? 1.9;
   }
 }
