@@ -488,11 +488,8 @@ export class GlobalsService {
     let syncData: any = await this.sync.downloadFile(this.env.settingsFilename);
     if (syncData != null) {
       try {
-        console.log('storage', new Date(storage.s0).toLocaleString());
-        console.log('syncage', new Date(syncData.s0).toLocaleString());
         if (+(storage.s0 ?? 0) === 0 || +(syncData.s0 ?? 0) > +(storage.s0 ?? 0)) {
           storage = syncData;
-          console.log('storage', storage);
         }
       } catch {
       }
