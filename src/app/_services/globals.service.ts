@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, signal} from '@angular/core';
 import {Utils} from '@/classes/utils';
 import {Log} from '@/_services/log.service';
 import {HttpClient, HttpRequest} from '@angular/common/http';
@@ -122,12 +122,13 @@ export class GlobalsService {
   factorList: number[] = [1.9, 1.95, 2.0];
   urlPlayground = 'http://pdf.zreptil.de/playground.php';
   appData: AppData;
-  user: UserData;
+  readonly _user = signal<UserData>(null);
   saveImmediately = true;
   showCompleted = false;
   _styleForPanels: any = {};
   formListParams: any;
   showConDebug = false;
+  readonly force = signal<boolean>(false);
   private flags = '';
 
   constructor(public http: HttpClient,
@@ -170,6 +171,14 @@ export class GlobalsService {
 
   static get msgThemeXmas(): string {
     return $localize`:theme selection - christmas|:X-Mas`;
+  }
+
+  get user(): UserData {
+    return this._user();
+  }
+
+  set user(value: UserData) {
+    this._user.set(value);
   }
 
   get currentUserTypeName(): string {
@@ -479,17 +488,19 @@ export class GlobalsService {
     let syncData: any = await this.sync.downloadFile(this.env.settingsFilename);
     if (syncData != null) {
       try {
-        if (+syncData.s0 > +storage.s0) {
+        console.log('storage', new Date(storage.s0).toLocaleString());
+        console.log('syncage', new Date(syncData.s0).toLocaleString());
+        if (+(storage.s0 ?? 0) === 0 || +(syncData.s0 ?? 0) > +(storage.s0 ?? 0)) {
           storage = syncData;
+          console.log('storage', storage);
         }
       } catch {
       }
     }
-
     this.storageVersion = storage.s1;
     GLOBALS.user.listWorld = [];
     if (!Array.isArray(storage.s2)) {
-      storage.s2 = [{a: null, b: storage.s2}];
+      storage.s2 = [{a: null, b: storage.s2 ?? {}}];
     }
     let src = storage.s2 ?? [];
     GLOBALS.user.listWorld = [];
@@ -546,8 +557,8 @@ export class GlobalsService {
       storage.s13 = GLOBALS.user.epochList;
     }
     const values = new Set(storage.s13);
-    if (values.size !== storage.s13.length ||
-      !storage.s13.every((_: any, i: number) => values.has(i))) {
+    if (values.size !== storage.s13?.length ||
+      !storage.s13?.every((_: any, i: number) => values.has(i))) {
       GLOBALS.user._epochList = null;
     } else {
       GLOBALS.user._epochList = storage.s13;
@@ -555,8 +566,8 @@ export class GlobalsService {
     if (storage.s10?.length === 0) {
       storage.s10 = [{a: 'Erster Tag', b: []}];
     }
-    src = storage.s10;
-    if (src[0].id != null) {
+    src = storage.s10 ?? [];
+    if (src[0]?.id != null) {
       GLOBALS.user.listQi = src;
     } else {
       for (const entry of src) {
@@ -569,6 +580,7 @@ export class GlobalsService {
 
     // validate data
     this.adjustGbSort();
+    GLOBALS.force.set(!GLOBALS.force());
   }
 
   onFocus(evt: FocusEvent): void {

@@ -408,7 +408,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">116,117</context>
+          <context context-type="linenumber">117,118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7911416166208830577" datatype="html">
@@ -1041,7 +1041,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">96</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3733215288982610673" datatype="html">
@@ -1279,21 +1279,21 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source>The file <x id="PH" equiv-text="filename"/> was downloaded from Dropbox.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/sync/dropbox.service.ts</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">137</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1799878284198173341" datatype="html">
         <source>The file <x id="PH" equiv-text="filename"/> was not uploaded, since the content didn&apos;t change.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/sync/dropbox.service.ts</context>
-          <context context-type="linenumber">172</context>
+          <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2566917109822382269" datatype="html">
         <source>The file <x id="PH" equiv-text="filename"/> was uploaded to Dropbox.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/sync/dropbox.service.ts</context>
-          <context context-type="linenumber">177</context>
+          <context context-type="linenumber">179</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1232839296875773478" datatype="html">
@@ -1310,23 +1310,24 @@ beyond the control of foe-manager. Should the confirmation process be started?</
           <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6968630760189801097" datatype="html">
-        <source>The connection to <x id="PH" equiv-text="serviceName"/> requires a confirmation
-                     that <x id="PH_1" equiv-text="GLOBALS.appTitle"/> may read and write the data from
-                     <x id="PH_2" equiv-text="serviceName"/>. This confirmation is requested with special
-                     dialogs from <x id="PH_3" equiv-text="serviceName"/>. Everything that has to be
-                     confirmed there is beyond <x id="PH_4" equiv-text="GLOBALS.appTitle"/>&apos;s control.
-                     Should the confirmation process be started?</source>
+      <trans-unit id="1685365852328381342" datatype="html">
+        <source>Die Verbindung zu <x id="PH" equiv-text="serviceName"/> erfordert eine Bestätigung,
+                     dass <x id="PH_1" equiv-text="GLOBALS.appTitle"/> Daten von <x id="PH_2" equiv-text="serviceName"/> lesen und
+                     schreiben darf. Diese Bestätigung wird mit speziellen
+                     Dialogen von <x id="PH_3" equiv-text="serviceName"/> angefordert. Alles, was bestätigt
+                     werden muss, liegt ausserhalb der Kontrolle von
+                     <x id="PH_4" equiv-text="GLOBALS.appTitle"/>.
+                     Soll der Bestätigungsprozess ausgeführt werden?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/sync/sync.service.ts</context>
-          <context context-type="linenumber">88,93</context>
+          <context context-type="linenumber">88,94</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8550844560794870731" datatype="html">
-        <source>Do you want to unsync with Dropbox?</source>
+      <trans-unit id="7335747379611217584" datatype="html">
+        <source>Willst Du die Verbindung zu Dropbox aufheben?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/sync/sync.service.ts</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9100427569418658598" datatype="html">
@@ -1471,35 +1472,35 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source>Zoom</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">122,123</context>
+          <context context-type="linenumber">131,132</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3656052262936020219" datatype="html">
         <source>Level Pfeile</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">128,129</context>
+          <context context-type="linenumber">137,138</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3899532759867827415" datatype="html">
         <source>Level Farbe zurücksetzen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">134,135</context>
+          <context context-type="linenumber">143,144</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1546319556558396470" datatype="html">
         <source> Initialisierung läuft... </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">172</context>
+          <context context-type="linenumber">182</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4847028901160817707" datatype="html">
         <source> Die Daten aus dem Cache sind falsch. Bitte den Cache leeren und neu versuchen. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.html</context>
-          <context context-type="linenumber">176</context>
+          <context context-type="linenumber">186</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2834476001728089364" datatype="html">

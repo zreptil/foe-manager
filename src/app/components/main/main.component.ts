@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, effect, OnInit} from '@angular/core';
 import {GLOBALS, GlobalsService} from '@/_services/globals.service';
 import {SyncService} from '@/_services/sync/sync.service';
 import {MessageService} from '@/_services/message.service';
@@ -43,6 +43,12 @@ export class MainComponent implements OnInit {
               public bs: BuildingService,
               public env: EnvironmentService) {
     this.assist.loadFromAsset();
+    effect(() => {
+      GLOBALS._user();
+      GLOBALS.user._siteMode();
+      GLOBALS.force();
+      GLOBALS._gbList = null;
+    });
   }
 
   get styleForContent(): any {

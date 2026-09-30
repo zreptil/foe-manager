@@ -25,9 +25,11 @@ export class BuildingComponent {
               public msg: MessageService,
               public bs: BuildingService) {
     effect(() => {
+      GLOBALS._user();
       GLOBALS.user._factor();
       GLOBALS.user._siteMode();
       GLOBALS.user._activeGbKey();
+      GLOBALS.force();
       this.gbUser = this.bs.gbForUser(this.building());
       if (this.gbUser != null && this.gbUser.copyIdx > this.bs.calcPlaceMethods.length - 1) {
         this.gbUser.copyIdx = this.bs.calcPlaceMethods.length - 1;
@@ -417,7 +419,7 @@ export class BuildingComponent {
 
   protected classForColor(idx: number) {
     const ret: string[] = [`color-${idx}`];
-    if (idx === this.gbUser.colorIdx) {
+    if (idx === this.gbUser?.colorIdx) {
       ret.push('current');
     }
     return ret;

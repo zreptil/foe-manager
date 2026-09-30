@@ -43,7 +43,6 @@ export class UserData extends BaseData {
   qiGroupIdx: number;
   readonly _activeGbKey = signal<string>(null);
   activeUserGb: GbUserData;
-  activePlayer: string;
   showInfoGb: boolean;
   copyColorIdx: number;
   worldIdx: number;

@@ -84,20 +84,21 @@ export class SyncService {
     return JSON.stringify(src) === JSON.stringify(dst);
   }
 
-  msgOauth2Workflow(serviceName: string): string {
-    return $localize`The connection to ${serviceName} requires a confirmation
-                     that ${GLOBALS.appTitle} may read and write the data from
-                     ${serviceName}. This confirmation is requested with special
-                     dialogs from ${serviceName}. Everything that has to be
-                     confirmed there is beyond ${GLOBALS.appTitle}'s control.
-                     Should the confirmation process be started?`;
+  msgOauth2Workflow(serviceName: string) {
+    return [$localize`Die Verbindung zu ${serviceName} erfordert eine Bestätigung, \
+dass ${GLOBALS.appTitle} Daten von ${serviceName} lesen und schreiben darf. \
+Diese Bestätigung wird mit speziellen Dialogen von ${serviceName} angefordert. \
+Alles, was bestätigt werden muss, liegt ausserhalb der Kontrolle von \
+${GLOBALS.appTitle}.`,
+      '&nbsp;',
+      $localize`Soll der Bestätigungsprozess ausgeführt werden?`];
   }
 
   toggleSyncDropbox() {
     if (this.syncType === oauth2SyncType.dropbox) {
       const params = new DialogParams();
       params.image = 'assets/images/dropbox.png';
-      this.ms.confirm($localize`Do you want to unsync with Dropbox?`, params).subscribe(result => {
+      this.ms.confirm($localize`Willst Du die Verbindung zu Dropbox aufheben?`, params).subscribe(result => {
         if (result?.btn == DialogResultButton.yes) {
           this.dbs.disconnect();
           this.syncType = oauth2SyncType.none;

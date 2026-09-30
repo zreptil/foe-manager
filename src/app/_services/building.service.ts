@@ -24,15 +24,15 @@ export class BuildingService {
   }
 
   get isModeSelect() {
-    return GLOBALS.user.siteMode === EnumSitemode.select;
+    return GLOBALS.user._siteMode() === EnumSitemode.select;
   }
 
   get isModeBuildings() {
-    return GLOBALS.user.siteMode === EnumSitemode.buildings;
+    return GLOBALS.user._siteMode() === EnumSitemode.buildings;
   }
 
   get isModeManage() {
-    return GLOBALS.user.siteMode === EnumSitemode.manage;
+    return GLOBALS.user._siteMode() === EnumSitemode.manage;
   }
 
   calcReward(reward: number) {

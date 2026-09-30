@@ -107,7 +107,11 @@
               {{ globals.user.username }}
             </button>
             <button [matMenuTriggerFor]="settingsMenu" mat-icon-button small-icon-button>
-              <mat-icon>settings</mat-icon>
+              @if (sync.hasSync) {
+                <img alt="dropbox" src="../../../assets/images/dropbox.png">
+              } @else {
+                <mat-icon>settings</mat-icon>
+              }
             </button>
             <mat-menu #settingsMenu="matMenu" class="menuSettings">
               <button (click)="clickInfo($event)" mat-button>
@@ -115,6 +119,14 @@
                   {{ globals.user.showInfoGb ? 'info' : 'help' }}
                 </mat-icon>
                 <span i18n>Info</span>
+              </button>
+              <button (click)="sync.toggleSyncDropbox()" id="sync" mat-button>
+                @if (sync.hasSync) {
+                  <img alt="dropbox" src="../../../assets/images/dropbox.png">
+                } @else {
+                  <mat-icon>sync_disabled</mat-icon>
+                }
+                Dropbox
               </button>
               <button (click)="clickZoom($event)" mat-button>
                 <mat-icon>

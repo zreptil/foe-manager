@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
 import {EnvironmentService} from '@/_services/environment.service';
-import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpRequest} from '@angular/common/http';
+import {encode as base64encode} from 'base64-arraybuffer';
 import {Oauth2pkce} from '@/_services/sync/oauth2pkce';
 import {lastValueFrom, Observable, of} from 'rxjs';
+import sha256 from 'fast-sha256';
 
 export enum oauthStatus {
   none,
@@ -134,7 +136,16 @@ export class DropboxService {
       ret = response?.body;
       this.lastStatus = new DBSStatus(dbsStatus.info, $localize`The file ${filename} was downloaded from Dropbox.`);
     } catch (ex) {
-      console.error('error when downloading file from Dropbox', ex);
+      if (
+        ex instanceof HttpErrorResponse &&
+        ex.status === 409 &&
+        ex.error?.error?.['.tag'] === 'path' &&
+        ex.error?.error?.path?.['.tag'] === 'not_found'
+      ) {
+        // file not found, no error
+      } else {
+        console.error('error when downloading file from Dropbox', ex);
+      }
       response = await this.checkRefreshToken(req, ex);
       ret = response?.body;
     }
@@ -263,10 +274,8 @@ export class DropboxService {
     sessionStorage.setItem('cv', codeVerifier);
     const encoder = new TextEncoder();
     const data = encoder.encode(codeVerifier);
-    const binaryString = String.fromCharCode(...data);
-    const base64Digest = btoa(binaryString);
-    // const digest = sha256(data);
-    // const base64Digest = base64encode(digest);
+    const digest = sha256(data);
+    const base64Digest: string = base64encode(new Uint8Array(digest).buffer);
     return base64Digest
       .replace(/\+/g, '-')
       .replace(/\//g, '_')
