@@ -8,6 +8,13 @@ import {EnumSortmode} from '@/_model/user-data';
   selector: 'app-v110',
   template: `<h2 [innerHTML]="version"></h2>
   <ul>
+    <li class="added" i18n="110a16">
+      Es gibt einen neuen Bereich für die temporären Ereignisse. Aktuell ist dort das
+      Gemeinschaftsevent zu finden. Das wird im Laufe der Zeit erweitert, wenn es weitere
+      Ereignisse gibt, für die foe-manager Unterstützung anbieten kann. Die Event-Seite kann
+      mit dem Icon
+      <mat-icon>events</mat-icon>
+    </li>
     <li class="added" i18n="110a15">
       Es ist jetzt möglich, die Daten mit Dropbox zu synchronisieren. Dazu gibt es eine neue
       Option im Einstellungsmenü, die passenderweise "Dropbox" heisst. Wenn diese angeklickt wird,
