@@ -1,0 +1,84 @@
+@if (event != null) {
+  <div eventList>
+    @for (event of eventSrv.eventList; track $index) {
+      <div [class.selected]="$index === globals.user.eventConfig.eventIdx" event>
+        @if ($index === globals.user.eventConfig.eventIdx) {
+          <mat-form-field small-input>
+            <input (focus)="globals.onFocus($event)"
+                   [(ngModel)]="event.name"
+                   matInput>
+          </mat-form-field>
+        }
+      </div>
+    }
+  </div>
+  <div panel>
+    @switch (event.type) {
+      @case (EnumEventtype.map) {
+        <ng-container [ngTemplateOutletContext]="{}" [ngTemplateOutlet]="panelMap"/>
+      }
+    }
+  </div>
+}
+<ng-template #panelMap>
+  <div controls>
+    <div>
+      @if (editField === 'eventCount') {
+        <mat-form-field>
+          <mat-label i18n>Abgeschlossene Ereignisse</mat-label>
+          <input (focus)="globals.onFocus($event)"
+                 (keydown.enter)="saveEventCount()"
+                 [(ngModel)]="eventCount"
+                 autofocus matInput>
+        </mat-form-field>
+        <button (click)="saveEventCount($event)" mat-button>
+          <mat-icon>done</mat-icon>
+        </button>
+      } @else {
+        <button (click)="clickEventCount($event)" mat-button>
+          Ereignis {{ globals.user.eventConfig.eventCount + 1 }} /
+          {{ nameForTown(townIdxForCount(globals.user.eventConfig.eventCount)) }}
+        </button>
+      }
+    </div>
+    <div>
+      @if (editField === 'phase') {
+        <mat-form-field>
+          <mat-label i18n>Phase des Aufbaus</mat-label>
+          <input (focus)="globals.onFocus($event)"
+                 (keydown.enter)="savePhase()"
+                 [(ngModel)]="phaseValue"
+                 autofocus matInput>
+        </mat-form-field>
+        <button (click)="savePhase($event)" mat-button>
+          <mat-icon>done</mat-icon>
+        </button>
+      } @else {
+        <button (click)="clickProgress($event, -1)" mat-button>
+          <mat-icon>arrow_left</mat-icon>
+        </button>
+        <button (click)="editField='phase'" mat-button>
+          Phase {{ globals.user.eventConfig.progressIdx + 1 }} / {{ progress.length }}
+        </button>
+        <button (click)="clickProgress($event, 1)" mat-button>
+          <mat-icon>arrow_right</mat-icon>
+        </button>
+      }
+    </div>
+    <a [href]="event.sourceUrl" mat-button target="_blank">
+      <img alt="external link" src="assets/images/youtube_social_icon_red.png">
+    </a>
+  </div>
+  @if (progressInfo != null) {
+    <div [innerHtml]="progressInfo" info></div>
+  }
+  <div [style]="styleForMap" map>
+    @for (place of event.places; track $index) {
+      <div (click)="clickPlace($event, $index)" [class]="classForPlace($index)" [style]="styleForPlace($index)">
+        <div level>{{ place.levels[townIdx] }}</div>
+        <div name>{{ place.name }}</div>
+        <div value>{{ placeProgress($index) }}</div>
+      </div>
+    }
+  </div>
+</ng-template>

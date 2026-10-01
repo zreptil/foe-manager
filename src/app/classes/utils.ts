@@ -509,4 +509,13 @@ export class Utils {
     }
     return Utils.join(ret, '&');
   }
+
+  static cvtToHtml(text: string) {
+    text = text?.replace(/@bold\|([^@|]*)@/g, `<span style="font-weight:bold">$1</span>`);
+    text = text?.replace(/@italic\|([^@|]*)@/g, `<span style="font-style:italic">$1</span>`);
+    text = text?.replace(/@icon\|([^@|]*)@/g, '<mat-icon class="check-icon mat-icon material-icons mat-ligature-font">$1</mat-icon>');
+    text = text?.replace(/@nl@/g, '<br/>');
+    text = text?.replace(/@([^@|]*)\|([^@]*)@/g, `<span style="color:$1">$2</span>`);
+    return text;
+  }
 }

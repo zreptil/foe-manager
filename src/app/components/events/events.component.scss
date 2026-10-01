@@ -1,0 +1,134 @@
+[eventList] {
+  display: flex;
+  align-items: center;
+  flex-flow: row;
+  flex-wrap: wrap;
+  gap: 1em;
+
+  [event] {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    button[small-icon-button] {
+      --size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      --mat-icon-button-state-layer-size: var(--size);
+
+      mat-icon {
+        font-size: var(--size);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  ::ng-deep [small-input].mat-mdc-form-field {
+    --mat-form-field-container-height: 36px;
+    --mat-form-field-container-vertical-padding: 6px;
+  }
+
+  ::ng-deep [small-input] .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+
+  [event].selected {
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+  }
+
+  mat-icon {
+    transition: transform 500ms ease;
+  }
+}
+
+[panel] {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: calc(100vh - 5.5em);
+
+  --width: 40em;
+
+  [controls] {
+    width: var(--width);
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+
+    div {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+    }
+
+    .mat-mdc-button {
+      img {
+        width: 32px;
+      }
+    }
+  }
+
+  [info] {
+    padding: 0.5em 0;
+  }
+
+  [map] {
+    width: var(--width);
+    height: 27.5em;
+    background: rgba(0, 0, 0, 0.2);
+    position: relative;
+    background-size: contain;
+    --size: 80px;
+
+    > div {
+      cursor: pointer;
+      position: absolute;
+      display: flex;
+      flex-flow: column;
+      justify-content: center;
+      align-items: center;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      width: var(--size);
+      height: var(--size);
+      background: rgba(255, 255, 255, 0.7);
+
+      div {
+        z-index: 100;
+      }
+    }
+
+    > div.current {
+      border: 3px solid white;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+    }
+
+    > div.last {
+      background: rgba(255, 255, 0, 0.7);
+      border-color: goldenrod;
+      border-width: 10px;
+      font-style: italic;
+      color: black;
+    }
+
+    [name] {
+      padding: 0 0.5em;
+    }
+
+    [value] {
+      padding: 0 0.5em;
+    }
+  }
+}

@@ -8,6 +8,14 @@ import {EnumSortmode} from '@/_model/user-data';
   selector: 'app-v110',
   template: `<h2 [innerHTML]="version"></h2>
   <ul>
+    <li class="added" i18n="110a15">
+      Es ist jetzt möglich, die Daten mit Dropbox zu synchronisieren. Dazu gibt es eine neue
+      Option im Einstellungsmenü, die passenderweise "Dropbox" heisst. Wenn diese angeklickt wird,
+      dann wird der Verbindungsdialog gestartet. Voraussetzung ist natürlich ein Dropbox Konto.
+      Wenn die Verbindung hergestellt ist, dann werden die Daten beim Laden aus der Dropbox geholt
+      und beim Speichern dort gespeichert. Damit kann man den gleichen Datenbestand über verschiedene
+      Browser und Computer hinweg synchron halten.
+    </li>
     <li class="added" i18n="110a14">
       Im Einstellungsmenü gibt es eine neue Option.
       <div list>

@@ -20,6 +20,7 @@ import {EnumEpoch, GbData} from '@/_model/gb-data';
 import {AssistService} from '@/_services/assist.service';
 import {BuildingService} from '@/_services/building.service';
 import {QiDef} from '@/_model/qi-def';
+import {EventConfig} from '@/_model/event-config-data';
 
 class CustomTimeoutError extends Error {
   constructor() {
@@ -129,6 +130,7 @@ export class GlobalsService {
   formListParams: any;
   showConDebug = false;
   readonly force = signal<boolean>(false);
+  timeoutForUpload: any;
   private flags = '';
 
   constructor(public http: HttpClient,
@@ -422,7 +424,8 @@ export class GlobalsService {
       s13: GLOBALS.user.epochList,
       s14: GLOBALS.user.copyColorIdx,
       s15: GLOBALS.user.worldIdx,
-      s16: GLOBALS.user.factor
+      s16: GLOBALS.user.factor,
+      s17: GLOBALS.user.eventConfig?.asJson
     };
     this.adjustGbSort();
     for (const world of GLOBALS.user.listWorld) {
@@ -574,6 +577,7 @@ export class GlobalsService {
     GLOBALS.user.copyColorIdx = storage.s14 ?? -1;
     GLOBALS.user.worldIdx = storage.s15 ?? 0;
     GLOBALS.user.factor = storage.s16 ?? 1.9;
+    GLOBALS.user.eventConfig = new EventConfig(storage.s17);
 
     // validate data
     this.adjustGbSort();
@@ -600,10 +604,13 @@ export class GlobalsService {
   saveSharedData(): void {
     const data = JSON.stringify(this.sharedData);
     localStorage.setItem('sharedData', data);
-    // console.error('Die Speicherung wird aktuell nicht ausgeführt!!!!', this.sharedData);
     if (this.sync.hasSync) {
-      this.sync.uploadFile(this.env.settingsFilename, data);
+      clearTimeout(this.timeoutForUpload);
+      this.timeoutForUpload = setTimeout(() => {
+        this.sync.uploadFile(this.env.settingsFilename, data);
+      }, 2000);
     }
+    // console.error('Die Speicherung wird aktuell nicht ausgeführt!!!!', this.sharedData);
   }
 
   loadWebData(): void {

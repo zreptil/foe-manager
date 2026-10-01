@@ -92,6 +92,8 @@ export class MainComponent implements OnInit {
         return $localize`Gebäude`;
       case EnumSitemode.qi:
         return $localize`Quanteninvasion`;
+      case EnumSitemode.events:
+        return $localize`Ereignisse`;
       default:
         return $localize`Liste der Gebäude in`;
     }
@@ -119,6 +121,8 @@ export class MainComponent implements OnInit {
         return 'select_check_box';
       case EnumSitemode.qi:
         return 'map';
+      case EnumSitemode.events:
+        return 'event';
     }
     return 'apartment';
   }

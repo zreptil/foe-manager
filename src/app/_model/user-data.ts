@@ -3,6 +3,7 @@ import {GbUserData} from '@/_model/gb-user-data';
 import {signal} from '@angular/core';
 import {QiDef} from '@/_model/qi-def';
 import {EnumEpoch} from '@/_model/gb-data';
+import {EventConfig} from '@/_model/event-config-data';
 
 export enum EnumPermission {
   keepUserToken
@@ -12,7 +13,8 @@ export enum EnumSitemode {
   select,
   manage,
   buildings,
-  qi
+  qi,
+  events
 }
 
 export enum EnumSortmode {
@@ -41,6 +43,7 @@ export class UserData extends BaseData {
     listGb: { [key: string]: GbUserData };
   }[];
   qiGroupIdx: number;
+  eventConfig: EventConfig;
   readonly _activeGbKey = signal<string>(null);
   activeUserGb: GbUserData;
   showInfoGb: boolean;
@@ -118,7 +121,7 @@ export class UserData extends BaseData {
       j: this.qiGroupIdx,
       k: this.resetLevelColor,
       l: this._epochList,
-      m: this.factor
+      m: this.factor,
     };
 
     ret.f = {};

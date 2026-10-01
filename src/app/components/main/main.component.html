@@ -59,6 +59,7 @@
               <ng-container [ngTemplateOutletContext]="{}" [ngTemplateOutlet]="btnSiteMode"/>
               <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.buildings}" [ngTemplateOutlet]="btnSiteMode"/>
               <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.qi}" [ngTemplateOutlet]="btnSiteMode"/>
+              <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.events}" [ngTemplateOutlet]="btnSiteMode"/>
             } @else {
               <ng-container [ngTemplateOutlet]="btnBack"/>
             }
@@ -70,6 +71,9 @@
             <ng-container [ngTemplateOutlet]="btnBack"/>
           }
           @case (EnumSitemode.qi) {
+            <ng-container [ngTemplateOutlet]="btnBack"/>
+          }
+          @case (EnumSitemode.events) {
             <ng-container [ngTemplateOutlet]="btnBack"/>
           }
         }
@@ -193,6 +197,8 @@
       } @else if (assist.loadDone) {
         @if (globals.user.siteMode === EnumSitemode.qi) {
           <app-quanten-invasion></app-quanten-invasion>
+        } @else if (globals.user.siteMode === EnumSitemode.events) {
+          <app-events></app-events>
         } @else {
           <div [class]="classForGbList" gbList>
             @if (showNavigation) {

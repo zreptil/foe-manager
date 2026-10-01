@@ -53,6 +53,7 @@ import {V109} from '@/components/whats-new/history/v109';
 import {V110} from '@/components/whats-new/history/v110';
 import {QuantenInvasionComponent} from './components/qi/quanten-invasion/quanten-invasion.component';
 import {EpochComponent} from '@/components/epoch/epoch.component';
+import { EventsComponent } from './components/events/events.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import {EpochComponent} from '@/components/epoch/epoch.component';
     BuildingComponent,
     EpochComponent,
     QuantenInvasionComponent,
+    EventsComponent,
   ],
   bootstrap: [AppComponent],
   imports: [
