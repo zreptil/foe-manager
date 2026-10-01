@@ -1,0 +1,14 @@
+<div cdkDrag cdkDragBoundary=".cdk-overlay-container"
+     cdkDragRootElement=".dialog-box.help">
+  <div cdkDragHandle mat-dialog-title>
+    <h1 i18n>Hilfe</h1>
+    <app-close-button [data]="closeData"></app-close-button>
+  </div>
+  <mat-dialog-content>
+    @if (loadDone) {
+      <div [innerHtml]="content"></div>
+    }
+  </mat-dialog-content>
+  <mat-dialog-actions>
+  </mat-dialog-actions>
+</div>

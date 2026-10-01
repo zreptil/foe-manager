@@ -5,6 +5,8 @@ import {EnumEventtype, EventData} from '@/_model/event-data';
 import {EventTownData} from '@/_model/event-place-data';
 import {Utils} from '@/classes/utils';
 import {DomSanitizer} from '@angular/platform-browser';
+import {MessageService} from '@/_services/message.service';
+import {HelpComponent} from '@/components/help/help.component';
 
 @Component({
   selector: 'app-events',
@@ -20,6 +22,7 @@ export class EventsComponent {
 
   constructor(public globals: GlobalsService,
               public eventSrv: EventService,
+              public msg: MessageService,
               public sanitizer: DomSanitizer) {
     if (!eventSrv.fullyLoaded) {
       eventSrv.loadFromAsset((_data) => {
@@ -154,5 +157,12 @@ export class EventsComponent {
     this.eventCount = GLOBALS.user.eventConfig.eventCount;
     this.editField = 'eventCount';
     GLOBALS.saveSharedData();
+  }
+
+  protected clickHelp(evt: PointerEvent, idx: number) {
+    evt.preventDefault();
+    this.msg.showPopup(HelpComponent, 'help', {
+      title: `event${idx}`
+    });
   }
 }

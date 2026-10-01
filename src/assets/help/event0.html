@@ -1,0 +1,100 @@
+<h1>Gemeinschaftsevent</h1>
+<h2>Basisinformation</h2>
+<div row>
+  Beim Gemeinschaftsevent geht es darum, ein Bankett auszurichten. Dazu fährt eine Kutsche ständig
+  zwischen dem Bankettverwalter und dem Vorratshaufen hin und her. Das muss entweder der Spieler
+  durch Anklicken der Kutsche initiieren oder einen Kutscher anstellen, der diese Strecke
+  automatisch fährt.
+</div>
+<div row>
+  Der Vorratshaufen wird von verschiedenen Läden beliefert, die auch entweder vom Spieler
+  angeklickt werden müssen, es sei denn, er stellt einen Händler an, der das automatisch tut.
+</div>
+<div row>
+  Bankettverwalter, Kutscher und die Läden haben jeweils einen Timer, der die bei ihnen
+  angezeigte Menge an Gütern freigibt. Die Läden schicken das dann an den Vorratshaufen,
+  der Kutscher holt es vom Laden und bringt es zum Bankettverwalter. Und der Bankettverwalter
+  bringt es zu den Festvorräten.
+</div>
+<div row>
+  Diese Festvorräte sind die Währung, mit denen man die ganzen Akteure (Bankettverwalter,
+  Kutsche, Läden) aufwerten kann. Bei jedem steht der Wert, der benötigt wird, um die Stufe zu
+  erhöhen. Ausserdem steht dort auch die Stufe, die nach und nach einen grünen Balken füllt. Wenn
+  ein bestimmter Wert erreicht wird, erhöht sich der Auswurf des entsprechenden Akteure
+  um ein Vielfaches. Jeder Akteur kann selbst auch aufgewertet werden. Das kostet dann die
+  Eventwährung Edelsteine. Diese erhält man durch Abarbeitung der Event-Quests auf der Hauptkarte.
+</div>
+<div row>
+  Es geht also darum, zunächst Festvorräte zu sammeln und dann damit die Akteure zu beliefern. Ausserdem
+  müssen die Akteure aufgewertet werden, damit sie mehr leisten und schneller agieren. An dieser
+  Stelle kommt nun Linnun Foe ins Spiel, der die bestmögliche Reihenfolge ausgeknobelt hat, um
+  das Event so effektiv wie möglich abzuarbeiten. Das entsprechende Video ist hier zu finden:
+
+  <a href="https://www.youtube.com/watch?v=PdOd71StOZU" target="_blank">Linnun Foe&nbsp;<img alt="youtube" src="assets/images/youtube_social_icon_red.png"></a>,
+</div>
+<div row>
+  Es gibt während des Ereignisses einige Aufgaben, die Belohnungen geben. Diese werden im Spiel
+  am oberen Rand der Karte angezeigt. Es sind immer drei Aufgaben, deren Belohnungen im Laufe
+  der Zeit nach und nach eingefordert werden können.
+</div>
+<h2>Funktionsweise im foe-manager</h2>
+<div row>
+  Auf der Ereignisseite sieht man das gleiche Bild, wie im Spiel. Oberhalb des Bildes steht links
+  die Nummer des Ereignisses. Um das festzulegen einfach den Text <b>Ereignis X / Stadt #Y</b> anklicken.
+  Dann kann man eingeben, wieviele Banketts man abgeschlossen hat. Für das erste Bankett also
+  <b>0</b> eingeben.
+</div>
+<div row>
+  Es gibt bei dem Ereignis vier verschiedene Städte. Die erste Stadt ist dabei wesentlich schneller
+  erledigt, als die nachfolgenden. Die restlichen drei Städte werden mit jedem absolvierten Bankett
+  durch rotiert. Leider wird im Spiel nicht angezeigt, welche Stadt aktuell aktiv ist. Es gibt von
+  Linnun Foe allerdings ein
+  <a href="https://www.youtube.com/watch?v=0GqWgtMwovM" target="_blank">Video&nbsp;<img alt="youtube" src="assets/images/youtube_social_icon_red.png"></a>,
+  in dem man sehen kann, wie man das ermittelt.
+</div>
+<div row>
+  Rechts daneben steht <b>Phase X / Y</b>. Auch das kann angeklickt werden. Ausserdem kann die Phase mit
+  den Pfeilchen links und rechts davon verringert und erhöht werden. Die Phase ist das, was aktuell
+  erreicht werden muss. Das sieht man dann auf dem Bild darunter. Dort werden die aktuell verfügbaren
+  Akteure angezeigt. Der aktuelle ist dunkel hinterlegt mit weisser Schrift. Die Zahlen in den Kreisen
+  haben folgende Bedeutung:
+  <ul>
+    <li>
+      <div list>
+        <b>1.&nbsp;Zeile</b>
+        <div>
+          Diese Zahl gibt an, auf welche Stufe der Akteur selbst gebracht werden soll. Das wird
+          mit der Ereigniswährung, also den Edelsteinen bezahlt.
+        </div>
+      </div>
+    </li>
+    <li>
+      <div list>
+        <b>2.&nbsp;Zeile</b>
+        <div>
+          Die Bezeichnung des Akteurs.
+        </div>
+      </div>
+    </li>
+    <li>
+      <div list>
+        <b>3.&nbsp;Zeile</b>
+        <div>
+          Die Stufe auf die die Produktion des Akteurs gebracht werden muss. Das wird mit den
+          Festvorräten bezahlt.
+        </div>
+      </div>
+    </li>
+  </ul>
+  Wenn die Werte im Spiel mit den Werten hier übereinstimmen, dann kann die nächste Phase
+  aktiviert werden. Das geschieht entweder dadurch, dass man den markierten Kreis anklickt
+  oder indem man bei der Phase den nächsten Wert eingibt oder das Pfeilchen rechts daneben
+  anklickt.
+</div>
+<div row>
+  Wenn man einen inaktiven Akteur anklickt, dann wird die Phase aktiviert, bei der zum
+  letztenmal eine Änderung bei diesem Akteur vor der aktuellen Phase stattgefunden hat.
+</div>
+<div row>
+  Das ist schon alles, was diese Seite hier zur Verfügung stellt.
+</div>

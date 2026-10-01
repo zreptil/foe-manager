@@ -1,0 +1,193 @@
+:host {
+  --headBack: var(--whatsnewHeadBack);
+  --headFore: var(--whatsnewHeadFore);
+  --bodyBack: var(--whatsnewBodyBack);
+  --bodyFore: var(--whatsnewBodyFore);
+  --accentBack: var(--whatsnewHeadBack);
+  --accentFore: var(--whatsnewHeadFore);
+}
+
+::ng-deep body {
+  --errorColor: white;
+}
+
+::ng-deep .dialog-box.welcome {
+  max-width: 680px !important;
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+::ng-deep a, a:visited, a:active {
+  text-decoration: none;
+  cursor: pointer;
+  color: var(--headBack);
+  vertical-align: middle;
+  text-wrap: nowrap;
+  white-space: nowrap;
+
+  img {
+    height: 16px;
+  }
+}
+
+div[header] {
+  > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+[mat-dialog-title] {
+  display: flex;
+  flex-direction: row;
+  color: var(--headFore);
+  justify-content: space-between;
+  align-items: center;
+
+  .langPanel {
+    display: flex;
+    flex-direction: row;
+    align-content: flex-end;
+    flex-wrap: wrap;
+  }
+}
+
+mat-dialog-content {
+  padding: 1em;
+  font-size: 1.2em;
+
+  div {
+    text-align: justify;
+    padding-top: 1.0em;
+  }
+}
+
+mat-dialog-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  button {
+    color: var(--headFore);
+  }
+
+  .left {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .right {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+
+@media(max-width: 33em) {
+  div[mat-dialog-title] {
+    flex-direction: column !important;
+  }
+}
+
+::ng-deep div[row] {
+  margin-top: 0.5em;
+}
+
+.current {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+::ng-deep ul {
+  display: flex;
+  flex-flow: column;
+  margin: 0;
+  padding: 0 0 1.5em 0;
+
+  li {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 2.0em;
+    position: relative;
+    text-align: justify;
+
+    div[row] {
+      display: flex;
+      flex-flow: row;
+      align-items: flex-start;
+    }
+
+    div[list], div[line] {
+      display: flex;
+      flex-flow: row;
+      align-items: flex-start;
+      gap: 0.5em;
+    }
+
+    div[line] {
+      gap: 0;
+    }
+
+    mat-icon {
+      --v: 24px;
+      font-size: 1em;
+      height: var(--v);
+      width: var(--v);
+      min-width: var(--v);
+      margin-top: 4px;
+    }
+  }
+
+  li:not(first-child) {
+    padding-top: 0.5em;
+  }
+
+  li:before {
+    content: "-";
+    position: absolute;
+    margin-left: -1.1em;
+    font-weight: bold;
+  }
+
+  .added:before {
+    content: "+";
+  }
+
+  .changed:before {
+    content: "~";
+  }
+
+  .removed:before {
+    content: "-";
+  }
+
+  .fixed:before {
+    content: "#";
+  }
+
+  .newline {
+    width: 100%;
+    height: 1px;
+    background: var(--whatsnewBodyFore);
+    margin: 0.5em 0;
+  }
+
+  a, a:visited, a:active {
+    text-decoration: none;
+    cursor: pointer;
+    color: var(--whatsnewBodyLink);
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  [bold] {
+    font-weight: bold;
+  }
+}

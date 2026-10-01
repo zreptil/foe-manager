@@ -1,178 +1,162 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "newProjectRoot": "projects",
-  "projects": {
-    "app": {
-      "i18n": {
-        "sourceLocale": "en"
+  "$schema":"./node_modules/@angular/cli/lib/config/schema.json",
+  "newProjectRoot":"projects",
+  "projects":{
+    "app":{
+      "i18n":{
+        "sourceLocale":"en"
       },
-      "architect": {
-        "build": {
-          "builder": "@angular/build:application",
-          "configurations": {
-            "development": {
-              "extractLicenses": false,
-              "namedChunks": true,
-              "optimization": false,
-              "sourceMap": {
-                "scripts": true,
-                "styles": true,
-                "vendor": false
+      "architect":{
+        "build":{
+          "builder":"@angular/build:application",
+          "configurations":{
+            "development":{
+              "extractLicenses":false,
+              "namedChunks":true,
+              "optimization":false,
+              "sourceMap":{
+                "scripts":true,
+                "styles":true,
+                "vendor":false
               }
             },
-            "production": {
-              "budgets": [
+            "production":{
+              "budgets":[
                 {
-                  "maximumError": "10mb",
-                  "maximumWarning": "7mb",
-                  "type": "initial"
+                  "maximumError":"10mb",
+                  "maximumWarning":"7mb",
+                  "type":"initial"
                 },
                 {
-                  "maximumError": "10mb",
-                  "maximumWarning": "7mb",
-                  "type": "anyComponentStyle"
+                  "maximumError":"10mb",
+                  "maximumWarning":"7mb",
+                  "type":"anyComponentStyle"
                 }
               ],
-              "fileReplacements": [
+              "fileReplacements":[
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace":"src/environments/environment.ts",
+                  "with":"src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all",
-              "sourceMap": false,
-              "serviceWorker": "src/ngsw-config.json"
+              "outputHashing":"all",
+              "sourceMap":false,
+              "serviceWorker":"src/ngsw-config.json"
             }
           },
-          "defaultConfiguration": "production",
-          "options": {
-            "allowedCommonJsDependencies": [
+          "defaultConfiguration":"production",
+          "options":{
+            "allowedCommonJsDependencies":[
               "pdfmake",
               "pdfjs-dist",
               "fast-sha256",
               "jszip"
             ],
-            "assets": [
+            "assets":[
               "src/favicon.ico",
               "src/assets",
               "src/web.config"
             ],
-            "index": "src/index.html",
-            "inlineStyleLanguage": "scss",
-            "outputPath": {
-              "base": "dist/app"
+            "index":"src/index.html",
+            "inlineStyleLanguage":"scss",
+            "outputPath":{
+              "base":"dist/app"
             },
-            "polyfills": [
+            "polyfills":[
               "src/polyfills.ts",
               "@angular/localize/init"
             ],
-            "scripts": [
+            "scripts":[
               "src/assets/scripts/pdf.js",
               "src/assets/scripts/pdf.worker.js"
             ],
-            "styles": [
+            "styles":[
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "src/styles.scss"
             ],
-            "tsConfig": "tsconfig.app.json",
-            "browser": "src/main.ts"
+            "tsConfig":"tsconfig.app.json",
+            "browser":"src/main.ts"
           }
         },
-        "extract-i18n": {
-          "builder": "@angular/build:extract-i18n",
-          "options": {
-            "buildTarget": "app:build"
+        "extract-i18n":{
+          "builder":"@angular/build:extract-i18n",
+          "options":{
+            "buildTarget":"app:build"
           }
         },
-        "serve": {
-          "builder": "@angular/build:dev-server",
-          "options": {
-            "ssl": true,
-            "sslKey": "server.key",
-            "sslCert": "server.crt"
+        "serve":{
+          "builder":"@angular/build:dev-server",
+          "options":{
+            "ssl":true,
+            "sslKey":"server.key",
+            "sslCert":"server.crt"
           },
-          "configurations": {
-            "development": {
-              "buildTarget": "app:build:development"
+          "configurations":{
+            "development":{
+              "buildTarget":"app:build:development"
             },
-            "production": {
-              "buildTarget": "app:build:production"
+            "production":{
+              "buildTarget":"app:build:production"
             }
           },
-          "defaultConfiguration": "development"
-        },
-        "test": {
-          "builder": "@angular/build:karma",
-          "options": {
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "inlineStyleLanguage": "scss",
-            "polyfills": "src/polyfills.ts",
-            "scripts": [],
-            "styles": [
-              "src/styles.scss"
-            ],
-            "tsConfig": "tsconfig.spec.json"
-          }
+          "defaultConfiguration":"development"
         }
       },
-      "prefix": "app",
-      "projectType": "application",
-      "root": "",
-      "schematics": {
-        "@schematics/angular:class": {
-          "skipTests": true
+      "prefix":"app",
+      "projectType":"application",
+      "root":"",
+      "schematics":{
+        "@schematics/angular:class":{
+          "skipTests":true
         },
-        "@schematics/angular:component": {
-          "module": "app",
-          "skipTests": true,
-          "style": "scss",
-          "standalone": false
+        "@schematics/angular:component":{
+          "module":"app",
+          "skipTests":true,
+          "style":"scss",
+          "standalone":false
         },
-        "@schematics/angular:directive": {
-          "module": "app",
-          "skipTests": true
+        "@schematics/angular:directive":{
+          "module":"app",
+          "skipTests":true
         },
-        "@schematics/angular:pipe": {
-          "module": "app",
-          "skipTests": true
+        "@schematics/angular:pipe":{
+          "module":"app",
+          "skipTests":true
         },
-        "@schematics/angular:service": {
-          "skipTests": true
+        "@schematics/angular:service":{
+          "skipTests":true
         }
       }
     }
   },
-  "version": 1,
-  "cli": {
-    "analytics": "67ada623-7f8d-4e76-aa24-99f45c9d7962"
+  "version":1,
+  "cli":{
+    "analytics":"67ada623-7f8d-4e76-aa24-99f45c9d7962"
   },
-  "schematics": {
-    "@schematics/angular:component": {
-      "type": "component"
+  "schematics":{
+    "@schematics/angular:component":{
+      "type":"component"
     },
-    "@schematics/angular:directive": {
-      "type": "directive"
+    "@schematics/angular:directive":{
+      "type":"directive"
     },
-    "@schematics/angular:service": {
-      "type": "service"
+    "@schematics/angular:service":{
+      "type":"service"
     },
-    "@schematics/angular:guard": {
-      "typeSeparator": "."
+    "@schematics/angular:guard":{
+      "typeSeparator":"."
     },
-    "@schematics/angular:interceptor": {
-      "typeSeparator": "."
+    "@schematics/angular:interceptor":{
+      "typeSeparator":"."
     },
-    "@schematics/angular:module": {
-      "typeSeparator": "."
+    "@schematics/angular:module":{
+      "typeSeparator":"."
     },
-    "@schematics/angular:pipe": {
-      "typeSeparator": "."
+    "@schematics/angular:pipe":{
+      "typeSeparator":"."
     },
-    "@schematics/angular:resolver": {
-      "typeSeparator": "."
+    "@schematics/angular:resolver":{
+      "typeSeparator":"."
     }
   }
 }
