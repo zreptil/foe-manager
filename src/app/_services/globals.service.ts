@@ -425,7 +425,8 @@ export class GlobalsService {
       s14: GLOBALS.user.copyColorIdx,
       s15: GLOBALS.user.worldIdx,
       s16: GLOBALS.user.factor,
-      s17: GLOBALS.user.eventConfig?.asJson
+      s17: GLOBALS.user.eventConfig?.asJson,
+      s18: GLOBALS.user.timer
     };
     this.adjustGbSort();
     for (const world of GLOBALS.user.listWorld) {
@@ -578,6 +579,7 @@ export class GlobalsService {
     GLOBALS.user.worldIdx = storage.s15 ?? 0;
     GLOBALS.user.factor = storage.s16 ?? 1.9;
     GLOBALS.user.eventConfig = new EventConfig(storage.s17);
+    GLOBALS.user.timer = storage.s18 ?? {target: '', goods: '', bankett: ''};
 
     // validate data
     this.adjustGbSort();

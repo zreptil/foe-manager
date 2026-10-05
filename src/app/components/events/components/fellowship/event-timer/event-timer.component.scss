@@ -7,12 +7,19 @@
   --accentFore: var(--whatsnewHeadFore);
 }
 
-::ng-deep body {
-  --errorColor: white;
-}
+::ng-deep .alert {
+  .mat-mdc-dialog-surface.mdc-dialog__surface {
+    animation: colorChange 1s linear infinite alternate;
+  }
 
-::ng-deep .dialog-box.welcome {
-  max-width: 680px !important;
+  @keyframes colorChange {
+    from {
+      box-shadow: 0 0 32px 50px rgba(255, 0, 0, 1);
+    }
+    to {
+      box-shadow: none;
+    }
+  }
 }
 
 h1 {
@@ -194,6 +201,7 @@ mat-dialog-actions {
   flex-flow: row;
   align-items: center;
   justify-content: flex-start;
+  min-height: 3em;
 
   div[label] {
     display: flex;
@@ -206,4 +214,8 @@ mat-dialog-actions {
       font-size: 75%;
     }
   }
+}
+
+.mat-mdc-form-field-input-control.mat-mdc-form-field-input-control {
+  text-transform: uppercase;
 }

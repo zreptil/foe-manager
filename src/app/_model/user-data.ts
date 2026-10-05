@@ -49,6 +49,7 @@ export class UserData extends BaseData {
   showInfoGb: boolean;
   copyColorIdx: number;
   worldIdx: number;
+  timer: any;
 
   constructor(json?: any) {
     super(json);

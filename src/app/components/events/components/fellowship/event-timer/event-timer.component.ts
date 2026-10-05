@@ -1,11 +1,11 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {DlgBaseComponent} from '@/classes/base/dlg-base-component';
-import {GlobalsService} from '@/_services/globals.service';
+import {GLOBALS, GlobalsService} from '@/_services/globals.service';
 import {EnvironmentService} from '@/_services/environment.service';
 import {MessageService} from '@/_services/message.service';
 import {HttpClient} from '@angular/common/http';
 import {DomSanitizer} from '@angular/platform-browser';
-import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {DialogData} from '@/_model/dialog-data';
 import {CloseButtonData} from '@/controls/close-button/close-button-data';
 import {Utils} from '@/classes/utils';
@@ -22,11 +22,9 @@ export class EventTimerComponent extends DlgBaseComponent implements OnInit {
     colorKey: 'help',
     showClose: true
   };
-  bankett = '4.22T';
-  goods = '4.22Q';
-  target = '8.4Q';
   timerStart: number;
   timerEnd: number;
+  org = {timerStart: 0, timerEnd: 0};
   durationText: string;
   timerHandle: NodeJS.Timeout;
 
@@ -35,8 +33,39 @@ export class EventTimerComponent extends DlgBaseComponent implements OnInit {
               public msg: MessageService,
               public http: HttpClient,
               public sanitizer: DomSanitizer,
+              private dialogRef: MatDialogRef<EventTimerComponent>,
               @Inject(MAT_DIALOG_DATA) public data: DialogData) {
     super(globals, 'EventTimer');
+  }
+
+  get bankett() {
+    return GLOBALS.user.timer.bankett;
+  }
+
+  set bankett(value) {
+    GLOBALS.user.timer.bankett = value;
+  }
+
+  get target() {
+    return GLOBALS.user.timer.target;
+  }
+
+  set target(value) {
+    GLOBALS.user.timer.target = value;
+  }
+
+  get goods() {
+    return GLOBALS.user.timer.goods;
+  }
+
+  set goods(value) {
+    if (GLOBALS.user.timer.goods != null && this.timerEnd != null && this.timerStart != null) {
+      const diff = Date.now() - this.timerEnd;
+      this.timerStart = this.org.timerStart + diff;
+      this.timerEnd = this.org.timerEnd + diff;
+    }
+    GLOBALS.user.timer.goods = value;
+    GLOBALS.saveSharedData();
   }
 
   get timerText() {
@@ -69,6 +98,14 @@ export class EventTimerComponent extends DlgBaseComponent implements OnInit {
     }
   }
 
+  get rootElement() {
+    const ret: string[] = ['.dialog-box', '.event-timer'];
+    if (this.timerEnd != null && this.durationText === this.fmtTime(0)) {
+      ret.push('.alert');
+    }
+    return Utils.join(ret, '');
+  }
+
   calcTimer(bankett: string, current: string, target: string, time: number, useCurrentTime = false) {
     const vBankett = this.cvtEvtNumber(bankett);
     const vCurrent = this.cvtEvtNumber(current);
@@ -77,6 +114,9 @@ export class EventTimerComponent extends DlgBaseComponent implements OnInit {
     time = count * time / 1000;
     if (useCurrentTime) {
       time -= (Date.now() - this.timerStart) / 1000;
+    }
+    if (time <= 0) {
+      this.dialogRef.addPanelClass('alert');
     }
     return this.fmtTime(time < 0 ? 0 : time);
   }
@@ -143,12 +183,17 @@ export class EventTimerComponent extends DlgBaseComponent implements OnInit {
     evt.stopPropagation();
     if (this.timerStart == null) {
       this.timerStart = Date.now();
+      this.org.timerStart = this.timerStart;
     } else if (this.timerEnd == null) {
       this.timerEnd = Date.now();
+      this.org.timerEnd = this.timerEnd;
+      GLOBALS.saveSharedData();
       this.timerStep();
     } else {
       this.timerStart = null;
       this.timerEnd = null;
+      this.org.timerStart = null;
+      this.org.timerEnd = null;
     }
   }
 }
