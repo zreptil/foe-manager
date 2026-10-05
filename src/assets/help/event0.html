@@ -51,15 +51,16 @@
 </div>
 <div row>
   Es gibt aber eine Möglichkeit, die Stadt zu ermitteln, die gerade aktuell ist. Die drei Aufgaben, die
-  man zur Abarbeitung zur Verfügung hat, können dazu genutzt werden, das herauszufinden. Wenn man
-  das Ereignis anklickt, dann ist links neben dem daraufhin erscheinenden Eingabefeld ein Hilfe-Button.
-  Wenn dieser gedrückt wird, kann man die aktuellen Aufgaben aus Listen aussuchen. Die Kombination
-  dieser Aufgaben ergibt dann möglicherweise die Stadt, in der man sich befindet. Manche Kombinationen
-  gibt es in mehreren Städten und manche Kombinationen kommen gar nicht vor. Das wird dann rechts neben
-  den Auswahlfeldern angezeigt. Wenn eine gültige Kombination gefunden wurde, dann wird durch
-  Anklicken des Buttons die entsprechende Stadt ausgewählt. Wenn es mehrere Städte gibt, dann
-  wird die erste Stadt genommen. Wenn die Stadt nicht ermittelt werden kann, dann hilft es, das
-  zu wiederholen, wenn andere Aufgaben vorhanden sind.
+  man zur Abarbeitung zur Verfügung hat, können dazu genutzt werden, das herauszufinden. Dazu gibt es
+  links neben dem Ereignis einen Hilfe-Button. Wenn dieser gedrückt wird, kann man die aktuellen
+  Aufgaben aus Listen aussuchen. Die Kombination dieser Aufgaben ergibt dann möglicherweise die Stadt,
+  in der man sich befindet. Manche Aufgaben sind Stadtspezifisch, weshalb man dann nur eine Aufgabe
+  aussuchen muss, um die Stadt zu ermitteln. Aber viele Aufgaben gibt es in mehreren Städten. Deswegen
+  kann man bis zu drei Aufgaben auswählen und wenn das noch nicht reicht, kann man noch die Anzahl der
+  aktuell gesammelten Aufgaben auswählen. Das sollte normalerweise die Stadt dann eindeutig identifizieren.
+  Wenn eine gültige Kombination gefunden wurde, dann wird durch Anklicken des Buttons mit der Nummer
+  der Stadt darauf die entsprechende Stadt ausgewählt. Wenn die Stadt nicht ermittelt werden kann,
+  dann hilft es, das zu wiederholen, wenn andere Aufgaben vorhanden sind.
 </div>
 <div row>
   Es gibt von Linnun Foe auch ein <a href="https://www.youtube.com/watch?v=0GqWgtMwovM" target="_blank">Video&nbsp;<img alt="youtube" src="assets/images/youtube_social_icon_red.png"></a>,
@@ -107,6 +108,46 @@
 <div row>
   Wenn man einen inaktiven Akteur anklickt, dann wird die Phase aktiviert, bei der zum
   letztenmal eine Änderung bei diesem Akteur vor der aktuellen Phase stattgefunden hat.
+</div>
+<div row>
+  Wenn man im Bankett schon weiter fortgeschritten ist, dann muss man immer länger warten,
+  bis man die aktuelle Aufwertung durchführen kann. Um das ein bisschen abschätzen zu können,
+  gibt es einen Timer, der durch das Icon
+  <span class="material-icons">timer</span>
+  dargestellt wird. Wenn man das anklickt, dann öffnet sich ein Dialog, in dem man die Werte
+  eingeben kann, die gerade beim Bankett angezeigt werden. Die Werte werden so angegeben wie
+  angezeigt. Also z.B. <b>1.02T</b> oder <b>4,01Q</b>. Der Timer rechnet sich das dann entsprechend um. Hier
+  die Vorgehensweise für die Verwendung des Dialogs.
+  <ul>
+    <li>
+      <div list><b>Wert Bankett</b></div>
+      <div>Den Wert eingeben, der beim Bankett in der Mitte des Kreises steht</div>
+    </li>
+    <li>
+      <div list><b>Zielwert</b></div>
+      <div>Den Wert eingeben, den die Festvorräte erreichen sollen. Das ist generell einer der Werte,
+        die bei den Akteuren als nächste Zahlung angezeigt werden. Aber es kann z.B. am Ende der
+        Phasen auch <b>8,4Q</b> eingegeben werden, um die Zeit zu ermitteln, die noch vergehen muss,
+        bis das Bankett abgeschlossen ist.
+      </div>
+    </li>
+    <li>
+      <div list><b>Start Timer</b></div>
+      <div>Diesen Button betätigen, wenn der Timer beim Bankettverwalter gerade eben die Festvorräte geliefert hat.</div>
+    </li>
+    <li>
+      <div list><b>Stop Timer</b></div>
+      <div>Der Button ändert sich dann in diesen. Den dann drücken, wenn das nächstemal der Bankettverwalter die Vorräte liefert.</div>
+    </li>
+    <li>
+      <div list><b>Wert Festvorräte</b></div>
+      <div>Jetzt den Wert eingeben, der oben bei den Festvorräten steht.</div>
+    </li>
+  </ul>
+  Wenn alles richtig ausgeführt wurde, dann läuft am unteren Rand des Dialogs ein Timer mit, der
+  anzeigt, wie lange es noch dauert, bis die Festvorräte den gewünschten Wert erreicht haben. Die
+  Genauigkeit dieser Vorhersage hängt davon ab, dass man den Start und Stop des Timers korrekt
+  ausführt.
 </div>
 <div row>
   Das ist schon alles, was diese Seite hier zur Verfügung stellt.

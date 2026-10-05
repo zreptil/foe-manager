@@ -97,6 +97,10 @@ mat-dialog-actions {
 
 ::ng-deep div[row] {
   margin-top: 0.5em;
+
+  .material-icons {
+    vertical-align: middle;
+  }
 }
 
 .current {
@@ -190,4 +194,11 @@ mat-dialog-actions {
   [bold] {
     font-weight: bold;
   }
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
 }
