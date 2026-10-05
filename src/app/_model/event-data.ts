@@ -12,4 +12,6 @@ export class EventData {
   sourceUrl: string;
   places: EventPlaceData[];
   towns: EventTownData[];
+  finalNote: string;
+  tasks: { [key: string]: number[][] };
 }

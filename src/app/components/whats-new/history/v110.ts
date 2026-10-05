@@ -8,6 +8,15 @@ import {EnumSortmode} from '@/_model/user-data';
   selector: 'app-v110',
   template: `<h2 [innerHTML]="version"></h2>
   <ul>
+    <li class="added" i18n="110a17">
+      Bei dem Gemeinschaftsevent gibt es jetzt eine Hilfe und man kann bei der Eingabe
+      der abgeschlossenen Ereignisse links daneben einen Button anklicken, mit dem
+      anhand der aktuellen Aufgaben ermittelt werden kann, welche Stadt aktuell
+      vorliegt.
+    </li>
+    <li class="changed" i18n="110c8">
+      Beim Kopieren werden nur noch Plätze berücksichtigt, die mehr als 0 Belohnung haben.
+    </li>
     <li class="added" i18n="110a16">
       Es gibt einen neuen Bereich für die temporären Ereignisse. Aktuell ist dort das
       Gemeinschaftsevent zu finden. Das wird im Laufe der Zeit erweitert, wenn es weitere

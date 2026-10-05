@@ -55,6 +55,8 @@ import {QuantenInvasionComponent} from './components/qi/quanten-invasion/quanten
 import {EpochComponent} from '@/components/epoch/epoch.component';
 import {EventsComponent} from './components/events/events.component';
 import {HelpComponent} from '@/components/help/help.component';
+import { FellowshipComponent } from './components/events/components/fellowship/fellowship.component';
+import { EventTimerComponent } from './components/events/components/fellowship/event-timer/event-timer.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +91,9 @@ import {HelpComponent} from '@/components/help/help.component';
     EpochComponent,
     QuantenInvasionComponent,
     EventsComponent,
-    HelpComponent
+    HelpComponent,
+    FellowshipComponent,
+    EventTimerComponent
   ],
   bootstrap: [AppComponent],
   imports: [

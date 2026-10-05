@@ -1,0 +1,134 @@
+@if (editField === 'townHelp') {
+  <div i18n info>
+    Hiermit kann ermittelt werden, welche Stadt aktuell aktiv ist. Dazu
+    musst Du im Spiel die drei Aufgaben anschauen und hier nacheinander
+    auswählen. Die Reihenfolge spielt keine Rolle. Wenn die Stadt dann
+    ermittelt werden kann, erscheinen Buttons, die die möglichen Städte
+    zeigen. Wenn nur noch eine Stadt zu sehen ist, dann ist das die
+    einzige Stadt, in der die Aufgabenkombination vorkommen kann.
+  </div>
+  <div controls>
+    @for (task of taskEdits; let taskIdx = $index; track taskIdx) {
+      <button [matMenuTriggerFor]="taskMenu" mat-button>
+        {{ tasks[task] }}
+      </button>
+      <mat-menu #taskMenu="matMenu" class="menuTasks menuSettings">
+        <button (click)="setTask(task)" mat-button>
+          <span i18n>Aufgabe entfernen</span>
+          <mat-icon>delete</mat-icon>
+        </button>
+        @for (key of taskKeys(taskIdx); track $index) {
+          <button (click)="setTask(task, key)" mat-button>{{ key }}</button>
+        }
+      </mat-menu>
+    }
+    @if (tasks.length === 3 && event.tasks[tasks[2]] != null) {
+      <button [matMenuTriggerFor]="limitMenu" mat-button>
+        Aufgabe #{{ taskLimit ?? 0 }}
+      </button>
+      <mat-menu #limitMenu="matMenu" class="menuTasks menuSettings">
+        @for (_ of taskNumbers; track $index) {
+          <button (click)="setTaskLimit($index+1)" mat-button>{{ $index + 1 }}</button>
+        }
+      </mat-menu>
+    }
+    <div column>
+      @if (townsForTasks.length === 0) {
+        <mat-icon>sentiment_dissatisfied</mat-icon>
+      } @else {
+        @for (town of townsForTasks; track $index) {
+          <button (click)="clickTownForTasks($event, $index)" mat-raised-button>
+            <div [innerHtml]="town.label"></div>
+          </button>
+        }
+      }
+    </div>
+    <button (click)="editField=null" mat-icon-button small-icon-button>
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+} @else {
+  <div controls>
+    <div>
+      @if (editField === 'eventCount') {
+        <mat-form-field>
+          <mat-label i18n>Abgeschlossene Ereignisse</mat-label>
+          <input (focus)="globals.onFocus($event)"
+                 (keydown.enter)="saveEventCount()"
+                 [(ngModel)]="eventCount"
+                 autofocus matInput>
+        </mat-form-field>
+        <button (click)="saveEventCount($event)" mat-icon-button small-icon-button>
+          <mat-icon>done</mat-icon>
+        </button>
+        <button (click)="editField = null" mat-icon-button small-icon-button>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      } @else if (editField === 'phase') {
+        <mat-form-field>
+          <mat-label i18n>Phase des Aufbaus</mat-label>
+          <input (focus)="globals.onFocus($event)"
+                 (keydown.enter)="savePhase()"
+                 [(ngModel)]="phaseValue"
+                 autofocus matInput>
+        </mat-form-field>
+        <button (click)="savePhase($event)" mat-icon-button small-icon-button>
+          <mat-icon>done</mat-icon>
+        </button>
+        <button (click)="editField = null" mat-icon-button small-icon-button>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      } @else {
+        <button (click)="clickTownHelp($event)" mat-icon-button small-icon-button>
+          <mat-icon>help</mat-icon>
+        </button>
+        <button (click)="clickEventCount($event)" mat-button>
+          Ereignis {{ globals.user.eventConfig.eventCount + 1 }} /
+          {{ nameForTown(townIdxForCount(globals.user.eventConfig.eventCount)) }}
+        </button>
+        <button (click)="clickProgress($event, -1)" mat-button>
+          <mat-icon>arrow_left</mat-icon>
+        </button>
+        <button (click)="editField='phase'" mat-button>
+          Phase {{ globals.user.eventConfig.progressIdx + 1 }} / {{ progress.length }}
+        </button>
+        <button (click)="clickProgress($event, 1)" mat-button>
+          <mat-icon>arrow_right</mat-icon>
+        </button>
+      }
+    </div>
+    <a [href]="event.sourceUrl" mat-button target="_blank">
+      <img alt="external link" src="assets/images/youtube_social_icon_red.png">
+    </a>
+  </div>
+}
+@if (progressInfo != null) {
+  <div [innerHtml]="progressInfo" info></div>
+}
+<div [style]="styleForMap" map>
+  <div (click)="clickEventTimer($event)" timer>
+    <mat-icon>timer</mat-icon>
+  </div>
+  @for (place of event.places; track $index) {
+    <div (click)="clickPlace($event, $index)" [class]="classForPlace($index)" [style]="styleForPlace($index)">
+      <div level>{{ place.levels[townIdx] }}</div>
+      <div name>{{ place.name }}</div>
+      <div value>{{ placeProgress($index) }}</div>
+      <svg circle-text viewBox="0 0 200 200">
+        <defs>
+          <path d="M 100,100
+             m -80,0
+             a 80,80 0 1,1 160,0
+             a 80,80 0 1,1 -160,0"
+                id="circle"/>
+        </defs>
+
+        <text>
+          <textPath href="#circle">
+            {{ event.finalNote }}
+          </textPath>
+        </text>
+      </svg>
+    </div>
+  }
+</div>

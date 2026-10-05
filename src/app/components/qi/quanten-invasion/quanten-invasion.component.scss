@@ -197,8 +197,8 @@
     display: flex;
     flex-flow: row;
     align-items: center;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 
     button[small-icon-button] {
       --size: 20px;
@@ -221,13 +221,19 @@
     --mat-form-field-container-vertical-padding: 6px;
   }
 
+  .mat-mdc-text-field-wrapper {
+    margin-left: 10px;
+    padding: 0;
+    width: 100%;
+  }
+
   ::ng-deep [small-input] .mat-mdc-form-field-subscript-wrapper {
     display: none;
   }
 
   [group].selected {
-    background: rgba(0, 0, 0, 0.4);
-    color: #fff;
+    background: var(--mainHeadBack);
+    color: var(--mainHeadFore);
   }
 
   mat-icon {

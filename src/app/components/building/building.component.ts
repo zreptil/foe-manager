@@ -134,7 +134,9 @@ export class BuildingComponent {
         } else {
           reward = this.bs.calcReward(reward);
         }
-        rewards.push(`P${i + 1}(${Math.abs(reward)})`);
+        if (reward > 0) {
+          rewards.push(`P${i + 1}(${Math.abs(reward)})`);
+        }
       }
     }
     return [...ret, ...rewards.reverse()].join(' ');

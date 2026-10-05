@@ -1,0 +1,39 @@
+<div cdkDrag cdkDragBoundary=".cdk-overlay-container"
+     cdkDragRootElement=".dialog-box.event-timer">
+  <div cdkDragHandle mat-dialog-title>
+    <h1 i18n>Timer</h1>
+    <app-close-button [data]="closeData"></app-close-button>
+  </div>
+  <mat-dialog-content>
+    <mat-form-field>
+      <mat-label i18n>Wert Bankett</mat-label>
+      <input (focus)="globals.onFocus($event)"
+             [(ngModel)]="bankett"
+             autofocus matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label i18n>Zielwert</mat-label>
+      <input (focus)="globals.onFocus($event)"
+             [(ngModel)]="target"
+             matInput>
+    </mat-form-field>
+    <button (click)="clickTimer($event)" mat-button timer-button>
+      <mat-icon>{{ timerIcon }}</mat-icon>
+      <div label>
+        <div>{{ timerLabel }}</div>
+        <div timer-text>{{ timerText }}</div>
+      </div>
+    </button>
+    <mat-form-field>
+      <mat-label i18n>Wert Festvorräte</mat-label>
+      <input (focus)="globals.onFocus($event)"
+             [(ngModel)]="goods"
+             matInput>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    @if (timerEnd != null) {
+      <div>{{ durationText }}</div>
+    }
+  </mat-dialog-actions>
+</div>
