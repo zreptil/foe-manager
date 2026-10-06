@@ -13,7 +13,7 @@
     "i18n-nobuild":"npm run i18n-01-extract && tsc tools/i18n-create-messages.ts && node tools/i18n-create-messages.js",
     "ng":"ng",
     "start-all":"run-p backend start",
-    "start":"npm run sync-version && ng serve --port 67 --open --ssl --ssl-key server.key --ssl-cert server.crt --hmr --prebundle",
+    "start":"npm run sync-version && ng serve --port 67 --open --ssl --ssl-key server.key --ssl-cert server.crt --hmr=false --prebundle",
     "test":"ng test",
     "watch":"ng build --watch --configuration development",
     "sync-version":"tsc tools/sync-version.ts && node tools/sync-version.js",

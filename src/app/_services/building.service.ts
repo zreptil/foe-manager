@@ -35,8 +35,16 @@ export class BuildingService {
     return GLOBALS.user._siteMode() === EnumSitemode.manage;
   }
 
-  calcReward(reward: number) {
-    return Math.round(reward * (GLOBALS.user.factor ?? 1.9));
+  // calcReward(reward: number) {
+  //   return Math.round(reward * (GLOBALS.user.factor ?? 1.9));
+  // }
+
+  calcRewardPlace(reward: number, gbUser: GbUserData, rewardIdx: number) {
+    return Math.round(reward * this.factorForPlace(gbUser, rewardIdx));
+  }
+
+  factorForPlace(gbUser: GbUserData, rewardIdx: number) {
+    return gbUser.factor[rewardIdx] < 0 ? (GLOBALS.user.factor ?? 1.9) : gbUser.factor[rewardIdx];
   }
 
   gbForUser(gb: GbData): GbUserData {
@@ -53,12 +61,12 @@ export class BuildingService {
     return gbUser == null ? null : gb.levels.find(level => level.level === gbUser.level + 1);
   }
 
-  calcPlacesRewards(level: LevelData, _gbUser: GbUserData, ownerValue: number) {
+  calcPlacesRewards(level: LevelData, gbUser: GbUserData, ownerValue: number) {
     const ret = new PlacesData();
     let rest = level.cost;
     let lastBlock = 0;
     for (let i = 0; i < level.rewards.length; i++) {
-      const reward = this.calcReward(level.rewards[i]);
+      const reward = this.calcRewardPlace(level.rewards[i], gbUser, i);
       ret.rewards.push(reward);
       if (reward > 0) {
         rest -= reward;
@@ -128,10 +136,12 @@ export class BuildingService {
     let calcOwnerValue = 0;
     let lastReward = 0;
     for (let i = 0; i < level.rewards.length; i++) {
-      let reward = this.calcReward(level.rewards[i]);
+      let reward = this.calcRewardPlace(level.rewards[i], gbUser, i);
       const slRest = sl[0] === 0 ? sl.slice(1) : sl;
       let sniperRest = 0;
-      const rewardRest = level.rewards.slice(i + 1).reduce((s, v) => s + this.calcReward(v), 0);
+      const rewardRest = level.rewards.slice(i + 1)
+        .reduce((s, v, idx) =>
+          s + this.calcRewardPlace(v, gbUser, idx), 0);
       if (rest - sl[0] > 0) {
         sniperRest = slRest.reduce((s, v) => s + v, 0);
       }

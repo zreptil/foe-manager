@@ -110,9 +110,15 @@
                 {{ nextLevel.level }}
               </div>
             </td>
+            @if (showFactors) {
+              <td><!-- factor --></td>
+            }
             <td>
               <div cost>{{ nextLevel.cost }}</div>
             </td>
+            @if (globals.user.activeGbKey != null) {
+              <td></td>
+            }
             @if (showSniper) {
               @if (!bs.isModeManage) {
                 <td></td>
@@ -127,60 +133,12 @@
               }
             }
           </tr>
-          <!--          @if (showSniper) {-->
-          <!--            <tr row>-->
-          <!--              &lt;!&ndash; row for own value &ndash;&gt;-->
-          <!--              <td></td>-->
-          <!--              @if (isColumnVisible(-1)) {-->
-          <!--                <td [class]="classForCopy(-1)" owner reward>-->
-          <!--                  <div (click)="clickCopyIdx($event, -1)">-->
-          <!--                    <mat-icon>crown</mat-icon>-->
-          <!--                    {{ ownerValueMax(nextLevel) }}-->
-          <!--                  </div>-->
-          <!--                </td>-->
-          <!--                <ng-container [ngTemplateOutletContext]="{method: -1}" [ngTemplateOutlet]="calcMissing"/>-->
-          <!--                &lt;!&ndash;                <td [class]="classForCopy(-1, ['blocks'])"></td>&ndash;&gt;-->
-          <!--              }-->
-          <!--              @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {-->
-          <!--                @let v = calcPlaceValue(calcIdx, nextLevel, -2, gbUser.ownerValue);-->
-          <!--                @if (isColumnVisible(calcIdx)) {-->
-          <!--                  <td [class]="classForCopy(calcIdx)">-->
-          <!--                    @let pv = calcPlaceValue(calcIdx, nextLevel, -2, gbUser.ownerValue);-->
-          <!--                    @if ((pv ?? 0) > 0 || gbUser.sniperValues?.length > 0) {-->
-          <!--                      <div (click)="clickCopyIdx($event, calcIdx)" calccost cost>-->
-          <!--                        <mat-icon>crown</mat-icon>-->
-          <!--                        {{ v }}-->
-          <!--                      </div>-->
-          <!--                    } @else {-->
-          <!--                      <div calccost cost>-->
-          <!--                        <mat-icon>crown</mat-icon>-->
-          <!--                        {{ v }}-->
-          <!--                      </div>-->
-          <!--                    }-->
-          <!--                  </td>-->
-          <!--                  <ng-container [ngTemplateOutletContext]="{method: calcIdx}" [ngTemplateOutlet]="calcMissing"/>-->
-          <!--                  &lt;!&ndash;                  <td [class]="classForCopy(calcIdx, ['blocks'])"></td>&ndash;&gt;-->
-          <!--                }-->
-          <!--              }-->
-          <!--            </tr>-->
-          <!--          } @else {-->
-          <!--            <tr row>-->
-          <!--              <td></td>-->
-          <!--              @if (isColumnVisible(-1)) {-->
-          <!--                <td [class]="classForCopy(-1)" owner reward>-->
-          <!--                  <div>-->
-          <!--                    <div (click)="clickCopyIdx($event, -1)">-->
-          <!--                      <mat-icon>crown</mat-icon>-->
-          <!--                      {{ ownerValueMax(nextLevel) }}-->
-          <!--                    </div>-->
-          <!--                  </div>-->
-          <!--                </td>-->
-          <!--                <ng-container [ngTemplateOutletContext]="{method: gbUser.copyIdx}" [ngTemplateOutlet]="calcMissing"/>-->
-          <!--              }-->
-          <!--            </tr>-->
-          <!--          }-->
+          <!-- header row with ownervalue -->
           <tr row>
             <td></td>
+            @if (showFactors) {
+              <td factors i18n>Faktor</td>
+            }
             <!-- ownervalue to secure all places and difference to ownervalue already paid -->
             @for (place of placesData; let placeIdx = $index; track $index) {
               @if (isColumnVisible(placeIdx - 1)) {
@@ -201,10 +159,28 @@
               }
             }
           </tr>
+          <!-- rows with places -->
           @for (reward of nextLevel.rewards; let rewardIdx = $index; track rewardIdx) {
             @if (reward > 0) {
               <tr (click)="clickRow($event, rewardIdx)" [class]="classForReward(rewardIdx)" row>
                 <td title>P{{ rewardIdx + 1 }}</td>
+                @if (showFactors) {
+                  <td (click)="$event.stopPropagation()"
+                      [matMenuTriggerData]="{ idx: rewardIdx }"
+                      [matMenuTriggerFor]="factorMenu"
+                      factors>{{ bs.factorForPlace(gbUser, rewardIdx)  | number:'1.1-2' }}
+                  </td>
+                }
+                <mat-menu #factorMenu="matMenu" class="menuSettings">
+                  <ng-template let-idx="idx" matMenuContent>
+                    <button (click)="clickFactor($event, gbUser, idx, -1)" matButton>
+                      <mat-icon>calculate</mat-icon>
+                    </button>
+                    @for (i of [1.9, 1.95, 2.0]; track $index) {
+                      <button (click)="clickFactor($event, gbUser, idx, i)" matButton>{{ i | number:'1.1-2' }}</button>
+                    }
+                  </ng-template>
+                </mat-menu>
                 @for (place of placesData; let placeIdx = $index; track placeIdx) {
                   @if (isColumnVisible(placeIdx - 1)) {
                     <td [class]="classForCopy(placeIdx-1)">
@@ -241,6 +217,10 @@
           @if (showSniper) {
             <tr row>
               <td></td>
+              @if (showFactors) {
+                <td factors>
+                </td>
+              }
               @for (place of placesData; let placeIdx = $index; track placeIdx) {
                 @if (isColumnVisible($index - 1)) {
                   <td [class]="classForCopy(placeIdx-1)">
@@ -256,81 +236,6 @@
               }
             </tr>
           }
-          <!-- rows for places -->
-          <!--          @for (reward of nextLevel.rewards; let rewardIdx = $index; track rewardIdx) {-->
-          <!--            @if (reward !== 0) {-->
-          <!--              <tr (click)="clickRow($event, rewardIdx)" [class]="classForReward(rewardIdx)" row>-->
-          <!--                <td title>P{{ rewardIdx + 1 }}</td>-->
-          <!--                @if (isColumnVisible(-1)) {-->
-          <!--                  <td [class]="classForCopy(-1)" reward>{{ bs.calcReward(reward) }}</td>-->
-          <!--                  <td [class]="classForCopy(-1, ['blocks'])">-->
-          <!--                    <div [class]="classForBlock(-1, nextLevel, rewardIdx)" block>-->
-          <!--                      @let block = calcBlockValue(-1, nextLevel, rewardIdx);-->
-          <!--                      @let last = calcBlockValue(-1, nextLevel, rewardIdx - 1);-->
-          <!--                      @if ((rewardIdx === 0 || block > last) && block > 0) {-->
-          <!--                        {{ block }}-->
-          <!--                      } @else {-->
-          <!--                        <mat-icon i18n-title title="Der Platz ist mit dem Eigenanteil schon gesichert">thumb_up</mat-icon>-->
-          <!--                      }-->
-          <!--                    </div>-->
-          <!--                  </td>-->
-          <!--                }-->
-          <!--                @if (showSniper) {-->
-          <!--                  @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {-->
-          <!--                    @if (isColumnVisible(calcIdx)) {-->
-          <!--                      <td [class]="classForCopy(calcIdx)">-->
-          <!--                        <div [class]="classForPlaceValue(calcIdx, nextLevel, rewardIdx, gbUser.ownerValue)" calc>-->
-          <!--                          @if (calcPlaceValue(calcIdx, nextLevel, -2, gbUser.ownerValue) > 0 || gbUser.sniperValues?.length > 0) {-->
-          <!--                            @let v = calcPlaceValue(calcIdx, nextLevel, rewardIdx, gbUser.ownerValue);-->
-          <!--                            @if (v >= 0) {-->
-          <!--                              <span></span>{{ v }}-->
-          <!--                            } @else {-->
-          <!--                              <mat-icon>target</mat-icon>-->
-          <!--                              {{ -v }}-->
-          <!--                            }-->
-          <!--                          } @else {-->
-          <!--                          }-->
-          <!--                        </div>-->
-          <!--                      </td>-->
-          <!--                      <td [class]="classForCopy(calcIdx, ['blocks'])">-->
-          <!--                        <div [class]="classForBlock(calcIdx, nextLevel, rewardIdx)" block>-->
-          <!--                          @let block = calcBlockValue(calcIdx, nextLevel, rewardIdx);-->
-          <!--                          @let last = calcBlockValue(calcIdx, nextLevel, rewardIdx - 1);-->
-          <!--                          @if ((rewardIdx === 0 || block > last) && block > 0) {-->
-          <!--                            {{ block }}-->
-          <!--                          } @else {-->
-          <!--                            <mat-icon i18n-title title="Der Platz ist mit dem Eigenanteil schon gesichert">thumb_up</mat-icon>-->
-          <!--                          }-->
-          <!--                        </div>-->
-          <!--                      </td>-->
-          <!--                    }-->
-          <!--                  }-->
-          <!--                }-->
-          <!--              </tr>-->
-          <!--            }-->
-          <!--          }-->
-          <!--          @if (showSniper) {-->
-          <!--            <tr>-->
-          <!--              @if (isColumnVisible(-1)) {-->
-          <!--                <td colspan="3"></td>-->
-          <!--              } @else {-->
-          <!--                <td></td>-->
-          <!--              }-->
-          <!--              @for (_method of calcMethods; let calcIdx = $index; track calcIdx) {-->
-          <!--                @if (isColumnVisible(calcIdx)) {-->
-          <!--                  <td>-->
-          <!--                    <div calcTotal>-->
-          <!--                      @if (calcPlaceValue(calcIdx, nextLevel, -2, gbUser.ownerValue) > 0 || gbUser.sniperValues?.length > 0) {-->
-          <!--                        <mat-icon>crown</mat-icon>-->
-          <!--                        {{ calcTotal(calcIdx, nextLevel, gbUser.ownerValue) }}-->
-          <!--                      }-->
-          <!--                    </div>-->
-          <!--                  </td>-->
-          <!--                  <td></td>-->
-          <!--                }-->
-          <!--              }-->
-          <!--            </tr>-->
-          <!--          }-->
         </table>
 
         @if (showSniper && globals.user.activeUserGb != null) {

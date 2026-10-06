@@ -74,6 +74,10 @@ export class BuildingComponent {
     return ret;
   }
 
+  get showFactors() {
+    return GLOBALS.user.activeGbKey != null;
+  }
+
   protected get classForGb() {
     const ret: string[] = [];
     if (GLOBALS.user.siteMode === EnumSitemode.manage || GLOBALS.user.siteMode === EnumSitemode.buildings) {
@@ -132,7 +136,7 @@ export class BuildingComponent {
         if (this.gbUser.copyIdx >= 0) {
           reward = this.placesData[this.gbUser.copyIdx + 1].rewards[i];
         } else {
-          reward = this.bs.calcReward(reward);
+          reward = this.bs.calcRewardPlace(reward, this.gbUser, i);
         }
         if (reward > 0) {
           rewards.push(`P${i + 1}(${Math.abs(reward)})`);
@@ -284,7 +288,7 @@ export class BuildingComponent {
     if (placeIdx > 0) {
       const place = this.placesData[placeIdx];
       const value = Math.abs(place.rewards[idx]);
-      if (value <= 0 || this.bs.calcReward(level.rewards[idx]) < value) {
+      if (value <= 0 || this.bs.calcRewardPlace(level.rewards[idx], this.gbUser, idx) < value) {
         ret.push('negative');
       } else {
         ret.push('positive');
@@ -362,28 +366,6 @@ export class BuildingComponent {
     this.saveSharedData();
   }
 
-  protected clickOwnSort(evt: PointerEvent, diff: number) {
-    let gbUser: GbUserData = null;
-    if (diff === -2) {
-      this.gbUser.sortIdx = -1;
-    } else if (diff === 2) {
-      this.gbUser.sortIdx = GLOBALS.gbList.length;
-    } else {
-      for (let i = 0; i < GLOBALS.gbList.length && gbUser == null; i++) {
-        const temp = this.bs.gbForUser(GLOBALS.gbList[i]);
-        if (temp.sortIdx === this.gbUser.sortIdx + diff) {
-          gbUser = temp;
-        }
-      }
-      if (gbUser != null) {
-        gbUser.sortIdx = this.gbUser.sortIdx;
-        this.gbUser.sortIdx += diff;
-      }
-    }
-    GLOBALS._gbList = null;
-    this.saveSharedData();
-  }
-
   // protected clickSecure(evt: PointerEvent) {
   //   evt?.preventDefault();
   //   GLOBALS.showConDebug = false;
@@ -419,11 +401,38 @@ export class BuildingComponent {
   //   GLOBALS.showConDebug = false;
   // }
 
+  protected clickOwnSort(evt: PointerEvent, diff: number) {
+    let gbUser: GbUserData = null;
+    if (diff === -2) {
+      this.gbUser.sortIdx = -1;
+    } else if (diff === 2) {
+      this.gbUser.sortIdx = GLOBALS.gbList.length;
+    } else {
+      for (let i = 0; i < GLOBALS.gbList.length && gbUser == null; i++) {
+        const temp = this.bs.gbForUser(GLOBALS.gbList[i]);
+        if (temp.sortIdx === this.gbUser.sortIdx + diff) {
+          gbUser = temp;
+        }
+      }
+      if (gbUser != null) {
+        gbUser.sortIdx = this.gbUser.sortIdx;
+        this.gbUser.sortIdx += diff;
+      }
+    }
+    GLOBALS._gbList = null;
+    this.saveSharedData();
+  }
+
   protected classForColor(idx: number) {
     const ret: string[] = [`color-${idx}`];
     if (idx === this.gbUser?.colorIdx) {
       ret.push('current');
     }
     return ret;
+  }
+
+  protected clickFactor(evt: PointerEvent, gbUser: GbUserData, rewardIdx: number, value: number) {
+    gbUser.factor[rewardIdx] = value;
+    GLOBALS.force.set(!GLOBALS.force());
   }
 }

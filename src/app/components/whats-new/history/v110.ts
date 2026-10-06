@@ -8,6 +8,14 @@ import {EnumSortmode} from '@/_model/user-data';
   selector: 'app-v110',
   template: `<h2 [innerHTML]="version"></h2>
   <ul>
+    <li class="added" i18n="110a18">
+      Es gibt jetzt die Möglichkeit, die Faktoren für die Berechnung der Plätze
+      individuell für jeden Platz jedes Gebäudes festzulegen. Das kann man im
+      Editor für die Gebäude einstellen. Beim Anklicken des Faktors öffnet sich
+      ein Menü, in dem man den Faktor auswählen kann. Mit dem Icon
+      <mat-icon>calculate</mat-icon>
+      wählt man den Faktor aus, der in den Einstellungen vorbelegt wurde.
+    </li>
     <li class="added" i18n="110a17">
       Bei dem Gemeinschaftsevent gibt es jetzt eine Hilfe und man kann bei der Eingabe
       der abgeschlossenen Ereignisse links daneben einen Button anklicken, mit dem

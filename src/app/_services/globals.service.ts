@@ -513,6 +513,10 @@ export class GlobalsService {
         if (gbUser.copyIdx >= this.bs.calcPlaceMethods.length - 1) {
           gbUser.copyIdx = 0;
         }
+        gbUser.factor ??= [];
+        while (gbUser.factor.length < 5) {
+          gbUser.factor.push(-1);
+        }
         if (+gbUser.sortIdx === -1) {
           gbUser.sortIdx = idx;
         }
