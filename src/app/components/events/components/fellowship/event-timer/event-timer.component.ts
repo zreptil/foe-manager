@@ -43,6 +43,7 @@ export class EventTimerComponent extends DlgBaseComponent implements OnInit {
   }
 
   set bankett(value) {
+    this.updateTimer();
     GLOBALS.user.timer.bankett = value;
   }
 
@@ -51,6 +52,7 @@ export class EventTimerComponent extends DlgBaseComponent implements OnInit {
   }
 
   set target(value) {
+    this.updateTimer();
     GLOBALS.user.timer.target = value;
   }
 
@@ -59,11 +61,7 @@ export class EventTimerComponent extends DlgBaseComponent implements OnInit {
   }
 
   set goods(value) {
-    if (GLOBALS.user.timer.goods != null && this.timerEnd != null && this.timerStart != null) {
-      const diff = Date.now() - this.timerEnd;
-      this.timerStart = this.org.timerStart + diff;
-      this.timerEnd = this.org.timerEnd + diff;
-    }
+    this.updateTimer();
     GLOBALS.user.timer.goods = value;
     GLOBALS.saveSharedData();
   }
@@ -104,6 +102,14 @@ export class EventTimerComponent extends DlgBaseComponent implements OnInit {
       ret.push('.alert');
     }
     return Utils.join(ret, '');
+  }
+
+  updateTimer() {
+    if (GLOBALS.user.timer.goods != null && this.timerEnd != null && this.timerStart != null) {
+      const diff = Date.now() - this.timerEnd;
+      this.timerStart = this.org.timerStart + diff;
+      this.timerEnd = this.org.timerEnd + diff;
+    }
   }
 
   calcTimer(bankett: string, current: string, target: string, time: number, useCurrentTime = false) {
