@@ -117,6 +117,8 @@ export class EventTimerComponent extends DlgBaseComponent implements OnInit {
     }
     if (time <= 0) {
       this.dialogRef.addPanelClass('alert');
+    } else {
+      this.dialogRef.removePanelClass('alert');
     }
     return this.fmtTime(time < 0 ? 0 : time);
   }
