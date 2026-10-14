@@ -3,7 +3,7 @@
     <div toolbar>
       <div>
         <div>{{ toolbarTitle }}</div>
-        @if (bs.isModeManage) {
+        @if (bs.isModeManage || bs.isModeAnalysis) {
           @if (globals.siteConfig.editField === 'world') {
             <mat-form-field>
               <mat-label i18n>Name der Welt</mat-label>
@@ -49,17 +49,24 @@
           </button>
         </ng-template>
         <ng-template #btnSiteMode let-mode="mode">
-          <button (click)="toggleMode($event, mode)" matIconButton small-icon-button>
+          <button (click)="toggleMode($event, mode)" mat-button>
+            {{ labelForMode(mode) }}
             <mat-icon>{{ iconForMode(mode) }}</mat-icon>
           </button>
         </ng-template>
         @switch (globals.user.siteMode) {
           @case (EnumSitemode.manage) {
             @if (globals.user.activeUserGb == null) {
-              <ng-container [ngTemplateOutletContext]="{}" [ngTemplateOutlet]="btnSiteMode"/>
-              <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.buildings}" [ngTemplateOutlet]="btnSiteMode"/>
-              <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.qi}" [ngTemplateOutlet]="btnSiteMode"/>
-              <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.events}" [ngTemplateOutlet]="btnSiteMode"/>
+              <button [matMenuTriggerFor]="modeMenu" mat-icon-button small-icon-button>
+                <mat-icon>menu</mat-icon>
+              </button>
+              <mat-menu #modeMenu="matMenu" class="menuSettings">
+                <ng-container [ngTemplateOutletContext]="{}" [ngTemplateOutlet]="btnSiteMode"/>
+                <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.buildings}" [ngTemplateOutlet]="btnSiteMode"/>
+                <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.qi}" [ngTemplateOutlet]="btnSiteMode"/>
+                <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.events}" [ngTemplateOutlet]="btnSiteMode"/>
+                <ng-container [ngTemplateOutletContext]="{mode: EnumSitemode.analysis}" [ngTemplateOutlet]="btnSiteMode"/>
+              </mat-menu>
             } @else {
               <ng-container [ngTemplateOutlet]="btnBack"/>
             }
@@ -74,6 +81,9 @@
             <ng-container [ngTemplateOutlet]="btnBack"/>
           }
           @case (EnumSitemode.events) {
+            <ng-container [ngTemplateOutlet]="btnBack"/>
+          }
+          @case (EnumSitemode.analysis) {
             <ng-container [ngTemplateOutlet]="btnBack"/>
           }
         }
@@ -152,11 +162,17 @@
               </button>
               <div row>
                 <mat-icon>calculate</mat-icon>
-                @for (factor of globals.factorList; track $index) {
-                  <button (click)="clickFactor($event, factor)" [class]="classForFactor(factor)" mat-button>
-                    <span>{{ factor | number:'1.1-2' }}</span>
+                <div row wrap>
+                  @for (factor of globals.factorList; track $index) {
+                    <button (click)="clickFactor($event, factor)" [class]="classForFactor(factor)" mat-button>
+                      <span>{{ factor | number:'1.1-3' }}</span>
+                    </button>
+                  }
+                  <button (click)="bs.clickEditFactor($event)" [class]="classForFactor(globals.user.editFactor)" mat-button small-icon-button>
+                    <mat-icon>edit</mat-icon>
+                    {{ globals.user.editFactor | number:'1.1-3' }}
                   </button>
-                }
+                </div>
               </div>
             </mat-menu>
           }
@@ -213,33 +229,12 @@
                 }
               }
             } @else {
-              @for (gb of globals.gbList; track $index) {
-                <!--                @if (!showNavigation && showEpoch($index)) {-->
-                  <!--                  <div [class]="classForEpoch(gb.epoch)" epoch>-->
-                  <!--                    <div>-->
-                  <!--                      @if (globals.user?.gbSort?.[globals.user.siteMode].asc) {-->
-                  <!--                        <button (click)="globals.clickSortEpoch($event, $index, gb.epoch, -1)" matIconButton small-icon-button>-->
-                  <!--                          @if (globals.sortEpoch(gb.epoch) > 0) {-->
-                  <!--                            <mat-icon>arrow_drop_up</mat-icon>-->
-                  <!--                          } @else {-->
-                  <!--                            <mat-icon>format_list_numbered</mat-icon>-->
-                  <!--                          }-->
-                  <!--                        </button>-->
-                  <!--                        <button (click)="globals.clickSortEpoch($event, $index, gb.epoch, 0)" label mat-button>{{ globals.epochName(gb.epoch) }}</button>-->
-                  <!--                        <button (click)="globals.clickSortEpoch($event, $index, gb.epoch, 1)" matIconButton small-icon-button>-->
-                  <!--                          @if (globals.sortEpoch(gb.epoch) < globals.sortEpoch(globals.gbList[globals.gbList.length - 1].epoch)) {-->
-                  <!--                            <mat-icon>arrow_drop_down</mat-icon>-->
-                  <!--                          } @else {-->
-                  <!--                            <mat-icon>format_list_numbered</mat-icon>-->
-                  <!--                          }-->
-                  <!--                        </button>-->
-                  <!--                      } @else {-->
-                  <!--                        <div label>{{ globals.epochName(gb.epoch) }}</div>-->
-                  <!--                      }-->
-                  <!--                    </div>-->
-                  <!--                  </div>-->
-                  <!--                }-->
-                <app-building [building]="gb"></app-building>
+              @if (bs.isModeAnalysis) {
+                <app-analysis></app-analysis>
+              } @else {
+                @for (gb of globals.gbList; track $index) {
+                  <app-building [building]="gb"></app-building>
+                }
               }
             }
             @if (showNavigation) {

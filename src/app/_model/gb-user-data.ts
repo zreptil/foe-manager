@@ -53,6 +53,9 @@ export class GbUserData extends BaseData {
     this.copyIdx = json?.i ?? def?.copyIdx ?? -1;
     this.sortIdx = json?.j ?? def?.sortIdx ?? -1;
     this.factor = json?.k ?? def?.factor ?? [];
+    while (this.factor.length < 5) {
+      this.factor.push(1);
+    }
   }
 }
 

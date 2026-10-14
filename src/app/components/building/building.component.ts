@@ -7,6 +7,8 @@ import {GLOBALS, GlobalsService} from '@/_services/globals.service';
 import {EnumSitemode, EnumSortmode} from '@/_model/user-data';
 import {Utils} from '@/classes/utils';
 import {MessageService} from '@/_services/message.service';
+import {EditFactorComponent} from '@/components/edit-factor/edit-factor.component';
+import {DialogResultButton} from '@/_model/dialog-data';
 
 @Component({
   selector: 'app-building',
@@ -19,7 +21,7 @@ export class BuildingComponent {
   gbUser: GbUserData;
   nextLevel: LevelData;
   placesData: PlacesData[] = [];
-  showLevelHint = false;
+  showEditLevelHint = false;
 
   constructor(public globals: GlobalsService,
               public msg: MessageService,
@@ -38,7 +40,7 @@ export class BuildingComponent {
       if (this.gbUser != null && this.nextLevel != null) {
         this.calcPlaces(this.nextLevel, this.gbUser.ownerValue);
       }
-    })
+    });
   }
 
   get gb() {
@@ -50,6 +52,10 @@ export class BuildingComponent {
       (GLOBALS.user.siteMode === EnumSitemode.manage &&
         (GLOBALS.user.activeGbKey != null || this.gbUser.copyIdx >= 0)
       );
+  }
+
+  get showManagement() {
+    return GLOBALS.user.siteMode === EnumSitemode.manage;
   }
 
   get ownSort() {
@@ -212,11 +218,11 @@ export class BuildingComponent {
     } else {
       GLOBALS.siteConfig.levelGbKey = null;
     }
-    this.showLevelHint = !levelValid;
+    this.showEditLevelHint = !levelValid;
   }
 
   protected updateLevel() {
-    this.showLevelHint = false;
+    this.showEditLevelHint = false;
     this.nextLevel = this.bs.levelForUser(this.gb, this.gbUser);
     GLOBALS.siteConfig.levelGbKey = null;
     this.gbUser.ownerValue = 0;
@@ -360,12 +366,6 @@ export class BuildingComponent {
     GLOBALS.siteConfig.editField = 'owner';
   }
 
-  protected clickCopyIdx(evt: PointerEvent, idx: number) {
-    evt?.preventDefault();
-    this.gbUser.copyIdx = +idx;
-    this.saveSharedData();
-  }
-
   // protected clickSecure(evt: PointerEvent) {
   //   evt?.preventDefault();
   //   GLOBALS.showConDebug = false;
@@ -401,6 +401,12 @@ export class BuildingComponent {
   //   GLOBALS.showConDebug = false;
   // }
 
+  protected clickCopyIdx(evt: PointerEvent, idx: number) {
+    evt?.preventDefault();
+    this.gbUser.copyIdx = +idx;
+    this.saveSharedData();
+  }
+
   protected clickOwnSort(evt: PointerEvent, diff: number) {
     let gbUser: GbUserData = null;
     if (diff === -2) {
@@ -431,8 +437,25 @@ export class BuildingComponent {
     return ret;
   }
 
+  protected classForFactor(factor: number, idx: number) {
+    const ret: string[] = [];
+    if (+factor === +this.gbUser.factor[idx]) {
+      ret.push('current');
+    }
+    return ret;
+  }
+
   protected clickFactor(evt: PointerEvent, gbUser: GbUserData, rewardIdx: number, value: number) {
     gbUser.factor[rewardIdx] = value;
     GLOBALS.force.set(!GLOBALS.force());
+  }
+
+  protected clickEditFactor(evt: PointerEvent, gbUser: GbUserData, rewardIdx: number) {
+    this.msg.showPopup(EditFactorComponent, 'edit-factor', {}).subscribe((result: any) => {
+      if (result?.btn === DialogResultButton.ok && result?.factor != null) {
+        gbUser.factor[rewardIdx] = result.factor;
+        GLOBALS.force.set(!GLOBALS.force());
+      }
+    });
   }
 }

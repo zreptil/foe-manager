@@ -41,7 +41,7 @@ export class GbData extends BaseData {
   }
 
   get maxLevel() {
-    return Math.max(0, ...this.levels?.map?.(item => item.level));
+    return Math.max(0, ...this.levels?.map?.(item => +item.level));
   }
 
   override get _asJson(): any {

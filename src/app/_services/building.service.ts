@@ -4,6 +4,8 @@ import {GbUserData} from '@/_model/gb-user-data';
 import {GLOBALS} from '@/_services/globals.service';
 import {EnumSitemode} from '@/_model/user-data';
 import {LevelData} from '@/_model/level-data';
+import {EditFactorComponent} from '@/components/edit-factor/edit-factor.component';
+import {MessageService} from '@/_services/message.service';
 
 export class PlacesData {
   rewards: number[] = [];
@@ -18,6 +20,9 @@ export class PlacesData {
 export class BuildingService {
   calcPlaceMethods: any = [this.calcPlacesRewards, this.calcPlacesSupport, this.calcPlacesSniper];
   calcPlaceTitles = [null, $localize`Förderung`, $localize`Sniper`];
+
+  constructor(public msg: MessageService) {
+  }
 
   get showInfo() {
     return GLOBALS.user.showInfoGb;
@@ -35,6 +40,10 @@ export class BuildingService {
     return GLOBALS.user._siteMode() === EnumSitemode.manage;
   }
 
+  get isModeAnalysis() {
+    return GLOBALS.user._siteMode() === EnumSitemode.analysis;
+  }
+
   // calcReward(reward: number) {
   //   return Math.round(reward * (GLOBALS.user.factor ?? 1.9));
   // }
@@ -44,7 +53,10 @@ export class BuildingService {
   }
 
   factorForPlace(gbUser: GbUserData, rewardIdx: number) {
-    return gbUser.factor[rewardIdx] < 0 ? (GLOBALS.user.factor ?? 1.9) : gbUser.factor[rewardIdx];
+    if (gbUser != null && gbUser.factor.length > rewardIdx) {
+      return gbUser.factor[rewardIdx] < 0 ? (GLOBALS.user.factor ?? 1.9) : gbUser.factor[rewardIdx];
+    }
+    return GLOBALS.user.factor ?? 1.9;
   }
 
   gbForUser(gb: GbData): GbUserData {
@@ -193,5 +205,28 @@ export class BuildingService {
     }
     GLOBALS.showConDebug = false;
     return ret;
+  }
+
+  calcArcheFactor(level: number) {
+    let bonus: number;
+    if (level <= 58) {
+      bonus = 10 + (level - 1);
+    } else if (level <= 80) {
+      bonus = 67 + (level - 58) * 0.5;
+    } else if (level <= 180) {
+      bonus = 90 + (level - 80) * 0.1;
+    } else {
+      bonus = 100;
+    }
+    return 1 + bonus / 100;
+  }
+
+  clickEditFactor(_evt: PointerEvent) {
+    this.msg.showPopup(EditFactorComponent, 'edit-factor', {});
+  }
+
+  sumLevels(epoch?: number) {
+    let list = GLOBALS.gbList.filter(gb => epoch == null || gb.epoch === epoch);
+    return list.reduce((s, v) => s + (this.gbForUser(v)?.level ?? 0), 0);
   }
 }

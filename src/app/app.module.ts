@@ -1,4 +1,4 @@
-import {isDevMode, NgModule} from '@angular/core';
+import {inject, isDevMode, NgModule, provideAppInitializer} from '@angular/core';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 import {BrowserModule} from '@angular/platform-browser';
@@ -55,8 +55,12 @@ import {QuantenInvasionComponent} from './components/qi/quanten-invasion/quanten
 import {EpochComponent} from '@/components/epoch/epoch.component';
 import {EventsComponent} from './components/events/events.component';
 import {HelpComponent} from '@/components/help/help.component';
-import { FellowshipComponent } from './components/events/components/fellowship/fellowship.component';
-import { EventTimerComponent } from './components/events/components/fellowship/event-timer/event-timer.component';
+import {FellowshipComponent} from './components/events/components/fellowship/fellowship.component';
+import {EventTimerComponent} from './components/events/components/fellowship/event-timer/event-timer.component';
+import {EditFactorComponent} from './components/edit-factor/edit-factor.component';
+import {NumberPipe} from '@/_pipes/number.pipe';
+import {LanguageService} from '@/_services/language.service';
+import { AnalysisComponent } from './components/analysis/analysis.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +97,10 @@ import { EventTimerComponent } from './components/events/components/fellowship/e
     EventsComponent,
     HelpComponent,
     FellowshipComponent,
-    EventTimerComponent
+    EventTimerComponent,
+    EditFactorComponent,
+    NumberPipe,
+    AnalysisComponent
   ],
   bootstrap: [AppComponent],
   imports: [
@@ -108,17 +115,17 @@ import { EventTimerComponent } from './components/events/components/fellowship/e
     HideMissingImageDirective,
     ScrollShadowDirective,
     OAuthModule.forRoot(),
-    V100,
-    V101,
-    V102,
-    V103,
-    V104,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
+    V100,
+    V101,
+    V102,
+    V103,
+    V104,
     V105,
     V106,
     V107,
@@ -128,8 +135,10 @@ import { EventTimerComponent } from './components/events/components/fellowship/e
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
-    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {autoFocus: 'dialog', restoreFocus: true}}
-  ]
+    {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {autoFocus: 'dialog', restoreFocus: true}},
+    provideAppInitializer(() => {
+      inject(LanguageService).activate('de-DE');
+    })]
 })
 export class AppModule {
 }

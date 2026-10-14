@@ -14,7 +14,8 @@ export enum EnumSitemode {
   manage,
   buildings,
   qi,
-  events
+  events,
+  analysis
 }
 
 export enum EnumSortmode {
@@ -50,6 +51,7 @@ export class UserData extends BaseData {
   copyColorIdx: number;
   worldIdx: number;
   timer: any;
+  editFactor: number;
 
   constructor(json?: any) {
     super(json);

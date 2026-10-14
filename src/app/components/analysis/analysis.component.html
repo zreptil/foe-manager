@@ -1,0 +1,16 @@
+<table>
+  <tr>
+    <td>Name</td>
+    <td>Stufe ({{ bs.sumLevels(epoch()) }})</td>
+    <td>Boni</td>
+  </tr>
+  @for (data of gbList; track $index) {
+    <tr>
+      <td>{{ data.gb.name }}</td>
+      <td>{{ data.user?.level }}</td>
+      <td>
+        <div [innerHtml]="effectsForGb(data.gb)"></div>
+      </td>
+    </tr>
+  }
+</table>

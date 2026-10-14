@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, signal} from '@angular/core';
 import {registerLocaleData} from '@angular/common';
 import enUS from '@angular/common/locales/en';
 import enGB from '@angular/common/locales/en-GB';
@@ -12,6 +12,7 @@ import * as messages from '../../assets/messages.json';
   providedIn: 'root'
 })
 export class LanguageService {
+  readonly locale = signal('en-US');
 
   languageList: LangData[] = [
     new LangData('en-GB', `English (GB)`, 'gb', null, 0),
@@ -20,6 +21,10 @@ export class LanguageService {
   ];
 
   constructor() {
+  }
+
+  formatNumber(value: number) {
+    return new Intl.NumberFormat(this.locale()).format(value);
   }
 
   activate(langCode?: string) {
@@ -37,5 +42,6 @@ export class LanguageService {
       'en-GB': enGB,
       'de-DE': de,
     } as any)[lng.id]);
+    this.locale.set(lng.id);
   }
 }

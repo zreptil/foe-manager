@@ -120,7 +120,7 @@ export class GlobalsService {
     ]
   }
 
-  factorList: number[] = [1.9, 1.95, 2.0];
+  factorList: number[] = [1.0, 1.9, 1.95, 2.0];
   urlPlayground = 'http://pdf.zreptil.de/playground.php';
   appData: AppData;
   readonly _user = signal<UserData>(null);
@@ -352,6 +352,12 @@ export class GlobalsService {
           && GLOBALS.user.listGb[gb.key].active
           && GLOBALS.user.listGb[gb.key].player == null);
         break;
+      case EnumSitemode.analysis:
+        ret = this.assist.gbList.filter(gb =>
+          GLOBALS.user.listGb[gb.key] != null
+          && GLOBALS.user.listGb[gb.key].active
+          && GLOBALS.user.listGb[gb.key].player == null);
+        break;
       default:
         ret = this.assist.gbList;
     }
@@ -426,7 +432,8 @@ export class GlobalsService {
       s15: GLOBALS.user.worldIdx,
       s16: GLOBALS.user.factor,
       s17: GLOBALS.user.eventConfig?.asJson,
-      s18: GLOBALS.user.timer
+      s18: GLOBALS.user.timer,
+      s19: GLOBALS.user.editFactor
     };
     this.adjustGbSort();
     for (const world of GLOBALS.user.listWorld) {
@@ -541,11 +548,21 @@ export class GlobalsService {
     // }
     GLOBALS.user.siteMode = storage.s3 ?? EnumSitemode.select;
     GLOBALS.user.username = storage.s4 ?? 'Bitte Name eingeben';
-    const defSort = {0: {mode: EnumSortmode.timeCopied, asc: true}, 1: {mode: EnumSortmode.alpha, asc: true}, 2: {mode: EnumSortmode.alpha, asc: true}};
+    const defSort: any = {
+      0: {mode: EnumSortmode.timeCopied, asc: true},
+      1: {mode: EnumSortmode.alpha, asc: true},
+      2: {mode: EnumSortmode.alpha, asc: true},
+      5: {mode: EnumSortmode.epoch, asc: true}
+    };
     if (typeof (storage.s5) !== 'object' || storage.s5[0]?.mode == null) {
       storage.s5 = defSort;
     }
     GLOBALS.user.gbSort = storage.s5 ?? defSort;
+    for (const key of Object.keys(defSort)) {
+      if (GLOBALS.user.gbSort[key] == null) {
+        GLOBALS.user.gbSort[key] = defSort[key];
+      }
+    }
     GLOBALS.user.activeGbKey = storage.s6;
     if (storage.s7 != null) {
       GLOBALS.user.activeUserGb = new GbUserData(storage.s7);
@@ -581,9 +598,13 @@ export class GlobalsService {
     }
     GLOBALS.user.copyColorIdx = storage.s14 ?? -1;
     GLOBALS.user.worldIdx = storage.s15 ?? 0;
-    GLOBALS.user.factor = storage.s16 ?? 1.9;
+    GLOBALS.user.factor = +(storage.s16 ?? 1.9);
     GLOBALS.user.eventConfig = new EventConfig(storage.s17);
     GLOBALS.user.timer = storage.s18 ?? {target: '', goods: '', bankett: ''};
+    GLOBALS.user.editFactor = +(storage.s19 ?? 1.9);
+    if (isNaN(GLOBALS.user.editFactor)) {
+      GLOBALS.user.editFactor = 1.9;
+    }
 
     // validate data
     this.adjustGbSort();

@@ -76,6 +76,9 @@ export class MainComponent implements OnInit {
     if (GLOBALS.user.activeUserGb != null) {
       return 'building';
     }
+    if (GLOBALS.user.siteMode === EnumSitemode.analysis) {
+      return 'analysis';
+    }
     return '';
   }
 
@@ -85,7 +88,7 @@ export class MainComponent implements OnInit {
         if (GLOBALS.user.activeUserGb != null) {
           return null;
         }
-        return $localize`Liste der Gebäude in`;
+        return $localize`Gebäude in`;
       case EnumSitemode.select:
         return $localize`Bitte die Gebäude auswählen, die in ${GLOBALS.user.worldName ?? $localize` Deiner Stadt`} stehen`;
       case EnumSitemode.buildings:
@@ -94,8 +97,10 @@ export class MainComponent implements OnInit {
         return $localize`Quanteninvasion`;
       case EnumSitemode.events:
         return $localize`Ereignisse`;
+      case EnumSitemode.analysis:
+        return $localize`Auswertung für`;
       default:
-        return $localize`Liste der Gebäude in`;
+        return $localize`Gebäude in`;
     }
   }
 
@@ -112,6 +117,23 @@ export class MainComponent implements OnInit {
     return GLOBALS.user.activeGbKey != null;
   }
 
+  labelForMode(mode?: number) {
+    mode ??= GLOBALS.user.siteMode;
+    switch (mode) {
+      case EnumSitemode.select:
+        return null;
+      case EnumSitemode.manage:
+        return $localize`Auswahl`;
+      case EnumSitemode.qi:
+        return $localize`Quanteninvasion`;
+      case EnumSitemode.events:
+        return $localize`Ereignisse`;
+      case EnumSitemode.analysis:
+        return $localize`Auswertung`;
+    }
+    return $localize`Gebäude`;
+  }
+
   iconForMode(mode?: number) {
     mode ??= GLOBALS.user.siteMode;
     switch (mode) {
@@ -123,6 +145,8 @@ export class MainComponent implements OnInit {
         return 'map';
       case EnumSitemode.events:
         return 'event';
+      case EnumSitemode.analysis:
+        return 'bar_chart';
     }
     return 'apartment';
   }
@@ -312,17 +336,17 @@ export class MainComponent implements OnInit {
     return GLOBALS.gbList.some(gb => gb.epoch === epoch);
   }
 
-  protected clickFactor(evt: PointerEvent, factor: number) {
-    evt?.preventDefault();
-    GLOBALS.user.factor = factor;
-    GLOBALS.saveSharedData();
-  }
-
   protected classForFactor(factor: number) {
     const ret: string[] = [];
     if (factor === GLOBALS.user.factor) {
       ret.push('current');
     }
     return ret;
+  }
+
+  protected clickFactor(evt: PointerEvent, factor: number) {
+    evt?.preventDefault();
+    GLOBALS.user.factor = factor;
+    GLOBALS.saveSharedData();
   }
 }

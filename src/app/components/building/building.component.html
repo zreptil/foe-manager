@@ -50,13 +50,17 @@
   }
   @if (globals.user.siteMode > 0 && gbUser != null) {
     <mat-card-content>
-      @if (showLevelHint && globals.siteConfig.levelGbKey !== gb.key) {
+      @if (showEditLevelHint && globals.siteConfig.levelGbKey !== gb.key) {
         <div levelHint>
           @if (globals.siteConfig.levelValue > 1 && globals.siteConfig.levelValue < gb.maxLevel) {
             Für Level {{ globals.siteConfig.levelValue }} gibt es aktuell keine Daten.
           } @else {
             Der Level muss im Bereich von 2 bis {{ gb.maxLevel - 1 }} liegen.
           }
+        </div>
+      } @else if (gbUser.level < 0 || gbUser.level >= gb.maxLevel) {
+        <div levelHint>
+          Für Level {{ gbUser.level }} gibt es aktuell keine Daten.
         </div>
       }
       @if (globals.siteConfig.levelGbKey === gb.key) {
@@ -168,18 +172,20 @@
                   <td (click)="$event.stopPropagation()"
                       [matMenuTriggerData]="{ idx: rewardIdx }"
                       [matMenuTriggerFor]="factorMenu"
-                      factors>{{ bs.factorForPlace(gbUser, rewardIdx)  | number:'1.1-2' }}
+                      factors>{{ bs.factorForPlace(gbUser, rewardIdx)  | number:'1.1-3' }}
                   </td>
                 }
                 <mat-menu #factorMenu="matMenu" class="menuSettings">
-                  <ng-template let-idx="idx" matMenuContent>
-                    <button (click)="clickFactor($event, gbUser, idx, -1)" matButton>
-                      <mat-icon>calculate</mat-icon>
-                    </button>
-                    @for (i of [1.9, 1.95, 2.0]; track $index) {
-                      <button (click)="clickFactor($event, gbUser, idx, i)" matButton>{{ i | number:'1.1-2' }}</button>
-                    }
-                  </ng-template>
+                  <div row wrap>
+                    <ng-template let-idx="idx" matMenuContent>
+                      <button (click)="clickFactor($event, gbUser, idx, -1)" [class]="classForFactor(-1, rewardIdx)" matButton>
+                        <mat-icon>calculate</mat-icon>
+                      </button>
+                      @for (i of [...globals.factorList, globals.user.editFactor]; track $index) {
+                        <button (click)="clickFactor($event, gbUser, idx, i)" [class]="classForFactor(i, rewardIdx)" matButton>{{ i | number:'1.1-3' }}</button>
+                      }
+                    </ng-template>
+                  </div>
                 </mat-menu>
                 @for (place of placesData; let placeIdx = $index; track placeIdx) {
                   @if (isColumnVisible(placeIdx - 1)) {

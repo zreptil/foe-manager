@@ -1,0 +1,23 @@
+<div cdkDrag cdkDragBoundary=".cdk-overlay-container"
+     cdkDragRootElement=".dialog-box.edit-factor">
+  <div cdkDragHandle mat-dialog-title>
+    <h1 i18n>Eigener Faktor</h1>
+    <app-close-button [data]="closeData"></app-close-button>
+  </div>
+  <mat-dialog-content>
+    <mat-form-field>
+      <mat-label i18n>Faktor</mat-label>
+      <input (focus)="globals.onFocus($event)"
+             [(ngModel)]="factor"
+             autofocus matInput>
+    </mat-form-field>
+    @if (globals.user.listGb['The-Arc'] != null) {
+      <button (click)="clickArche($event)" mat-button>Faktor der eigenen Arche</button>
+    }
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button (click)="clickSave($event)" mat-button>
+      <mat-icon>save</mat-icon>
+    </button>
+  </mat-dialog-actions>
+</div>

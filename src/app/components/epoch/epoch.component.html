@@ -21,9 +21,13 @@
     }
   </mat-card-title>
   <div content>
-    @for (gb of globals.gbList; track $index) {
-      @if (gb.epoch === epoch()) {
-        <app-building [building]="gb"></app-building>
+    @if (bs.isModeAnalysis) {
+      <app-analysis [epoch]="epoch()"></app-analysis>
+    } @else {
+      @for (gb of globals.gbList; track $index) {
+        @if (gb.epoch === epoch()) {
+          <app-building [building]="gb"></app-building>
+        }
       }
     }
   </div>

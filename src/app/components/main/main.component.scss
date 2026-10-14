@@ -71,7 +71,11 @@
     height: calc(var(--doc-height) - 50px);
   }
 
-  [content] {
+  [content].analysis {
+    overflow-y: auto;
+  }
+
+  [content]:not(.analysis) {
     overflow-y: auto;
     display: flex;
     flex-flow: column;
@@ -278,11 +282,6 @@ app-log {
     align-items: flex-start;
     padding: 0.5em;
 
-    button.current {
-      background-color: var(--mainHeadFore);
-      color: var(--mainHeadBack);
-    }
-
     > button {
       width: 100%;
       justify-content: flex-start;
@@ -295,12 +294,21 @@ app-log {
       gap: 0.2em;
 
       mat-icon {
-        --size: 24px;
+        --size: 16px;
         font-size: var(--size);
         height: var(--size);
         color: var(--mainHeadFore);
         padding-left: var(--mat-button-text-with-icon-horizontal-padding);
         padding-right: 2px;
+      }
+    }
+
+    button.current, button:hover {
+      background-color: var(--mainHeadFore);
+      color: var(--mainHeadBack);
+
+      mat-icon {
+        color: var(--mainHeadBack);
       }
     }
 
@@ -327,6 +335,13 @@ app-log {
       button[small-icon-button]:hover {
         --mat-icon-color: var(--mainHeadBack);
       }
+    }
+
+    div[row][wrap] {
+      display: flex;
+      flex-flow: row;
+      flex-wrap: wrap;
+      gap: 0.2em;
     }
   }
 }

@@ -96,14 +96,6 @@ export class EventTimerComponent extends DlgBaseComponent implements OnInit {
     }
   }
 
-  get rootElement() {
-    const ret: string[] = ['.dialog-box', '.event-timer'];
-    if (this.timerEnd != null && this.durationText === this.fmtTime(0)) {
-      ret.push('.alert');
-    }
-    return Utils.join(ret, '');
-  }
-
   updateTimer() {
     if (GLOBALS.user.timer.goods != null && this.timerEnd != null && this.timerStart != null) {
       const diff = Date.now() - this.timerEnd;
