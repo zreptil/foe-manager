@@ -214,6 +214,7 @@ export class MainComponent implements OnInit {
     evt.preventDefault();
     GLOBALS.user.worldIdx = idx;
     GLOBALS._gbList = null;
+    GLOBALS.force.set(!GLOBALS.force());
     GLOBALS.saveSharedData();
   }
 
@@ -276,6 +277,7 @@ export class MainComponent implements OnInit {
     // }
     // GLOBALS.user.gbSort[GLOBALS.user.siteMode] = sort;
     GLOBALS._gbList = null;
+    GLOBALS.force.set(!GLOBALS.force());
     GLOBALS.saveSharedData();
   }
 

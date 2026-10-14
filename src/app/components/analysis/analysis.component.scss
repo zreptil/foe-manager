@@ -10,6 +10,31 @@
       padding: 0.2em;
     }
 
+    td[level] {
+      text-align: center;
+    }
+
+    td[effects] {
+      display: flex;
+      flex-flow: column;
+
+      > div {
+        mat-icon {
+          min-width: 24px;
+        }
+
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        gap: 0.3em;
+      }
+    }
+
+    .type {
+      display: flex;
+      flex-flow: row;
+    }
+
     tr:nth-child(odd) {
       background-color: rgba(0, 0, 0, 0.1);
     }

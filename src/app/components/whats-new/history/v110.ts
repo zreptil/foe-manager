@@ -8,6 +8,14 @@ import {EnumSortmode} from '@/_model/user-data';
   selector: 'app-v110',
   template: `<h2 [innerHTML]="version"></h2>
   <ul>
+    <li class="changed" i18n="110c9">
+      Die Auswahl der Bereiche wurde in ein Menü verlegt, damit die Bereiche beliebig
+      erweitert werden können.
+    </li>
+    <li class="added" i18n="110a19">
+      Es gibt jetzt eine Analyse der Gebäude in der Stadt. Dort werden aktuell die
+      Gebäude mit ihrem Level und den Boni angezeigt.
+    </li>
     <li class="added" i18n="110a18">
       Es gibt jetzt die Möglichkeit, die Faktoren für die Berechnung der Plätze
       individuell für jeden Platz jedes Gebäudes festzulegen. Das kann man im
