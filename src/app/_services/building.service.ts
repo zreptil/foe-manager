@@ -225,6 +225,13 @@ export class BuildingService {
     this.msg.showPopup(EditFactorComponent, 'edit-factor', {});
   }
 
+  clickShowColors(evt: PointerEvent) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    GLOBALS.user.analysis.showColors = !GLOBALS.user.analysis.showColors;
+    GLOBALS.saveSharedData();
+  }
+
   sumLevels(epoch?: number) {
     let list = GLOBALS.gbList.filter(gb => epoch == null || gb.epoch === epoch);
     return list.reduce((s, v) => s + (this.gbForUser(v)?.level ?? 0), 0);

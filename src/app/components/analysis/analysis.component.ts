@@ -4,7 +4,6 @@ import {MessageService} from '@/_services/message.service';
 import {BuildingService} from '@/_services/building.service';
 import {GbData} from '@/_model/gb-data';
 import {GbUserData} from '@/_model/gb-user-data';
-import {Utils} from '@/classes/utils';
 
 @Component({
   selector: 'app-analysis',
@@ -32,7 +31,10 @@ export class AnalysisComponent {
     });
   }
 
-  effectsForGb(gb: GbData) {
-    return Utils.join(gb.effects, '<br>');
+  protected classForRow(data: { gb: GbData; user: GbUserData }) {
+    if (!GLOBALS.user.analysis.showColors) {
+      return '';
+    }
+    return `color color-${data.user?.colorIdx}`;
   }
 }

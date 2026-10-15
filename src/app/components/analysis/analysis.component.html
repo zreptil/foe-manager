@@ -5,7 +5,7 @@
     <td>Boni</td>
   </tr>
   @for (data of gbList; track $index) {
-    <tr>
+    <tr [class]="classForRow(data)">
       <td>{{ data.gb.name }}</td>
       <td level>{{ data.user?.level }}</td>
       <td effects>

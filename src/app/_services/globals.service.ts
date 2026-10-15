@@ -433,7 +433,8 @@ export class GlobalsService {
       s16: GLOBALS.user.factor,
       s17: GLOBALS.user.eventConfig?.asJson,
       s18: GLOBALS.user.timer,
-      s19: GLOBALS.user.editFactor
+      s19: GLOBALS.user.editFactor,
+      s20: GLOBALS.user.analysis.showColors
     };
     this.adjustGbSort();
     for (const world of GLOBALS.user.listWorld) {
@@ -605,6 +606,8 @@ export class GlobalsService {
     if (isNaN(GLOBALS.user.editFactor)) {
       GLOBALS.user.editFactor = 1.9;
     }
+    GLOBALS.user.analysis ??= {showColors: false};
+    GLOBALS.user.analysis.showColors = storage.s20 ?? false;
 
     // validate data
     this.adjustGbSort();

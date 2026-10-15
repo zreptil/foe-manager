@@ -2,47 +2,6 @@
   @if (assist.fullyLoaded) {
     <div toolbar>
       <div>
-        <div>{{ toolbarTitle }}</div>
-        @if (bs.isModeManage || bs.isModeAnalysis) {
-          @if (globals.siteConfig.editField === 'world') {
-            <mat-form-field>
-              <mat-label i18n>Name der Welt</mat-label>
-              <input (focus)="globals.onFocus($event)"
-                     (keydown.enter)="saveEdit()"
-                     [(ngModel)]="globals.user.worldName"
-                     autofocus matInput>
-            </mat-form-field>
-            <button (click)="saveEdit()" mat-button>
-              <mat-icon>done</mat-icon>
-            </button>
-          } @else {
-            <button [matMenuTriggerFor]="worldMenu" mat-button>
-              {{ globals.user.worldName ?? ' der Stadt' }}
-            </button>
-            <mat-menu #worldMenu="matMenu" class="menuSettings">
-              @for (world of globals.user.listWorld; track $index) {
-                <div>
-                  <button (click)="clickWorld($event, $index)" mat-button>
-                    <mat-icon>globe</mat-icon>
-                    <span>{{ world.name ?? defaultWorldName }}</span>
-                  </button>
-                  @if (globals.user.worldIdx === $index) {
-                    <button (click)="clickEdit($event, 'world')" mat-icon-button small-icon-button>
-                      <mat-icon>edit</mat-icon>
-                    </button>
-                  } @else if (globals.user.listWorld.length > 1) {
-                    <button (click)="clickDeleteWorld($event, $index)" mat-icon-button small-icon-button>
-                      <mat-icon>delete</mat-icon>
-                    </button>
-                  }
-                </div>
-              }
-              <button (click)="clickAddWorld($event)" mat-button>
-                <mat-icon>add</mat-icon>
-              </button>
-            </mat-menu>
-          }
-        }
         <ng-template #btnBack>
           <button (click)="clickBuildingsBack($event)" matIconButton small-icon-button>
             <mat-icon>keyboard_arrow_left</mat-icon>
@@ -87,6 +46,47 @@
             <ng-container [ngTemplateOutlet]="btnBack"/>
           }
         }
+        <div>{{ toolbarTitle }}</div>
+        @if (bs.isModeManage || bs.isModeAnalysis) {
+          @if (globals.siteConfig.editField === 'world') {
+            <mat-form-field>
+              <mat-label i18n>Name der Welt</mat-label>
+              <input (focus)="globals.onFocus($event)"
+                     (keydown.enter)="saveEdit()"
+                     [(ngModel)]="globals.user.worldName"
+                     autofocus matInput>
+            </mat-form-field>
+            <button (click)="saveEdit()" mat-button>
+              <mat-icon>done</mat-icon>
+            </button>
+          } @else {
+            <button [matMenuTriggerFor]="worldMenu" mat-button>
+              {{ globals.user.worldName ?? ' der Stadt' }}
+            </button>
+            <mat-menu #worldMenu="matMenu" class="menuSettings">
+              @for (world of globals.user.listWorld; track $index) {
+                <div>
+                  <button (click)="clickWorld($event, $index)" mat-button>
+                    <mat-icon>globe</mat-icon>
+                    <span>{{ world.name ?? defaultWorldName }}</span>
+                  </button>
+                  @if (globals.user.worldIdx === $index) {
+                    <button (click)="clickEdit($event, 'world')" mat-icon-button small-icon-button>
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  } @else if (globals.user.listWorld.length > 1) {
+                    <button (click)="clickDeleteWorld($event, $index)" mat-icon-button small-icon-button>
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  }
+                </div>
+              }
+              <button (click)="clickAddWorld($event)" mat-button>
+                <mat-icon>add</mat-icon>
+              </button>
+            </mat-menu>
+          }
+        }
       </div>
       @if (globals.siteConfig.editField !== 'world') {
         @if (globals.user.siteMode !== EnumSitemode.buildings || globals.user.activeGbKey == null) {
@@ -128,6 +128,17 @@
               }
             </button>
             <mat-menu #settingsMenu="matMenu" class="menuSettings">
+              @if (bs.isModeAnalysis) {
+                <button (click)="bs.clickShowColors($event)" mat-button>
+                  <mat-icon>@if (globals.user.analysis.showColors) {
+                    format_color_reset
+                  } @else {
+                    colors
+                  }</mat-icon>
+                  <span i18n>Farbige Zeilen</span>
+                </button>
+                <div line></div>
+              }
               <button (click)="clickInfo($event)" mat-button>
                 <mat-icon>
                   {{ globals.user.showInfoGb ? 'info' : 'help' }}

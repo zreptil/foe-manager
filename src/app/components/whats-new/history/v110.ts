@@ -10,7 +10,8 @@ import {EnumSortmode} from '@/_model/user-data';
   <ul>
     <li class="changed" i18n="110c9">
       Die Auswahl der Bereiche wurde in ein Menü verlegt, damit die Bereiche beliebig
-      erweitert werden können.
+      erweitert werden können. Ausserdem ist das Menü links vorne in der Toolbar, wie
+      es sich für ein Menü gehört.
     </li>
     <li class="added" i18n="110a19">
       Es gibt jetzt eine Analyse der Gebäude in der Stadt. Dort werden aktuell die

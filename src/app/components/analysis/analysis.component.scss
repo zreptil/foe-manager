@@ -1,4 +1,7 @@
+@use '../../../_mixins' as m;
+
 :host {
+  padding: 0.5em;
   width: 100%;
   overflow: auto;
 
@@ -37,6 +40,15 @@
 
     tr:nth-child(odd) {
       background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  tr {
+    @include m.colors;
+
+    &.color {
+      background-color: var(--ownerBack);
+      color: var(--ownerFore);
     }
   }
 }
