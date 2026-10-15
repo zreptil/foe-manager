@@ -233,7 +233,7 @@
                 <mat-icon>arrow_back_2</mat-icon>
               </button>
             }
-            @if (globals.user?.gbSort?.[globals.user.siteMode]?.mode === EnumSortmode.epoch && !showNavigation) {
+            @if (!bs.isModeAnalysis && globals.user?.gbSort?.[globals.user.siteMode]?.mode === EnumSortmode.epoch && !showNavigation) {
               @for (epoch of globals.user?.epochList; track $index) {
                 @if (hasGbForEpoch(epoch)) {
                   <app-epoch [epoch]="epoch"></app-epoch>

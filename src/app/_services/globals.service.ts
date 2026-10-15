@@ -553,7 +553,7 @@ export class GlobalsService {
       0: {mode: EnumSortmode.timeCopied, asc: true},
       1: {mode: EnumSortmode.alpha, asc: true},
       2: {mode: EnumSortmode.alpha, asc: true},
-      5: {mode: EnumSortmode.epoch, asc: true}
+      5: {mode: EnumSortmode.epoch, asc: false}
     };
     if (typeof (storage.s5) !== 'object' || storage.s5[0]?.mode == null) {
       storage.s5 = defSort;

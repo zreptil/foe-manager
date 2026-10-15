@@ -1,10 +1,27 @@
 <table>
-  <tr>
-    <td>Name</td>
-    <td>Stufe ({{ bs.sumLevels(epoch()) }})</td>
-    <td>Boni</td>
-  </tr>
+  @if (sortMode !== EnumSortmode.epoch) {
+    <tr>
+      <td>Name</td>
+      <td level>
+        Stufe
+        <div levels>{{ bs.sumLevels(epoch()) }}</div>
+      </td>
+      <td>Boni</td>
+    </tr>
+  }
   @for (data of gbList; track $index) {
+    @if (sortMode === EnumSortmode.epoch && needEpochHead($index)) {
+      <tr epoch>
+        <td>{{ data.gb.epoch + 1 }}. {{ globals.epochName(data.gb.epoch) }}</td>
+        <td level>
+          Stufe
+          @if ($index === 0) {
+            <div levels>{{ bs.sumLevels() }}</div>
+          }
+        </td>
+        <td>Boni</td>
+      </tr>
+    }
     <tr [class]="classForRow(data)">
       <td>{{ data.gb.name }}</td>
       <td level>{{ data.user?.level }}</td>

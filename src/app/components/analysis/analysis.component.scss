@@ -1,12 +1,14 @@
 @use '../../../_mixins' as m;
 
 :host {
-  padding: 0.5em;
+  padding: 0.1em;
   width: 100%;
   overflow: auto;
 
   table {
     width: 100%;
+    border-collapse: collapse;
+    border: none;
 
     td {
       vertical-align: top;
@@ -40,6 +42,20 @@
 
     tr:nth-child(odd) {
       background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    tr[epoch] {
+      td {
+        background-color: var(--mainHeadBack);
+        color: var(--mainHeadFore);
+      }
+    }
+
+    tr {
+      td div[levels] {
+        font-size: 75%;
+        opacity: 0.6;
+      }
     }
   }
 
