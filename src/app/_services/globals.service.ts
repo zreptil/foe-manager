@@ -21,6 +21,7 @@ import {AssistService} from '@/_services/assist.service';
 import {BuildingService} from '@/_services/building.service';
 import {QiDef} from '@/_model/qi-def';
 import {EventConfig} from '@/_model/event-config-data';
+import {EventService} from '@/_services/event.service';
 
 class CustomTimeoutError extends Error {
   constructor() {
@@ -116,7 +117,8 @@ export class GlobalsService {
       {name: $localize`Grün`, color: '#008000'},
       {name: $localize`Lila`, color: '#808'},
       {name: $localize`Orange`, color: '#fb0'},
-      {name: $localize`Rosa`, color: '#fbb'}
+      {name: $localize`Rosa`, color: '#fbb'},
+      {name: $localize`Dunkelblau`, color: '#11c'}
     ]
   }
 
@@ -136,6 +138,7 @@ export class GlobalsService {
   constructor(public http: HttpClient,
               public bs: BuildingService,
               public assist: AssistService,
+              public eventService: EventService,
               public sync: SyncService,
               public ls: LanguageService,
               public msg: MessageService,
@@ -434,7 +437,7 @@ export class GlobalsService {
       s17: GLOBALS.user.eventConfig?.asJson,
       s18: GLOBALS.user.timer,
       s19: GLOBALS.user.editFactor,
-      s20: GLOBALS.user.analysis.showColors
+      s20: GLOBALS.user.analysis
     };
     this.adjustGbSort();
     for (const world of GLOBALS.user.listWorld) {
@@ -606,16 +609,32 @@ export class GlobalsService {
     if (isNaN(GLOBALS.user.editFactor)) {
       GLOBALS.user.editFactor = 1.9;
     }
-    GLOBALS.user.analysis ??= {showColors: false};
-    GLOBALS.user.analysis.showColors = storage.s20 ?? false;
+    const defAnalysis = {showColors: false, targetLevel: 0};
+    GLOBALS.user.analysis ??= defAnalysis;
+    if (typeof storage.s20 === 'boolean') {
+      storage.s20 = defAnalysis;
+    }
+    GLOBALS.user.analysis = storage.s20 ?? defAnalysis;
 
     // validate data
     this.adjustGbSort();
+    this.adjustEventConfig();
     GLOBALS.force.set(!GLOBALS.force());
   }
 
   onFocus(evt: FocusEvent): void {
     (evt?.target as HTMLInputElement)?.select();
+  }
+
+  adjustEventConfig() {
+    if (this.eventService.fullyLoaded) {
+      const event = this.eventService.eventList[this.user.eventConfig.eventIdx];
+      if (event?.places != null) {
+        while (this.user.eventConfig.placePaid.length < event.places.length) {
+          this.user.eventConfig.placePaid.push(0);
+        }
+      }
+    }
   }
 
   adjustGbSort(): void {

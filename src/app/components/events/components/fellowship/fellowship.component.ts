@@ -3,7 +3,7 @@ import {GLOBALS, GlobalsService} from '@/_services/globals.service';
 import {EventService} from '@/_services/event.service';
 import {MessageService} from '@/_services/message.service';
 import {DomSanitizer} from '@angular/platform-browser';
-import {EventTownData} from '@/_model/event-place-data';
+import {EventPlaceData, EventTownData} from '@/_model/event-place-data';
 import {Utils} from '@/classes/utils';
 import {EventData} from '@/_model/event-data';
 import {EventTimerComponent} from '@/components/events/components/fellowship/event-timer/event-timer.component';
@@ -267,5 +267,35 @@ export class FellowshipComponent {
   protected clickEventTimer(evt: PointerEvent) {
     evt.preventDefault();
     this.msg.showPopup(EventTimerComponent, 'event-timer', {});
+  }
+
+  protected styleForCost(place: EventPlaceData) {
+    return {
+      left: `${place.xc}%`,
+      top: `${place.yc}%`,
+    };
+  }
+
+  protected clickCost(_evt: PointerEvent, idx: number) {
+    GLOBALS.user.eventConfig.placePaid[idx]++;
+    GLOBALS.saveSharedData();
+  }
+
+  protected clickDeleteCost(_evt: PointerEvent, idx: number) {
+    GLOBALS.user.eventConfig.placePaid[idx] = 0;
+    GLOBALS.saveSharedData();
+  }
+
+  protected costForPlace(idx: number) {
+    const place = this.event.places[idx];
+    const costIdx = GLOBALS.user.eventConfig.placePaid[idx];
+    if (costIdx < place.levels[this.townIdx]) {
+      return place.costs[costIdx];
+    }
+    let paid = 0;
+    for (let i = 0; i < place.costs.length && i < costIdx; i++) {
+      paid += place.costs[i];
+    }
+    return paid;
   }
 }

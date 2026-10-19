@@ -8,6 +8,13 @@ import {EnumSortmode} from '@/_model/user-data';
   selector: 'app-v110',
   template: `<h2 [innerHTML]="version"></h2>
   <ul>
+    <li class="added" i18n="110a21">
+      Der Timer im Gemeinschafsevent zeigt jetzt auch die Uhrzeit an, zu der der Timer abläuft.
+    </li>
+    <li class="added" i18n="110a20">
+      Beim Gemeinschafsevent kann man jetzt bei den Aufsehern Einzahlungen vornehmen und
+      sehen, was der jeweilige Aufseher an Kosten verursacht.
+    </li>
     <li class="changed" i18n="110c9">
       Die Auswahl der Bereiche wurde in ein Menü verlegt, damit die Bereiche beliebig
       erweitert werden können. Ausserdem ist das Menü links vorne in der Toolbar, wie

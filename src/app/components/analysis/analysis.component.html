@@ -1,12 +1,27 @@
+<mat-form-field>
+  <mat-label i18n>Zielstufe</mat-label>
+  <input (focus)="globals.onFocus($event)"
+         (keydown.enter)="globals.saveSharedData()"
+         [(ngModel)]="globals.user.analysis.targetLevel"
+         autofocus matInput>
+</mat-form-field>
+<button (click)="globals.saveSharedData()" mat-button>
+  <mat-icon>save</mat-icon>
+</button>
+
 <table>
   @if (sortMode !== EnumSortmode.epoch) {
     <tr>
       <td>Name</td>
       <td level>
         Stufe
-        <div levels>{{ bs.sumLevels(epoch()) }}</div>
+        <div levels>{{ bs.sumLevels() }}</div>
       </td>
       <td>Boni</td>
+      <td fp i18n>bis Level-Up</td>
+      @if (globals.user.analysis.targetLevel > 0) {
+        <td fp i18n>bis {{ globals.user.analysis.targetLevel }}</td>
+      }
     </tr>
   }
   @for (data of gbList; track $index) {
@@ -20,6 +35,10 @@
           }
         </td>
         <td>Boni</td>
+        <td fp i18n>bis Level-Up</td>
+        @if (globals.user.analysis.targetLevel > 0) {
+          <td fp i18n>bis {{ globals.user.analysis.targetLevel }}</td>
+        }
       </tr>
     }
     <tr [class]="classForRow(data)">
@@ -37,6 +56,17 @@
           </div>
         }
       </td>
+      <td>{{ fpForLevelUp(data) | number: '1.0-0' }} FP</td>
+      @if (globals.user.analysis.targetLevel > 0) {
+        <td>
+          @let fp = missingFP(data);
+          @if (fp > 0) {
+            {{ fp | number: '1.0-0' }} FP
+          } @else {
+            <mat-icon>check</mat-icon>
+          }
+        </td>
+      }
     </tr>
   }
 </table>

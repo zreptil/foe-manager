@@ -4,6 +4,7 @@ export class EventConfig extends BaseData {
   eventIdx: number;
   eventCount: number;
   progressIdx: number;
+  placePaid: number[];
 
   constructor(json?: any) {
     super(json);
@@ -13,7 +14,8 @@ export class EventConfig extends BaseData {
     return {
       a: this.eventIdx,
       b: this.eventCount,
-      c: this.progressIdx
+      c: this.progressIdx,
+      d: this.placePaid
     };
   }
 
@@ -21,5 +23,6 @@ export class EventConfig extends BaseData {
     this.eventIdx = json?.a ?? def?.eventIdx ?? 0;
     this.eventCount = json?.b ?? def?.eventCount ?? 0;
     this.progressIdx = json?.c ?? def?.progressIdx ?? 0;
+    this.placePaid = json?.d ?? def?.placePaid ?? [];
   }
 }

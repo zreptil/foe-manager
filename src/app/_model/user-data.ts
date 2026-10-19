@@ -52,7 +52,7 @@ export class UserData extends BaseData {
   worldIdx: number;
   timer: any;
   editFactor: number;
-  analysis: { showColors: boolean };
+  analysis: { showColors: boolean, targetLevel: number };
 
   constructor(json?: any) {
     super(json);

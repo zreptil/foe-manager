@@ -114,6 +114,32 @@
       <div level>{{ place.levels[townIdx] }}</div>
       <div name>{{ place.name }}</div>
       <div value>{{ placeProgress($index) }}</div>
+      <div [style]="styleForCost(place)" costs>
+        @let idx = globals.user.eventConfig.placePaid[$index];
+        <div (click)="$event.stopPropagation()" [matMenuTriggerFor]="costMenu" mat-button>
+          <div level>
+            @if (idx < place.levels[townIdx]) {
+              <mat-icon>arrow_shape_up</mat-icon>
+            }
+            <div>{{ idx }}</div>
+          </div>
+          <div cost>
+            @if (idx >= place.levels[townIdx]) {
+              <mat-icon>functions</mat-icon>
+            }
+            {{ costForPlace($index) }}
+          </div>
+        </div>
+        <mat-menu #costMenu="matMenu" class="menuSettings">
+          <button (click)="clickCost($event, $index)" mat-button>
+            {{ place.costs[idx] }} zahlen für Level {{ idx + 1 }}
+          </button>
+          <button (click)="clickDeleteCost($event, $index)" mat-button small-icon-button>
+            <mat-icon>delete</mat-icon>
+            Zahlungen entfernen
+          </button>
+        </mat-menu>
+      </div>
       <svg circle-text viewBox="0 0 200 200">
         <defs>
           <path d="M 100,100
@@ -122,7 +148,6 @@
              a 80,80 0 1,1 -160,0"
                 id="circle"/>
         </defs>
-
         <text>
           <textPath href="#circle">
             {{ event.finalNote }}

@@ -40,8 +40,8 @@
       flex-flow: row;
     }
 
-    tr:nth-child(odd) {
-      background-color: rgba(0, 0, 0, 0.1);
+    td[fp] {
+      white-space: nowrap;
     }
 
     tr[epoch] {
@@ -57,14 +57,19 @@
         opacity: 0.6;
       }
     }
-  }
 
-  tr {
-    @include m.colors;
+    tr {
+      @include m.colors;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.5);
 
-    &.color {
-      background-color: var(--ownerBack);
-      color: var(--ownerFore);
+      &.color {
+        background-color: var(--ownerBack);
+        color: var(--ownerFore);
+      }
+
+      &.target:not(.color) {
+        background-color: rgba(0, 255, 0, 0.5);
+      }
     }
   }
 }

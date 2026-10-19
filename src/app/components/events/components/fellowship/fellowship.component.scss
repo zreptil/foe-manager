@@ -49,7 +49,7 @@
 
   [map] {
     width: var(--width);
-    height: 27.5em;
+    height: calc(518 / 822 * var(--width));
     background: rgba(0, 0, 0, 0.2);
     position: relative;
     background-size: contain;
@@ -106,6 +106,45 @@
       width: calc(var(--size) / 2);
       height: calc(var(--size) / 2);
       left: calc(var(--size) / 2);
+    }
+
+    [costs] {
+      position: absolute;
+
+      > div {
+        height: 48px;
+        width: 48px;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.5);
+
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        --size: 14px;
+
+        [level], [cost] {
+          font-size: var(--size);
+          display: flex;
+          flex-flow: row;
+          justify-content: center;
+          align-items: center;
+        }
+
+        [cost] {
+          font-size: 60%;
+          color: rgba(255, 255, 255, 0.8);
+        }
+
+        [level], [cost] {
+          mat-icon {
+            font-size: var(--size);
+            width: var(--size);
+            height: var(--size);
+          }
+        }
+      }
     }
 
     [circle-text] {

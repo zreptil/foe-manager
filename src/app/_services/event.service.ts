@@ -33,6 +33,7 @@ export class EventService {
         this.eventList = body.body;
         this.fullyLoaded = true;
         this.loadDone = true;
+        GLOBALS.adjustEventConfig();
         // this.convertTasksFromLinnunFoe();
         onDone?.(this.eventList);
       }

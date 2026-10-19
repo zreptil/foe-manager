@@ -26,6 +26,7 @@ export class EventTimerComponent extends DlgBaseComponent implements OnInit {
   timerEnd: number;
   org = {timerStart: 0, timerEnd: 0};
   durationText: string;
+  endTimeText: string;
   timerHandle: NodeJS.Timeout;
 
   constructor(globals: GlobalsService,
@@ -118,7 +119,15 @@ export class EventTimerComponent extends DlgBaseComponent implements OnInit {
     } else {
       this.dialogRef.removePanelClass('alert');
     }
-    return this.fmtTime(time < 0 ? 0 : time);
+    const date = new Date(Date.now() + time * 1000);
+    const endTime =
+      date.getHours() * 3600 +
+      date.getMinutes() * 60 +
+      date.getSeconds();
+    return {
+      duration: this.fmtTime(time < 0 ? 0 : time),
+      endTime: this.fmtTime(endTime < 0 ? 0 : endTime, false, true) + ' Uhr'
+    };
   }
 
   calcDuration(current = false) {
@@ -136,24 +145,26 @@ export class EventTimerComponent extends DlgBaseComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  fmtTime(seconds: number, withMillis = false) {
+  fmtTime(seconds: number, withMillis = false, asTime = false) {
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
     const s = Math.floor(seconds % 60);
     const ret: string[] = [];
     if (h > 0) {
-      ret.push(`${h} Std`);
+      ret.push(asTime ? `${h}` : `${h} Std`);
     }
     if (m > 0 || h > 0) {
-      ret.push(`${m} Min`);
+      ret.push(asTime ? `${m}` : `${m} Min`);
     }
-    if (withMillis) {
-      ret.push(`${(seconds % 60 % 1000)} Sec`);
-    } else {
-      ret.push(`${s} Sec`);
+    if (!asTime) {
+      if (withMillis) {
+        ret.push(`${(seconds % 60 % 1000)} Sec`);
+      } else {
+        ret.push(`${s} Sec`);
+      }
     }
 
-    return Utils.join(ret, ' ');
+    return Utils.join(ret, asTime ? ':' : ' ');
   }
 
   cvtEvtNumber(value: string) {
@@ -176,7 +187,9 @@ export class EventTimerComponent extends DlgBaseComponent implements OnInit {
     this.timerHandle = setTimeout(() => {
       this.timerStep();
     }, 1000);
-    this.durationText = this.calcDuration(true);
+    const temp: any = this.calcDuration(true);
+    this.durationText = temp?.duration;
+    this.endTimeText = temp?.endTime;
   }
 
   protected clickTimer(evt: PointerEvent) {
