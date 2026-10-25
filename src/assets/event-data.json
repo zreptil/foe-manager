@@ -25,7 +25,8 @@
         "progressInfo":[
           {"idx":23,"info":"Warten auf Aufgabe @bold|100x upgraden@@nl@(nach 50B Festvorräte, nahezu sofort verfügbar)"},
           {"idx":30,"info":"Warten auf Aufgabe @bold|150x upgraden@@nl@(nach 1T Kutschen-Transporte, nahezu sofort verfügbar)"},
-          {"idx":37,"info":"Warten auf Aufgabe @bold|200x upgraden@@nl@(nach 10B Saft, nahezu sofort verfügbar)"}
+          {"idx":37,"info":"Warten auf Aufgabe @bold|200x upgraden@@nl@(nach 10B Saft, nahezu sofort verfügbar)"},
+          {"idx":41,"info":"@bold|Saft@ so oft wie nötig bis @bold|200x upgraden@ erledigt ist"}
         ]
       },
       {
@@ -37,7 +38,8 @@
         ],
         "progressInfo":[
           {"idx":16,"info":"Warten auf Aufgabe @bold|100x upgraden@@nl@(nahezu sofort verfügbar)"},
-          {"idx":34,"info":"Warten auf Aufgabe @bold|150x upgraden@@nl@(nach 15T Bauernhof, Wartezeit ca. 4½–8 Stunden)"}
+          {"idx":34,"info":"Warten auf Aufgabe @bold|150x upgraden@@nl@(nach 15T Bauernhof, Wartezeit ca. 4½–8 Stunden)"},
+          {"idx":39,"info":"@bold|Saft@, @bold|Bauernhof@ oder @bold|Bäckerei@ so oft wie nötig bis @bold|150x upgraden@ erledigt ist"}
         ]
       },
       {
@@ -74,8 +76,8 @@
         "costs":[10,20,30,50,0],
         "x":57,
         "y":39,
-        "xc":-45,
-        "yc":-30
+        "xc":-49,
+        "yc":-34
       },
       {
         "name":"Saft",

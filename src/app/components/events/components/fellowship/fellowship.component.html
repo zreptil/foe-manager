@@ -109,6 +109,13 @@
   <div (click)="clickEventTimer($event)" timer>
     <mat-icon>timer</mat-icon>
   </div>
+  @let placeCosts = remainingPlaceCosts;
+  @if (placeCosts > 0) {
+    <div placeCosts>
+      <div i18n label>Restl. Aufseherkosten</div>
+      <div>{{ placeCosts }}</div>
+    </div>
+  }
   @for (place of event.places; track $index) {
     <div (click)="clickPlace($event, $index)" [class]="classForPlace($index)" [style]="styleForPlace($index)">
       <div level>{{ place.levels[townIdx] }}</div>
@@ -116,7 +123,7 @@
       <div value>{{ placeProgress($index) }}</div>
       <div [style]="styleForCost(place)" costs>
         @let idx = globals.user.eventConfig.placePaid[$index];
-        <div (click)="$event.stopPropagation()" [matMenuTriggerFor]="costMenu" mat-button>
+        <div (click)="$event.stopPropagation()" [class]="classForCost($index)" [matMenuTriggerFor]="costMenu" mat-button>
           <div level>
             @if (idx < place.levels[townIdx]) {
               <mat-icon>arrow_shape_up</mat-icon>

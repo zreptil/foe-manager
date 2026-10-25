@@ -117,6 +117,15 @@
         border-radius: 50%;
         background-color: rgba(0, 0, 0, 0.5);
 
+        &.paid {
+          //          border: 3px solid rgba(0, 255, 0, 0.7);
+          background-color: rgba(0, 100, 0, 0.7);
+
+          [cost] {
+            _color: rgba(0, 0, 0, 0.8);
+          }
+        }
+
         display: flex;
         flex-flow: column;
         align-items: center;
@@ -166,6 +175,24 @@
 
     [value] {
       padding: 0 0.5em;
+    }
+
+    [placeCosts] {
+      [label] {
+        font-size: 75%;
+        color: rgba(0, 0, 0, 0.7);
+      }
+
+      display: flex;
+      flex-flow: column;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      transform: initial;
+      padding: 0.5em;
+      border-radius: 10px;
+      width: fit-content;
+      height: fit-content;
     }
   }
 }

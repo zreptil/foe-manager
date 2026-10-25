@@ -65,6 +65,17 @@ export class FellowshipComponent {
     return ret;
   }
 
+  protected get remainingPlaceCosts() {
+    let ret = 0;
+    for (var i = 0; i < this.event?.places?.length; i++) {
+      const place = this.event?.places[i];
+      for (let j = GLOBALS.user.eventConfig.placePaid[i]; j < place.levels[this.townIdx]; j++) {
+        ret += place.costs[j];
+      }
+    }
+    return ret;
+  }
+
   protected get progressInfo() {
     const ret = this.town.progressInfo?.find((info) => info.idx === GLOBALS.user.eventConfig.progressIdx)?.info;
     if (ret == null) {
@@ -214,6 +225,8 @@ export class FellowshipComponent {
       if (GLOBALS.user.eventConfig.progressIdx === this.progress.length - 1) {
         GLOBALS.user.eventConfig.progressIdx = 0;
         GLOBALS.user.eventConfig.eventCount++;
+        GLOBALS.user.eventConfig.placePaid = [];
+        GLOBALS.ensureEventPlaces(this.event);
       } else {
         GLOBALS.user.eventConfig.progressIdx++;
       }
@@ -240,6 +253,8 @@ export class FellowshipComponent {
     this.eventCount = Math.max(0, Math.min(999, isNaN(this.eventCount) ? 0 : this.eventCount));
     GLOBALS.user.eventConfig.eventCount = this.eventCount;
     GLOBALS.user.eventConfig.progressIdx = 0;
+    GLOBALS.user.eventConfig.placePaid = [];
+    GLOBALS.ensureEventPlaces(this.event);
     this.editField = null;
     GLOBALS.saveSharedData();
   }
@@ -297,5 +312,14 @@ export class FellowshipComponent {
       paid += place.costs[i];
     }
     return paid;
+  }
+
+  protected classForCost(idx: number) {
+    const ret: string[] = [];
+    const place = this.event.places[idx];
+    if (GLOBALS.user.eventConfig.placePaid[idx] >= place.levels[this.townIdx]) {
+      ret.push('paid');
+    }
+    return ret;
   }
 }

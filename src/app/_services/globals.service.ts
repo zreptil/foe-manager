@@ -22,6 +22,7 @@ import {BuildingService} from '@/_services/building.service';
 import {QiDef} from '@/_model/qi-def';
 import {EventConfig} from '@/_model/event-config-data';
 import {EventService} from '@/_services/event.service';
+import {EventData} from '@/_model/event-data';
 
 class CustomTimeoutError extends Error {
   constructor() {
@@ -628,11 +629,16 @@ export class GlobalsService {
 
   adjustEventConfig() {
     if (this.eventService.fullyLoaded) {
-      const event = this.eventService.eventList[this.user.eventConfig.eventIdx];
-      if (event?.places != null) {
-        while (this.user.eventConfig.placePaid.length < event.places.length) {
-          this.user.eventConfig.placePaid.push(0);
-        }
+      for (const event of this.eventService.eventList) {
+        this.ensureEventPlaces(event);
+      }
+    }
+  }
+
+  ensureEventPlaces(event: EventData) {
+    if (event?.places != null) {
+      while (this.user.eventConfig.placePaid.length < event.places.length) {
+        this.user.eventConfig.placePaid.push(0);
       }
     }
   }

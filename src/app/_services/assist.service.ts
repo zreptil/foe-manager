@@ -53,15 +53,6 @@ export class AssistService {
             // this.gbList.push(new GbData(src));
           }
         }
-        if (GLOBALS.mayDebug) {
-          this.gbList.push(new GbData({
-            '0': this.gbList.length,
-            'a': '_Test100',
-            'b': '_Test 100',
-            'c': [{'0': 1, 'a': 1, 'b': 200, 'c': [25, 20, 15, 10, 5], 'd': [null, null, null, null, null], 'e': 10, 'f': 10, 'g': 10},
-              {'0': 2, 'a': 2, 'b': 100, 'c': [20, 17, 9, 7, 3], 'd': [null, null, null, null, null], 'e': 10, 'f': 10, 'g': 10}]
-          }));
-        }
         req = new HttpRequest(
           'GET',
           `assets/gb-data-update.json?v=${GLOBALS.version}`,

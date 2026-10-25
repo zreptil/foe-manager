@@ -1,4 +1,5 @@
 import {BaseData} from '@/_model/base-data';
+import {GLOBALS} from '@/_services/globals.service';
 
 export class GbUserData extends BaseData {
   level: number;
@@ -54,7 +55,7 @@ export class GbUserData extends BaseData {
     this.sortIdx = json?.j ?? def?.sortIdx ?? -1;
     this.factor = json?.k ?? def?.factor ?? [];
     while (this.factor.length < 5) {
-      this.factor.push(1);
+      this.factor.push(GLOBALS.user.factor ?? 1.9);
     }
   }
 }
