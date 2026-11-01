@@ -14,7 +14,7 @@ import {MatFormFieldAppearance} from '@angular/material/form-field';
 import {VERSION} from '@/version';
 import {ImgurService} from '@/_services/oauth2/imgur.service';
 import {FormConfig} from '@/forms/form-config';
-import {EnumSitemode, EnumSortmode, UserData} from '@/_model/user-data';
+import {EnumDisplaymode, EnumSitemode, EnumSortmode, UserData} from '@/_model/user-data';
 import {GbUserData} from '@/_model/gb-user-data';
 import {EnumEpoch, GbData} from '@/_model/gb-data';
 import {AssistService} from '@/_services/assist.service';
@@ -53,7 +53,7 @@ export class GlobalsService {
   ICON_REWARD = 'stars_2';
 
   version = VERSION;
-  subversion = '13';
+  subversion = '14';
   isNewVersion = false;
   skipStorageClear = false;
   devSupport = false;
@@ -438,7 +438,8 @@ export class GlobalsService {
       s17: GLOBALS.user.eventConfig?.asJson,
       s18: GLOBALS.user.timer,
       s19: GLOBALS.user.editFactor,
-      s20: GLOBALS.user.analysis
+      s20: GLOBALS.user.analysis,
+      s21: GLOBALS.user.displayMode
     };
     this.adjustGbSort();
     for (const world of GLOBALS.user.listWorld) {
@@ -616,6 +617,7 @@ export class GlobalsService {
       storage.s20 = defAnalysis;
     }
     GLOBALS.user.analysis = storage.s20 ?? defAnalysis;
+    GLOBALS.user.displayMode = storage.s21 ?? EnumDisplaymode.tiles;
 
     // validate data
     this.adjustGbSort();

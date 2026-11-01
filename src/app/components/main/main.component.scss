@@ -156,6 +156,11 @@
       }
     }
 
+    [gbList].display_list {
+      display: flex;
+      flex-flow: column;
+    }
+
     textarea {
       display: flex;
       flex: 1;
@@ -297,11 +302,27 @@ app-log {
       justify-content: flex-start;
     }
 
-    > div[row] {
+    div[row] {
       display: flex;
       flex-flow: row;
       align-items: center;
       gap: 0.2em;
+
+      div[btn] {
+        [part-button] {
+          min-width: 32px;
+          width: 32px;
+          border-top-right-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
+        :not([part-button])[mat-button] {
+          border-top-left-radius: 0;
+          border-bottom-left-radius: 0;
+        }
+
+        gap: 0;
+      }
 
       mat-icon {
         --size: 16px;

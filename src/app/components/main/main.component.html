@@ -128,6 +128,12 @@
               }
             </button>
             <mat-menu #settingsMenu="matMenu" class="menuSettings">
+              <button (click)="clickDisplayMode($event)" mat-button>
+                <mat-icon>
+                  {{ iconForDisplayMode }}
+                </mat-icon>
+                <span i18n>Darstellung</span>
+              </button>
               @if (bs.isModeAnalysis) {
                 <button (click)="bs.clickShowColors($event)" mat-button>
                   <mat-icon>@if (globals.user.analysis.showColors) {
@@ -179,10 +185,14 @@
                       <span>{{ factor | number:'1.1-3' }}</span>
                     </button>
                   }
-                  <button (click)="bs.clickEditFactor($event)" [class]="classForFactor(globals.user.editFactor)" mat-button small-icon-button>
-                    <mat-icon>edit</mat-icon>
-                    {{ globals.user.editFactor | number:'1.1-3' }}
-                  </button>
+                  <div btn row>
+                    <button (click)="bs.clickEditFactor($event)" [class]="classForFactor(globals.user.editFactor)" mat-button part-button>
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button (click)="clickFactor($event, globals.user.editFactor)" [class]="classForFactor(globals.user.editFactor)" mat-button>
+                      {{ globals.user.editFactor | number:'1.1-3' }}
+                    </button>
+                  </div>
                 </div>
               </div>
             </mat-menu>

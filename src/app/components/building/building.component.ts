@@ -4,7 +4,7 @@ import {GbUserData} from '@/_model/gb-user-data';
 import {LevelData} from '@/_model/level-data';
 import {BuildingService, PlacesData} from '@/_services/building.service';
 import {GLOBALS, GlobalsService} from '@/_services/globals.service';
-import {EnumSitemode, EnumSortmode} from '@/_model/user-data';
+import {EnumDisplaymode, EnumSitemode, EnumSortmode} from '@/_model/user-data';
 import {Utils} from '@/classes/utils';
 import {MessageService} from '@/_services/message.service';
 import {EditFactorComponent} from '@/components/edit-factor/edit-factor.component';
@@ -22,6 +22,9 @@ export class BuildingComponent {
   nextLevel: LevelData;
   placesData: PlacesData[] = [];
   showEditLevelHint = false;
+  costData: { cost: number, owner: number, sniper: number };
+
+  protected readonly EnumDisplaymode = EnumDisplaymode;
 
   constructor(public globals: GlobalsService,
               public msg: MessageService,
@@ -39,6 +42,13 @@ export class BuildingComponent {
       this.nextLevel = this.bs.levelForUser(this.building(), this.gbUser);
       if (this.gbUser != null && this.nextLevel != null) {
         this.calcPlaces(this.nextLevel, this.gbUser.ownerValue);
+      }
+      if (this.gbUser != null) {
+        this.costData = {
+          cost: this.gb.levels?.[this.gbUser.level]?.cost,
+          owner: this.gbUser.ownerValue,
+          sniper: this.gbUser.sniperValues?.reduce((acc, curr) => acc + curr, 0),
+        };
       }
     });
   }
@@ -103,6 +113,17 @@ export class BuildingComponent {
     }
     ret.push(Object.keys(EnumSitemode).filter(key => isNaN(Number(key)))[GLOBALS.user.siteMode]);
     return ret.join(' ');
+  }
+
+  protected get styleForCost() {
+    if (this.gbUser == null) {
+      return {};
+    }
+    const c = Math.floor(this.costData.owner / this.costData.cost * 100);
+    const s = Math.floor(this.costData.sniper / this.costData.cost * 100);
+    return {
+      'background': `linear-gradient(to right, rgba(0,140,0,1.0) 0% ${s + c}%, rgba(0,0,0,0.8) ${s + c}% 100%)`
+    };
   }
 
   isColumnVisible(idx: number) {
@@ -331,6 +352,39 @@ export class BuildingComponent {
     this.saveSharedData();
   }
 
+  // protected clickSecure(evt: PointerEvent) {
+  //   evt?.preventDefault();
+  //   GLOBALS.showConDebug = false;
+  //   for (let idx = 0; idx < this.nextLevel.rewards.length; idx++) {
+  //     const value = this.calcPlaceValue(this.gbUser.copyIdx, this.nextLevel, idx, this.gbUser.ownerValue);
+  //     GLOBALS.show(idx, value);
+  //     if (value > 0) {
+  //       this.gbUser.sniperValues.push(value);
+  //       this.gbUser.sniperValues = this.gbUser.sniperValues.map(a => +a)
+  //       this.gbUser.sniperValues.sort((a, b) => b - a);
+  //     }
+  //   }
+  //   let sum = this.nextLevel.cost;
+  //   let hasLast = false;
+  //   for (let i = this.gbUser.sniperValues.length - 1; i >= 0; i--) {
+  //     sum -= this.gbUser.sniperValues[i];
+  //     if (this.gbUser.sniperValues[i] >= 0 && !hasLast) {
+  //       hasLast = true;
+  //       sum -= this.gbUser.sniperValues[i];
+  //     }
+  //   }
+  //   GLOBALS.show('ach guck', sum, this.nextLevel.cost);
+  //   if (this.gbUser.ownerValue > sum) {
+  //     GLOBALS.msg.error(`Der eingezahlte Eigenanteil übersteigt die benötigte Absicherung von ${sum}.`);
+  //     // .subscribe((result: DialogResult) => {
+  //     //   if (result.btn === DialogResultButton.yes) {
+  //     //     this.gbUser.ownerValue = sum;
+  //     //   }
+  //     // });
+  //   } else {
+  //     this.gbUser.ownerValue = sum;
+  //   }
+
   protected clickGBCard(evt: PointerEvent) {
     evt.preventDefault();
     switch (GLOBALS.user.siteMode) {
@@ -366,43 +420,13 @@ export class BuildingComponent {
     GLOBALS.siteConfig.editField = 'owner';
   }
 
-  // protected clickSecure(evt: PointerEvent) {
-  //   evt?.preventDefault();
-  //   GLOBALS.showConDebug = false;
-  //   for (let idx = 0; idx < this.nextLevel.rewards.length; idx++) {
-  //     const value = this.calcPlaceValue(this.gbUser.copyIdx, this.nextLevel, idx, this.gbUser.ownerValue);
-  //     GLOBALS.show(idx, value);
-  //     if (value > 0) {
-  //       this.gbUser.sniperValues.push(value);
-  //       this.gbUser.sniperValues = this.gbUser.sniperValues.map(a => +a)
-  //       this.gbUser.sniperValues.sort((a, b) => b - a);
-  //     }
-  //   }
-  //   let sum = this.nextLevel.cost;
-  //   let hasLast = false;
-  //   for (let i = this.gbUser.sniperValues.length - 1; i >= 0; i--) {
-  //     sum -= this.gbUser.sniperValues[i];
-  //     if (this.gbUser.sniperValues[i] >= 0 && !hasLast) {
-  //       hasLast = true;
-  //       sum -= this.gbUser.sniperValues[i];
-  //     }
-  //   }
-  //   GLOBALS.show('ach guck', sum, this.nextLevel.cost);
-  //   if (this.gbUser.ownerValue > sum) {
-  //     GLOBALS.msg.error(`Der eingezahlte Eigenanteil übersteigt die benötigte Absicherung von ${sum}.`);
-  //     // .subscribe((result: DialogResult) => {
-  //     //   if (result.btn === DialogResultButton.yes) {
-  //     //     this.gbUser.ownerValue = sum;
-  //     //   }
-  //     // });
-  //   } else {
-  //     this.gbUser.ownerValue = sum;
-  //   }
-  //   GLOBALS.showConDebug = false;
-  // }
-
   protected clickCopyIdx(evt: PointerEvent, idx: number) {
     evt?.preventDefault();
+    if (GLOBALS.user.activeGbKey == null) {
+      this.clickGBEdit(evt);
+      GLOBALS.siteConfig.editField = 'owner';
+      return;
+    }
     this.gbUser.copyIdx = +idx;
     this.saveSharedData();
   }

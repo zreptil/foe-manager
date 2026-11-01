@@ -9,6 +9,11 @@ export enum EnumPermission {
   keepUserToken
 }
 
+export enum EnumDisplaymode {
+  tiles,
+  list
+}
+
 export enum EnumSitemode {
   select,
   manage,
@@ -53,6 +58,7 @@ export class UserData extends BaseData {
   timer: any;
   editFactor: number;
   analysis: { showColors: boolean, targetLevel: number };
+  displayMode: EnumDisplaymode;
 
   constructor(json?: any) {
     super(json);

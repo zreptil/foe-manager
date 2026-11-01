@@ -552,3 +552,35 @@ mat-icon.attackdefend {
 [factors] {
   font-size: 0.8em;
 }
+
+[display_list] {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: var(--ownerBack);
+  color: var(--ownerFore);
+  width: 100%;
+
+  ::ng-deep .mdc-button__label {
+    display: grid;
+    grid-template-columns: 15em 3em 1fr;
+    width: 100%;
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    [cost] {
+      padding: 0 0.5em;
+      color: white;
+
+      div {
+        width: 100%;
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        border-radius: 10px;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}

@@ -13,17 +13,23 @@ import {EnvironmentService} from '@/_services/environment.service';
 import {ImgurService} from '@/_services/oauth2/imgur.service';
 import {GoogleService} from '@/_services/oauth2/google.service';
 import {AssistService} from '@/_services/assist.service';
-import {EnumSitemode, EnumSortmode} from '@/_model/user-data';
+import {EnumDisplaymode, EnumSitemode, EnumSortmode} from '@/_model/user-data';
 import {BuildingService} from '@/_services/building.service';
 import {DialogResult, DialogResultButton} from '@/_model/dialog-data';
 
+/*
+* Listenansicht für Gebäude
+* - Name
+* - Level
+* - konfigurierbare Spalten
+* */
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss'],
   standalone: false
 })
-export class MainComponent implements OnInit {
+class MainComponent implements OnInit {
   closeData: CloseButtonData = {
     viewInfo: 'Main',
     colorKey: 'main',
@@ -49,6 +55,15 @@ export class MainComponent implements OnInit {
       GLOBALS.force();
       GLOBALS._gbList = null;
     });
+  }
+
+  get iconForDisplayMode() {
+    switch (GLOBALS.user.displayMode) {
+      case EnumDisplaymode.tiles:
+        return 'grid_view';
+      case EnumDisplaymode.list:
+        return 'list';
+    }
   }
 
   get styleForContent(): any {
@@ -108,7 +123,10 @@ export class MainComponent implements OnInit {
     const ret: string[] = [];
     if (this.showNavigation) {
       ret.push('navigate');
+    } else if (this.bs.isModeManage && GLOBALS.user.displayMode === EnumDisplaymode.list) {
+      ret.push('display_list');
     }
+
     ret.push(EnumSortmode[GLOBALS.user?.gbSort[GLOBALS.user?.siteMode].mode]);
     return ret;
   }
@@ -351,4 +369,19 @@ export class MainComponent implements OnInit {
     GLOBALS.user.factor = factor;
     GLOBALS.saveSharedData();
   }
+
+  protected clickDisplayMode(evt: PointerEvent) {
+    evt.stopPropagation();
+    switch (GLOBALS.user.displayMode) {
+      case EnumDisplaymode.tiles:
+        GLOBALS.user.displayMode = EnumDisplaymode.list;
+        break;
+      case EnumDisplaymode.list:
+        GLOBALS.user.displayMode = EnumDisplaymode.tiles;
+        break;
+    }
+    GLOBALS.saveSharedData();
+  }
 }
+
+export default MainComponent

@@ -9,7 +9,7 @@ import {ColorPickerImageComponent} from '@/controls/color-picker/color-picker-im
 import {ColorPickerMixerComponent} from '@/controls/color-picker/color-picker-mixer/color-picker-mixer.component';
 import {ColorPickerBaseComponent} from '@/controls/color-picker/color-picker-base.component';
 import {WelcomeComponent} from '@/components/welcome/welcome.component';
-import {MainComponent} from '@/components/main/main.component';
+import MainComponent from '@/components/main/main.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MaterialModule} from '@/material.module';
 import {DragDropModule} from '@angular/cdk/drag-drop';
@@ -60,7 +60,7 @@ import {EventTimerComponent} from './components/events/components/fellowship/eve
 import {EditFactorComponent} from './components/edit-factor/edit-factor.component';
 import {NumberPipe} from '@/_pipes/number.pipe';
 import {LanguageService} from '@/_services/language.service';
-import { AnalysisComponent } from './components/analysis/analysis.component';
+import {AnalysisComponent} from './components/analysis/analysis.component';
 
 @NgModule({
   declarations: [
