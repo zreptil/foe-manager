@@ -10,6 +10,32 @@
         </div>
       }
     </div>
+    @if (globals.user.showInfoGb) {
+      <div info>
+        @for (icon of gb.icon; track $index) {
+          <mat-icon [class]="icon.class">{{ icon.key }}</mat-icon>
+        }
+        <ul gb-effects>
+          @for (e of gb.effects; track $index) {
+            <li>{{ e }}</li>
+          }
+        </ul>
+        <div snipers>
+          @if (gbUser.ownerValue > 0) {
+            <div row>
+              <mat-icon>crown</mat-icon>
+              {{ gbUser.ownerValue | number: "1.0-0" }}
+            </div>
+          }
+          @for (sniper of gbUser.sniperValues; track $index) {
+            <div row>
+              <mat-icon>target</mat-icon>
+              {{ sniper | number: "1.0-0" }}
+            </div>
+          }
+        </div>
+      </div>
+    }
   </button>
 } @else {
   <mat-card (click)="clickGBCard($event)" [class]="classForGb">

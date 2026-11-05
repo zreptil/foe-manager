@@ -1,5 +1,5 @@
 <div mainpanel>
-  @if (assist.fullyLoaded) {
+  @if (gbsrv.fullyLoaded) {
     <div toolbar>
       <div>
         <ng-template #btnBack>
@@ -219,10 +219,10 @@
   }
   <div>
     <div [class]="classForContent" [style]="styleForContent" content>
-      @if (assist.importDone) {
+      @if (gbsrv.importDone) {
         <textarea>{{ gbJson }}</textarea>
-      } @else if (!assist.hasData) {
-        @if (!assist.fullyLoaded) {
+      } @else if (!gbsrv.hasData) {
+        @if (!gbsrv.fullyLoaded) {
           <div gbListLoading i18n>
             Initialisierung läuft...
           </div>
@@ -231,7 +231,7 @@
             Die Daten aus dem Cache sind falsch. Bitte den Cache leeren und neu versuchen.
           </div>
         }
-      } @else if (assist.loadDone) {
+      } @else if (gbsrv.loadDone) {
         @if (globals.user.siteMode === EnumSitemode.qi) {
           <app-quanten-invasion></app-quanten-invasion>
         } @else if (globals.user.siteMode === EnumSitemode.events) {

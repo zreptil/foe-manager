@@ -3,6 +3,7 @@ import {BuildingService} from '@/_services/building.service';
 import {GLOBALS, GlobalsService} from '@/_services/globals.service';
 import {MessageService} from '@/_services/message.service';
 import {EnumEpoch} from '@/_model/gb-data';
+import {EnumDisplaymode} from '@/_model/user-data';
 
 @Component({
   selector: 'app-epoch',
@@ -20,5 +21,13 @@ export class EpochComponent {
       GLOBALS.user._siteMode();
       GLOBALS.user._activeGbKey();
     })
+  }
+
+  protected get classForEpoch() {
+    const ret: string[] = [];
+    if (GLOBALS.user.displayMode === EnumDisplaymode.list) {
+      ret.push('display_list');
+    }
+    return ret;
   }
 }

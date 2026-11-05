@@ -7,7 +7,7 @@ import {GLOBALS} from './globals.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AssistService {
+export class GbDataService {
   assistVersion = '1.1';
   gbVersion: string;
   gbList: GbData[];
@@ -523,6 +523,121 @@ export class AssistService {
   }
 
   importData() {
+    // const importer = new PrestigeImporter();
+    // const previousData: any = null;
+    // this.importDone = false;
+    // importer.import(previousData, {
+    //   onProgress: (done, total, slug) => {
+    //     console.log(`${done}/${total}: ${slug}`);
+    //   }
+    // }).then((data) => {
+    //   this.importDone = true;
+    //   console.log(data);
+    // });
+    let req = new HttpRequest(
+      'GET',
+      `assets/foe-prestige.json?v=${GLOBALS.version}`,
+      null,
+      {responseType: 'json'});
+    let body: any;
+    this.loadDone = false;
+    this.fullyLoaded = false;
+    this.http.request(req).subscribe({
+      next: (data: any) => {
+        body = data;
+      }, error: (err) => {
+        this.fullyLoaded = true;
+        console.error(err);
+      }, complete: () => {
+        const response = body.body;
+        this.initData();
+        const list = response.buildings;
+        const mapping: any = {
+          'cosmic-catalyst': 'Cosmic-Catalyst',
+          'stellar-warship': 'Stellar-Warship',
+          'hydra': 'Saturn-VI-Gate-HYDRA',
+          'pegasus': 'Saturn-VI-Gate-PEGASUS',
+          'centaurus': 'Saturn-VI-Gate-CENTAURUS',
+          'ai-core': 'AI-Core',
+          'flying-island': 'Flying-Island',
+          'space-carrier': 'Space-Carrier',
+          'virgo-project': 'The-Virgo-Project',
+          'star-gazer': 'Star-Gazer',
+          'terracotta-army': 'Terracotta-Army',
+          'himeji-castle': 'Himeji-Castle',
+          'atlantis-museum': 'Atlantis-Museum',
+          'kraken': 'The-Kraken',
+          'blue-galaxy': 'The-Blue-Galaxy',
+          'gaea-statue': 'Gaea-Statue',
+          'arctic-orangery': 'Arctic-Orangery',
+          'seed-vault': 'Seed-Vault',
+          'rainforest-project': 'Rain-Forest-Project',
+          'arc': 'The-Arc',
+          'voyager-v1': 'Voyager-V1',
+          'truce-tower': 'Trust-Tower',
+          'innovation-tower': 'Innovation-Tower',
+          'lotus-temple': 'Lotus-Temple',
+          'cape-canaveral': 'Cape-Canaveral',
+          'habitat': 'The-Habitat',
+          'space-needle': 'Space-Needle',
+          'atomium': 'Atomium',
+          'chateau-frontenac': 'Château-Frontenac',
+          'alcatraz': 'Alcatraz',
+          'capitol': 'Capitol',
+          'royal-albert-hall': 'Royal-Albert-Hall',
+          'deal-castle': 'Deal-Castle',
+          'frauenkirche-of-dresden': 'Frauenkirche-of-Dresden',
+          'st-basils-cathedral': 'Saint-Basils-Cathedral',
+          'castel-del-monte': 'Castel-del-Monte',
+          'st-marks-basilica': 'St.-Marks-Basilica',
+          'notre-dame': 'Notre-Dame',
+          'cathedral-of-aachen': 'Cathedral-of-Aachen',
+          'hagia-sophia': 'Hagia-Sophia',
+          'galata-tower': 'Galata-Tower',
+          'colosseum': 'Colosseum',
+          'lighthouse-of-alexandria': 'Lighthouse-of-Alexandria',
+          'tower-of-babel': 'Tower-of-Babel',
+          'statue-of-zeus': 'Statue-of-Zeus',
+          'observatory': 'Observatory',
+          'oracle-of-delphi': 'Oracle-of-Delphi',
+          'temple-of-relics': 'Temple-of-Relics',
+          'shattered-horizon-siphon': 'Shattered-Horizon'
+        };
+        for (const srcKey of Object.keys(list)) {
+          const key = mapping[srcKey];
+          if (key == null) {
+            console.error(`no mapping for: ${srcKey}`);
+          } else {
+            const gb = this.gbList.find((gb) => gb.key === key);
+            if (gb == null) {
+              console.error(`unknown gb: ${key}`);
+            } else {
+              const json: any = {c: []};
+              for (const levelKey of Object.keys(list[srcKey].levels)) {
+                const src = list[srcKey].levels[levelKey];
+                json.c.push({
+                  a: src.Level,
+                  b: src.FP,
+                  c: src.rewards
+                });
+              }
+              gb.fillFromJson(json, gb);
+            }
+          }
+          // const gb = this.gbList.find((gb) => gb.key === src.a);
+          // if (gb != null) {
+          //   gb.fillFromJson(src, gb);
+          // } else {
+          //   console.error(`Unknown GB: ${src.a}`);
+          // }
+          // this.gbList.push(new GbData(src));
+        }
+        this.importDone = true;
+      }
+    });
+  }
+
+  importFromAssist() {
     this.importDone = false;
     this.initData();
     let remaining = this.gbList.length;

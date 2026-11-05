@@ -8,6 +8,10 @@ import {EnumSortmode} from '@/_model/user-data';
   selector: 'app-v110',
   template: `<h2 [innerHTML]="version"></h2>
   <ul>
+    <li class="added" i18n="110a22">
+      Die Liste der Gebäude kann jetzt auch Liste angezeigt werden, nicht nur als Kachelansicht. Das
+      wird im Einstellungsmenü mit dem Menüpunkt "Darstellung" umgeschaltet.
+    </li>
     <li class="added" i18n="110a21">
       Der Timer im Gemeinschafsevent zeigt jetzt auch die Uhrzeit an, zu der der Timer abläuft.
     </li>

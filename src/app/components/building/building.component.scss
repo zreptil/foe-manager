@@ -558,6 +558,42 @@ mat-icon.attackdefend {
   background-color: var(--ownerBack);
   color: var(--ownerFore);
   width: 100%;
+  height: initial;
+  padding: 0.5em;
+  border-radius: 10px;
+
+  [info] {
+    grid-column: 1 / -1;
+    font-size: 75%;
+
+    div {
+      display: flex;
+      flex-flow: column;
+    }
+
+    [gb-effects] {
+      flex: 1;
+
+      li {
+        text-align: left;
+      }
+    }
+
+    [snipers] {
+      [row] {
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        mat-icon {
+          font-size: 75%;
+          height: 0;
+        }
+      }
+    }
+  }
 
   ::ng-deep .mdc-button__label {
     display: grid;

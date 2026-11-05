@@ -12,7 +12,7 @@ import {DsgvoComponent} from '@/components/dsgvo/dsgvo.component';
 import {EnvironmentService} from '@/_services/environment.service';
 import {ImgurService} from '@/_services/oauth2/imgur.service';
 import {GoogleService} from '@/_services/oauth2/google.service';
-import {AssistService} from '@/_services/assist.service';
+import {GbDataService} from '@/_services/gb-data.service';
 import {EnumDisplaymode, EnumSitemode, EnumSortmode} from '@/_model/user-data';
 import {BuildingService} from '@/_services/building.service';
 import {DialogResult, DialogResultButton} from '@/_model/dialog-data';
@@ -45,10 +45,10 @@ class MainComponent implements OnInit {
               public sync: SyncService,
               public imgur: ImgurService,
               public google: GoogleService,
-              public assist: AssistService,
+              public gbsrv: GbDataService,
               public bs: BuildingService,
               public env: EnvironmentService) {
-    this.assist.loadFromAsset();
+    this.gbsrv.loadFromAsset();
     effect(() => {
       GLOBALS._user();
       GLOBALS.user._siteMode();
@@ -79,8 +79,8 @@ class MainComponent implements OnInit {
   }
 
   get gbJson(): string {
-    let ret: any = {version: this.assist.assistVersion, list: []};
-    for (const gb of this.assist.gbList) {
+    let ret: any = {version: this.gbsrv.assistVersion, list: []};
+    for (const gb of this.gbsrv.gbList) {
       ret.list.push(gb.asJson);
     }
     return JSON.stringify(ret);
@@ -205,7 +205,7 @@ class MainComponent implements OnInit {
 
   protected clickImport(evt: PointerEvent) {
     evt.preventDefault();
-    this.assist.importData();
+    this.gbsrv.importData();
   }
 
   protected toggleMode(evt: PointerEvent, mode?: number) {

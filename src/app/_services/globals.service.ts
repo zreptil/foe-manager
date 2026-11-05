@@ -17,7 +17,7 @@ import {FormConfig} from '@/forms/form-config';
 import {EnumDisplaymode, EnumSitemode, EnumSortmode, UserData} from '@/_model/user-data';
 import {GbUserData} from '@/_model/gb-user-data';
 import {EnumEpoch, GbData} from '@/_model/gb-data';
-import {AssistService} from '@/_services/assist.service';
+import {GbDataService} from '@/_services/gb-data.service';
 import {BuildingService} from '@/_services/building.service';
 import {QiDef} from '@/_model/qi-def';
 import {EventConfig} from '@/_model/event-config-data';
@@ -138,7 +138,7 @@ export class GlobalsService {
 
   constructor(public http: HttpClient,
               public bs: BuildingService,
-              public assist: AssistService,
+              public assist: GbDataService,
               public eventService: EventService,
               public sync: SyncService,
               public ls: LanguageService,

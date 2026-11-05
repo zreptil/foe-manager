@@ -1,4 +1,4 @@
-<mat-card epoch>
+<mat-card [class]="classForEpoch" epoch>
   <mat-card-title>
     @if (globals.user?.gbSort?.[globals.user.siteMode].asc) {
       <button (click)="globals.clickSortEpoch($event, epoch(), -1)" matIconButton small-icon-button>
