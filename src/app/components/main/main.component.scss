@@ -4,6 +4,22 @@
   overflow: hidden;
 }
 
+.historic {
+  border: 40px solid transparent;
+
+  border-image-source: url('src/assets/images/historic.png');
+  border-image-repeat: stretch;
+  border-image-width: 40px;
+  border-image-slice: 100 fill;
+}
+
+._historic {
+  background-image: url('src/assets/images/historic.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 [mainpanel] {
   display: flex;
   flex-flow: column;
@@ -373,6 +389,15 @@ app-log {
       flex-flow: row;
       flex-wrap: wrap;
       gap: 0.2em;
+    }
+
+    div[factors] {
+      margin-bottom: 1em;
+      align-items: flex-start;
+
+      &.gold {
+        --mainHeadFore: gold;
+      }
     }
   }
 }

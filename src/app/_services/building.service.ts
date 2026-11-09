@@ -54,7 +54,13 @@ export class BuildingService {
 
   factorForPlace(gbUser: GbUserData, rewardIdx: number) {
     if (gbUser != null && gbUser.factor.length > rewardIdx) {
-      return gbUser.factor[rewardIdx] < 0 ? (GLOBALS.user.factor ?? 1.9) : gbUser.factor[rewardIdx];
+      if (gbUser.factor[rewardIdx] >= 0) {
+        return gbUser.factor[rewardIdx];
+      }
+      const isGold = gbUser.level >= (GLOBALS.gbList.find(gb => gb.key === gbUser.gbKey)?.gold ?? 10000);
+      if (isGold) {
+        return GLOBALS.user.factorGold ?? 1.19;
+      }
     }
     return GLOBALS.user.factor ?? 1.9;
   }
@@ -207,22 +213,78 @@ export class BuildingService {
     return ret;
   }
 
-  calcArcheFactor(level: number) {
-    let bonus: number;
-    if (level <= 58) {
-      bonus = 10 + (level - 1);
-    } else if (level <= 80) {
-      bonus = 67 + (level - 58) * 0.5;
-    } else if (level <= 180) {
-      bonus = 90 + (level - 80) * 0.1;
-    } else {
-      bonus = 100;
+  calcArcheFactor(level: number, forGold = false): number {
+    if (!GLOBALS.isCurrentData) {
+      let bonus: number;
+      if (level <= 58) {
+        bonus = 10 + (level - 1);
+      } else if (level <= 80) {
+        bonus = 67 + (level - 58) * 0.5;
+      } else if (level <= 180) {
+        bonus = 90 + (level - 80) * 0.1;
+      } else {
+        bonus = 100;
+      }
+      return 1 + bonus / 100;
     }
+
+    const points: [number, number][] = forGold
+      ? [[101, 5], [201, 23], [301, 33], [401, 38], [500, 40]]
+      : [[1, 19], [101, 85], [201, 100], [301, 100], [401, 100], [500, 100]];
+
+    const values = new Map(points);
+    if (values.has(level)) {
+      return 1 + values.get(level)! / 100;
+    }
+
+    const first = forGold ? 101 : 1;
+    if (level < first) {
+      return 1;
+    }
+
+    const start = forGold ? first - 1 : 0;
+    const end = forGold ? 500 : 200;
+
+    const curve = (n: number): number =>
+      1 - Math.exp(-3.53612 * Math.pow(
+        Math.min(Math.max((n - start) / (end - start), 0), 1), 1.2
+      ));
+
+    const regression = points.filter(([n]) => n >= first && n <= end);
+
+    let sumX = 0, sumY = 0, sumXX = 0, sumXY = 0;
+
+    for (const [n, y] of regression) {
+      const x = curve(n);
+      sumX += x;
+      sumY += y;
+      sumXX += x * x;
+      sumXY += x * y;
+    }
+
+    const count = regression.length;
+    const divisor = count * sumXX - sumX * sumX;
+
+    const lower = [...points].reverse()
+      .find(([n]) => n <= level)?.[1] ?? 0;
+
+    if (count < 2 || divisor <= 0) {
+      return 1 + lower / 100;
+    }
+
+    const b = (count * sumXY - sumX * sumY) / divisor;
+    const a = (sumY - b * sumX) / count;
+
+    const upper = points.find(([n]) => n > level)?.[1] ?? Infinity;
+    const bonus = Math.round(
+      Math.min(Math.max(a + b * curve(level), lower), upper)
+    );
+
     return 1 + bonus / 100;
   }
 
-  clickEditFactor(_evt: PointerEvent) {
-    this.msg.showPopup(EditFactorComponent, 'edit-factor', {});
+  clickEditFactor(_evt: PointerEvent, isGold: boolean) {
+    this.msg.showPopup(EditFactorComponent, 'edit-factor', {isGold});
   }
 
   clickShowColors(evt: PointerEvent) {

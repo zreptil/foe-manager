@@ -35,6 +35,8 @@ export class GbData extends BaseData {
   levels: LevelData[];
   effects: string[];
   epoch: EnumEpoch;
+  // when level higher than this value the building is in gold status
+  gold: number;
 
   constructor(json?: any) {
     super(json);
@@ -51,7 +53,8 @@ export class GbData extends BaseData {
       c: [],
       d: this.icon,
       e: this.effects,
-      f: this.epoch
+      f: this.epoch,
+      g: this.gold
     };
     for (const level of this.levels) {
       ret.c.push(level.asJson);
@@ -70,6 +73,7 @@ export class GbData extends BaseData {
     this.icon = json?.d ?? def?.icon ?? [{key: 'apartment'}];
     this.effects = json?.e ?? def?.effects ?? [];
     this.epoch = json?.f ?? def?.epoch ?? EnumEpoch.none;
+    this.gold = json?.g ?? def?.gold ?? 10000;
   }
 
   addLevels(src: any) {

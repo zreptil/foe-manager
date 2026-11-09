@@ -14,7 +14,7 @@ export class GbUserData extends BaseData {
   player: string;
   sortIdx: number;
 
-  constructor(json?: any) {
+  constructor(public gbKey: string, json?: any) {
     super(json);
   }
 

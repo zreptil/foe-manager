@@ -17,6 +17,37 @@ import {EnumDisplaymode, EnumSitemode, EnumSortmode} from '@/_model/user-data';
 import {BuildingService} from '@/_services/building.service';
 import {DialogResult, DialogResultButton} from '@/_model/dialog-data';
 
+class FactorDefinition {
+  constructor(public list: number[],
+              public cssClass: string,
+              public isGold: boolean) {
+  }
+
+  get factor(): number {
+    return this.isGold ? GLOBALS.user.factorGold : GLOBALS.user.factor;
+  }
+
+  set factor(value: number) {
+    if (this.isGold) {
+      GLOBALS.user.factorGold = value;
+    } else {
+      GLOBALS.user.factor = value;
+    }
+  }
+
+  get factorEdit(): number {
+    return this.isGold ? GLOBALS.user.editFactorGold : GLOBALS.user.editFactor;
+  }
+
+  set factorEdit(value: number) {
+    if (this.isGold) {
+      GLOBALS.user.editFactorGold = value;
+    } else {
+      GLOBALS.user.editFactor = value;
+    }
+  }
+}
+
 /*
 * Listenansicht für Gebäude
 * - Name
@@ -57,6 +88,15 @@ class MainComponent implements OnInit {
     });
   }
 
+  _factorDefinitions: FactorDefinition[] = [
+    new FactorDefinition(GLOBALS.factorList, '', false),
+    new FactorDefinition(GLOBALS.factorGoldList, 'gold', true)
+  ];
+
+  get factorDefinitions() {
+    return this._factorDefinitions.filter((d: any) => GLOBALS.isCurrentData ? true : !d.isGold)
+  }
+
   get iconForDisplayMode() {
     switch (GLOBALS.user.displayMode) {
       case EnumDisplaymode.tiles:
@@ -87,14 +127,18 @@ class MainComponent implements OnInit {
   }
 
   get classForContent() {
+    const ret: string[] = [];
     // GLOBALS.user.siteMode === EnumSitemode.buildings &&
+    if (!GLOBALS.isCurrentData) {
+      ret.push('historic');
+    }
     if (GLOBALS.user.activeUserGb != null) {
-      return 'building';
+      ret.push('building');
     }
     if (GLOBALS.user.siteMode === EnumSitemode.analysis) {
-      return 'analysis';
+      ret.push('analysis');
     }
-    return '';
+    return ret;
   }
 
   get toolbarTitle() {
@@ -133,6 +177,16 @@ class MainComponent implements OnInit {
 
   get showNavigation() {
     return GLOBALS.user.activeGbKey != null;
+  }
+
+  get dsLabel() {
+    return GLOBALS.isCurrentData
+      ? $localize`Aktuelle Daten`
+      : $localize`Historische Daten`;
+  }
+
+  get dsIcon() {
+    return GLOBALS.isCurrentData ? 'check' : 'history';
   }
 
   labelForMode(mode?: number) {
@@ -356,17 +410,20 @@ class MainComponent implements OnInit {
     return GLOBALS.gbList.some(gb => gb.epoch === epoch);
   }
 
-  protected classForFactor(factor: number) {
+  protected classForFactor(def: FactorDefinition, factor: number) {
     const ret: string[] = [];
-    if (factor === GLOBALS.user.factor) {
+    if (factor === def.factor) {
       ret.push('current');
     }
     return ret;
   }
 
-  protected clickFactor(evt: PointerEvent, factor: number) {
+  protected clickFactor(evt: PointerEvent, def: FactorDefinition, factor?: number) {
     evt?.preventDefault();
-    GLOBALS.user.factor = factor;
+    if (factor == null) {
+      factor = def.factorEdit;
+    }
+    def.factor = factor;
     GLOBALS.saveSharedData();
   }
 
@@ -381,6 +438,14 @@ class MainComponent implements OnInit {
         break;
     }
     GLOBALS.saveSharedData();
+  }
+
+  protected clickDataSource(evt: PointerEvent) {
+    evt.preventDefault();
+    GLOBALS.isCurrentData = !GLOBALS.isCurrentData;
+    this.gbsrv.loadFromAsset(() => {
+      GLOBALS.force.set(!GLOBALS.force());
+    });
   }
 }
 

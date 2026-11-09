@@ -29,6 +29,8 @@ mat-card:hover {
     display: flex;
     z-index: 10000;
   }
+
+  z-index: 9999;
 }
 
 
@@ -619,4 +621,34 @@ mat-icon.attackdefend {
       }
     }
   }
+}
+
+mat-icon[gold] {
+  display: none;
+}
+
+.gold {
+  mat-icon[gold] {
+    display: flex;
+    color: #ffe066;
+    overflow: visible;
+
+    text-shadow: 1px 0 1px #795000,
+    -1px 0 1px #795000,
+    0 1px 1px #795000,
+    0   -1px 1px #795000,
+    0 0 3px #ffffff,
+    0 0 6px #ffffff,
+    0 0 12px #ffe066,
+    0 0 20px #ffd700,
+    0 0 32px rgba(255, 190, 0, 0.9);
+  }
+}
+
+.has-gold:hover {
+  box-shadow: 0 0 25px #fff2a0,
+  0 0 12px #ffd700,
+  0 0 25px rgba(255, 215, 0, 0.7),
+  0 0 45px rgba(218, 165, 32, 0.4);
+  z-index: 100000;
 }

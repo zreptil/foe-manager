@@ -43,6 +43,7 @@ export class UserData extends BaseData {
   listQi: QiDef[];
   readonly _siteMode = signal<EnumSitemode>(EnumSitemode.select);
   readonly _factor = signal<number>(1.9);
+  readonly _factorGold = signal<number>(1.19);
   gbSort: { [key: string]: { mode: EnumSortmode, asc: boolean } };
   listWorld: {
     name: string;
@@ -57,6 +58,7 @@ export class UserData extends BaseData {
   worldIdx: number;
   timer: any;
   editFactor: number;
+  editFactorGold: number;
   analysis: { showColors: boolean, targetLevel: number };
   displayMode: EnumDisplaymode;
 
@@ -70,6 +72,14 @@ export class UserData extends BaseData {
 
   set factor(value: number) {
     this._factor?.set?.(value);
+  }
+
+  get factorGold() {
+    return this._factorGold?.() ?? 1.19;
+  }
+
+  set factorGold(value: number) {
+    this._factorGold?.set?.(value);
   }
 
   get listGb() {
@@ -148,12 +158,12 @@ export class UserData extends BaseData {
     this.siteMode = json?.e ?? def?.siteMode ?? EnumSitemode.select;
     let src = json?.f ?? def?.listGb ?? {};
     for (const key of Object.keys(src)) {
-      this.listGb[key] = new GbUserData(src[key]);
+      this.listGb[key] = new GbUserData(key, src[key]);
     }
     this.activeGbKey = json?.g?.a ?? def?.activeGbKey;
     src = json?.g?.b ?? def?.activeUserGb;
     if (src != null) {
-      this.activeUserGb = new GbUserData(src);
+      this.activeUserGb = new GbUserData(this.activeGbKey, src);
     } else {
       this.activeUserGb = null;
     }

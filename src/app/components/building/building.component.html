@@ -1,14 +1,15 @@
 @if (bs.isModeManage && globals.user.activeGbKey == null && globals.user.displayMode === EnumDisplaymode.list) {
   <button (click)="clickGBEdit($event)" [class]="classForGb" display_list mat-button>
     <div>{{ gb.name }}</div>
-    <div>{{ gbUser?.level }}</div>
+    <div>
+      {{ gbUser?.level }}
+      <mat-icon gold>workspace_premium</mat-icon>
+    </div>
     <div cost>
-      @if (gbUser != null) {
-        <div [style]="styleForCost">
-          {{ costData.sniper + costData.owner | number: '1.0-0' }}
-          / {{ costData.cost | number: '1.0-0' }}
-        </div>
-      }
+      <div [style]="styleForCost">
+        {{ costData.sniper + costData.owner | number: '1.0-0' }}
+        / {{ costData.cost | number: '1.0-0' }}
+      </div>
     </div>
     @if (globals.user.showInfoGb) {
       <div info>
@@ -129,7 +130,10 @@
                 <mat-icon>arrow_drop_down</mat-icon>
               </button>
             }
-            <button (click)="clickEditLevel($event)" mat-button>{{ gbUser.level }}</button>
+            <button (click)="clickEditLevel($event)" mat-button>
+              {{ gbUser.level }}
+              <mat-icon gold>workspace_premium</mat-icon>
+            </button>
             @if (globals.user.showLevelArrows) {
               <button
                 (contextmenu)="$event.preventDefault()"
@@ -158,7 +162,7 @@
                 <td><!-- factor --></td>
               }
               <td>
-                <div cost>{{ nextLevel.cost }}</div>
+                <div cost>{{ nextLevel.cost  | number: "1.0-0" }}</div>
               </td>
               @if (globals.user.activeGbKey != null) {
                 <td></td>
@@ -189,14 +193,14 @@
                   <td [class]="classForCopy(placeIdx-1)" owner reward>
                     <div (click)="clickCopyIdx($event, placeIdx-1)">
                       <mat-icon>crown</mat-icon>
-                      {{ place.ownerValue }}
+                      {{ place.ownerValue | number: "1.0-0" }}
                     </div>
                   </td>
                   <td [class]="classForCopy(placeIdx-1, ['blocks'])">
                     @if (gbUser.ownerValue > 0 && place.ownerValue - gbUser.ownerValue > 0) {
                       <div block>
                         <mat-icon>crown</mat-icon>
-                        {{ gbUser.ownerValue - place.ownerValue }}
+                        {{ gbUser.ownerValue - place.ownerValue  | number: "1.0-0" }}
                       </div>
                     }
                   </td>
@@ -234,14 +238,14 @@
                         @if (placeIdx > 0) {
                           <div [class]="classForPlace(placeIdx, nextLevel, rewardIdx)" calc>
                             @if (v >= 0) {
-                              <span></span>{{ v }}
+                              <span></span>{{ v  | number: "1.0-0" }}
                             } @else {
                               <mat-icon>{{ -v === placesData[0].rewards[rewardIdx] ? 'check_circle' : 'target' }}</mat-icon>
-                              {{ -v }}
+                              {{ -v  | number: "1.0-0" }}
                             }
                           </div>
                         } @else {
-                          <div reward>{{ v }}</div>
+                          <div reward>{{ v  | number: "1.0-0" }}</div>
                         }
                       </td>
                       <td [class]="classForCopy(placeIdx-1, ['blocks'])">

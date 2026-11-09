@@ -61,6 +61,7 @@ import {EditFactorComponent} from './components/edit-factor/edit-factor.componen
 import {NumberPipe} from '@/_pipes/number.pipe';
 import {LanguageService} from '@/_services/language.service';
 import {AnalysisComponent} from './components/analysis/analysis.component';
+import {RouterLink} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -131,7 +132,8 @@ import {AnalysisComponent} from './components/analysis/analysis.component';
     V107,
     V108,
     V109,
-    V110
+    V110,
+    RouterLink
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),

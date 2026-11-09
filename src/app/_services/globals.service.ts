@@ -123,7 +123,8 @@ export class GlobalsService {
     ]
   }
 
-  factorList: number[] = [1.0, 1.9, 1.95, 2.0];
+  factorList: number[] = [1.0, 1.8, 1.85, 1.9, 1.95, 2.0];
+  factorGoldList: number[] = [1.1, 1.19, 1.2, 1.3, 1.4];
   urlPlayground = 'http://pdf.zreptil.de/playground.php';
   appData: AppData;
   readonly _user = signal<UserData>(null);
@@ -134,6 +135,7 @@ export class GlobalsService {
   showConDebug = false;
   readonly force = signal<boolean>(false);
   timeoutForUpload: any;
+  isCurrentData = true;
   private flags = '';
 
   constructor(public http: HttpClient,
@@ -439,7 +441,8 @@ export class GlobalsService {
       s18: GLOBALS.user.timer,
       s19: GLOBALS.user.editFactor,
       s20: GLOBALS.user.analysis,
-      s21: GLOBALS.user.displayMode
+      s21: GLOBALS.user.displayMode,
+      s22: GLOBALS.user.editFactorGold
     };
     this.adjustGbSort();
     for (const world of GLOBALS.user.listWorld) {
@@ -522,7 +525,7 @@ export class GlobalsService {
     for (let i = 0; i < src.length; i++) {
       const world = {name: src[i].a, listGb: {} as any};
       for (const key of Object.keys(src[i].b)) {
-        const gbUser = new GbUserData(src[i].b[key]);
+        const gbUser = new GbUserData(key, src[i].b[key]);
         if (gbUser.copyIdx >= this.bs.calcPlaceMethods.length - 1) {
           gbUser.copyIdx = 0;
         }
@@ -571,7 +574,7 @@ export class GlobalsService {
     }
     GLOBALS.user.activeGbKey = storage.s6;
     if (storage.s7 != null) {
-      GLOBALS.user.activeUserGb = new GbUserData(storage.s7);
+      GLOBALS.user.activeUserGb = new GbUserData(GLOBALS.user.activeGbKey, storage.s7);
     } else {
       GLOBALS.user.activeUserGb = null;
     }
@@ -618,6 +621,10 @@ export class GlobalsService {
     }
     GLOBALS.user.analysis = storage.s20 ?? defAnalysis;
     GLOBALS.user.displayMode = storage.s21 ?? EnumDisplaymode.tiles;
+    GLOBALS.user.editFactorGold = +(storage.s22 ?? 1.1);
+    if (isNaN(GLOBALS.user.editFactorGold)) {
+      GLOBALS.user.editFactorGold = 1.1;
+    }
 
     // validate data
     this.adjustGbSort();

@@ -40,7 +40,8 @@ export class EditFactorComponent extends DlgBaseComponent implements OnInit {
 
   protected clickArche(evt: PointerEvent) {
     evt.preventDefault();
-    this.factor = this.ls.formatNumber(this.bs.calcArcheFactor(GLOBALS.user.listGb['The-Arc']?.level ?? 1));
+    const factor = this.bs.calcArcheFactor(GLOBALS.user.listGb['The-Arc']?.level ?? 1, (this.data as any).isGold);
+    this.factor = this.ls.formatNumber(factor);
   }
 
   protected clickSave(_evt: PointerEvent) {

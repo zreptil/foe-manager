@@ -8,6 +8,10 @@ import {EnumSortmode} from '@/_model/user-data';
   selector: 'app-v110',
   template: `<h2 [innerHTML]="version"></h2>
   <ul>
+    <li class="changed" i18n="110c10">
+      Einige Gebäude wurden umbenannt, um sie in alphabetischer Sortierung leichter zu finden.
+      Artikel wurden entfernt bei <b>Arche</b>, <b>Habitat</b> und <b>Blaue Galaxie</b>.
+    </li>
     <li class="added" i18n="110a22">
       Die Liste der Gebäude kann jetzt auch Liste angezeigt werden, nicht nur als Kachelansicht. Das
       wird im Einstellungsmenü mit dem Menüpunkt "Darstellung" umgeschaltet.

@@ -7,6 +7,7 @@ import {GLOBALS} from './globals.service';
 @Injectable({
   providedIn: 'root',
 })
+
 export class GbDataService {
   assistVersion = '1.1';
   gbVersion: string;
@@ -18,6 +19,13 @@ export class GbDataService {
   constructor(public http: HttpClient) {
   }
 
+  get dataFilename() {
+    if (!GLOBALS.isCurrentData) {
+      return 'gb-data.v10.json';
+    }
+    return 'gb-data.json';
+  }
+
   get hasData() {
     return this.gbVersion === this.assistVersion;
   }
@@ -25,7 +33,7 @@ export class GbDataService {
   loadFromAsset(onDone?: (data: any) => void) {
     let req = new HttpRequest(
       'GET',
-      `assets/gb-data.json?v=${GLOBALS.version}`,
+      `assets/${this.dataFilename}?v=${GLOBALS.version}`,
       null,
       {responseType: 'json'});
     let body: any;
@@ -155,7 +163,8 @@ export class GbDataService {
           $localize`Gewährt zusätzliche Belohnungen bei erfolgreichen Verhandlungen`,
           $localize`Ermöglicht den Transfer spezieller Ressourcen`
         ],
-        f: EnumEpoch.space_age_asteroid_belt
+        f: EnumEpoch.space_age_asteroid_belt,
+        g: 101
       }),
       new GbData({
         a: 'The-Virgo-Project', b: 'Virgo Projekt',
@@ -164,7 +173,8 @@ export class GbDataService {
           $localize`Chance, zu Kampfbeginn gegnerische Einheiten auszuschalten`,
           $localize`Produziert Münzen`
         ],
-        f: EnumEpoch.space_age_mars
+        f: EnumEpoch.space_age_mars,
+        g: 101
       }),
       new GbData({
         a: 'Star-Gazer', b: 'Star Gazer', d: [{key: GLOBALS.ICON_GOODS}], e: [
@@ -178,7 +188,8 @@ export class GbDataService {
         e: [
           $localize`Erhöht die Kampfwerte der angreifenden und verteidigenden Armee`
         ],
-        f: EnumEpoch.virtual_future
+        f: EnumEpoch.virtual_future,
+        g: 101
       }),
       new GbData({
         a: 'Himeji-Castle', b: 'Burg Himeji',
@@ -187,7 +198,8 @@ export class GbDataService {
           $localize`Chance auf eine zusätzliche Belohnung nach gewonnenen Kämpfen`,
           $localize`Produziert Vorräte`
         ],
-        f: EnumEpoch.virtual_future
+        f: EnumEpoch.virtual_future,
+        g: 101
       }),
       new GbData({
         a: 'Atlantis-Museum', b: 'Atlantis Museum',
@@ -205,16 +217,18 @@ export class GbDataService {
           $localize`Chance, zu Kampfbeginn eine gegnerische Einheit auszuschalten`,
           $localize`Produziert Forge-Punkte`
         ],
-        f: EnumEpoch.oceanic_future
+        f: EnumEpoch.oceanic_future,
+        g: 101
       }),
       new GbData({
-        a: 'The-Blue-Galaxy', b: 'Die blaue Galaxie',
+        a: 'The-Blue-Galaxy', b: 'Blaue Galaxie',
         d: [{key: GLOBALS.ICON_MEDALS}, {key: GLOBALS.ICON_DOUBLE}],
         e: [
           $localize`Produziert Medaillen`,
           $localize`Chance, die reguläre Produktion eines motivierten Gebäudes doppelt einzusammeln`
         ],
-        f: EnumEpoch.oceanic_future
+        f: EnumEpoch.oceanic_future,
+        g: 101
       }),
       new GbData({
         a: 'Gaea-Statue', b: 'Gaea-Statue',
@@ -232,7 +246,8 @@ export class GbDataService {
           $localize`Chance, einer gegnerischen Einheit des selben Zeitalters 150% Schaden zuzufügen`,
           $localize`Produziert Forge-Punkte`
         ],
-        f: EnumEpoch.arctic_future
+        f: EnumEpoch.arctic_future,
+        g: 101
       }),
       new GbData({
         a: 'Seed-Vault', b: 'Saatgut-Tresor',
@@ -241,7 +256,8 @@ export class GbDataService {
           $localize`Produziert Vorräte`,
           $localize`Chance auf Güter oder andere Belohnungen beim Motivieren beziehungsweise Polieren`
         ],
-        f: EnumEpoch.arctic_future
+        f: EnumEpoch.arctic_future,
+        g: 101
       }),
       new GbData({
         a: 'Rain-Forest-Project', b: 'Regenwald-Projekt',
@@ -253,13 +269,14 @@ export class GbDataService {
         f: EnumEpoch.future_era
       }),
       new GbData({
-        a: 'The-Arc', b: 'Die Arche',
+        a: 'The-Arc', b: 'Arche',
         d: [{key: GLOBALS.ICON_GUILD}, {key: GLOBALS.ICON_REWARD}],
         e: [
           $localize`Produziert Güter für die Gildenkasse`,
           $localize`Erhöht Belohnungen für Einzahlungen in Legendäre Gebäude`
         ],
-        f: EnumEpoch.future_era
+        f: EnumEpoch.future_era,
+        g: 101
       }),
       new GbData({
         a: 'Voyager-V1', b: 'Voyager V1',
@@ -295,7 +312,8 @@ export class GbDataService {
           $localize`Produziert Münzen`,
           $localize`Erhöht die Zufriedenheit der Stadt`
         ],
-        f: EnumEpoch.contemporary_era
+        f: EnumEpoch.contemporary_era,
+        g: 101
       }),
       new GbData({
         a: 'Cape-Canaveral', b: 'Cape Canaveral',
@@ -306,7 +324,7 @@ export class GbDataService {
         f: EnumEpoch.postmodern_era
       }),
       new GbData({
-        a: 'The-Habitat', b: 'Das Habitat',
+        a: 'The-Habitat', b: 'Habitat',
         d: [{key: GLOBALS.ICON_MONEY}, {key: GLOBALS.ICON_PEOPLE}],
         e: [
           $localize`Produziert Münzen`,
@@ -339,7 +357,8 @@ export class GbDataService {
           $localize`Produziert Münzen`,
           $localize`Erhöht die meisten Belohnungen aus Quests`
         ],
-        f: EnumEpoch.progressive_era
+        f: EnumEpoch.progressive_era,
+        g: 101
       }),
       new GbData({
         a: 'Alcatraz', b: 'Alcatraz',
@@ -348,7 +367,8 @@ export class GbDataService {
           $localize`Produziert ungebundene Einheiten aus vorhandenen Militärgebäuden`,
           $localize`Erhöht die Zufriedenheit der Stadt`
         ],
-        f: EnumEpoch.progressive_era
+        f: EnumEpoch.progressive_era,
+        g: 101
       }),
       new GbData({
         a: 'Capitol', b: 'Capitol',
@@ -366,7 +386,8 @@ export class GbDataService {
           $localize`Produziert Güter der aktuellen Epoche`,
           $localize`Erhöht die Vorratsproduktion der Stadt`
         ],
-        f: EnumEpoch.industrial_age
+        f: EnumEpoch.industrial_age,
+        g: 101
       }),
       new GbData({
         a: 'Deal-Castle', b: 'Deal Castle',
@@ -375,7 +396,8 @@ export class GbDataService {
           $localize`Erhöht die Kampfwerte der verteidigenden Armee`,
           $localize`Produziert Medaillen`
         ],
-        f: EnumEpoch.colonial_age
+        f: EnumEpoch.colonial_age,
+        g: 101
       }),
       new GbData({
         a: 'Frauenkirche-of-Dresden', b: 'Dresdner Frauenkirche',
@@ -402,7 +424,8 @@ export class GbDataService {
           $localize`Erhöht die Kampfwerte der angreifenden Armee`,
           $localize`Produziert Forge-Punkte`
         ],
-        f: EnumEpoch.late_middle_ages
+        f: EnumEpoch.late_middle_ages,
+        g: 101
       }),
       new GbData({
         a: 'St.-Marks-Basilica', b: 'Markusdom',
@@ -411,7 +434,8 @@ export class GbDataService {
           $localize`Produziert Güter der aktuellen Epoche`,
           $localize`Erhöht die Münzproduktion der Stadt`
         ],
-        f: EnumEpoch.high_middle_ages
+        f: EnumEpoch.high_middle_ages,
+        g: 101
       }),
       new GbData({
         a: 'Notre-Dame', b: 'Notre Dame',
@@ -429,7 +453,8 @@ export class GbDataService {
           $localize`Erhöht die Kampfwerte der angreifenden Armee`,
           $localize`Produziert Münzen`
         ],
-        f: EnumEpoch.early_middle_ages
+        f: EnumEpoch.early_middle_ages,
+        g: 101
       }),
       new GbData({
         a: 'Hagia-Sophia', b: 'Hagia Sophia',
@@ -456,7 +481,8 @@ export class GbDataService {
           $localize`Produziert Medaillen`,
           $localize`Erhöht die Zufriedenheit der Stadt`
         ],
-        f: EnumEpoch.iron_age
+        f: EnumEpoch.iron_age,
+        g: 101
       }),
       new GbData({
         a: 'Lighthouse-of-Alexandria', b: 'Leuchtturm von Alexandria',
@@ -482,7 +508,8 @@ export class GbDataService {
         e: [
           $localize`Erhöht die Kampfwerte der angreifenden Armee`
         ],
-        f: EnumEpoch.bronze_age
+        f: EnumEpoch.bronze_age,
+        g: 101
       }),
       new GbData({
         a: 'Observatory', b: 'Observatorium',
@@ -491,7 +518,8 @@ export class GbDataService {
           $localize`Erhöht die Kampfwerte der verteidigenden Armee`,
           $localize`Produziert Güter für die Gildenkasse`
         ],
-        f: EnumEpoch.none
+        f: EnumEpoch.none,
+        g: 101
       }),
       new GbData({
         a: 'Oracle-of-Delphi', b: 'Orakel von Delphi',
@@ -517,7 +545,8 @@ export class GbDataService {
           $localize`Erhöht die Kampfwerte der angreifenden und verteidigenden Armee`,
           $localize`Produziert Vorräte`,
         ],
-        f: EnumEpoch.stellar_age_discovery
+        f: EnumEpoch.stellar_age_discovery,
+        g: 101
       }),
     ];
   }
@@ -536,7 +565,7 @@ export class GbDataService {
     // });
     let req = new HttpRequest(
       'GET',
-      `assets/foe-prestige.json?v=${GLOBALS.version}`,
+      `assets/import-graldron-prestige.json?v=${GLOBALS.version}`,
       null,
       {responseType: 'json'});
     let body: any;
@@ -616,8 +645,8 @@ export class GbDataService {
               for (const levelKey of Object.keys(list[srcKey].levels)) {
                 const src = list[srcKey].levels[levelKey];
                 json.c.push({
-                  a: src.Level,
-                  b: src.FP,
+                  a: +levelKey,
+                  b: src.fp,
                   c: src.rewards
                 });
               }

@@ -7,8 +7,6 @@ import {GLOBALS, GlobalsService} from '@/_services/globals.service';
 import {EnumDisplaymode, EnumSitemode, EnumSortmode} from '@/_model/user-data';
 import {Utils} from '@/classes/utils';
 import {MessageService} from '@/_services/message.service';
-import {EditFactorComponent} from '@/components/edit-factor/edit-factor.component';
-import {DialogResultButton} from '@/_model/dialog-data';
 
 @Component({
   selector: 'app-building',
@@ -110,6 +108,14 @@ export class BuildingComponent {
     }
     if (GLOBALS.user.listGb[this.gb.key]?.active) {
       ret.push('selected');
+    }
+    if (GLOBALS.isCurrentData) {
+      if (this.gb.gold < 10000) {
+        ret.push('has-gold');
+      }
+      if (this.gbUser.level > this.gb.gold) {
+        ret.push('gold');
+      }
     }
     ret.push(Object.keys(EnumSitemode).filter(key => isNaN(Number(key)))[GLOBALS.user.siteMode]);
     return ret.join(' ');
@@ -391,7 +397,7 @@ export class BuildingComponent {
       case EnumSitemode.select:
         const found = GLOBALS.user.listGb[this.gb.key];
         if (found == null) {
-          GLOBALS.user.listGb[this.gb.key] = new GbUserData({a: 1, b: 0, e: true});
+          GLOBALS.user.listGb[this.gb.key] = new GbUserData(this.gb.key, {a: 1, b: 0, e: true});
         } else {
           found.active = !found.active;
         }
@@ -402,7 +408,7 @@ export class BuildingComponent {
       case EnumSitemode.buildings:
         if (GLOBALS.user.activeGbKey !== this.gb.key) {
           GLOBALS.user.activeGbKey = this.gb.key;
-          GLOBALS.user.activeUserGb = new GbUserData({a: 1});
+          GLOBALS.user.activeUserGb = new GbUserData(GLOBALS.user.activeGbKey, {a: 1});
           this.saveSharedData();
         }
         break;
@@ -472,14 +478,5 @@ export class BuildingComponent {
   protected clickFactor(evt: PointerEvent, gbUser: GbUserData, rewardIdx: number, value: number) {
     gbUser.factor[rewardIdx] = value;
     GLOBALS.force.set(!GLOBALS.force());
-  }
-
-  protected clickEditFactor(evt: PointerEvent, gbUser: GbUserData, rewardIdx: number) {
-    this.msg.showPopup(EditFactorComponent, 'edit-factor', {}).subscribe((result: any) => {
-      if (result?.btn === DialogResultButton.ok && result?.factor != null) {
-        gbUser.factor[rewardIdx] = result.factor;
-        GLOBALS.force.set(!GLOBALS.force());
-      }
-    });
   }
 }
