@@ -40,7 +40,7 @@ export class GbUserData extends BaseData {
     this.colorIdx = json?.c ?? def?.marked ?? 0;
     const src = json?.d ?? def?.levelMarked;
     this.levelMarked = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 7; i++) {
       let v = src?.[i];
       if (v == null) {
         v = true;
@@ -54,8 +54,13 @@ export class GbUserData extends BaseData {
     this.copyIdx = json?.i ?? def?.copyIdx ?? -1;
     this.sortIdx = json?.j ?? def?.sortIdx ?? -1;
     this.factor = json?.k ?? def?.factor ?? [];
-    while (this.factor.length < 5) {
-      this.factor.push(GLOBALS.user.factor ?? 1.9);
+    while (this.factor.length < 7) {
+      const gb = GLOBALS.gbList.find(gb => gb.key === this.gbKey);
+      if (this.level > gb?.gold) {
+        this.factor.push(GLOBALS.user.factorGold ?? 1.1);
+      } else {
+        this.factor.push(GLOBALS.user.factor ?? 1.85);
+      }
     }
   }
 }

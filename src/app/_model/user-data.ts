@@ -42,8 +42,8 @@ export class UserData extends BaseData {
   usertype: number;
   listQi: QiDef[];
   readonly _siteMode = signal<EnumSitemode>(EnumSitemode.select);
-  readonly _factor = signal<number>(1.9);
-  readonly _factorGold = signal<number>(1.19);
+  readonly _factor = signal<number>(1.85);
+  readonly _factorGold = signal<number>(1.1);
   gbSort: { [key: string]: { mode: EnumSortmode, asc: boolean } };
   listWorld: {
     name: string;
@@ -67,7 +67,7 @@ export class UserData extends BaseData {
   }
 
   get factor() {
-    return this._factor?.() ?? 1.9;
+    return this._factor?.() ?? 1.85;
   }
 
   set factor(value: number) {
@@ -75,7 +75,7 @@ export class UserData extends BaseData {
   }
 
   get factorGold() {
-    return this._factorGold?.() ?? 1.19;
+    return this._factorGold?.() ?? 1.1;
   }
 
   set factorGold(value: number) {
@@ -172,6 +172,6 @@ export class UserData extends BaseData {
     this.qiGroupIdx = json?.j ?? def?.qiGroupIdx ?? 0;
     this.resetLevelColor = json?.k ?? def?.resetLevelColor ?? false;
     this._epochList = json?.l ?? def?.epochList;
-    this.factor = json?.m ?? def?.factor ?? 1.9;
+    this.factor = json?.m ?? def?.factor ?? 1.85;
   }
 }

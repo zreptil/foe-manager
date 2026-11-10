@@ -219,13 +219,13 @@
                         factors>{{ bs.factorForPlace(gbUser, rewardIdx)  | number:'1.1-3' }}
                     </td>
                   }
-                  <mat-menu #factorMenu="matMenu" class="menuSettings">
-                    <div row wrap>
+                  <mat-menu #factorMenu="matMenu" [class]="classForFactorMenu">
+                    <div factors row wrap>
                       <ng-template let-idx="idx" matMenuContent>
                         <button (click)="clickFactor($event, gbUser, idx, -1)" [class]="classForFactor(-1, rewardIdx)" matButton>
                           <mat-icon>calculate</mat-icon>
                         </button>
-                        @for (i of [...globals.factorList, globals.user.editFactor]; track $index) {
+                        @for (i of globals.gbFactorList(gb, gbUser); track $index) {
                           <button (click)="clickFactor($event, gbUser, idx, i)" [class]="classForFactor(i, rewardIdx)" matButton>{{ i | number:'1.1-3' }}</button>
                         }
                       </ng-template>
@@ -305,6 +305,9 @@
                 </button>
                 <button (click)="clearOwnerValue($event)" matIconButton small-icon-button>
                   <mat-icon>delete</mat-icon>
+                </button>
+                <button (click)="setRewardOwnerValue($event)" matIconButton small-icon-button>
+                  <mat-icon>crown</mat-icon>
                 </button>
               </div>
             } @else if (globals.siteConfig.editField === 'sniper') {

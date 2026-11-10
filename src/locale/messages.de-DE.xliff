@@ -474,6 +474,13 @@
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="1397769174897694756" datatype="html">
+        <source>Verdrängung</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/building.service.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="4010263149667626596" datatype="html">
         <source>Sniper</source>
         <context-group purpose="location">
@@ -509,14 +516,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/gb-data.service.ts</context>
           <context context-type="linenumber">275</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/gb-data.service.ts</context>
-          <context context-type="linenumber">348</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/_services/gb-data.service.ts</context>
-          <context context-type="linenumber">519</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3920972348773563211" datatype="html">
@@ -916,6 +915,17 @@
           <context context-type="linenumber">501</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="3398377050576964274" datatype="html">
+        <source>Produziert aktuelle Güter für die Gildenkasse</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/gb-data.service.ts</context>
+          <context context-type="linenumber">348</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/_services/gb-data.service.ts</context>
+          <context context-type="linenumber">519</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="7809000301937245879" datatype="html">
         <source>Erhöht die meisten Belohnungen aus Quests</source>
         <context-group purpose="location">
@@ -1202,7 +1212,7 @@
         <source>There was no answer within <x id="PH" equiv-text="params.timeout / 1000"/> seconds at <x id="PH_1" equiv-text="url"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/globals.service.ts</context>
-          <context context-type="linenumber">749</context>
+          <context context-type="linenumber">756</context>
         </context-group>
       </trans-unit>
       <trans-unit id="328801838200143891" datatype="html">
@@ -1437,14 +1447,14 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>target<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Eingezahlter Anteil </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/building/building.component.html</context>
-          <context context-type="linenumber">314,316</context>
+          <context context-type="linenumber">317,319</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2577916285831366531" datatype="html">
         <source>Fremdanteil</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/building/building.component.html</context>
-          <context context-type="linenumber">344,345</context>
+          <context context-type="linenumber">347,348</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6267428840386316328" datatype="html">
@@ -1458,7 +1468,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source>Der Faktor muss zwischen 1.0 und 2.0 liegen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/edit-factor/edit-factor.component.ts</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6083026006568353651" datatype="html">
@@ -1708,100 +1718,100 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source>Gebäude in</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">150</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">162</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1238036151468691364" datatype="html">
         <source>Bitte die Gebäude auswählen, die in <x id="PH" equiv-text="GLOBALS.user.worldName ?? $localize` Deiner Stadt`"/> stehen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">152</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5370736470494442189" datatype="html">
         <source> Deiner Stadt</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">152</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2107568235118415750" datatype="html">
         <source>Gebäude</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">127</context>
+          <context context-type="linenumber">154</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">179</context>
+          <context context-type="linenumber">206</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2473040132597168324" datatype="html">
         <source>Quanteninvasion</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">129</context>
+          <context context-type="linenumber">156</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">173</context>
+          <context context-type="linenumber">200</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3126316096937088166" datatype="html">
         <source>Ereignisse</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">131</context>
+          <context context-type="linenumber">158</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">175</context>
+          <context context-type="linenumber">202</context>
         </context-group>
       </trans-unit>
       <trans-unit id="247379755831804565" datatype="html">
         <source>Auswertung für</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">133</context>
+          <context context-type="linenumber">160</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8907387008231388113" datatype="html">
         <source>Aktuelle Daten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">157</context>
+          <context context-type="linenumber">184</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7829526216105920315" datatype="html">
         <source>Historische Daten</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">158</context>
+          <context context-type="linenumber">185</context>
         </context-group>
       </trans-unit>
       <trans-unit id="914304656572352050" datatype="html">
         <source>Auswahl</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">171</context>
+          <context context-type="linenumber">198</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8015856771643324012" datatype="html">
         <source>Auswertung</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">177</context>
+          <context context-type="linenumber">204</context>
         </context-group>
       </trans-unit>
       <trans-unit id="620656086187803535" datatype="html">
         <source>Neue Welt</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/main/main.component.ts</context>
-          <context context-type="linenumber">268</context>
+          <context context-type="linenumber">295</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4360072995007239979" datatype="html">
@@ -2122,11 +2132,27 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         </context-group>
         <note priority="1" from="description">109a1</note>
       </trans-unit>
+      <trans-unit id="64747971318736164" datatype="html">
+        <source> Die Berechnung der Förderungsspalte wurde korrigiert. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
+          <context context-type="linenumber">12,14</context>
+        </context-group>
+        <note priority="1" from="description">110f01</note>
+      </trans-unit>
+      <trans-unit id="1033984347714123041" datatype="html">
+        <source> Es gibt eine neue Spalte bei den Gebäuden, die die Werte so berechnet, dass Sniper möglichst niedrige Plätze kriegen. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
+          <context context-type="linenumber">15,17</context>
+        </context-group>
+        <note priority="1" from="description">110a23</note>
+      </trans-unit>
       <trans-unit id="2856370352092667588" datatype="html">
         <source> Einige Gebäude wurden umbenannt, um sie in alphabetischer Sortierung leichter zu finden. Artikel wurden entfernt bei <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Arche<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>, <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Habitat<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> und <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Blaue Galaxie<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">12,15</context>
+          <context context-type="linenumber">19,22</context>
         </context-group>
         <note priority="1" from="description">110c10</note>
       </trans-unit>
@@ -2134,7 +2160,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Die Liste der Gebäude kann jetzt auch Liste angezeigt werden, nicht nur als Kachelansicht. Das wird im Einstellungsmenü mit dem Menüpunkt &quot;Darstellung&quot; umgeschaltet. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">16,18</context>
+          <context context-type="linenumber">23,25</context>
         </context-group>
         <note priority="1" from="description">110a22</note>
       </trans-unit>
@@ -2142,7 +2168,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Der Timer im Gemeinschafsevent zeigt jetzt auch die Uhrzeit an, zu der der Timer abläuft. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">20,22</context>
+          <context context-type="linenumber">27,29</context>
         </context-group>
         <note priority="1" from="description">110a21</note>
       </trans-unit>
@@ -2150,7 +2176,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Beim Gemeinschafsevent kann man jetzt bei den Aufsehern Einzahlungen vornehmen und sehen, was der jeweilige Aufseher an Kosten verursacht. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">23,25</context>
+          <context context-type="linenumber">30,32</context>
         </context-group>
         <note priority="1" from="description">110a20</note>
       </trans-unit>
@@ -2158,7 +2184,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Die Auswahl der Bereiche wurde in ein Menü verlegt, damit die Bereiche beliebig erweitert werden können. Ausserdem ist das Menü links vorne in der Toolbar, wie es sich für ein Menü gehört. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">27,29</context>
+          <context context-type="linenumber">34,36</context>
         </context-group>
         <note priority="1" from="description">110c9</note>
       </trans-unit>
@@ -2166,7 +2192,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Es gibt jetzt eine Analyse der Gebäude in der Stadt. Dort werden aktuell die Gebäude mit ihrem Level und den Boni angezeigt. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">32,34</context>
+          <context context-type="linenumber">39,41</context>
         </context-group>
         <note priority="1" from="description">110a19</note>
       </trans-unit>
@@ -2174,7 +2200,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Es gibt jetzt die Möglichkeit, die Faktoren für die Berechnung der Plätze individuell für jeden Platz jedes Gebäudes festzulegen. Das kann man im Editor für die Gebäude einstellen. Beim Anklicken des Faktors öffnet sich ein Menü, in dem man den Faktor auswählen kann. Mit dem Icon <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>calculate<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> wählt man den Faktor aus, der in den Einstellungen vorbelegt wurde. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">36,43</context>
+          <context context-type="linenumber">43,50</context>
         </context-group>
         <note priority="1" from="description">110a18</note>
       </trans-unit>
@@ -2182,7 +2208,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Bei dem Gemeinschaftsevent gibt es jetzt eine Hilfe und man kann bei der Eingabe der abgeschlossenen Ereignisse links daneben einen Button anklicken, mit dem anhand der aktuellen Aufgaben ermittelt werden kann, welche Stadt aktuell vorliegt. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">44,47</context>
+          <context context-type="linenumber">51,54</context>
         </context-group>
         <note priority="1" from="description">110a17</note>
       </trans-unit>
@@ -2190,7 +2216,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Beim Kopieren werden nur noch Plätze berücksichtigt, die mehr als 0 Belohnung haben. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">50,51</context>
+          <context context-type="linenumber">57,58</context>
         </context-group>
         <note priority="1" from="description">110c8</note>
       </trans-unit>
@@ -2198,7 +2224,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Es gibt einen neuen Bereich für die temporären Ereignisse. Aktuell ist dort das Gemeinschaftsevent zu finden. Das wird im Laufe der Zeit erweitert, wenn es weitere Ereignisse gibt, für die foe-manager Unterstützung anbieten kann. Die Event-Seite kann mit dem Icon <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>events<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">53,59</context>
+          <context context-type="linenumber">60,66</context>
         </context-group>
         <note priority="1" from="description">110a16</note>
       </trans-unit>
@@ -2206,7 +2232,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Es ist jetzt möglich, die Daten mit Dropbox zu synchronisieren. Dazu gibt es eine neue Option im Einstellungsmenü, die passenderweise &quot;Dropbox&quot; heisst. Wenn diese angeklickt wird, dann wird der Verbindungsdialog gestartet. Voraussetzung ist natürlich ein Dropbox Konto. Wenn die Verbindung hergestellt ist, dann werden die Daten beim Laden aus der Dropbox geholt und beim Speichern dort gespeichert. Damit kann man den gleichen Datenbestand über verschiedene Browser und Computer hinweg synchron halten. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">60,65</context>
+          <context context-type="linenumber">67,72</context>
         </context-group>
         <note priority="1" from="description">110a15</note>
       </trans-unit>
@@ -2214,7 +2240,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Im Einstellungsmenü gibt es eine neue Option. <x id="START_TAG_DIV_1" ctype="x-div_1" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>calculate<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div&gt;"/> Hiermit wird der Berechnungsfaktor für die Plätze festgelegt. Bisher wurde immer mit 1,9 gerechnet, nun kann man den Wert entsprechend seiner Arche anpassen. Bei einer Änderung werden alle Berechnungen aktualisiert. <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">68,78</context>
+          <context context-type="linenumber">75,85</context>
         </context-group>
         <note priority="1" from="description">110a14</note>
       </trans-unit>
@@ -2222,7 +2248,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Es ist jetzt möglich, die Gebäude verschiedener Welten zu verwalten. Dazu einfach in der Titelleiste den Namen der Welt anklicken und auswählen. Wenn daran noch nichts geändert wurde, dann einfach &quot;der Stadt&quot; anklicken. Dann kommt das Menü, in dem man eine neue Welt hinzufügen kann. Das Icon rechts neben dem Weltnamen kann verwendet werden, um die aktuelle Welt umzubenennen. Wenn es mehrere Welten gibt, dann gibt es bei den Welten, die nicht aktuell angezeigt werden, ein Icon zum Löschen dieser Welt. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">79,84</context>
+          <context context-type="linenumber">86,91</context>
         </context-group>
         <note priority="1" from="description">110a13</note>
       </trans-unit>
@@ -2230,7 +2256,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Die Spalten &quot;Nett&quot; und &quot;Sicher&quot; wurden entfernt. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">87,88</context>
+          <context context-type="linenumber">94,95</context>
         </context-group>
         <note priority="1" from="description">110r1</note>
       </trans-unit>
@@ -2238,7 +2264,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Die Spalte &quot;Förderung&quot; wurde überarbeitet und sollte nun bessere Werte für die Verwaltung von Snipern und sonstigen Einzahlern bieten. Das Icon für die Einzahlungen wurde geändert, wenn die Einzahlung dem Wert für die Förderung des Platzes entspricht. <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>check_circle<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Die Einzahlung entspricht dem Wert, der für den Platz vorgesehen ist. <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>target<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> Die Einzahlung ist höher oder niedriger als der Wert für den Platz. <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">90,104</context>
+          <context context-type="linenumber">97,111</context>
         </context-group>
         <note priority="1" from="description">110c6</note>
       </trans-unit>
@@ -2246,7 +2272,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Die Spalte &quot;sniper&quot; wurde hinzugefügt. In dieser Spalte werden die Werte so berechnet, dass sie unter Berücksichtigung der bisher getätigten Einzahlungen dem minimalen Betrag entsprechen, der eingezahlt werden muss, um nicht überboten werden zu können. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">105,107</context>
+          <context context-type="linenumber">112,114</context>
         </context-group>
         <note priority="1" from="description">110a12</note>
       </trans-unit>
@@ -2254,7 +2280,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Der Wert für den Eigenanteil in der Spalte Förderung (oberhalb der Plätze) entspricht nun immer dem Wert, der benötigt wird, um den letzten Platz abzusichern. Daneben wird angezeigt, wieviel beim Eigenanteil noch fehlt, also die Differenz zwischen dem, was im Gebäude als Eigenanteil eingetragen wurde und dem, was benötigt wird. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">110,113</context>
+          <context context-type="linenumber">117,120</context>
         </context-group>
         <note priority="1" from="description">110c7</note>
       </trans-unit>
@@ -2262,7 +2288,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Wenn eine Farbe ausgewählt wird, wird der Text kopiert. Damit kann man nach Auswahl der Farbe die aktuelle Platzverteilung woanders einfügen. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">116,118</context>
+          <context context-type="linenumber">123,125</context>
         </context-group>
         <note priority="1" from="description">110a11</note>
       </trans-unit>
@@ -2270,7 +2296,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Bei der Farbauswahl kann man jetzt eine Farbe für das Kopieren festlegen. Wenn sie definiert wurde, dann erscheint vor dem Kopierbutton dieses Icon: <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>colors<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/>  Das Icon hat die entsprechende Farbe. Wenn das Gebäude diese Farbe schon hat, dann erscheint das Icon nicht. Wenn man dieses anklickt, dann wird der Text kopiert und gleichzeitig die entsprechende Farbe für das Gebäude gesetzt. Beim Anklicken des Textes selbst wird immer nur der Text kopiert ohne dass die Farbe gesetzt wird. Man setzt diese Farbe, indem man die gleiche Farbe anklickt, die gerade beim Gebäude hinterlegt ist. Die Icons auf den Farben haben folgende Bedeutung: <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>done<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> wird für die aktuelle Farbe angezeigt <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>content_copy<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> wird angezeigt, wenn es diese Farbe als Button beim Text gibt <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>difference<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> wird angezeigt, wenn es diese Farbe als Button beim Text gibt und es sich um die aktuelle Farbe handelt <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">120,140</context>
+          <context context-type="linenumber">127,147</context>
         </context-group>
         <note priority="1" from="description">110a10</note>
       </trans-unit>
@@ -2278,7 +2304,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> In der Titelleiste gibt es rechts oben einen Button, mit dem man die Informationen zu den Gebäuden ein- und ausblenden kann. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">141,143</context>
+          <context context-type="linenumber">148,150</context>
         </context-group>
         <note priority="1" from="description">110a1</note>
       </trans-unit>
@@ -2286,7 +2312,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Es gibt neue Icons für die Gbäude. Es werden jetzt auch bis zu zwei Icons für jedes Gebäude angezeigt. Eins links und eins rechts. Hier die vollständige Liste der Icons: <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION" equiv-text="{{ globals.ICON_FIGHT }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Bonus für Kampf<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_1" equiv-text="{{ globals.ICON_GOODS }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Resourcen<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_2" equiv-text="{{ globals.ICON_GUILD }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Ressourcen für die Gildenkasse<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_3" equiv-text="{{ globals.ICON_FORGE }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Forgepunkte<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_4" equiv-text="{{ globals.ICON_PEOPLE }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Bevölkerung<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_5" equiv-text="{{ globals.ICON_MONEY }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Geld<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_6" equiv-text="{{ globals.ICON_HAPPY }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erhöht die Zufriedenheit<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_7" equiv-text="{{ globals.ICON_PROTECT }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Chance, einen Plünderungsversuch abzuwehren<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_8" equiv-text="{{ globals.ICON_MEDALS }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Medaillen<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_9" equiv-text="{{ globals.ICON_TOWNGOODS }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erhöht die Vorratsproduktion in der Stadt<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_10" equiv-text="{{ globals.ICON_ARMY }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erzeugt Einheiten<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_11" equiv-text="{{ globals.ICON_BAG }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Bonus auf diverse Ressourcen<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_12" equiv-text="{{ globals.ICON_DOUBLE }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Doppelter Bonus auf diverse Ressourcen<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div list&gt;"/><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION_13" equiv-text="{{ globals.ICON_REWARD }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Erhöhung des Mäzenbonus<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">145,204</context>
+          <context context-type="linenumber">152,211</context>
         </context-group>
         <note priority="1" from="description">110a2</note>
       </trans-unit>
@@ -2294,7 +2320,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Es gibt jetzt eine Option, um die Pfeile für die Änderung des Levels ein- und auszuschalten. Diese befindet sich im neuen Einstellungsmenü rechts oben. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">205,207</context>
+          <context context-type="linenumber">212,214</context>
         </context-group>
         <note priority="1" from="description">110a3</note>
       </trans-unit>
@@ -2302,7 +2328,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Die Sortierung wird jetzt über ein Menü gesteuert. Das wird über den gleichen Button wie bisher aufgerufen. Die Sortierung kann dann durch Anklicken der Sortierbuttons festgelegt werden. Durch erneutes Anklicken des Buttons wird die Sortierung umgedreht. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">209,211</context>
+          <context context-type="linenumber">216,218</context>
         </context-group>
         <note priority="1" from="description">110c2</note>
       </trans-unit>
@@ -2310,7 +2336,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Bei der Sortierung gibt es jetzt die Option, die Sortierung selbst vorzunehmen. Wenn dieser Modus aktiviert ist, kann die Sortierung durch Anklicken der Pfeile am unteren Rand der Gebäude vorgenommen werden, die statt des Kopierbuttons angezeigt werden. Wenn die Option für die eigene Sortierung nochmal angeklickt wird, wird die Reihenfolge festgesetzt und die Kopierung der Gebäude wieder ermöglicht. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">214,218</context>
+          <context context-type="linenumber">221,225</context>
         </context-group>
         <note priority="1" from="description">110a4</note>
       </trans-unit>
@@ -2318,7 +2344,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Im Editmodus der eigenen Gebäude ist es nun möglich die Spalte, die kopiert werden soll, mit dem Button <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>&quot;Spalte&quot; absichern<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> mit den Werten für die Absicherung aller Plätze zu versehen. Dabei werden die Fremdanteile eingetragen und der Eigenanteil entsprechend berechnet und auch eingetragen. Der Button ist nur verfügbar, wenn eine andere Spalte als die erste ausgewählt wurde. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">221,225</context>
+          <context context-type="linenumber">228,232</context>
         </context-group>
         <note priority="1" from="description">110a5</note>
       </trans-unit>
@@ -2326,7 +2352,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Die Anzeige der Spalten für die Einzahlungen wurde verbessert. Es gibt jetzt für jede Spalte eine Spalte mit dem benötigen Eigenanteil, um den Wert abzusichern. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">228,230</context>
+          <context context-type="linenumber">235,237</context>
         </context-group>
         <note priority="1" from="description">110c1</note>
       </trans-unit>
@@ -2334,7 +2360,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Die Buttons für die Umschaltung des Zooms und der Gebäudeinfo wurden in das Einstellungsmenü verschoben. Das Aussehen des Buttons für die Umschaltung der Level Pfeile wurde an die anderen Buttons angepasst. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">232,234</context>
+          <context context-type="linenumber">239,241</context>
         </context-group>
         <note priority="1" from="description">110c3</note>
       </trans-unit>
@@ -2342,7 +2368,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Das Icon für die Umschaltung zur Auswahl der Gebäude für die Stadt wurde geändert. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">237,238</context>
+          <context context-type="linenumber">244,245</context>
         </context-group>
         <note priority="1" from="description">110c4</note>
       </trans-unit>
@@ -2350,7 +2376,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Die eigene Sortierung wurde korrigiert und mit zusätzlichen Buttons versehen, die das entsprechende Gebäude an den Anfang oder das Ende verschieben. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">240,242</context>
+          <context context-type="linenumber">247,249</context>
         </context-group>
         <note priority="1" from="description">110c5</note>
       </trans-unit>
@@ -2358,7 +2384,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> In der Spalte der Eigenanteile wird bei Auswahl der 1,9er Spalte jetzt auch an, was noch vom Eigenanteil fehlt, wenn er noch nicht dem benötigten Eigenanteil zur Absicherung von P1 bis P5 entspricht. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">244,246</context>
+          <context context-type="linenumber">251,253</context>
         </context-group>
         <note priority="1" from="description">110a6</note>
       </trans-unit>
@@ -2366,7 +2392,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Bei der Editierung von Gebäuden kann jetzt mit Navigationsbuttons rechts und links durch die Liste der Gebäude geblättert werden. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">249,251</context>
+          <context context-type="linenumber">256,258</context>
         </context-group>
         <note priority="1" from="description">110a7</note>
       </trans-unit>
@@ -2374,7 +2400,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source> Es gibt eine neue Option <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span bold&gt;"/>Level Farbe zurücksetzen<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>. Wenn diese aktiviert ist, dann wird beim Ändern des Levels eines Gebäudes die Farbe auf den Standardwert zurückgesetzt. Ausserdem werden alle Plätze markiert. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">253,256</context>
+          <context context-type="linenumber">260,263</context>
         </context-group>
         <note priority="1" from="description">110a8</note>
       </trans-unit>
@@ -2382,7 +2408,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         <source><x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div line&gt;"/> Es gibt eine neue Sortierung namens <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span bold&gt;"/>Zeitalter<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>. Diese wird mit dem Icon <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION" equiv-text="{{ globals.iconForSort(EnumSortmode.epoch) }}"/><x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/> dargestellt. <x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/> Diese Sortierung funktioniert ähnlich wie die eigene Sortierung. Wenn man sie anklickt, wird zunächst die Sortierung aktiviert. Dann kann man mit kleinen Pfeilchen links und rechts der Zeitalterbezeichnungen die Sortierung ändern. Wenn man in diesem Modus das Zeitalter selbst anklickt, wird es an die erste Stelle gesetzt. <x id="START_TAG_DIV" ctype="x-div" equiv-text="&lt;div line&gt;"/>Beim ersten und letzten Zeitalter gibt es einen Button, der so aussieht:  <x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>format_list_numbered<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/><x id="CLOSE_TAG_DIV" ctype="x-div" equiv-text="&lt;/div&gt;"/> Wenn man diesen Button anklickt, werden die Zeitalter so sortiert, wie sie im Spiel vorkommen. Wenn man im Sortierungsmenü die Option mit der Zeitalter Sortierung noch einmal anklickt, wird die Sortierung fixiert und kann erst dann wieder geändert werden, wenn man diese Option erneut anklickt. </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/whats-new/history/v110.ts</context>
-          <context context-type="linenumber">258,273</context>
+          <context context-type="linenumber">265,280</context>
         </context-group>
         <note priority="1" from="description">110a9</note>
       </trans-unit>

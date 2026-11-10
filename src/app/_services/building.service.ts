@@ -18,8 +18,8 @@ export class PlacesData {
   providedIn: 'root',
 })
 export class BuildingService {
-  calcPlaceMethods: any = [this.calcPlacesRewards, this.calcPlacesSupport, this.calcPlacesSniper];
-  calcPlaceTitles = [null, $localize`Förderung`, $localize`Sniper`];
+  calcPlaceMethods: any = [this.calcPlacesRewards, this.calcPlacesSupport, this.calcPlacesEvict, this.calcPlacesSniper];
+  calcPlaceTitles = [null, $localize`Förderung`, $localize`Verdrängung`, $localize`Sniper`];
 
   constructor(public msg: MessageService) {
   }
@@ -45,7 +45,7 @@ export class BuildingService {
   }
 
   // calcReward(reward: number) {
-  //   return Math.round(reward * (GLOBALS.user.factor ?? 1.9));
+  //   return Math.round(reward * (GLOBALS.user.factor ?? 1.85));
   // }
 
   calcRewardPlace(reward: number, gbUser: GbUserData, rewardIdx: number) {
@@ -59,10 +59,10 @@ export class BuildingService {
       }
       const isGold = gbUser.level >= (GLOBALS.gbList.find(gb => gb.key === gbUser.gbKey)?.gold ?? 10000);
       if (isGold) {
-        return GLOBALS.user.factorGold ?? 1.19;
+        return GLOBALS.user.factorGold ?? 1.1;
       }
     }
-    return GLOBALS.user.factor ?? 1.9;
+    return GLOBALS.user.factor ?? 1.85;
   }
 
   gbForUser(gb: GbData): GbUserData {
@@ -145,6 +145,65 @@ export class BuildingService {
     return ret;
   }
 
+  calcPlacesEvict(level: LevelData, gbUser: GbUserData, ownerValue: number) {
+    GLOBALS.showConDebug = false;
+    GLOBALS.show('calcPlacesClean');
+    const ret = new PlacesData();
+    let sl = [...gbUser.sniperValues, 0];
+    let rest = level.cost - +(ownerValue ?? 0);
+    let calcOwnerValue = 0;
+    let lastReward = 0;
+    for (let i = 0; i < level.rewards.length; i++) {
+      let reward = this.calcRewardPlace(level.rewards[i], gbUser, i);
+      const slRest = sl[0] === 0 ? sl.slice(1) : sl;
+      let sniperRest = 0;
+      const rewardRest = level.rewards.slice(i + 1)
+        .reduce((s, v, idx) =>
+          s + this.calcRewardPlace(v, gbUser, idx), 0);
+      if (rest - sl[0] > 0) {
+        sniperRest = slRest.reduce((s, v) => s + v, 0);
+      }
+      if (sniperRest < 0 && sl[0] === 0) {
+        reward = 0;
+      }
+      GLOBALS.show(i, `reward=${reward}, rest=${rest}, sniperRest=${sniperRest}, rewardRest=${rewardRest}`, sl);
+      if (reward <= sl[0] // sniper is bigger than reward
+        || (sl[0] > 0 && rest <= sl[0] && (
+            sniperRest + reward > rest // reward and snipers would exceed rest
+            // || sniperRest > rewardRest // remaining sniper values would exceed remaining rewards
+          ) && sl[0] > rewardRest
+        )
+      ) {
+        reward = -sl[0];
+        if (sl[0] > 0) {
+          sl = sl.slice(1);
+        }
+      }
+      if (rest - Math.abs(reward) <= 0 && reward > 0) {
+        reward = rest / 2;
+      }
+      if (reward > rest) {
+        reward = rest;
+      }
+      ret.rewards.push(reward);
+      rest -= Math.abs(reward);
+      calcOwnerValue = rest - Math.abs(reward);
+      if (reward > 0) {
+        lastReward = reward;
+      }
+      ret.blocks.push(calcOwnerValue);
+    }
+    if (+ownerValue > 0) {
+      ret.ownerValue = +ownerValue;
+      ret.ownerRest = rest;
+    } else {
+      ret.ownerValue = rest - lastReward;
+      ret.ownerRest = level.cost - ret.rewards.reduce((s, v) => s + Math.abs(v), 0) - rest + lastReward;
+    }
+    GLOBALS.showConDebug = false;
+    return ret;
+  }
+
   calcPlacesSupport(level: LevelData, gbUser: GbUserData, ownerValue: number) {
     GLOBALS.showConDebug = false;
     GLOBALS.show('calcPlacesSupport');
@@ -171,7 +230,7 @@ export class BuildingService {
         || (sl[0] > 0 && (
             sniperRest + reward > rest // reward and snipers would exceed rest
             || sniperRest > rewardRest // remaining sniper values would exceed remaining rewards
-          )
+          ) && sl[0] > rewardRest
         )
       ) {
         reward = -sl[0];
@@ -179,8 +238,8 @@ export class BuildingService {
           sl = sl.slice(1);
         }
       }
-      if (rest - Math.abs(reward) <= 0 && reward > 0 && rest > 0) {
-        reward = rest - 1;
+      if (rest - Math.abs(reward) <= 0 && reward > 0) {
+        reward = rest / 2;
       }
       if (reward > rest) {
         reward = rest;
@@ -284,7 +343,7 @@ export class BuildingService {
   }
 
   clickEditFactor(_evt: PointerEvent, isGold: boolean) {
-    this.msg.showPopup(EditFactorComponent, 'edit-factor', {isGold});
+    this.msg.showPopup(EditFactorComponent, `edit-factor${isGold ? ' gold' : ''}`, {isGold});
   }
 
   clickShowColors(evt: PointerEvent) {

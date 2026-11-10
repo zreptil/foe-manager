@@ -42,7 +42,7 @@ export class MessageService {
     GLOBALS.removeFocus();
     this.popupDlgRef = this.dialog.open(dlg, {
       data: data,
-      panelClass: ['dialog-box', id],
+      panelClass: ('dialog-box ' + id).split(' '),
       disableClose: true
     });
     return this.popupDlgRef.afterClosed().pipe(map(data => {

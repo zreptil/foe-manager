@@ -132,6 +132,14 @@ export class BuildingComponent {
     };
   }
 
+  protected get classForFactorMenu() {
+    const ret: string[] = ['menuSettings'];
+    if (this.gbUser.level > this.gb.gold) {
+      ret.push('gold');
+    }
+    return Utils.join(ret, ' ');
+  }
+
   isColumnVisible(idx: number) {
     return GLOBALS.user.activeGbKey != null ||
       (GLOBALS.user.siteMode === EnumSitemode.manage && +(this.gbUser?.copyIdx) === +idx);
@@ -287,6 +295,13 @@ export class BuildingComponent {
     this.saveSharedData();
   }
 
+  protected setRewardOwnerValue(evt: PointerEvent) {
+    evt?.preventDefault();
+    GLOBALS.siteConfig.editField = null;
+    this.gbUser.ownerValue = this.bs.calcPlacesRewards(this.nextLevel, this.gbUser, null)?.ownerValue;
+    this.saveSharedData();
+  }
+
   protected clearOwnerValue(evt?: PointerEvent) {
     evt?.preventDefault();
     this.gbUser.ownerValue = null;
@@ -345,19 +360,6 @@ export class BuildingComponent {
     }
   }
 
-  protected clickGBEdit(evt: PointerEvent) {
-    evt.preventDefault();
-    if (GLOBALS.user.activeGbKey == null) {
-      GLOBALS.user.activeGbKey = this.gb.key;
-      GLOBALS.user.activeUserGb = this.bs.gbForUser(this.gb);
-    } else {
-      GLOBALS.user.activeGbKey = null;
-      GLOBALS.user.activeUserGb = null;
-      GLOBALS._gbList = null;
-    }
-    this.saveSharedData();
-  }
-
   // protected clickSecure(evt: PointerEvent) {
   //   evt?.preventDefault();
   //   GLOBALS.showConDebug = false;
@@ -390,6 +392,19 @@ export class BuildingComponent {
   //   } else {
   //     this.gbUser.ownerValue = sum;
   //   }
+
+  protected clickGBEdit(evt: PointerEvent) {
+    evt.preventDefault();
+    if (GLOBALS.user.activeGbKey == null) {
+      GLOBALS.user.activeGbKey = this.gb.key;
+      GLOBALS.user.activeUserGb = this.bs.gbForUser(this.gb);
+    } else {
+      GLOBALS.user.activeGbKey = null;
+      GLOBALS.user.activeUserGb = null;
+      GLOBALS._gbList = null;
+    }
+    this.saveSharedData();
+  }
 
   protected clickGBCard(evt: PointerEvent) {
     evt.preventDefault();
@@ -478,5 +493,6 @@ export class BuildingComponent {
   protected clickFactor(evt: PointerEvent, gbUser: GbUserData, rewardIdx: number, value: number) {
     gbUser.factor[rewardIdx] = value;
     GLOBALS.force.set(!GLOBALS.force());
+    GLOBALS.saveSharedData();
   }
 }

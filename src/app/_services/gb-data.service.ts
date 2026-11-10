@@ -345,7 +345,7 @@ export class GbDataService {
         a: 'Atomium', b: 'Atomium',
         d: [{key: GLOBALS.ICON_GUILD}, {key: GLOBALS.ICON_HAPPY}],
         e: [
-          $localize`Produziert Güter für die Gildenkasse`,
+          $localize`Produziert aktuelle Güter für die Gildenkasse`,
           $localize`Erhöht die Zufriedenheit der Stadt`
         ],
         f: EnumEpoch.modern_era
@@ -516,7 +516,7 @@ export class GbDataService {
         d: [{key: GLOBALS.ICON_FIGHT, class: 'defend'}, {key: GLOBALS.ICON_GUILD}],
         e: [
           $localize`Erhöht die Kampfwerte der verteidigenden Armee`,
-          $localize`Produziert Güter für die Gildenkasse`
+          $localize`Produziert aktuelle Güter für die Gildenkasse`
         ],
         f: EnumEpoch.none,
         g: 101

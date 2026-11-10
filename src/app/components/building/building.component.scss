@@ -652,3 +652,28 @@ mat-icon[gold] {
   0 0 45px rgba(218, 165, 32, 0.4);
   z-index: 100000;
 }
+
+::ng-deep .menuSettings.gold {
+  [factors] {
+    --mainHeadFore: #ffd700;
+  }
+}
+
+::ng-deep .edit-factor.gold {
+  .mat-mdc-dialog-surface {
+    box-shadow: 0 0 25px #fff2a0,
+    0 0 64px #ffd700,
+    0 0 25px rgba(255, 215, 0, 0.7),
+    0 0 45px rgba(218, 165, 32, 0.4);
+
+    .cdk-drag {
+      --headBack: #77500f;
+      --headFore: #e3bc69;
+      --bodyBack: #e3bc69;
+      --bodyFore: #513409;
+      --mat-form-field-filled-text-color: #513409;
+      --mat-form-field-filled-caret-color: #513409;
+    }
+  }
+}
+

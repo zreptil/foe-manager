@@ -34,8 +34,12 @@ export class EditFactorComponent extends DlgBaseComponent implements OnInit {
     super(globals, 'EditFactor');
   }
 
+  get isGold() {
+    return (this.data as any).isGold;
+  }
+
   ngOnInit(): void {
-    this.factor = this.ls.formatNumber(GLOBALS.user.editFactor);
+    this.factor = this.ls.formatNumber(this.isGold ? GLOBALS.user.editFactorGold : GLOBALS.user.editFactor);
   }
 
   protected clickArche(evt: PointerEvent) {
@@ -46,12 +50,17 @@ export class EditFactorComponent extends DlgBaseComponent implements OnInit {
 
   protected clickSave(_evt: PointerEvent) {
     const temp = Number.parseFloat(`${this.factor}`.replace(/,/g, '.'));
-    if (!isNaN(temp) && temp >= 1.0 && temp <= 2.0) {
-      GLOBALS.user.editFactor = temp;
+    const limits = this.isGold ? {min: 1.0, max: 1.4} : {min: 1.0, max: 2.0};
+    if (!isNaN(temp) && temp >= limits.min && temp <= limits.max) {
+      if (this.isGold) {
+        GLOBALS.user.editFactorGold = temp;
+      } else {
+        GLOBALS.user.editFactor = temp;
+      }
       GLOBALS.saveSharedData();
       this.dialogRef.close({btn: DialogResultButton.ok, factor: this.factor});
     } else {
-      this.msg.error($localize`Der Faktor muss zwischen 1.0 und 2.0 liegen`);
+      this.msg.error($localize`Der Faktor muss zwischen ${limits.min} und ${limits.max} liegen`);
     }
   }
 }

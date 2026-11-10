@@ -460,6 +460,13 @@ export class GlobalsService {
     return ret;
   }
 
+  gbFactorList(gb: GbData, gbUser: GbUserData) {
+    if (gbUser.level >= gb.gold) {
+      return [...GLOBALS.factorGoldList, GLOBALS.user.editFactorGold];
+    }
+    return [...GLOBALS.factorList, GLOBALS.user.editFactor];
+  }
+
   sortEpoch(epoch: EnumEpoch) {
     return this.user.epochList.findIndex((e) => e === epoch);
   }
@@ -530,7 +537,7 @@ export class GlobalsService {
           gbUser.copyIdx = 0;
         }
         gbUser.factor ??= [];
-        while (gbUser.factor.length < 5) {
+        while (gbUser.factor.length < 7) {
           gbUser.factor.push(-1);
         }
         if (+gbUser.sortIdx === -1) {
@@ -607,12 +614,12 @@ export class GlobalsService {
     }
     GLOBALS.user.copyColorIdx = storage.s14 ?? -1;
     GLOBALS.user.worldIdx = storage.s15 ?? 0;
-    GLOBALS.user.factor = +(storage.s16 ?? 1.9);
+    GLOBALS.user.factor = +(storage.s16 ?? 1.85);
     GLOBALS.user.eventConfig = new EventConfig(storage.s17);
     GLOBALS.user.timer = storage.s18 ?? {target: '', goods: '', bankett: ''};
-    GLOBALS.user.editFactor = +(storage.s19 ?? 1.9);
+    GLOBALS.user.editFactor = +(storage.s19 ?? 1.85);
     if (isNaN(GLOBALS.user.editFactor)) {
-      GLOBALS.user.editFactor = 1.9;
+      GLOBALS.user.editFactor = 1.85;
     }
     const defAnalysis = {showColors: false, targetLevel: 0};
     GLOBALS.user.analysis ??= defAnalysis;

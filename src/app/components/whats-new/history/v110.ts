@@ -8,6 +8,13 @@ import {EnumSortmode} from '@/_model/user-data';
   selector: 'app-v110',
   template: `<h2 [innerHTML]="version"></h2>
   <ul>
+    <li class="fixed" i18n="110f01">
+      Die Berechnung der Förderungsspalte wurde korrigiert.
+    </li>
+    <li class="added" i18n="110a23">
+      Es gibt eine neue Spalte bei den Gebäuden, die die Werte so berechnet, dass Sniper
+      möglichst niedrige Plätze kriegen.
+    </li>
     <li class="changed" i18n="110c10">
       Einige Gebäude wurden umbenannt, um sie in alphabetischer Sortierung leichter zu finden.
       Artikel wurden entfernt bei <b>Arche</b>, <b>Habitat</b> und <b>Blaue Galaxie</b>.
