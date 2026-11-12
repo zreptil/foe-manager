@@ -22,7 +22,7 @@ export class GoogleMapsOptions {
 })
 export class GoogleLinkService {
   private apiKeys = {
-    maps: 'AIzaSyCiezSySm7kNjdBarx16IQ06gneReCGbz8'
+    maps: '--'
   };
 
   constructor() {
