@@ -61,6 +61,7 @@ export class UserData extends BaseData {
   editFactorGold: number;
   analysis: { showColors: boolean, targetLevel: number };
   displayMode: EnumDisplaymode;
+  gbColumns: number[];
 
   constructor(json?: any) {
     super(json);

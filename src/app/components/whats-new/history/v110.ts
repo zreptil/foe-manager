@@ -8,6 +8,10 @@ import {EnumSortmode} from '@/_model/user-data';
   selector: 'app-v110',
   template: `<h2 [innerHTML]="version"></h2>
   <ul>
+    <li class="added" i18n="110a24">
+      Bei den Faktoren in den Gebäuden kann man jetzt mit dem Füllsymbol unterhalb der
+      Liste einen Faktor für alle Plätze gleichzeitig vergeben.
+    </li>
     <li class="fixed" i18n="110f01">
       Die Berechnung der Förderungsspalte wurde korrigiert.
     </li>

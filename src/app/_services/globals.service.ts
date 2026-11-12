@@ -124,7 +124,7 @@ export class GlobalsService {
   }
 
   factorList: number[] = [1.0, 1.8, 1.85, 1.9, 1.95, 2.0];
-  factorGoldList: number[] = [1.1, 1.19, 1.2, 1.3, 1.4];
+  factorGoldList: number[] = [1.05, 1.1, 1.19, 1.2, 1.3, 1.4];
   urlPlayground = 'http://pdf.zreptil.de/playground.php';
   appData: AppData;
   readonly _user = signal<UserData>(null);
@@ -442,7 +442,8 @@ export class GlobalsService {
       s19: GLOBALS.user.editFactor,
       s20: GLOBALS.user.analysis,
       s21: GLOBALS.user.displayMode,
-      s22: GLOBALS.user.editFactorGold
+      s22: GLOBALS.user.editFactorGold,
+      s23: GLOBALS.user.gbColumns
     };
     this.adjustGbSort();
     for (const world of GLOBALS.user.listWorld) {
@@ -631,6 +632,10 @@ export class GlobalsService {
     GLOBALS.user.editFactorGold = +(storage.s22 ?? 1.1);
     if (isNaN(GLOBALS.user.editFactorGold)) {
       GLOBALS.user.editFactorGold = 1.1;
+    }
+    GLOBALS.user.gbColumns = storage.s23 ?? [];
+    while (GLOBALS.user.gbColumns.length < this.bs.calcPlaceMethods.length) {
+      GLOBALS.user.gbColumns.push(1);
     }
 
     // validate data

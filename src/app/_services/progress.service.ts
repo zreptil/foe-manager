@@ -27,6 +27,7 @@ export class ProgressData {
 export class ProgressService {
   data = new ProgressData();
   mayCancel = true;
+  indefinite = false;
   style: any;
   public initializer: Observable<any>;
   private initializerSubject: BehaviorSubject<any>;
@@ -83,11 +84,12 @@ export class ProgressService {
     return !this.data.isStopped;
   }
 
-  init(style?: any, mayCancel = true): void {
+  init(style?: any, mayCancel = true, indefinite = false): void {
     this.data.isPaused = false;
     this.data.isStopped = false;
     this.style = style;
     this.mayCancel = mayCancel;
+    this.indefinite = indefinite;
     this.initializerSubject.next(style);
   }
 

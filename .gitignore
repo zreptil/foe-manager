@@ -53,3 +53,19 @@ Thumbs.db
 /server.crt
 /server.csr
 /server.key
+
+# FoE: vertrauliche Dateien und temporaere Ausgaben
+**/.firebase-*-auth.json
+/config/secrets/*.tmp
+/config/secrets/*.age.tmp
+/config/secrets/*.restore.tmp
+/export-*.json
+*.cookie
+*.cookies
+*.pfx
+*.p12
+
+# Zusätzlicher Schutz für Secrets
+/config/secrets/*
+!/config/secrets/*.age
+!/config/secrets/*.age.json

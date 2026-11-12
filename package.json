@@ -14,6 +14,7 @@
     "ng":"ng",
     "start-all":"run-p backend start",
     "start":"npm run sync-version && ng serve --port 67 --open --ssl --ssl-key server.key --ssl-cert server.crt --hmr=false --prebundle",
+    "start:php":"powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./scripts/start-php.ps1",
     "test":"ng test",
     "watch":"ng build --watch --configuration development",
     "sync-version":"tsc tools/sync-version.ts && node tools/sync-version.js",

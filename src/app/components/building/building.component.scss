@@ -382,7 +382,10 @@ table {
       padding: 0 0.5em;
 
       [title] {
-        text-align: center;
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+        justify-content: center;
         font-size: 75%;
       }
     }
@@ -518,14 +521,14 @@ mat-icon.attackdefend {
     }
   }
 
-  td {
-    button {
-      width: 100%;
-      display: flex;
-      justify-content: flex-end;
-      padding: 0;
-    }
-  }
+  //td {
+  //  button {
+  //    width: 100%;
+  //    display: flex;
+  //    justify-content: flex-end;
+  //    padding: 0;
+  //  }
+  //}
 
 }
 
@@ -676,4 +679,3 @@ mat-icon[gold] {
     }
   }
 }
-

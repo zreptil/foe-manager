@@ -62,7 +62,21 @@
               <input (focus)="globals.onFocus($event)"
                      (keydown.enter)="saveEdit()"
                      [(ngModel)]="globals.user.worldName"
-                     autofocus matInput>
+                     autofocus
+                     matInput>
+            </mat-form-field>
+            <button (click)="saveEdit()" mat-button>
+              <mat-icon>done</mat-icon>
+            </button>
+          } @else            if (globals.siteConfig.editField === 'cityBuilder') {
+            <mat-form-field>
+              <mat-label i18n>Passwort für Zugriff auf FOE</mat-label>
+              <input (focus)="globals.onFocus($event)"
+                     (keydown.enter)="saveEdit()"
+                     [(ngModel)]="password"
+                     autofocus
+                     matInput
+                     type="password">
             </mat-form-field>
             <button (click)="saveEdit()" mat-button>
               <mat-icon>done</mat-icon>
@@ -82,6 +96,11 @@
                     <button (click)="clickEdit($event, 'world')" mat-icon-button small-icon-button>
                       <mat-icon>edit</mat-icon>
                     </button>
+                    @if (globals.mayDebug) {
+                      <button (click)="clickEdit($event, 'cityBuilder')" class="debug" mat-icon-button small-icon-button>
+                        <mat-icon>assignment_globe</mat-icon>
+                      </button>
+                    }
                   } @else if (globals.user.listWorld.length > 1) {
                     <button (click)="clickDeleteWorld($event, $index)" mat-icon-button small-icon-button>
                       <mat-icon>delete</mat-icon>

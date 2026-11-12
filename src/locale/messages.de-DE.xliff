@@ -474,8 +474,8 @@
           <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1397769174897694756" datatype="html">
-        <source>Verdrängung</source>
+      <trans-unit id="3963563074649608339" datatype="html">
+        <source>Dämpfer</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/_services/building.service.ts</context>
           <context context-type="linenumber">22</context>
@@ -1426,7 +1426,7 @@ beyond the control of foe-manager. Should the confirmation process be started?</
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/edit-factor/edit-factor.component.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9187102794850384720" datatype="html">
@@ -1464,11 +1464,11 @@ beyond the control of foe-manager. Should the confirmation process be started?</
           <context context-type="linenumber">4,5</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3519669829387022269" datatype="html">
-        <source>Der Faktor muss zwischen 1.0 und 2.0 liegen</source>
+      <trans-unit id="7455831615651966096" datatype="html">
+        <source>Der Faktor muss zwischen <x id="PH" equiv-text="limits.min"/> und <x id="PH_1" equiv-text="limits.max"/> liegen</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/components/edit-factor/edit-factor.component.ts</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6083026006568353651" datatype="html">

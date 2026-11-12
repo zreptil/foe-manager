@@ -16,6 +16,7 @@ import {GbDataService} from '@/_services/gb-data.service';
 import {EnumDisplaymode, EnumSitemode, EnumSortmode} from '@/_model/user-data';
 import {BuildingService} from '@/_services/building.service';
 import {DialogResult, DialogResultButton} from '@/_model/dialog-data';
+import {FoeImportService} from '@/_services/foe-import.service';
 
 class FactorDefinition {
   constructor(public list: number[],
@@ -67,6 +68,7 @@ class MainComponent implements OnInit {
     showClose: false
   };
   defaultWorldName = 'Stadt';
+  password: string;
   protected readonly Utils = Utils;
   protected readonly EnumSitemode = EnumSitemode;
   protected readonly EnumSortmode = EnumSortmode;
@@ -78,7 +80,8 @@ class MainComponent implements OnInit {
               public google: GoogleService,
               public gbsrv: GbDataService,
               public bs: BuildingService,
-              public env: EnvironmentService) {
+              public env: EnvironmentService,
+              public fis: FoeImportService) {
     this.gbsrv.loadFromAsset();
     effect(() => {
       GLOBALS._user();
@@ -316,10 +319,31 @@ class MainComponent implements OnInit {
   }
 
   protected saveEdit() {
-    if (Utils.isEmpty(GLOBALS.user.worldName)) {
-      GLOBALS.user.worldName = null;
+    switch (GLOBALS.siteConfig.editField) {
+      case 'world':
+        if (Utils.isEmpty(GLOBALS.user.worldName)) {
+          GLOBALS.user.worldName = null;
+        }
+        GLOBALS.saveSharedData();
+        break;
+      case 'cityBuilder':
+        this.fis.importCity(GLOBALS.user.username, this.password, GLOBALS.user.worldName,
+          (result) => {
+            if (result?.success) {
+              this.msg.info($localize`Die Stadt wurde als ${result.name} exportiert.`).subscribe({
+                next: (ret: DialogResult) => {
+                  if (ret.btn === DialogResultButton.ok) {
+                    window.open(result.cityBuilderUrl, '_blank', 'noopener,noreferrer');
+                  }
+                }
+              });
+            } else {
+              console.error(result);
+              this.msg.error(result.error.text);
+            }
+          });
+        break;
     }
-    GLOBALS.saveSharedData();
     GLOBALS.siteConfig.editField = null;
   }
 

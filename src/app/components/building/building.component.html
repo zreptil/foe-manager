@@ -175,7 +175,18 @@
                 @for (_place of placesData; let placeIdx = $index; track placeIdx) {
                   @if (placeIdx > 0 && isColumnVisible(placeIdx - 1)) {
                     <td colspan="2">
-                      <div title>{{ bs.calcPlaceTitles[placeIdx] }}</div>
+                      <div title>
+                        @if (globals.user.activeGbKey != null) {
+                          <button (click)="clickPlacesTitle($event, placeIdx)" mat-button>
+                            {{ bs.calcPlaceTitles[placeIdx] }}
+                            @if (placeIdx === placesData.length - 1) {
+                              <mat-icon iconPositionEnd>{{ iconForPlaceTitle }}</mat-icon>
+                            }
+                          </button>
+                        } @else {
+                          {{ bs.calcPlaceTitles[placeIdx] }}
+                        }
+                      </div>
                     </td>
                   }
                 }
@@ -268,7 +279,22 @@
               <tr row>
                 <td></td>
                 @if (showFactors) {
-                  <td factors>
+                  <td (click)="$event.stopPropagation()"
+                      [matMenuTriggerFor]="factorMenu"
+                      factors>
+                    <mat-icon>colors</mat-icon>
+                    <mat-menu #factorMenu="matMenu" [class]="classForFactorMenu">
+                      <div factors row wrap>
+                        <ng-template matMenuContent>
+                          <button (click)="clickFactor($event, gbUser, -1, -1)" matButton>
+                            <mat-icon>calculate</mat-icon>
+                          </button>
+                          @for (i of globals.gbFactorList(gb, gbUser); track $index) {
+                            <button (click)="clickFactor($event, gbUser, -1, i)" matButton>{{ i | number:'1.1-3' }}</button>
+                          }
+                        </ng-template>
+                      </div>
+                    </mat-menu>
                   </td>
                 }
                 @for (place of placesData; let placeIdx = $index; track placeIdx) {
@@ -341,7 +367,7 @@
                   <span>{{ sniper }}</span>
                 </button>
               }
-              @if (gbUser.sniperValues?.length < 5) {
+              @if (gbUser.sniperValues?.length < nextLevel.rewards.length) {
                 <button (click)="globals.siteConfig.editField='sniper'" mat-button owner>
                   <mat-icon>target</mat-icon>
                   <span i18n>Fremdanteil</span>

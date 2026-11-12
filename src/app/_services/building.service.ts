@@ -18,8 +18,8 @@ export class PlacesData {
   providedIn: 'root',
 })
 export class BuildingService {
-  calcPlaceMethods: any = [this.calcPlacesRewards, this.calcPlacesSupport, this.calcPlacesEvict, this.calcPlacesSniper];
-  calcPlaceTitles = [null, $localize`Förderung`, $localize`Verdrängung`, $localize`Sniper`];
+  calcPlaceMethods: any[] = [this.calcPlacesRewards, this.calcPlacesSupport, this.calcPlacesDamper, this.calcPlacesSniper];
+  calcPlaceTitles = [null, $localize`Förderung`, $localize`Dämpfer`, $localize`Sniper`];
 
   constructor(public msg: MessageService) {
   }
@@ -145,9 +145,9 @@ export class BuildingService {
     return ret;
   }
 
-  calcPlacesEvict(level: LevelData, gbUser: GbUserData, ownerValue: number) {
-    GLOBALS.showConDebug = false;
-    GLOBALS.show('calcPlacesClean');
+  calcPlacesDamper(level: LevelData, gbUser: GbUserData, ownerValue: number) {
+    GLOBALS.showConDebug = GLOBALS.isDebug;
+    GLOBALS.show('calcPlacesDamper');
     const ret = new PlacesData();
     let sl = [...gbUser.sniperValues, 0];
     let rest = level.cost - +(ownerValue ?? 0);
@@ -167,6 +167,9 @@ export class BuildingService {
         reward = 0;
       }
       GLOBALS.show(i, `reward=${reward}, rest=${rest}, sniperRest=${sniperRest}, rewardRest=${rewardRest}`, sl);
+      // if (i > 4 && sl[0] > 0 && reward < sl[0] && sl[0] + 1 < rest && (sl[0] + 1) <= reward * 2) {
+      //   reward = sl[0] + 1;
+      // } else
       if (reward <= sl[0] // sniper is bigger than reward
         || (sl[0] > 0 && rest <= sl[0] && (
             sniperRest + reward > rest // reward and snipers would exceed rest

@@ -1,0 +1,37 @@
+{
+    "buildingSets": [],
+    "alarm": false,
+    "townhallSet": {
+        "width": 7,
+        "name": "Townhall Set",
+        "height": 6,
+        "buildings": [
+            {
+                "width": 7,
+                "height": 6,
+                "offset": {
+                    "x": 0,
+                    "y": 0
+                },
+                "isTownhall": true
+            }
+        ]
+    },
+    "buildings": [],
+    "buildingLegend": "BT_B",
+    "zoom": 3,
+    "optimize": true,
+    "cityResult": null,
+    "impedimentSet": [],
+    "expansions": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+    ]
+}

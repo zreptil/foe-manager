@@ -55,7 +55,12 @@
             "assets":[
               "src/favicon.ico",
               "src/assets",
-              "src/web.config"
+              "src/web.config",
+              {
+                "glob":"foe_city_import_iis.php",
+                "input":"src",
+                "output":"/"
+              }
             ],
             "index":"src/index.html",
             "inlineStyleLanguage":"scss",
@@ -89,7 +94,8 @@
           "options":{
             "ssl":true,
             "sslKey":"server.key",
-            "sslCert":"server.crt"
+            "sslCert":"server.crt",
+            "proxyConfig":"proxy.conf.json"
           },
           "configurations":{
             "development":{

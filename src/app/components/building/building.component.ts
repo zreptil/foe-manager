@@ -92,6 +92,13 @@ export class BuildingComponent {
     return GLOBALS.user.activeGbKey != null;
   }
 
+  get iconForPlaceTitle() {
+    if (this.placesData.length === this.bs.calcPlaceMethods.length) {
+      return 'visibility';
+    }
+    return 'arrow_right';
+  }
+
   protected get classForGb() {
     const ret: string[] = [];
     if (GLOBALS.user.siteMode === EnumSitemode.manage || GLOBALS.user.siteMode === EnumSitemode.buildings) {
@@ -113,7 +120,7 @@ export class BuildingComponent {
       if (this.gb.gold < 10000) {
         ret.push('has-gold');
       }
-      if (this.gbUser.level > this.gb.gold) {
+      if (this.gbUser?.level > this.gb.gold) {
         ret.push('gold');
       }
     }
@@ -233,7 +240,9 @@ export class BuildingComponent {
   calcPlaces(level: LevelData, ownerValue: number) {
     this.placesData = [];
     for (let method = 0; method < this.bs.calcPlaceMethods.length; method++) {
-      this.placesData.push(this.bs.calcPlaceMethods[method].bind(this.bs)(level, this.gbUser, ownerValue));
+      if (GLOBALS.user.gbColumns[method] > 0) {
+        this.placesData.push(this.bs.calcPlaceMethods[method].bind(this.bs)(level, this.gbUser, ownerValue));
+      }
     }
   }
 
@@ -268,7 +277,9 @@ export class BuildingComponent {
     }
     if (GLOBALS.user.resetLevelColor) {
       this.gbUser.colorIdx = 0;
-      this.gbUser.levelMarked = [true, true, true, true, true];
+      for (let i = 0; i < this.gbUser.levelMarked.length; i++) {
+        this.gbUser.levelMarked[i] = true;
+      }
     }
     if (GLOBALS.user.siteMode === EnumSitemode.manage || GLOBALS.user.siteMode === EnumSitemode.buildings) {
       GLOBALS._gbList = null;
@@ -491,8 +502,25 @@ export class BuildingComponent {
   }
 
   protected clickFactor(evt: PointerEvent, gbUser: GbUserData, rewardIdx: number, value: number) {
-    gbUser.factor[rewardIdx] = value;
+    if (rewardIdx < 0) {
+      for (let i = 0; i < gbUser.factor.length; i++) {
+        gbUser.factor[i] = value;
+      }
+    } else {
+      gbUser.factor[rewardIdx] = value;
+    }
     GLOBALS.force.set(!GLOBALS.force());
+    GLOBALS.saveSharedData();
+  }
+
+  protected clickPlacesTitle(evt: PointerEvent, idx: number) {
+    evt?.stopPropagation();
+    if (idx === GLOBALS.user.gbColumns.length - 1) {
+      GLOBALS.user.gbColumns[idx] = 0;
+    } else {
+      GLOBALS.user.gbColumns[GLOBALS.user.gbColumns.length - 1] = 1;
+    }
+    this.calcPlaces(this.nextLevel, this.gbUser.ownerValue);
     GLOBALS.saveSharedData();
   }
 }
