@@ -6,6 +6,7 @@ import {EnumSitemode} from '@/_model/user-data';
 import {LevelData} from '@/_model/level-data';
 import {EditFactorComponent} from '@/components/edit-factor/edit-factor.component';
 import {MessageService} from '@/_services/message.service';
+import {EditLoopvalueComponent} from '@/components/edit-loopvalue/edit-loopvalue.component';
 
 export class PlacesData {
   rewards: number[] = [];
@@ -174,19 +175,19 @@ export class BuildingService {
         || (sl[0] > 0 && rest <= sl[0] && (
             sniperRest + reward > rest // reward and snipers would exceed rest
             // || sniperRest > rewardRest // remaining sniper values would exceed remaining rewards
-          ) && sl[0] > rewardRest
-        )
+          ) && (sl[0] > rewardRest || sniperRest > rewardRest)
+        ) || rewardRest < sniperRest
       ) {
         reward = -sl[0];
         if (sl[0] > 0) {
           sl = sl.slice(1);
         }
       }
-      if (rest - Math.abs(reward) <= 0 && reward > 0) {
-        reward = rest / 2;
-      }
+      // if (rest - Math.abs(reward) <= 0 && reward > 0) {
+      //   reward = rest / 2;
+      // }
       if (reward > rest) {
-        reward = rest;
+        reward = rest - 1;
       }
       ret.rewards.push(reward);
       rest -= Math.abs(reward);
@@ -230,10 +231,10 @@ export class BuildingService {
       }
       GLOBALS.show(i, `reward=${reward}, rest=${rest}, sniperRest=${sniperRest}, rewardRest=${rewardRest}`, sl);
       if (reward <= sl[0] // sniper is bigger than reward
-        || (sl[0] > 0 && (
+        || (sl[0] > 0 && ( // snipervalue is available
             sniperRest + reward > rest // reward and snipers would exceed rest
             || sniperRest > rewardRest // remaining sniper values would exceed remaining rewards
-          ) && sl[0] > rewardRest
+          ) && (sl[0] > rewardRest || sniperRest > rewardRest)
         )
       ) {
         reward = -sl[0];
@@ -241,11 +242,14 @@ export class BuildingService {
           sl = sl.slice(1);
         }
       }
-      if (rest - Math.abs(reward) <= 0 && reward > 0) {
-        reward = rest / 2;
+      if (rest - Math.abs(reward) <= 0 && reward > 0 && rest > 0) {
+        reward = rest - 1;
       }
-      if (reward > rest) {
-        reward = rest;
+      if (reward > rest && rest > 0) {
+        reward = rest - 1;
+      }
+      if (reward > rewardRest && rewardRest > 0) {
+        reward = rewardRest - 1;
       }
       ret.rewards.push(reward);
       rest -= Math.abs(reward);
@@ -347,6 +351,10 @@ export class BuildingService {
 
   clickEditFactor(_evt: PointerEvent, isGold: boolean) {
     this.msg.showPopup(EditFactorComponent, `edit-factor${isGold ? ' gold' : ''}`, {isGold});
+  }
+
+  clickEditLoopvalue(_evt: PointerEvent) {
+    this.msg.showPopup(EditLoopvalueComponent, `edit-loopvalue`, {});
   }
 
   clickShowColors(evt: PointerEvent) {

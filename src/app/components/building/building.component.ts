@@ -21,7 +21,6 @@ export class BuildingComponent {
   placesData: PlacesData[] = [];
   showEditLevelHint = false;
   costData: { cost: number, owner: number, sniper: number };
-
   protected readonly EnumDisplaymode = EnumDisplaymode;
 
   constructor(public globals: GlobalsService,
@@ -145,6 +144,12 @@ export class BuildingComponent {
       ret.push('gold');
     }
     return Utils.join(ret, ' ');
+  }
+
+  clickLoop(evt: PointerEvent) {
+    evt?.preventDefault();
+    this.gbUser.ownerValue += GLOBALS.user.loopValue;
+    this.saveSharedData();
   }
 
   isColumnVisible(idx: number) {
@@ -291,6 +296,9 @@ export class BuildingComponent {
     if (GLOBALS.user.siteMode === EnumSitemode.buildings) {
       return '';
     }
+    if ((this.placesData[this.gbUser.copyIdx + 1]?.rewards?.[idx] ?? 0) <= 0) {
+      return '';
+    }
     return this.gbUser.levelMarked[idx] ? 'marked' : '';
   }
 
@@ -347,9 +355,9 @@ export class BuildingComponent {
     if (placeIdx > 0) {
       const place = this.placesData[placeIdx];
       const value = Math.abs(place.rewards[idx]);
-      if (value <= 0 || this.bs.calcRewardPlace(level.rewards[idx], this.gbUser, idx) < value) {
+      if (value < 0 || this.bs.calcRewardPlace(level.rewards[idx], this.gbUser, idx) < value) {
         ret.push('negative');
-      } else {
+      } else if (value > 0) {
         ret.push('positive');
       }
     }

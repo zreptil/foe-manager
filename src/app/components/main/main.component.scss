@@ -372,15 +372,33 @@ app-log {
         justify-content: center;
         --mat-icon-button-state-layer-size: var(--size);
         --mat-icon-color: var(--mainHeadFore);
+        --mat-icon-button-touch-target-size: var(--size);
 
         mat-icon {
           font-size: var(--size);
           height: var(--size);
         }
+
+        img {
+          width: var(--size);
+          height: var(--size);
+        }
+
+        [hidden] {
+          display: none;
+        }
       }
 
       button[small-icon-button]:hover {
         --mat-icon-color: var(--mainHeadBack);
+
+        img {
+          display: none;
+        }
+
+        mat-icon {
+          display: block;
+        }
       }
     }
 

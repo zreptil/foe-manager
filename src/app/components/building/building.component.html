@@ -2,8 +2,8 @@
   <button (click)="clickGBEdit($event)" [class]="classForGb" display_list mat-button>
     <div>{{ gb.name }}</div>
     <div>
-      {{ gbUser?.level }}
       <mat-icon gold>workspace_premium</mat-icon>
+      {{ gbUser?.level }}
     </div>
     <div cost>
       <div [style]="styleForCost">
@@ -168,9 +168,6 @@
                 <td></td>
               }
               @if (showSniper) {
-                @if (!bs.isModeManage) {
-                  <td></td>
-                }
                 <!-- titles of calcmethods -->
                 @for (_place of placesData; let placeIdx = $index; track placeIdx) {
                   @if (placeIdx > 0 && isColumnVisible(placeIdx - 1)) {
@@ -353,14 +350,21 @@
                 </button>
               </div>
             } @else {
-              <button (click)="clickOwnerValue($event)" mat-button owner>
-                <mat-icon>crown</mat-icon>
-                <span>@if (gbUser.ownerValue > 0) {
-                  {{ gbUser.ownerValue }}
-                } @else {
-                  Eigenanteil
-                }</span>
-              </button>
+              <div line>
+                @if (globals.user.loopValue > 0) {
+                  <button (click)="clickLoop($event)" loopValue mat-icon-button>
+                    <mat-icon>all_inclusive</mat-icon>
+                  </button>
+                }
+                <button (click)="clickOwnerValue($event)" mat-button owner>
+                  <mat-icon>crown</mat-icon>
+                  <span>@if (gbUser.ownerValue > 0) {
+                    {{ gbUser.ownerValue }}
+                  } @else {
+                    Eigenanteil
+                  }</span>
+                </button>
+              </div>
               @for (sniper of gbUser.sniperValues; track $index) {
                 <button (click)="clickSniperValue($event, $index)" mat-button owner>
                   <mat-icon>target</mat-icon>

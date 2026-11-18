@@ -62,6 +62,8 @@ export class UserData extends BaseData {
   analysis: { showColors: boolean, targetLevel: number };
   displayMode: EnumDisplaymode;
   gbColumns: number[];
+  cityBuilderCredentials: string;
+  loopValue: number;
 
   constructor(json?: any) {
     super(json);

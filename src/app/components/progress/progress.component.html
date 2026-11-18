@@ -1,24 +1,38 @@
-@if (!ps.data.isPaused) {
-  <div [class]="classForOverlay(!ps.data.isActive)" overlay>
-    <div #overlay panel>
-      @if (ps.data.info != null) {
-        <div label>{{ ps.data.info }}</div>
-      }
-      @if (ps.indefinite) {
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-      } @else {
-        <mat-progress-bar [value]="ps.data.percent"
-                          mode="determinate">
-        </mat-progress-bar>
-      }
-      <div label>{{ ps.data.text }}</div>
-      <div controls>
-        @if (ps.mayCancel) {
-          <button (click)="ps.cancel()" mat-icon-button>
-            <mat-icon>cancel</mat-icon>
-          </button>
+<ng-template
+  [cdkConnectedOverlayOpen]="ps.data.isActive"
+  [cdkConnectedOverlayOrigin]="bodyOrigin"
+  [cdkConnectedOverlayPositions]="[
+    {
+      originX: 'start',
+      originY: 'top',
+      overlayX: 'start',
+      overlayY: 'top'
+    }]"
+  cdkConnectedOverlay>
+  @if (!ps.data.isPaused) {
+    <div
+      [class]="classForOverlay(!ps.data.isActive)"
+      overlay>
+      <div #overlay panel>
+        @if (ps.data.info != null) {
+          <div label>{{ ps.data.info }}</div>
         }
+        @if (ps.indefinite) {
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        } @else {
+          <mat-progress-bar [value]="ps.data.percent"
+                            mode="determinate">
+          </mat-progress-bar>
+        }
+        <div label>{{ ps.data.text }}</div>
+        <div controls>
+          @if (ps.mayCancel) {
+            <button (click)="ps.cancel()" mat-icon-button>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          }
+        </div>
       </div>
     </div>
-  </div>
-}
+  }
+</ng-template>

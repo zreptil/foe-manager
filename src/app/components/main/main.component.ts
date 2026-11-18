@@ -16,7 +16,7 @@ import {GbDataService} from '@/_services/gb-data.service';
 import {EnumDisplaymode, EnumSitemode, EnumSortmode} from '@/_model/user-data';
 import {BuildingService} from '@/_services/building.service';
 import {DialogResult, DialogResultButton} from '@/_model/dialog-data';
-import {FoeImportService} from '@/_services/foe-import.service';
+import {CityBuilderComponent} from '@/components/city-builder/city-builder.component';
 
 class FactorDefinition {
   constructor(public list: number[],
@@ -80,8 +80,7 @@ class MainComponent implements OnInit {
               public google: GoogleService,
               public gbsrv: GbDataService,
               public bs: BuildingService,
-              public env: EnvironmentService,
-              public fis: FoeImportService) {
+              public env: EnvironmentService) {
     this.gbsrv.loadFromAsset();
     effect(() => {
       GLOBALS._user();
@@ -260,6 +259,11 @@ class MainComponent implements OnInit {
     }
   }
 
+  clickCityBuilder(evt: PointerEvent) {
+    evt.preventDefault();
+    this.msg.showPopup(CityBuilderComponent, 'city-builder', {});
+  }
+
   protected clickImport(evt: PointerEvent) {
     evt.preventDefault();
     this.gbsrv.importData();
@@ -325,23 +329,6 @@ class MainComponent implements OnInit {
           GLOBALS.user.worldName = null;
         }
         GLOBALS.saveSharedData();
-        break;
-      case 'cityBuilder':
-        this.fis.importCity(GLOBALS.user.username, this.password, GLOBALS.user.worldName,
-          (result) => {
-            if (result?.success) {
-              this.msg.info($localize`Die Stadt wurde als ${result.name} exportiert.`).subscribe({
-                next: (ret: DialogResult) => {
-                  if (ret.btn === DialogResultButton.ok) {
-                    window.open(result.cityBuilderUrl, '_blank', 'noopener,noreferrer');
-                  }
-                }
-              });
-            } else {
-              console.error(result);
-              this.msg.error(result.error.text);
-            }
-          });
         break;
     }
     GLOBALS.siteConfig.editField = null;

@@ -1,12 +1,13 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ProgressService} from '@/_services/progress.service';
 import {ThemeService} from '@/_services/theme.service';
 import {of, Subscription} from 'rxjs';
 
 import {MaterialModule} from '@/material.module';
+import {CdkConnectedOverlay} from '@angular/cdk/overlay';
 
 @Component({
-  imports: [MaterialModule],
+  imports: [MaterialModule, CdkConnectedOverlay],
   selector: 'app-progress',
   templateUrl: './progress.component.html',
   styleUrls: ['./progress.component.scss']
@@ -16,6 +17,7 @@ export class ProgressComponent implements OnInit, AfterViewInit, OnDestroy {
 
   subPsInit: Subscription;
   _cssStyle: any;
+  bodyOrigin = new ElementRef(document.body);
   protected readonly of = of;
 
   constructor(public ps: ProgressService,

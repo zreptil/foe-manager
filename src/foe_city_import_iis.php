@@ -77,6 +77,14 @@ function api(string $url, ?array $payload = null, ?string $bearer = null): array
   if (!is_array($json)) importError('FIREBASE_INVALID_RESPONSE', 'FIREBASE', 502, true);
   if ($status >= 400) {
     $msg = $json['error']['message'] ?? ('HTTP ' . $status);
+    if (isLocalDevelopment()) {
+      error_log(sprintf(
+        'Firebase API error: HTTP %d, URL: %s, message: %s',
+        $status,
+        strtok($url, '?'),
+        is_scalar($msg) ? (string)$msg : json_encode($msg)
+      ));
+    }
     throw new ImportApiException($status === 404 ? 'FIREBASE_DOCUMENT_NOT_FOUND' : ($status === 401 || $status === 403 ? 'FIREBASE_ACCESS_DENIED' : ($status === 409 || $status === 412 ? 'FIREBASE_CONFLICT' : 'FIREBASE_REQUEST_FAILED')), 'FIREBASE', $status >= 500 || $status === 429, [], $status === 404 ? 404 : ($status === 409 || $status === 412 ? 409 : 502));
   }
   return $json;
@@ -291,7 +299,7 @@ function saveAuth(array $auth): void
   @chmod(firebaseAuthFile(), 0600);
 }
 
-function refreshAuth(array $auth): array
+function refreshAuth(array $auth, bool $persist = true): array
 {
   if (($auth['expiresAt'] ?? 0) > time() + 120) return $auth;
   if (empty($auth['refreshToken'])) importError('FIREBASE_REFRESH_TOKEN_MISSING', 'CONFIGURATION');
@@ -316,8 +324,135 @@ function refreshAuth(array $auth): array
   $auth['idToken'] = $r['id_token'];
   $auth['refreshToken'] = $r['refresh_token'] ?? $auth['refreshToken'];
   $auth['expiresAt'] = time() + (int)($r['expires_in'] ?? 3600);
-  saveAuth($auth);
+  if ($persist) saveAuth($auth);
   return $auth;
+}
+
+/** AES-256-GCM key: FOE_CREDENTIAL_KEY must contain base64 of 32 random bytes. */
+function credentialKey(): string
+{
+  $encoded = getenv('FOE_CREDENTIAL_KEY');
+  $key = is_string($encoded) ? base64_decode($encoded, true) : false;
+  if ($key === false || strlen($key) !== 32) {
+    importError('CREDENTIAL_KEY_CONFIG_MISSING', 'CONFIGURATION');
+  }
+  return $key;
+}
+
+function encryptCredentials(array $auth): string
+{
+  if (empty($auth['uid']) || empty($auth['refreshToken'])) {
+    importError('FIREBASE_CREDENTIALS_INVALID', 'AUTHENTICATION', 401);
+  }
+  $data = json_encode([
+    'version' => 1,
+    'uid' => $auth['uid'],
+    'refreshToken' => $auth['refreshToken'],
+    'email' => $auth['email'] ?? null,
+  ], JSON_THROW_ON_ERROR);
+  $nonce = random_bytes(12);
+  $tag = '';
+  $ciphertext = openssl_encrypt($data, 'aes-256-gcm', credentialKey(), OPENSSL_RAW_DATA, $nonce, $tag);
+  if ($ciphertext === false) importError('CREDENTIAL_ENCRYPT_FAILED', 'SERVER');
+  return 'v1.' . base64_encode($nonce . $tag . $ciphertext);
+}
+
+function decryptCredentials(string $blob): array
+{
+  if (!str_starts_with($blob, 'v1.') || strlen($blob) > 8192) {
+    importError('CREDENTIALS_INVALID', 'AUTHENTICATION', 401);
+  }
+  $raw = base64_decode(substr($blob, 3), true);
+  if ($raw === false || strlen($raw) < 29) importError('CREDENTIALS_INVALID', 'AUTHENTICATION', 401);
+  $plaintext = openssl_decrypt(substr($raw, 28), 'aes-256-gcm', credentialKey(),
+    OPENSSL_RAW_DATA, substr($raw, 0, 12), substr($raw, 12, 16));
+  if ($plaintext === false) importError('CREDENTIALS_INVALID', 'AUTHENTICATION', 401);
+  $auth = json_decode($plaintext, true);
+  if (!is_array($auth) || ($auth['version'] ?? null) !== 1
+    || !is_string($auth['uid'] ?? null) || $auth['uid'] === ''
+    || !is_string($auth['refreshToken'] ?? null) || $auth['refreshToken'] === '') {
+    importError('CREDENTIALS_INVALID', 'AUTHENTICATION', 401);
+  }
+  if (isset($auth['email']) && $auth['email'] !== null
+    && (!is_string($auth['email']) || !filter_var($auth['email'], FILTER_VALIDATE_EMAIL))) {
+    importError('CREDENTIALS_INVALID', 'AUTHENTICATION', 401);
+  }
+  return $auth;
+}
+
+/** Redeem a Firebase email-link once. The email is not persisted on the server. */
+function loginWithEmailLink(array $input): array
+{
+  $email = trim((string)($input['email'] ?? ''));
+  $link = (string)($input['link'] ?? '');
+  if (!filter_var($email, FILTER_VALIDATE_EMAIL) || strlen($email) > 254 || strlen($link) > 8192) {
+    importError('LOGIN_INPUT_INVALID', 'INPUT', 400);
+  }
+  $parts = parse_url($link);
+  if (!is_array($parts) || ($parts['scheme'] ?? '') !== 'https') {
+    importError('LOGIN_LINK_INVALID', 'INPUT', 400);
+  }
+  // Firebase links may wrap the action link in a nested `link` parameter.
+  parse_str($parts['query'] ?? '', $params);
+  if (isset($params['link']) && is_string($params['link'])) {
+    $nested = parse_url($params['link']);
+    if (!is_array($nested) || ($nested['scheme'] ?? '') !== 'https') {
+      importError('LOGIN_LINK_INVALID', 'INPUT', 400);
+    }
+    parse_str($nested['query'] ?? '', $params);
+  }
+  $code = $params['oobCode'] ?? null;
+  if (!is_string($code) || $code === '' || strlen($code) > 4096
+    || ($params['mode'] ?? '') !== 'signIn'
+    || (isset($params['apiKey']) && $params['apiKey'] !== API_KEY)) {
+    importError('LOGIN_LINK_INVALID', 'INPUT', 400);
+  }
+  $result = api('https://identitytoolkit.googleapis.com/v1/accounts:signInWithEmailLink?key=' . rawurlencode(API_KEY), [
+    'email' => $email,
+    'oobCode' => $code,
+    'returnSecureToken' => true,
+  ]);
+  if (!is_string($result['localId'] ?? null) || !is_string($result['refreshToken'] ?? null)) {
+    importError('FIREBASE_LOGIN_INVALID_RESPONSE', 'FIREBASE', 502);
+  }
+  return ['success' => true, 'credentials' => encryptCredentials([
+    'uid' => $result['localId'], 'refreshToken' => $result['refreshToken'],
+    'email' => $result['email'] ?? $email,
+  ])];
+}
+
+/** Return the email tied to the encrypted Firebase credentials.
+ * Older blobs without an email are resolved through Firebase once.
+ */
+function accountInfo(array $input): array
+{
+  $blob = $input['credentials'] ?? null;
+  if (!is_string($blob) || $blob === '') {
+    importError('CREDENTIALS_INVALID', 'AUTHENTICATION', 401);
+  }
+  $auth = decryptCredentials($blob);
+  if (empty($auth['email'])) {
+    // Legacy blobs contain only UID and refresh token.
+    // Never persist browser credentials in the default server auth file.
+    $auth = refreshAuth($auth, false);
+    $lookup = api(
+      'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=' . rawurlencode(API_KEY),
+      ['idToken' => $auth['idToken']]
+    );
+    $users = $lookup['users'] ?? [];
+    $user = is_array($users) ? ($users[0] ?? null) : null;
+    if (!is_array($user) || ($user['localId'] ?? null) !== $auth['uid']
+      || !is_string($user['email'] ?? null)
+      || !filter_var($user['email'], FILTER_VALIDATE_EMAIL)) {
+      importError('FIREBASE_EMAIL_NOT_FOUND', 'AUTHENTICATION', 401);
+    }
+    $auth['email'] = $user['email'];
+  }
+  return [
+    'success' => true,
+    'email' => $auth['email'],
+    'credentials' => encryptCredentials($auth),
+  ];
 }
 
 function resolveWorld(string $requested, array $worlds): array
@@ -559,10 +694,14 @@ function extractBuildingMetadata(array $definition, string $id, string $url): ?a
     }
   }
 
-  // Missing requirements do not prove that a road is unnecessary.
-  $roadRequired = array_key_exists('street_connection_level', $definition['requirements'] ?? [])
-    ? ((int)$definition['requirements']['street_connection_level'] > 0)
-    : null;
+  // Classic buildings use requirements.street_connection_level.
+  // Component-based buildings use AllAge.streetConnectionRequirement.requiredLevel.
+  // An absent requirement means no road is required; preserve explicit false in metadata.
+  $classicLevel = $definition['requirements']['street_connection_level'] ?? null;
+  $componentLevel = $definition['components']['AllAge']['streetConnectionRequirement']['requiredLevel'] ?? null;
+  $roadRequired = $componentLevel !== null
+    ? ((int)$componentLevel > 0)
+    : ($classicLevel !== null ? ((int)$classicLevel > 0) : false);
 
   return [
     'id' => $definition['id'] ?? $id,
@@ -761,9 +900,18 @@ function runImport(array $input): array
   $world = trim((string)($input['world'] ?? ''));
   if ($username === '' || $password === '' || $world === '') importError('REQUIRED_FIELDS_MISSING', 'INPUT', 400);
   if (strlen($username) > 200 || strlen($password) > 1000 || strlen($world) > 100) importError('INPUT_TOO_LONG', 'INPUT', 400);
-  $auth = loadAuth();
-  if (!$auth || ($auth['email'] ?? '') !== 'foe-manager@zreptil.de') importError('FIREBASE_ACCOUNT_NOT_CONFIGURED', 'CONFIGURATION');
-  $auth = refreshAuth($auth);
+  $userCredentials = $input['credentials'] ?? null;
+  $ownAccount = $userCredentials !== null;
+  if ($ownAccount) {
+    if (!is_string($userCredentials)) importError('CREDENTIALS_INVALID', 'AUTHENTICATION', 401);
+    $auth = decryptCredentials($userCredentials);
+    // Browser-owned credentials are never saved in the server-side default auth file.
+    $auth = refreshAuth($auth, false);
+  } else {
+    $auth = loadAuth();
+    if (!$auth || ($auth['email'] ?? '') !== 'foe-manager@zreptil.de') importError('FIREBASE_ACCOUNT_NOT_CONFIGURED', 'CONFIGURATION');
+    $auth = refreshAuth($auth);
+  }
   $dir = sys_get_temp_dir() . '/foe_import_' . bin2hex(random_bytes(12));
   if (!mkdir($dir, 0700)) importError('TEMP_DIRECTORY_UNAVAILABLE', 'SERVER');
   try {
@@ -811,17 +959,120 @@ function runImport(array $input): array
     $commit = api('https://firestore.googleapis.com/v1/projects/' . PROJECT_ID . '/databases/(default)/documents:commit',
       ['writes' => [$write]], $auth['idToken']);
     return ['success' => true, 'name' => $displayName, 'documentId' => $name,
-      'action' => $existing === null ? 'created' : 'updated', 'world' => $result['world'],
-      'worldName' => $result['worldName'],
-      'buildings' => count($converted['buildings']),
-      'roads' => count($converted['cityResult']['roadPositions']),
-      'expansions' => count(array_filter($converted['expansions'])),
-      'writeTime' => $commit['writeResults'][0]['updateTime'] ?? null,
-      'cityBuilderUrl' => 'https://foe-city-builder.web.app/'];
+        'action' => $existing === null ? 'created' : 'updated', 'world' => $result['world'],
+        'worldName' => $result['worldName'],
+        'buildings' => count($converted['buildings']),
+        'roads' => count($converted['cityResult']['roadPositions']),
+        'expansions' => count(array_filter($converted['expansions'])),
+        'writeTime' => $commit['writeResults'][0]['updateTime'] ?? null,
+        'cityBuilderUrl' => 'https://foe-city-builder.web.app/']
+      + ($ownAccount ? ['credentials' => encryptCredentials($auth)] : []);
   } finally {
     foreach (glob($dir . '/*') ?: [] as $path) if (is_file($path)) @unlink($path);
     @rmdir($dir);
   }
+}
+
+
+/** Read-only comparison of two City Builder documents in the same Firebase account. */
+function compareCities(array $input): array
+{
+  $names = ['FoE-Cirgard-CityBuilder', 'FoE-Cirgard-andi_schlumpf'];
+  $credentials = $input['credentials'] ?? null;
+  if ($credentials !== null) {
+    if (!is_string($credentials)) importError('CREDENTIALS_INVALID', 'AUTHENTICATION', 401);
+    $auth = refreshAuth(decryptCredentials($credentials), false);
+  } else {
+    $auth = loadAuth();
+    if (!$auth || ($auth['email'] ?? '') !== 'foe-manager@zreptil.de')
+      importError('FIREBASE_ACCOUNT_NOT_CONFIGURED', 'CONFIGURATION');
+    $auth = refreshAuth($auth);
+  }
+  $cities = [];
+  foreach ($names as $name) {
+    $doc = api(firestoreUrl($auth['uid'], $name), null, $auth['idToken']);
+    $city = [];
+    foreach (($doc['fields'] ?? []) as $key => $value) $city[$key] = fromFv($value);
+    $cities[] = $city;
+  }
+  $getBuildings = static function (array $city): array {
+    $out = [];
+    foreach (($city['buildings'] ?? []) as $index => $b) {
+      if (!is_array($b)) continue;
+      $out[] = [
+        'index' => $index,
+        'name' => $b['name'] ?? null,
+        'x' => $b['s']['x'] ?? null,
+        'y' => $b['s']['y'] ?? null,
+        'width' => $b['width'] ?? null,
+        'height' => $b['height'] ?? null,
+        'roadRequired' => $b['roadRequired'] ?? null,
+        'roadRequiredPresent' => array_key_exists('roadRequired', $b),
+        'data' => $b,
+      ];
+    }
+    return $out;
+  };
+  [$original, $imported] = array_map($getBuildings, $cities);
+  $used = [];
+  $differences = [];
+  foreach ($original as $a) {
+    $best = null;
+    // Match first by coordinates and dimensions; names can differ by localization.
+    foreach ($imported as $j => $b) {
+      if (isset($used[$j])) continue;
+      if ($a['x'] === $b['x'] && $a['y'] === $b['y']
+          && $a['width'] === $b['width'] && $a['height'] === $b['height']) {
+        $best = $j;
+        break;
+      }
+    }
+    if ($best === null) {
+      foreach ($imported as $j => $b) {
+        if (isset($used[$j])) continue;
+        if ($a['name'] === $b['name'] && $a['name'] !== null) {
+          $best = $j;
+          break;
+        }
+      }
+    }
+    if ($best === null) {
+      $differences[] = ['type' => 'missingInImporter', 'original' => $a];
+      continue;
+    }
+    $used[$best] = true;
+    $b = $imported[$best];
+    $fields = [];
+    foreach (array_unique(array_merge(array_keys($a['data']), array_keys($b['data']))) as $key) {
+      if (!array_key_exists($key, $a['data']) || !array_key_exists($key, $b['data'])
+          || $a['data'][$key] !== $b['data'][$key]) {
+        $fields[$key] = [
+          'original' => $a['data'][$key] ?? null,
+          'imported' => $b['data'][$key] ?? null,
+          'originalPresent' => array_key_exists($key, $a['data']),
+          'importedPresent' => array_key_exists($key, $b['data']),
+        ];
+      }
+    }
+    if ($fields) $differences[] = [
+      'type' => 'different', 'originalIndex' => $a['index'],
+      'importedIndex' => $b['index'], 'name' => $a['name'],
+      'position' => ['x' => $a['x'], 'y' => $a['y']],
+      'fields' => $fields,
+    ];
+  }
+  foreach ($imported as $j => $b) {
+    if (!isset($used[$j])) $differences[] = ['type' => 'missingInOriginal', 'imported' => $b];
+  }
+  $roadDiffs = array_values(array_filter($differences, static fn($d) =>
+    $d['type'] === 'different' && isset($d['fields']['roadRequired'])));
+  return [
+    'success' => true,
+    'cities' => $names,
+    'counts' => ['original' => count($original), 'imported' => count($imported)],
+    'roadRequiredDifferences' => $roadDiffs,
+    'allDifferences' => $differences,
+  ] + ($credentials !== null ? ['credentials' => encryptCredentials($auth)] : []);
 }
 
 /** Public endpoint guards. Rate limiting is best-effort and is not an authentication mechanism. */
@@ -923,19 +1174,29 @@ try {
     importError('ORIGIN_NOT_ALLOWED', 'SECURITY', 403);
   }
   enforceRateLimit();
-  $slot = acquireImportSlot();
-  try {
-    $body = file_get_contents('php://input');
-    if ($body === false || strlen($body) > 8192) {
-      http_response_code(413);
-      importError('REQUEST_TOO_LARGE', 'REQUEST', 413);
+  $body = file_get_contents('php://input');
+  if ($body === false || strlen($body) > 16384) {
+    http_response_code(413);
+    importError('REQUEST_TOO_LARGE', 'REQUEST', 413);
+  }
+  $input = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+  if (!is_array($input)) importError('INVALID_JSON_BODY', 'REQUEST', 400);
+  if (($input['action'] ?? 'import') === 'login') {
+    echo json_encode(loginWithEmailLink($input), JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+  } elseif (($input['action'] ?? 'import') === 'accountInfo') {
+    echo json_encode(accountInfo($input), JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+  } elseif (($input['action'] ?? 'import') === 'compareCities') {
+    echo json_encode(compareCities($input), JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+  } elseif (($input['action'] ?? 'import') === 'import') {
+    $slot = acquireImportSlot();
+    try {
+      echo json_encode(runImport($input), JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+    } finally {
+      flock($slot, LOCK_UN);
+      fclose($slot);
     }
-    $input = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
-    if (!is_array($input)) importError('INVALID_JSON_BODY', 'REQUEST', 400);
-    echo json_encode(runImport($input), JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
-  } finally {
-    flock($slot, LOCK_UN);
-    fclose($slot);
+  } else {
+    importError('UNKNOWN_ACTION', 'INPUT', 400);
   }
 } catch (Throwable $error) {
   $public = publicImportError($error);

@@ -39,6 +39,16 @@
                   "with":"src/environments/environment.prod.ts"
                 }
               ],
+              "assets":[
+                "src/favicon.ico",
+                "src/assets",
+                "src/web.config",
+                {
+                  "glob":"foe_city_import_iis.php",
+                  "input":"src",
+                  "output":"/"
+                }
+              ],
               "outputHashing":"all",
               "sourceMap":false,
               "serviceWorker":"src/ngsw-config.json"
@@ -55,12 +65,7 @@
             "assets":[
               "src/favicon.ico",
               "src/assets",
-              "src/web.config",
-              {
-                "glob":"foe_city_import_iis.php",
-                "input":"src",
-                "output":"/"
-              }
+              "src/web.config"
             ],
             "index":"src/index.html",
             "inlineStyleLanguage":"scss",

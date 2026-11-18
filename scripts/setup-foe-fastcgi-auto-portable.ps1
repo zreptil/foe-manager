@@ -1,4 +1,4 @@
-#requires -Version 5.1
+﻿#requires -Version 5.1
 <#
 .SYNOPSIS
   Configure the FoE IIS/Plesk PHP FastCGI application and bind the site's PHP handler to it.
@@ -111,6 +111,32 @@ try {
     }
     if ($null -eq $fastApp) { throw 'Websitespezifische FastCGI-Anwendung in applicationHost.config nicht gefunden.' }
     $envs = $fastApp.GetChildElement('environmentVariables').GetCollection()
+
+    # Preserve the existing credential encryption key across repeated setup runs.
+    # A changed key would invalidate already issued encrypted login credentials.
+    $credentialEntry = $null
+    foreach ($entry in $envs) {
+        if ([string]$entry['name'] -ceq 'FOE_CREDENTIAL_KEY') {
+            $credentialEntry = $entry
+            break
+        }
+    }
+    $createCredentialKey = $false
+    if ($null -ne $credentialEntry -and -not [string]::IsNullOrWhiteSpace([string]$credentialEntry['value'])) {
+        try {
+            $keyBytes = [Convert]::FromBase64String([string]$credentialEntry['value'])
+        } catch {
+            throw 'FOE_CREDENTIAL_KEY ist vorhanden, aber kein gueltiger Base64-Schluessel. Abbruch, um bestehende Credentials nicht zu verlieren.'
+        }
+        if ($keyBytes.Length -ne 32) {
+            throw 'FOE_CREDENTIAL_KEY ist vorhanden, hat aber nicht 32 Bytes. Abbruch, um bestehende Credentials nicht zu verlieren.'
+        }
+        Write-Host 'OK:        FOE_CREDENTIAL_KEY ist vorhanden und gueltig (Wert verborgen).'
+    } else {
+        $createCredentialKey = $true
+        Write-Host 'NEU:       FOE_CREDENTIAL_KEY wird beim Anwenden sicher erzeugt (Wert verborgen).'
+    }
+
     $pending = @()
     foreach ($name in $values.Keys) {
         $existing = $null
@@ -149,7 +175,7 @@ try {
     if ($changeHandler) { Write-Host "AENDERN:   PHP-Handler scriptProcessor -> $newProcessor" }
     else { Write-Host 'OK:        PHP-Handler verweist auf websitespezifischen FastCGI-Eintrag.' }
 
-    $total = $pending.Count + [int]$changeHandler
+    $total = $pending.Count + [int]$changeHandler + [int]$createCredentialKey
     if ($total -eq 0) {
         Write-Host 'Keine IIS-Konfigurationsaenderungen erforderlich.'
     } elseif ($PSCmdlet.ShouldProcess("IIS-Website $SiteName", "$total Aenderung(en) an FastCGI und PHP-Handler speichern")) {
@@ -161,6 +187,25 @@ try {
         }
         if (-not (Test-Path -LiteralPath $rateDir -PathType Container)) {
             New-Item -ItemType Directory -Path $rateDir -Force | Out-Null
+        }
+        if ($createCredentialKey) {
+            $randomBytes = New-Object byte[] 32
+            $rng = [System.Security.Cryptography.RandomNumberGenerator]::Create()
+            try {
+                $rng.GetBytes($randomBytes)
+            } finally {
+                $rng.Dispose()
+            }
+            $generatedKey = [Convert]::ToBase64String($randomBytes)
+            if ($null -eq $credentialEntry) {
+                $credentialEntry = $envs.CreateElement('environmentVariable')
+                $credentialEntry['name'] = 'FOE_CREDENTIAL_KEY'
+                $credentialEntry['value'] = $generatedKey
+                [void]$envs.Add($credentialEntry)
+            } else {
+                $credentialEntry['value'] = $generatedKey
+            }
+            Write-Host 'FOE_CREDENTIAL_KEY sicher erzeugt und zur Speicherung vorgemerkt (Wert verborgen).'
         }
         foreach ($change in $pending) {
             if ($null -eq $change.Existing) {

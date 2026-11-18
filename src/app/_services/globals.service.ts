@@ -443,7 +443,9 @@ export class GlobalsService {
       s20: GLOBALS.user.analysis,
       s21: GLOBALS.user.displayMode,
       s22: GLOBALS.user.editFactorGold,
-      s23: GLOBALS.user.gbColumns
+      s23: GLOBALS.user.gbColumns,
+      s24: GLOBALS.user.cityBuilderCredentials,
+      s25: GLOBALS.user.loopValue,
     };
     this.adjustGbSort();
     for (const world of GLOBALS.user.listWorld) {
@@ -637,6 +639,8 @@ export class GlobalsService {
     while (GLOBALS.user.gbColumns.length < this.bs.calcPlaceMethods.length) {
       GLOBALS.user.gbColumns.push(1);
     }
+    GLOBALS.user.cityBuilderCredentials = storage.s24;
+    GLOBALS.user.loopValue = storage.s25;
 
     // validate data
     this.adjustGbSort();

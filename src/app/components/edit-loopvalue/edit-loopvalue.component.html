@@ -1,0 +1,32 @@
+<div cdkDrag cdkDragBoundary=".cdk-overlay-container"
+     cdkDragRootElement=".dialog-box.edit-loopvalue">
+  <div cdkDragHandle mat-dialog-title>
+    <h1 i18n>Forge-Punkte</h1>
+    <app-close-button [data]="closeData"></app-close-button>
+  </div>
+  <mat-dialog-content>
+    <br>
+    <mat-label i18n limitWidth>
+      Forge-Punkte, die in der wiederkehrenden Quest ausgegeben werden müssen. Wenn hier ein
+      Wert eingegeben wird, der grösser als 0 ist, dann gibt es bei der Eingabe des Eigenanteils
+      in den legendären Gebäuden einen Button, der so aussieht:
+      <button mat-button>
+        <mat-icon>all_inclusive</mat-icon>
+      </button>
+      Wenn dieser angeklickt wird, dann wird der hier eingegebene Wert zum Eigenanteil
+      dazu gezählt.
+    </mat-label>
+    <br>
+    <mat-form-field>
+      <mat-label i18n>Forge-Punkte</mat-label>
+      <input (focus)="globals.onFocus($event)"
+             [(ngModel)]="value"
+             autofocus matInput>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button (click)="clickSave($event)" mat-button>
+      <mat-icon>save</mat-icon>
+    </button>
+  </mat-dialog-actions>
+</div>

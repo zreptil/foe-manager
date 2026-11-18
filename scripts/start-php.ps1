@@ -20,6 +20,7 @@ New-Item -ItemType Directory -Path $rateDir -Force | Out-Null
 
 $env:FOE_FIREBASE_AUTH_FILE = $authFile
 $env:FOE_RATE_LIMIT_DIR = $rateDir
+$env:FOE_CREDENTIAL_KEY = '/Y+2+k6gU3dg3Jv232YRGmOAnHGtqdWH7eFWSwy5Q6k='
 
 Write-Host "PHP:       $php"
 Write-Host "Webroot:   $projectRoot"

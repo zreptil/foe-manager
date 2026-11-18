@@ -62,6 +62,8 @@ import {NumberPipe} from '@/_pipes/number.pipe';
 import {LanguageService} from '@/_services/language.service';
 import {AnalysisComponent} from './components/analysis/analysis.component';
 import {RouterLink} from '@angular/router';
+import {CityBuilderComponent} from '@/components/city-builder/city-builder.component';
+import {EditLoopvalueComponent} from './components/edit-loopvalue/edit-loopvalue.component';
 
 @NgModule({
   declarations: [
@@ -100,8 +102,10 @@ import {RouterLink} from '@angular/router';
     FellowshipComponent,
     EventTimerComponent,
     EditFactorComponent,
+    EditLoopvalueComponent,
     NumberPipe,
-    AnalysisComponent
+    AnalysisComponent,
+    CityBuilderComponent
   ],
   bootstrap: [AppComponent],
   imports: [

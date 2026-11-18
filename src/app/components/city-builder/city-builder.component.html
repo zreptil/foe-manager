@@ -1,0 +1,79 @@
+<div cdkDrag cdkDragBoundary=".cdk-overlay-container"
+     cdkDragRootElement=".dialog-box.city-builder">
+  <div cdkDragHandle mat-dialog-title>
+    <mat-icon>apartment</mat-icon>
+    <h1 i18n>City Builder</h1>
+    <app-close-button [data]="closeData"></app-close-button>
+  </div>
+  <mat-dialog-content>
+    <button (click)="clickCityBuilder($event)" mat-button>
+      <img src="https://foe-city-builder.web.app/icons/favicon-128x128.png">
+      City Builder aufrufen
+    </button>
+    @if (enterCredentials) {
+      <div i18n info>
+        Um die Stadtdaten in den City Builder zu transferrieren, wird der Zugriff mit einer gültigen
+        Benutzerkennung benötigt. Dazu müssen die eMail-Adresse und der Link, der an diese eMail-Adresse
+        versendet wurde, hier erfasst werden. Der Link darf vorher nicht aufgerufen worden sein.
+      </div>
+      <div row>
+        <mat-form-field>
+          <mat-label>eMail-Adresse</mat-label>
+          <input (focus)="globals.onFocus($event)"
+                 (keydown.enter)="clickSave()"
+                 [(ngModel)]="_email"
+                 autofocus
+                 matInput
+                 type="email">
+        </mat-form-field>
+        <button (click)="clickActivationLink($event)" mat-button>
+          Aktivierungslink
+          @if (activationLink != null) {
+            @if (isEmail(email)) {
+              aufrufen
+            }
+            <mat-icon green>done</mat-icon>
+          } @else {
+            <mat-icon red>close</mat-icon>
+          }
+        </button>
+      </div>
+      <div row>
+        Alternativ kann auch der Benutzer
+        <button (click)="clickEmail($event)" mat-button>{{ email }}</button>
+        verwendet werden.
+      </div>
+    } @else {
+      <div i18n info>
+        Das Passwort wird benötigt, um bei Forge of Empires die Stadtdaten
+        zu ermitteln. Dazu müssen auch der aktuelle Name mit dem Loginnamen
+        bei FOE und der Weltname mit dem Weltnamen bei FOE übereinstimmen.
+        Die Stadtdaten werden anschliessend zum City Builder mit dem Login
+        <button (click)="clickEmail($event)" mat-button>{{ email }}</button>
+        hochgeladen.
+      </div>
+      <div row>
+        <mat-form-field>
+          <mat-label i18n>Passwort für FOE</mat-label>
+          <input (focus)="globals.onFocus($event)"
+                 (keydown.enter)="clickSave()"
+                 [(ngModel)]="password"
+                 autofocus
+                 matInput
+                 type="password">
+        </mat-form-field>
+        <button (click)="clickSave($event)" mat-button>
+          <mat-icon>wifi_home</mat-icon>
+        </button>
+      </div>
+    }
+    @if (info != null) {
+      <div info>{{ info }}</div>
+    }
+    @if (error != null) {
+      <div error>{{ error }}</div>
+    }
+  </mat-dialog-content>
+  <mat-dialog-actions>
+  </mat-dialog-actions>
+</div>
